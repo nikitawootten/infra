@@ -1,0 +1,8 @@
+required_packages:
+  - jq
+  - helm
+  - kubectl
+required_pip_packages:
+  - kubernetes
+  - pyyaml
+helm_repositories: []

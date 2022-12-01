@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-ddns-secret
+stringData: {{ secrets.cloudflareDdns }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflare-ddns-script-configmap
+data:
+  run.sh: |
+    IP=$(curl $CHECK_IP)
+    curl --request PUT --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID \
+      --header 'Content-Type: application/json' \
+      --header "Authorization: Bearer $API_KEY" \
+      --data "{
+        \"content\": \"$IP\",
+        \"name\": \"$NAME\",
+        \"proxied\": $PROXIED,
+        \"ttl\": $TTL,
+        \"type\": \"$TYPE\"
+      }"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudflare-ddns-job
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 5
+  startingDeadlineSeconds: 60
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    metadata:
+      name: cloudflare-ddns-job
+    spec:
+      activeDeadlineSeconds: 240
+      backoffLimit: 3
+      template:
+        metadata:
+          name: cloudflare-ddns-job-pod
+        spec:
+          containers:
+            - name: cloudflare-ddns-job-container
+              image: fedora:36
+              command: ["bash", "/scripts/run.sh"]
+              envFrom:
+                - secretRef:
+                    name: cloudflare-ddns-secret
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /scripts
+          volumes:
+            - name: script-volume
+              configMap:
+                name: cloudflare-ddns-script-configmap
+          restartPolicy: OnFailure

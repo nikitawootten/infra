@@ -5,6 +5,7 @@ K8S_AUTH_KUBECONFIG=./.temp_kubeconfig
 if [[ ! -f "$K8S_AUTH_KUBECONFIG" ]]; then
     echo "Grabbing KubeConfig from Terraform bootstrap..."
     (cd ../bootstrap; terraform output -raw kubeconfig) > $K8S_AUTH_KUBECONFIG
+    chmod 600 $K8S_AUTH_KUBECONFIG
 fi
 
 ANSIBLE_SECRETS_FILE=ansible_secrets.yaml

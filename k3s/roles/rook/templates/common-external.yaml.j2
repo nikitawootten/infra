@@ -1,0 +1,58 @@
+# https://github.com/rook/rook/blob/master/deploy/examples/common-external.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ rook_external_namespace }}
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rook-ceph-cluster-mgmt
+  namespace: {{ rook_external_namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: rook-ceph-cluster-mgmt
+subjects:
+  - kind: ServiceAccount
+    name: rook-ceph-system
+    namespace: {{ rook_namespace }}
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rook-ceph-cmd-reporter
+  namespace: {{ rook_external_namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rook-ceph-cmd-reporter
+subjects:
+  - kind: ServiceAccount
+    name: rook-ceph-cmd-reporter
+    namespace: {{ rook_external_namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rook-ceph-cmd-reporter
+  namespace: {{ rook_external_namespace }}
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rook-ceph-cmd-reporter
+  namespace: {{ rook_external_namespace }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete

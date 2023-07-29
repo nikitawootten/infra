@@ -44,7 +44,6 @@ in {
           border: 0px !important;
         }
         #main-window[titlepreface*="${cfg.preface}"] #titlebar {
-          visibility: hidden;
           height: 0px;
         }
       '';

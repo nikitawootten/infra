@@ -9,7 +9,16 @@
 let
   mkHomeManagerCommon = imports:
     ({ lib, username, system, ... }: {
-      imports = defaultModules ++ imports;
+      imports = defaultModules ++ imports ++ [
+        ({ pkgs, ... }: {
+          nix = {
+            package = lib.mkDefault pkgs.nixFlakes;
+            extraOptions = ''
+              experimental-features = nix-command flakes
+            '';
+          };
+        })
+      ];
       home = {
         inherit username;
         homeDirectory = lib.mkDefault "${if (lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";

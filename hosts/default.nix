@@ -20,13 +20,15 @@ personalLib.mkHosts {
         specialArgs.nixos-hardware.nixosModules.framework
         ./optional/sound.nix
         ./optional/networkmanager.nix
-        ./optional/flatpak.nix
         ./optional/printing.nix
         ./optional/gnome.nix
         ./optional/steam.nix
         ./optional/docker.nix
         ./optional/vpn.nix
         ./optional/wireshark.nix
+        {
+          flatpak.enable = true;
+        }
       ];
     };
   };

@@ -11,6 +11,8 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    kubenix.url = "github:hall/kubenix";
+    kubenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, ... }:

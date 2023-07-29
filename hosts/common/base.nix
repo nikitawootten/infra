@@ -1,4 +1,4 @@
-{ pkgs, hostname, username, ... }:
+{ pkgs, lib, hostname, username, ... }:
 
 {
   time.timeZone = "America/New_York";
@@ -31,7 +31,7 @@
     shell = pkgs.zsh;
   };
 
-  services.fwupd.enable = true;
+  services.fwupd.enable = lib.mkDefault true;
 
   environment.systemPackages = with pkgs; [
     gnumake

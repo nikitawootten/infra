@@ -1,5 +1,7 @@
+{ lib, ... }:
 {
   imports = [
+    ./allowUnfreeRegexes.nix
     ./direnv.nix
     ./editor.nix
     ./git.nix
@@ -8,5 +10,8 @@
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
+    ./upgrade-diff.nix
   ];
+
+  upgrade-diff.enable = lib.mkDefault true;
 }

@@ -1,11 +1,8 @@
 { lib, pkgs, ... }:
 {
-  # Currently burpsuite does not work with allowUnfreePredicate for some reason
-  # see https://github.com/NixOS/nixpkgs/issues/238466
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "burpsuite"
-  ];
-  nixpkgs.config.allowUnfree = true; # TODO remove when fixed?
+  allowedUnfreePackagesRegexs = [ "burpsuite" ];
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = with pkgs; [
     nmap
   ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [

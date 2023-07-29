@@ -25,8 +25,14 @@ update: ## Update "flake.lock"
 switch-home: ## Switch local home-manager config
 	$(call IN_NIXSHELL,home-manager switch --flake .)
 
+build-home: ## Build local home-manager config
+	$(call IN_NIXSHELL,home-manager build --flake .)
+
 switch-nixos: ## Switch local NixOS config
 	$(call IN_NIXSHELL,sudo nixos-rebuild switch --flake .#)
+
+build-nixos: ## Build local NixOS config
+	$(call IN_NIXSHELL,sudo nixos-rebuild dry-activate --flake .#)
 
 # Default to connecting to the hostname directly
 ADDR=$(HOST)

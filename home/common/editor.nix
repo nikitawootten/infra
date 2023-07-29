@@ -25,9 +25,7 @@
   };
 
   # Required for `vscode-langservers-extracted
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "vscode"
-  ];
+  allowedUnfreePackagesRegexs = [ "vscode" ];
 
   home.packages = with pkgs; [
     nodePackages.vscode-langservers-extracted

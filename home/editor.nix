@@ -19,7 +19,6 @@
   };
 
   home.packages = with pkgs; [
-    # provided via overlay
-    vscode-langservers-extracted
+    nodePackages.vscode-langservers-extracted
   ];
 }

@@ -5,6 +5,7 @@ let
     ./editor.nix
     ./git.nix
     ./shell.nix
+    ./ssh.nix
   ];
 
   # Conditionally generates config compatible with HomeManager flake or as NixOS modules

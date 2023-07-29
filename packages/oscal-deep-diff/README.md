@@ -1,6 +1,6 @@
-# `vscode-langservers-extracted`
+# `oscal-deep-diff`
 
-This overlay package has been lightly adapted from [`~bwolf/languageservers.nix`](https://git.sr.ht/~bwolf/language-servers.nix/tree/master/item/vscode-langservers-extracted).
+This package has been adapted from [`~bwolf/languageservers.nix`](https://git.sr.ht/~bwolf/language-servers.nix/tree/master/item/vscode-langservers-extracted).
 
 ## What's Changed?
 
@@ -8,7 +8,7 @@ This overlay package has been lightly adapted from [`~bwolf/languageservers.nix`
 
     This is to avoid issues [like this](https://github.com/NixOS/nix/issues/4265).
 
-* Can be built independently or in flake (defaultible `pkgs`)
+* Can be built independently or in flake (defaultable `pkgs`)
 
 ## Updating
 

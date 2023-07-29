@@ -10,8 +10,8 @@
 , ...
 }:
 let
-  pname = "vscode-langservers-extracted";
-  version = (builtins.fromJSON (builtins.readFile ./package.json)).dependencies.${pname};
+  pname = "oscal-deep-diff";
+  version = (builtins.fromJSON (builtins.readFile ./package.json)).dependencies."@oscal/oscal-deep-diff";
   deps = pkgs.mkYarnModules {
     inherit pname version;
     packageJSON = ./package.json;
@@ -34,8 +34,8 @@ pkgs.stdenv.mkDerivation {
     mkdir -p $out/bin
     rsync -a --no-links ${deps}/node_modules $out
     chmod a+rwx $out/node_modules
-    cp -a ${deps}/deps/vscode-langservers-extracted/node_modules/vscode-langservers-extracted \
-      $out/node_modules
+    # cp -a ${deps}/deps/oscal-deep-diff/node_modules/oscal-deep-diff \
+    #   $out/node_modules
     
     make_start () {
       target="$1"
@@ -45,17 +45,8 @@ pkgs.stdenv.mkDerivation {
       chmod a+x "$1"
     }
 
-    make_start "$out/bin/vscode-css-language-server" \
-      "$out/node_modules/vscode-langservers-extracted/lib/css-language-server/node/cssServerMain.js"
-
-    make_start "$out/bin/vscode-html-language-server" \
-      "$out/node_modules/vscode-langservers-extracted/lib/html-language-server/node/htmlServerMain.js"
-
-    make_start "$out/bin/vscode-json-language-server" \
-      "$out/node_modules/vscode-langservers-extracted/lib/json-language-server/node/jsonServerMain.js"
-
-    make_start "$out/bin/vscode-eslint-language-server" \
-      "$out/node_modules/vscode-langservers-extracted/lib/eslint-language-server/eslintServer.js"
+    make_start "$out/bin/oscal-deep-diff" \
+      "$out/node_modules/@oscal/oscal-deep-diff/lib/cli/cli.js"
   '';
 
   dontUnpack = true;

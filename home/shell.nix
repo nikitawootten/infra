@@ -105,6 +105,8 @@ in
       # warn me when I'm not in zsh
       shell.disabled = false;
       shell.zsh_indicator = "";
+      # no nerdfont
+      nodejs.symbol = "[⬢](bold green) ";
     };
     enableZshIntegration = true;
     enableBashIntegration = true;

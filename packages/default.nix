@@ -1,3 +1,3 @@
 self: super: {
-  vscode-langservers-extracted = super.callPackage ./vscode-langservers-extracted { };
+  oscal-deep-diff = super.callPackage ./oscal-deep-diff { };
 }

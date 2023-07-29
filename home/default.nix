@@ -1,7 +1,7 @@
 { nixpkgs, home-manager, personalLib, overlays, specialArgs, ... }:
 personalLib.mkHomes {
   inherit nixpkgs home-manager overlays specialArgs;
-  defaultModules = import ./common;
+  defaultModules = (import ./common) ++ [specialArgs.nix-index-database.hmModules.nix-index];
   homes =
     let
       default = {

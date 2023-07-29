@@ -2,8 +2,9 @@
 let
   # Common modules shared by all configs
   commonModules = [
-    ./git.nix
     ./editor.nix
+    ./git.nix
+    ./nix.nix
     ./shell.nix
   ];
 
@@ -11,11 +12,15 @@ let
   mkHome = username: system: extraModules:
     (if isNixOsModule then mkHomeManagerNixOsModule else mkHomeManagerConfig) username system ([
       {
-        home = {
-          inherit username;
-          homeDirectory = "/home/${username}";
-          stateVersion = "22.11";
-        };
+        home =
+          let
+            homesDir = if (nixpkgs.lib.hasInfix "darwin" system) then "/Users" else "/home";
+          in
+          {
+            inherit username;
+            homeDirectory = "${homesDir}/${username}";
+            stateVersion = "22.11";
+          };
         programs.home-manager.enable = true;
       }
     ] ++ commonModules ++ extraModules);
@@ -40,4 +45,8 @@ in
     ./git-signed.nix
   ];
   "nikita@danzek" = mkHome "nikita" "x86_64-linux" [ ];
+
+  "naw2@PN118973" = mkHome "naw2" "aarch64-darwin" [{
+    programs.git.userEmail = nixpkgs.lib.mkForce "nikita.wootten@nist.gov";
+  }];
 }

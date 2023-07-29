@@ -19,6 +19,9 @@ pkgs.mkShell {
   packages = with pkgs; [
     nix
     git
+    # Editor support
+    nixpkgs-fmt
+    rnix-lsp
     # For provisioning K8s resources
     ansible
     kubectl

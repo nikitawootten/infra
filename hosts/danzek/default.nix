@@ -2,8 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./k3s.nix
-    ./nfs.nix
+    ./lab
   ];
 
   # TODO: derive this in a more pure way?

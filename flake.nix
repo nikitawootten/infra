@@ -11,11 +11,11 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    kubenix.url = "github:hall/kubenix";
-    kubenix.inputs.nixpkgs.follows = "nixpkgs";
+    arion.url = "github:hercules-ci/arion";
+    arion.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, ... }:
+  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, arion, ... }:
     let
       personalLib = import ./lib;
       personalPackages = import ./packages { inherit nixpkgs personalLib; };
@@ -24,7 +24,7 @@
       commonInherits = {
         inherit nixpkgs home-manager overlays personalLib;
         specialArgs = {
-          inherit devenv nixos-hardware nix-index-database agenix;
+          inherit devenv nixos-hardware nix-index-database arion;
         };
       };
 

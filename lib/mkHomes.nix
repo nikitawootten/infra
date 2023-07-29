@@ -24,7 +24,7 @@ let
         homeDirectory = lib.mkDefault "${if (lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";
         stateVersion = lib.mkDefault stateVersion;
       };
-      programs.home-manager.enable = lib.mkDefault true;
+      programs.home-manager.enable = lib.mkForce true;
       nixpkgs = { inherit overlays; };
     });
 

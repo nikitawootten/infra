@@ -11,6 +11,7 @@ personalLib.mkHosts {
       system = "x86_64-linux";
       modules = [
         ./optional/zfs.nix
+        ./optional/docker.nix
       ];
     };
     voyager = {

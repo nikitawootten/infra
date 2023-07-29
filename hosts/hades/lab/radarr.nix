@@ -19,6 +19,7 @@
         subdomain = "atropos";
         forwardAuth = true;
       };
+      restart = "unless-stopped";
     };
   };
 }

@@ -40,6 +40,7 @@
         subdomain = "oauth";
         icon = "https://oauth2-proxy.github.io/oauth2-proxy/img/logos/OAuth2_Proxy_icon.svg";
       };
+      depends_on = [ "keycloak" ];
       restart = "unless-stopped";
     };
   };

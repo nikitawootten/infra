@@ -48,6 +48,7 @@ in
     ./sonarr.nix
     ./traefik.nix
     ./transmission-ovpn.nix
+    ./watchtower.nix
     ./postgres
   ];
 }

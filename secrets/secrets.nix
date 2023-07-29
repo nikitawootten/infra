@@ -16,4 +16,5 @@ in
   "keycloak.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "postgres.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "oauth2-proxy.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "watchtower.env.age".publicKeys = [ nikita_voyager voyager hades ];
 }

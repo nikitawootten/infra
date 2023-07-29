@@ -19,6 +19,7 @@
         subdomain = "clotho";
         forwardAuth = true;
       };
+      restart = "unless-stopped";
     };
   };
 }

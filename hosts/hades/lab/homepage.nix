@@ -27,6 +27,19 @@ let
             # };
           };
         }
+        {
+          Watchtower = {
+            icon = "watchtower.png";
+            description = "Container update manager";
+            server = "my-docker";
+            container = "watchtower";
+            widget = {
+              type = "watchtower";
+              url = "http://watchtower:3004";
+              key = "{{HOMEPAGE_VAR_WATCHTOWER_APIKEY}}";
+            };
+          };
+        }
       ];
     }
     {

@@ -31,6 +31,7 @@
         subdomain = "cerberus";
         icon = "keycloak.png";
       };
+      depends_on = [ "postgres" ];
       restart = "unless-stopped";
     };
   };

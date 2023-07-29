@@ -49,6 +49,9 @@ in
       bindkey '^x^e' edit-command-line
       autoload -z edit-command-line
 
+      # C-backspace
+      bindkey '^H' backward-kill-word
+
       # Forward/backword word bindings
       bindkey "^[[1;5C" forward-word
       bindkey "^[[1;5D" backward-word
@@ -62,7 +65,12 @@ in
     '';
   } // shellCommon;
 
-  programs.bash = { } // shellCommon;
+  programs.bash = {
+    initExtra = ''
+      # C-backspace
+      stty werase \^H
+    '';
+  } // shellCommon;
 
   # shells share a common prompt
   programs.starship = {

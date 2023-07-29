@@ -17,7 +17,6 @@
     tmux
     vim
     helix
-    rnix-lsp
   ];
 
   nix = {

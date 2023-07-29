@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, system, ... }:
 let
   shellCommon = {
     enable = true;
@@ -6,6 +6,11 @@ let
     # needed for some terminal emulators to set title to current directory
     enableVteIntegration = true;
   };
+
+  # needed for single user installations
+  sourceNixSingleUser = ''
+    [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]] && source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+  '';
 in
 {
   home.shellAliases = {
@@ -64,6 +69,8 @@ in
       zstyle ':completion:*' menu select
       # And Shift-Tab should cycle backwards
       bindkey '^[[Z' reverse-menu-complete
+
+      ${sourceNixSingleUser}
     '';
 
     plugins = [
@@ -97,45 +104,18 @@ in
       # Perform partial (common) completion on the first Tab press, only start
       # cycling full results on the second Tab press (from bash version 5)
       bind "set menu-complete-display-prefix on"
+
+      ${sourceNixSingleUser}
     '';
   } // shellCommon;
-
-  # shells share a common prompt
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = false;
-      character.success_symbol = "[➜](bold green)";
-      character.error_symbol = "[✗](bold red)";
-      aws.disabled = true;
-      battery.disabled = true;
-      # warn me when I'm not in zsh
-      shell.disabled = false;
-      shell.zsh_indicator = "";
-      # no nerdfont
-      nodejs.symbol = "[⬢](bold green) ";
-    };
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    nix-direnv = {
-      enable = true;
-    };
-  };
 
   home.packages = [
     pkgs.bat
     pkgs.tree
-  ];
+  ] ++ (
+    # packaged bash on MacOS is ancient
+    if (lib.hasInfix "darwin" system) then with pkgs; [
+      bashInteractive
+    ] else [ ]
+  );
 }

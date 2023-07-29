@@ -2,10 +2,14 @@
 let
   # Common modules shared by all configs
   commonModules = [
+    ./direnv.nix
     ./editor.nix
+    ./fzf.nix
     ./git.nix
     ./shell.nix
     ./ssh.nix
+    ./starship.nix
+    ./tmux.nix
   ];
 
   # Conditionally generates config compatible with HomeManager flake or as NixOS modules
@@ -44,6 +48,7 @@ let
           pkgs = import nixpkgs { inherit system overlays; };
           pkgs-unstable = import nixpkgs-unstable { inherit system; };
           lib = nixpkgs.lib;
+          inherit system;
         };
       in
       {
@@ -58,6 +63,7 @@ let
       pkgs = import nixpkgs { inherit system overlays; };
       extraSpecialArgs = {
         pkgs-unstable = import nixpkgs-unstable { inherit system; };
+        inherit system;
       };
       inherit modules;
     };
@@ -67,11 +73,19 @@ in
   # helper function that generates output attrs `.homeConfigs` and
   # `nixosModules` that can be consumed directly.
 {
+  # Framework laptop running Arch Linux
   "nikita@yukon" = mkHome "nikita" "x86_64-linux" [
     ./git-signed.nix
   ];
+  # Desktop running Fedora (single user Nix install due to SELinux)
+  "nikita@defiant" = mkHome "nikita" "x86_64-linux" [
+    ./git-signed.nix
+  ];
+  # Dell Poweredge R610 running NixOS
+  # TODO configure SSH-Agent forwarding
   "nikita@danzek" = mkHome "nikita" "x86_64-linux" [ ];
 
+  # Work machine running MacOS
   "naw2@PN118973" = mkHome "naw2" "aarch64-darwin" [{
     programs.git.userEmail = nixpkgs.lib.mkForce "nikita.wootten@nist.gov";
     # output of `eval "$(/opt/homebrew/bin/brew shellenv)"`

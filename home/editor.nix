@@ -27,5 +27,6 @@
 
   home.packages = with pkgs; [
     nodePackages.vscode-langservers-extracted
+    rnix-lsp
   ];
 }

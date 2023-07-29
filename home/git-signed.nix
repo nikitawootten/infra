@@ -1,10 +1,11 @@
 { ... }:
-
 {
   programs.git = {
     extraConfig = {
+      gpg.format = "ssh";
       commit.gpgsign = true;
-      user.signingKey = "0xAC4A02D80C2F00DC82EE1EFA0D418BA5CA014A62";
+      tag.gpgsign = true;
+      user.signingKey = "~/.ssh/id_ed25519_sk";
     };
   };
 }

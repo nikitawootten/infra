@@ -3,17 +3,14 @@ personalLib.mkHosts {
   inherit nixpkgs overlays homeConfigs specialArgs;
   configBasePath = ./.;
   defaultModules = [
-    ./common/base.nix
-    ./common/sudo.nix
-    ./common/ssh-server.nix
+    ./common
   ];
   hosts = {
     danzek = {
       username = "nikita";
       system = "x86_64-linux";
       modules = [
-        ./common/zfs.nix
-        ./common/tailscale.nix
+        ./optional/zfs.nix
       ];
     };
     voyager = {
@@ -21,6 +18,11 @@ personalLib.mkHosts {
       system = "x86_64-linux";
       modules = [
         specialArgs.nixos-hardware.nixosModules.framework
+        ./optional/gnome.nix
+        ./optional/sound.nix
+        ./optional/networkmanager.nix
+        ./optional/flatpak.nix
+        ./optional/printing.nix
       ];
     };
   };

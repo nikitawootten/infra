@@ -6,10 +6,12 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
     devenv.url = "github:cachix/devenv/latest";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, ... }:
+  outputs = { nixpkgs, home-manager, nixos-hardware, hyprland, devenv, ... }:
     let
       personalLib = import ./lib;
       personalPackages = import ./packages { inherit nixpkgs personalLib; };
@@ -18,7 +20,7 @@
       commonInherits = {
         inherit nixpkgs home-manager overlays personalLib;
         specialArgs = {
-          inherit devenv nixos-hardware;
+          inherit devenv nixos-hardware hyprland;
         };
 
       };

@@ -67,6 +67,12 @@ in
         day = "adw-gtk3";
         night = "adw-gtk3-dark";
       };
+      "org/gnome/Console" = {
+        theme = "auto";
+      };
+      "org/gnome/nautilus/list-view" = {
+        "use-tree-view" = true;
+      };
     };
   };
 }

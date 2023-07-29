@@ -1,4 +1,4 @@
-{ pkgs, lib, system, ... }:
+{ pkgs, lib, ... }:
 let
   shellCommon = {
     enable = true;

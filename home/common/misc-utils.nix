@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     gnumake
+    file
     tree
     yq
     qrencode # useful for terminal -> phone communication

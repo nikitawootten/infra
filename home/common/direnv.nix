@@ -11,4 +11,7 @@
   home.packages = [
     devenv.packages.${system}.devenv
   ];
+  programs.git.ignores = [
+    ".direnv"
+  ];
 }

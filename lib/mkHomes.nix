@@ -4,54 +4,40 @@
 , defaultModules ? [ ]
 , overlays ? [ ]
 , specialArgs ? { }
+, stateVersion ? "22.11"
 }:
 let
-  commonModules = username: system: [
-    {
+  mkHomeManagerCommon = imports:
+    ({ username, system, ...}: {
+      imports = defaultModules ++ imports;
       home = {
         inherit username;
         homeDirectory = nixpkgs.lib.mkDefault "${if (nixpkgs.lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";
-        stateVersion = nixpkgs.lib.mkDefault "22.11";
+        stateVersion = nixpkgs.lib.mkDefault stateVersion;
       };
       programs.home-manager.enable = nixpkgs.lib.mkDefault true;
-      nix = {
-        # NixOS overrides this
-        package = nixpkgs.lib.mkDefault nixpkgs.legacyPackages.${system}.nixFlakes;
-        extraOptions = nixpkgs.lib.mkDefault ''
-          experimental-features = nix-command flakes
-        '';
-      };
-    }
-  ] ++ defaultModules;
+    });
 
   # Generates config compatible with HomeManager flake output
   mkHomeManagerConfig = _: { username, system, modules ? [ ] }:
     home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { inherit system overlays; };
-      extraSpecialArgs = {
-        inherit system;
-      } // specialArgs;
-      modules = modules ++ (commonModules username system);
+      extraSpecialArgs = specialArgs // { inherit system username; };
+      modules = [ (mkHomeManagerCommon modules) ];
     };
 
   # Generates config compatible with NixOS modules
-  mkHomeManagerNixOsModule = _: { username, system, modules ? [ ] }:
-    [ home-manager.nixosModules.home-manager ] ++ map
-      (module:
-        {
-          # Resolve import if path type is passed in
-          home-manager.users.${username} = { lib, ... }:
-            let
-              inherits = {
-                pkgs = import nixpkgs { inherit system overlays; };
-                inherit system lib;
-              } // specialArgs;
-            in
-              if builtins.isPath module then (import module inherits) else module;
-        })
-      (modules ++ (commonModules username system));
+  mkHomeManagerNixOsModules = _: { username, system, modules ? [ ] }:
+    [ 
+      home-manager.nixosModules.home-manager
+      {
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgs // { inherit system username; };
+          home-manager.users.${username} = (mkHomeManagerCommon modules);
+      }
+    ];
 in
 {
   homeConfigurations = builtins.mapAttrs mkHomeManagerConfig homes;
-  nixosHomeModules = builtins.mapAttrs mkHomeManagerNixOsModule homes;
+  nixosHomeModules = builtins.mapAttrs mkHomeManagerNixOsModules homes;
 }

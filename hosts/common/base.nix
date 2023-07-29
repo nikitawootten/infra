@@ -1,4 +1,4 @@
-{ pkgs, hostname, username, ... }:
+{ lib, pkgs, hostname, username, ... }:
 
 {
   time.timeZone = "America/New_York";
@@ -30,6 +30,8 @@
     extraGroups = [ "wheel" ];
     shell = pkgs.zsh;
   };
+
+  services.fwupd.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnumake

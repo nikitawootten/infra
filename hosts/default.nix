@@ -20,8 +20,9 @@ personalLib.mkHosts {
         ./optional/networkmanager.nix
         ./optional/flatpak.nix
         ./optional/printing.nix
-        ./optional/hyprland.nix
-        specialArgs.hyprland.nixosModules.default
+        ./optional/gnome.nix
+        ./optional/steam.nix
+        ./optional/docker.nix
       ];
     };
   };

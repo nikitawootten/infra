@@ -13,10 +13,9 @@ personalLib.mkHomes {
       # Framework laptop running NixOS
       "nikita@voyager" = default // {
         modules = [
-          ./optional/hyprland
           ./optional/firefox.nix
-          ./optional/wayland-wm.nix
-          specialArgs.hyprland.homeManagerModules.default
+          ./optional/vscode.nix
+          ./optional/gnome.nix
         ];
       };
       # Desktop running Fedora (single user Nix install due to SELinux)

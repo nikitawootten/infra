@@ -6,6 +6,9 @@
       "github.com" = {
         user = "git";
         identitiesOnly = true;
+        # Connect over HTTPS port (useful in restricted wifi environments like conferences)
+        hostname = "ssh.github.com";
+        port = 443;
       };
     } // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       # On darwin systems, force SSH to use the MacOS keychain

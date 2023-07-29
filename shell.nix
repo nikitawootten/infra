@@ -25,6 +25,6 @@ pkgs.mkShell {
 
     # Editor support
     nixpkgs-fmt
-    rnix-lsp
+    nil
   ];
 }

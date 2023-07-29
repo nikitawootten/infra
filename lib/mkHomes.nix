@@ -16,12 +16,15 @@ let
         stateVersion = lib.mkDefault stateVersion;
       };
       programs.home-manager.enable = lib.mkDefault true;
+      nixpkgs = { inherit overlays; };
     });
 
   # Generates config compatible with HomeManager flake output
   mkHomeManagerConfig = _: { username, system, modules ? [ ] }:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { inherit system overlays; };
+      # TODO: temporary workaround until config override works?
+      pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+      # pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs // { inherit system username; };
       modules = [ (mkHomeManagerCommon modules) ];
     };

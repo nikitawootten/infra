@@ -20,7 +20,7 @@ personalLib.mkHomes {
     in
     {
       # Framework laptop running Arch Linux
-      "nikita@yukon" = default;
+      "nikita@voyager" = default;
       # Desktop running Fedora (single user Nix install due to SELinux)
       "nikita@defiant" = default;
       # Dell Poweredge R610 running NixOS

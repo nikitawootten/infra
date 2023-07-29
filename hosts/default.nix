@@ -16,5 +16,12 @@ personalLib.mkHosts {
         ./common/tailscale.nix
       ];
     };
+    voyager = {
+      username = "nikita";
+      system = "x86_64-linux";
+      modules = [
+        specialArgs.nixos-hardware.nixosModules.framework
+      ];
+    };
   };
 }

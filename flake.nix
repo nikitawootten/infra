@@ -5,10 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     devenv.url = "github:cachix/devenv/latest";
   };
 
-  outputs = { nixpkgs, home-manager, devenv, ... }:
+  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, ... }:
     let
       personalLib = import ./lib;
       personalPackages = import ./packages { inherit nixpkgs personalLib; };
@@ -17,7 +18,7 @@
       commonInherits = {
         inherit nixpkgs home-manager overlays personalLib;
         specialArgs = {
-          inherit devenv;
+          inherit devenv nixos-hardware;
         };
 
       };

@@ -1,4 +1,4 @@
-SHELL := /bin/bash
+SHELL := /usr/bin/env bash
 
 secrets_file := ansible_secrets.yaml
 secrets_path := ../../$(secrets_file)
@@ -15,7 +15,7 @@ $(secrets_path):
 	cd ../..; git secret reveal $(secrets_file)
 
 # TODO grab IP from nix config? Or create an ssh entry in home-manager
-danzek_addr=192.168.101.1
+danzek_addr=10.69.0.27
 
 # Get kubernetes config from danzek
 $(temp_kubeconfig_file):

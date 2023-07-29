@@ -23,6 +23,7 @@ personalLib.mkHosts {
         ./optional/gnome.nix
         ./optional/steam.nix
         ./optional/docker.nix
+        ./optional/vpn.nix
       ];
     };
   };

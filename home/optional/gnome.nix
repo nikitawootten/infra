@@ -11,6 +11,7 @@ in
     gnomeExtensions.night-theme-switcher
     gnomeExtensions.pano
     gnomeExtensions.tailscale-status
+    gnomeExtensions.pip-on-top
     # libadwaita lookalike for gtk3
     adw-gtk3
   ];
@@ -29,6 +30,7 @@ in
           "nightthemeswitcher@romainvigier.fr"
           "pano@elhan.io"
           "tailscale-status@maxgallup.github.com"
+          "pip-on-top@rafostar.github.com"
         ];
       };
       "org/gnome/desktop/interface" = {
@@ -56,6 +58,14 @@ in
       };
       "org/gtk/gtk4/settings/file-chooser" = {
         show-hidden = true;
+      };
+      "org/gnome/shell/extensions/nightthemeswitcher/time" = {
+        nightthemeswitcher-ondemand-keybinding  = [ "<Shift><Super>t" ];
+      };
+      "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
+        enabled = true;
+        day = "adw-gtk3";
+        night = "adw-gtk3-dark";
       };
     };
   };

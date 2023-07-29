@@ -1,12 +1,10 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, nix-index-database, ... }:
 {
+  imports = [
+    nix-index-database.hmModules.nix-index
+  ];
+
   programs = {
-    bat = {
-      enable = lib.mkDefault true;
-      extraPackages = with pkgs.bat-extras; [
-        batdiff
-      ];
-    };
     fzf.enable = lib.mkDefault true;
     htop.enable = lib.mkDefault true;
     jq.enable = lib.mkDefault true;
@@ -15,6 +13,7 @@
 
   home.packages = with pkgs; [
     gnumake
+    wget
     file
     tree
     parallel

@@ -2,7 +2,6 @@
 personalLib.mkHomes {
   inherit nixpkgs home-manager overlays specialArgs;
   defaultModules = [
-    specialArgs.nix-index-database.hmModules.nix-index
     ./common
   ];
   homes =
@@ -33,22 +32,11 @@ personalLib.mkHomes {
         username = "naw2";
         system = "aarch64-darwin";
         modules = [
-          ({lib, ...}: {
-            programs.git.userEmail = lib.mkForce "nikita.wootten@nist.gov";
+          ./optional/fonts.nix
+          ./optional/work.nix
+          ({ lib, ... }: {
             programs.git.extraConfig.user.signingKey = lib.mkForce
               "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM5wxg2WEXR5Tb1+BtXJmKG1hqMKjzYcHQgB3jxZjiQhTS9qZugjFLjqtrOP4XySHYDVLTzFwlsTR4Bw+lveGz0= naw2@PN118973";
-            # output of `eval "$(/opt/homebrew/bin/brew shellenv)"`
-            home.sessionVariables = {
-              HOMEBREW_PREFIX = "/opt/homebrew";
-              HOMEBREW_CELLAR = "/opt/homebrew/Cellar";
-              HOMEBREW_REPOSITORY = "/opt/homebrew";
-              MANPATH = "/opt/homebrew/share/man\${MANPATH+:$MANPATH}:";
-              INFOPATH = "/opt/homebrew/share/info:\${INFOPATH:-}";
-            };
-            home.sessionPath = [
-              "/opt/homebrew/bin"
-              "/opt/homebrew/sbin"
-            ];
           })
         ];
       };

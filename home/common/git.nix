@@ -16,6 +16,7 @@ in
       "*.swp"
       "Thumbs.db"
       "/scratch/" # I often have "scratch" directory for experiments
+      ".direnv"
     ];
     extraConfig = {
       fetch.prune = lib.mkDefault true;

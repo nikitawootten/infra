@@ -14,6 +14,8 @@
       # On darwin systems, force SSH to use the MacOS keychain
       "*" = {
         extraOptions = {
+          # Mitigating https://github.com/NixOS/nixpkgs/issues/15686 for now
+          IgnoreUnknown = "AddKeysToAgent,UseKeychain";
           UseKeychain = "yes";
           AddKeysToAgent = "yes";
         };

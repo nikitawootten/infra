@@ -90,6 +90,20 @@ let
             };
           };
         }
+        {
+          Atropos = {
+            icon = "radarr.png";
+            href = "https://atropos.${hostname}.${config.lib.lab.domain}";
+            description = "Radarr: TV series management";
+            server = "my-docker";
+            container = "radarr";
+            widget = {
+              type = "radarr";
+              url = "https://atropos.${hostname}.${config.lib.lab.domain}";
+              key = "{{HOMEPAGE_VAR_RADARR_APIKEY}}";
+            };
+          };
+        }
       ];
     }
   ];

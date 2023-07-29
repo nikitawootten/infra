@@ -28,7 +28,7 @@ in
       };
       capabilities = { NET_ADMIN = true; };
       sysctls = { "net.ipv6.conf.all.disable_ipv6" = 0; };
-      restart = "always";
+      restart = "unless-stopped";
       useHostStore = true;
     };
   };

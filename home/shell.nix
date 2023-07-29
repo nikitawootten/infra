@@ -109,10 +109,8 @@ in
     '';
   } // shellCommon;
 
-  home.packages = (
-    # packaged bash on MacOS is ancient
-    if (lib.hasInfix "darwin" system) then with pkgs; [
-      bashInteractive
-    ] else [ ]
-  );
+  # packaged bash on MacOS is ancient
+  home.packages = lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [
+    bashInteractive
+  ]);
 }

@@ -15,5 +15,6 @@
   home.packages = with pkgs; [
     tree
     yq
+    qrencode # useful for terminal -> phone communication
   ];
 }

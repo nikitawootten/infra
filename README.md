@@ -1,5 +1,7 @@
 # `infra`
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 Welcome to my Nix-ified infrastructure and personal monorepo.
 
 ## Usage

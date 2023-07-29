@@ -7,7 +7,7 @@
         user = "git";
         identitiesOnly = true;
       };
-    } // (if (lib.hasInfix "darwin" system) then {
+    } // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       # On darwin systems, force SSH to use the MacOS keychain
       "*" = {
         extraOptions = {
@@ -15,7 +15,7 @@
           AddKeysToAgent = "yes";
         };
       };
-    } else { });
+    };
     # Escape hatch allow additional configs in ~/.ssh/confid.d/
     includes = [ "config.d/*" ];
   };

@@ -1,4 +1,4 @@
-{ lib, pkgs, hostname, username, ... }:
+{ pkgs, hostname, username, ... }:
 
 {
   time.timeZone = "America/New_York";
@@ -53,5 +53,5 @@
     '';
   };
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }

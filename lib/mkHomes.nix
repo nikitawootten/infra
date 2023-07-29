@@ -4,7 +4,7 @@
 , defaultModules ? [ ]
 , overlays ? [ ]
 , specialArgs ? { }
-, stateVersion ? "22.11"
+, stateVersion ? "23.05"
 }:
 let
   mkHomeManagerCommon = imports:
@@ -31,7 +31,7 @@ let
     [ 
       home-manager.nixosModules.home-manager
       {
-          home-manager.useUserPackages = true;
+          # home-manager.useGlobalPkgs = true;
           home-manager.extraSpecialArgs = specialArgs // { inherit system username; };
           home-manager.users.${username} = (mkHomeManagerCommon modules);
       }

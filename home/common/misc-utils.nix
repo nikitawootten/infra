@@ -17,6 +17,7 @@
     gnumake
     file
     tree
+    parallel
     yq
     qrencode # useful for terminal -> phone communication
   ];

@@ -2,7 +2,9 @@
 personalLib.mkHosts {
   inherit nixpkgs overlays homeConfigs specialArgs;
   configBasePath = ./.;
-  defaultModules = import ./common;
+  defaultModules = [
+    ./common
+  ];
   hosts = {
     danzek = {
       username = "nikita";
@@ -24,6 +26,7 @@ personalLib.mkHosts {
         ./optional/steam.nix
         ./optional/docker.nix
         ./optional/vpn.nix
+        ./optional/wireshark.nix
       ];
     };
   };

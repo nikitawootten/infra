@@ -1,0 +1,3 @@
+rook_deployment_name: rook-ceph
+rook_namespace: rook-ceph
+rook_external_namespace: rook-ceph-external

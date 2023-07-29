@@ -10,3 +10,4 @@
   roles:
     - local
     - k8s_dashboard
+    - rook

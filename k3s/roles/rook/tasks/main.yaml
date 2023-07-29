@@ -1,0 +1,28 @@
+- name: Add Rook Helm repository
+  kubernetes.core.helm_repository:
+    repo_name: rook-release
+    repo_url: https://charts.rook.io/release
+- name: Deploy Rook operator
+  kubernetes.core.helm:
+    name: "{{ rook_deployment_name }}"
+    chart_ref: rook-release/rook-ceph
+    release_namespace: "{{ rook_namespace }}"
+    create_namespace: true
+# See https://github.com/rook/rook/blob/master/Documentation/CRDs/Cluster/external-cluster.md
+- name: Create the base Rook CRDs
+  kubernetes.core.k8s:
+    template: "{{ item }}"
+    state: present
+    apply: true
+  with_items:
+    - common-external.yaml.j2
+    - cluster-external.yaml.j2
+# TODO: run conditionally if the resource exists
+# - name: Run import-external-cluster script
+#   ansible.builtin.shell: |
+#     {{ rookExternalResourcesEnv }}
+
+#     ./import-external-cluster.sh
+#   args:
+#     executable: /bin/bash
+#     chdir: "{{ role_path }}/files"

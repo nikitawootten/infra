@@ -17,6 +17,7 @@
       labels = config.lib.lab.mkTraefikLabels {
         name = "radarr";
         subdomain = "atropos";
+        middleware = "oauth-auth-redirect@file";
       };
     };
   };

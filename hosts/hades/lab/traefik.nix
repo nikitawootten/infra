@@ -38,21 +38,34 @@ let
   # For defining middlewares
   dynamicConfig = {
     http.middlewares = {
-      local-https = {
-        chain.middlewares = [
-          "known-ips"
-          "https-only"
-        ];
+      local-https.chain.middlewares = [ "known-ips" "https-only" ];
+      https-only.redirectScheme.scheme = "https";
+      known-ips.ipWhiteList.sourceRange = [
+        "10.69.0.0/24"
+        # Tailscale subnet https://tailscale.com/kb/1015/100.x-addresses/
+        "100.64.0.0/10"
+      ];
+      # https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/overview/#forwardauth-with-static-upstreams-configuration
+      auth-headers.headers = {
+        sslRedirect = true;
+        stsSeconds = 315360000;
+        browserXssFilter = true;
+        contentTypeNosniff = true;
+        forceSTSHeader = true;
+        sslHost = config.personal.lab.domain;
+        stsIncludeSubdomains = true;
+        stsPreload = true;
+        frameDeny = true;
       };
-      https-only = {
-        redirectScheme.scheme = "https";
+      oauth-auth-redirect.forwardAuth = {
+        address = "https://${config.lib.lab.mkServiceSubdomain "oauth"}/";
+        trustForwardHeader = true;
+        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" ];
       };
-      known-ips = {
-        ipWhiteList.sourceRange = [
-          "10.69.0.0/24"
-          # Tailscale subnet https://tailscale.com/kb/1015/100.x-addresses/
-          "100.64.0.0/10"
-        ];
+      oauth-auth-no-redirects.forwardAuth = {
+        address = "https://${config.lib.lab.mkServiceSubdomain "oauth"}/oauth2/auth";
+        trustForwardHeader = true;
+        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" ];
       };
     };
   };
@@ -79,6 +92,8 @@ in
       "traefik.http.services.${service}.loadbalancer.server.port" = "${options.port}";
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "service" options) {
       "traefik.http.routers.${name}.service" = service;
+    } // lib.attrsets.optionalAttrs (builtins.hasAttr "middleware" options) {
+      "traefik.http.routers.${name}.middlewares" = "${options.middleware}";
     });
 
   age.secrets.traefik.file = secrets.traefik;
@@ -111,15 +126,13 @@ in
         name = "traefik";
         subdomain = "charon";
         service = "api@internal";
+        middleware = "oauth-auth-redirect@file";
       } // config.lib.lab.mkHomepageLabels {
         name = "Charon";
         description = "Traefik: HTTP router";
         group = "Infrastructure";
         subdomain = "charon";
         icon = "traefik.png";
-      } // {
-        "homepage.widget.type" = "traefik";
-        "homepage.widget.url" = "https://${config.lib.lab.mkServiceSubdomain "charon"}";
       };
       restart = "unless-stopped";
     };

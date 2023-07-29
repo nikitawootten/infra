@@ -17,6 +17,7 @@
       labels = config.lib.lab.mkTraefikLabels {
         name = "sonarr";
         subdomain = "clotho";
+        middleware = "oauth-auth-redirect@file";
       };
     };
   };

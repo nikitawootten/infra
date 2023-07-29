@@ -1,4 +1,4 @@
-{ config, secrets, ... }:
+{ lib, config, secrets, ... }:
 let
   settings = {
     title = "Hades";
@@ -56,7 +56,7 @@ let
             container = "transmission-ovpn";
             widget = {
               type = "transmission";
-              url = "https://${config.lib.lab.mkServiceSubdomain "tartarus"}";
+              url = "http://transmission-ovpn:9091";
               rpcUrl = "/transmission/";
             };
           };
@@ -70,7 +70,7 @@ let
             container = "prowlarr";
             widget = {
               type = "prowlarr";
-              url = "https://${config.lib.lab.mkServiceSubdomain "lachesis"}";
+              url = "http://prowlarr:9696";
               key = "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}";
             };
           };
@@ -84,7 +84,7 @@ let
             container = "sonarr";
             widget = {
               type = "sonarr";
-              url = "https://${config.lib.lab.mkServiceSubdomain "clotho"}";
+              url = "http://sonarr:8989";
               key = "{{HOMEPAGE_VAR_SONARR_APIKEY}}";
             };
           };
@@ -98,7 +98,7 @@ let
             container = "radarr";
             widget = {
               type = "radarr";
-              url = "https://${config.lib.lab.mkServiceSubdomain "atropos"}";
+              url = "http://radarr:7878";
               key = "{{HOMEPAGE_VAR_RADARR_APIKEY}}";
             };
           };
@@ -155,15 +155,15 @@ in
       name = options.name;
       description = options.description;
       group = options.group;
-      subdomain = options.subdomain;
       icon = options.icon;
     in
     {
       "homepage.name" = name;
       "homepage.description" = description;
       "homepage.group" = group;
-      "homepage.href" = "https://${config.lib.lab.mkServiceSubdomain subdomain}";
       "homepage.icon" = icon;
+    } // lib.attrsets.optionalAttrs (builtins.hasAttr "subdomain" options) {
+      "homepage.href" = "https://${config.lib.lab.mkServiceSubdomain options.subdomain}";
     });
 
   age.secrets.homepage.file = secrets.homepage;

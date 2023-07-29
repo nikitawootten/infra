@@ -41,6 +41,7 @@ in
     ./homepage.nix
     ./jellyfin.nix
     ./keycloak.nix
+    ./oauth2-proxy.nix
     ./openldap.nix
     ./prowlarr.nix
     ./radarr.nix

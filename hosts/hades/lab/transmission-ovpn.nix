@@ -20,6 +20,7 @@
         name = "transmission-ovpn";
         subdomain = "tartarus";
         port = "9091";
+        middleware = "oauth-auth-redirect@file";
       };
       capabilities = { NET_ADMIN = true; };
       sysctls = { "net.ipv6.conf.all.disable_ipv6" = 0; };

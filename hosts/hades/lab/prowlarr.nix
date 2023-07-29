@@ -22,6 +22,7 @@ in
       labels = config.lib.lab.mkTraefikLabels {
         name = service;
         inherit subdomain;
+        middleware = "oauth-auth-redirect@file";
       };
     };
   };

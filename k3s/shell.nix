@@ -17,7 +17,7 @@ pkgs.mkShell {
     git-secret
 
     kubectl
-    helm
+    kubernetes-helm
 
     ansible
     ansible-lint

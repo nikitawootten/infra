@@ -10,3 +10,4 @@
   roles:
     - k8s-dashboard
     - cloudflare-ddns
+    - nfs-storage-class

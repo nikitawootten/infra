@@ -5,7 +5,7 @@ secrets_path := ../../$(secrets_file)
 
 temp_kubeconfig_file := .temp_kubeconfig
 
-.PHONY: deploy dependencies dash_token
+.PHONY: deploy dependencies dash_token clean
 
 deploy: $(secrets_path) $(temp_kubeconfig_file) dependencies
 	K8S_AUTH_KUBECONFIG=$(temp_kubeconfig_file) ansible-playbook -i hosts site.yaml
@@ -30,3 +30,6 @@ dependencies:
 
 dash_token: $(temp_kubeconfig_file)
 	kubectl -n kubernetes-dashboard create token admin-user
+
+clean:
+	rm $(temp_kubeconfig_file)

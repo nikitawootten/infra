@@ -10,8 +10,6 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      forEachSystem = nixpkgs.lib.genAttrs systems;
-      forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
 
       commonInherits = {
         inherit inputs nixpkgs home-manager self;
@@ -20,6 +18,11 @@
     {
       nixosConfigurations = import ./hosts commonInherits;
       homeConfigurations = import ./home commonInherits;
-      devShell = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
+
+      devShells = nixpkgs.lib.genAttrs
+        systems
+        (system: {
+          default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; };
+        });
     };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 let
   shellCommon = {
     enable = true;
@@ -18,6 +18,9 @@ in
 
     sys = "systemctl";
     sysu = "systemctl --user";
+
+    e = "$EDITOR";
+    zfe = "$EDITOR $(fzf)";
   };
 
   home.sessionPath = [

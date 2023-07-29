@@ -4,7 +4,6 @@ let
   commonModules = [
     ./editor.nix
     ./git.nix
-    ./nix.nix
     ./shell.nix
   ];
 
@@ -26,18 +25,38 @@ let
     ] ++ commonModules ++ extraModules);
 
   # Generates config compatible with NixOS modules
-  mkHomeManagerNixOsModule = username: _: modules: map
-    (module: {
-      # Resolve import if path type is passed in
-      home-manager.users.${username} = if builtins.isPath module then (import module inputs) else module;
-    })
+  mkHomeManagerNixOsModule = username: system: modules: map
+    (module:
+      let
+        commonInherits = inputs // {
+          pkgs = nixpkgs.legacyPackages.${system};
+          lib = nixpkgs.lib;
+        };
+      in
+      {
+        # Resolve import if path type is passed in
+        home-manager.users.${username} = if builtins.isPath module then (import module commonInherits) else module;
+      })
     modules;
 
   # Generates config compatible with HomeManager flake output
   mkHomeManagerConfig = _: system: modules:
     home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
-      inherit modules;
+      modules = modules ++ [
+        # When running via home-manager also configure nix to use flakes 
+        # TODO avoid thrashing when switching between home-manager and nixos
+        # Currently get the following error when run in nixos:
+        #   error: The option `home-manager.users.nikita.nix.package' is defined multiple times.
+        {
+          nix = {
+            package = nixpkgs.legacyPackages.${system}.nixFlakes;
+            extraOptions = ''
+              experimental-features = nix-command flakes
+            '';
+          };
+        }
+      ];
     };
 in
 {

@@ -22,6 +22,8 @@
         # https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/overview/#forwardauth-with-static-upstreams-configuration
         OAUTH2_PROXY_UPSTREAMS = "static://202";
         OAUTH2_PROXY_REVERSE_PROXY = "true";
+        # Traefik uses the "X-Forwarded-For" header to pass the client's IP address to oauth2-proxy
+        OAUTH2_PROXY_REAL_CLIENT_IP_HEADER = "X-Forwarded-For";
       };
       env_file = [
         config.age.secrets.oauth2-proxy.path

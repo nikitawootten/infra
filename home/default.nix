@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, devenv, overlays, isNixOsModule ? false, ... }:
+{ nixpkgs, home-manager, devenv, overlays, isNixOsModule ? false, ... }@inputs:
 let
   # Common modules shared by all configs
   commonModules = [

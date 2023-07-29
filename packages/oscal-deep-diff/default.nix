@@ -1,4 +1,6 @@
-# Adapted from https://git.sr.ht/~bwolf/language-servers.nix/tree/master/item/vscode-langservers-extracted/default.nix
+# Disclaimer: Although I am the author and current maintainer of
+# OSCAL-deep-diff, and while I work on this project as part of my job, this is
+# not an official package endorsed by my organization.
 { pkgs ? let
     lock = (builtins.fromJSON (builtins.readFile ../../flake.lock)).nodes.nixpkgs.locked;
     nixpkgs = fetchTarball {
@@ -24,31 +26,19 @@ pkgs.stdenv.mkDerivation {
   inherit pname version;
 
   nativeBuildInputs = with pkgs; [ ];
-  buildInputs = with pkgs; [ rsync ];
-
-  configurePhase = ''
-    ln -sf ${deps}/node_modules ./node_modules
-  '';
+  buildInputs = with pkgs; [ ];
 
   installPhase = ''
     mkdir -p $out/bin
-    rsync -a --no-links ${deps}/node_modules $out
-    chmod a+rwx $out/node_modules
-    # cp -a ${deps}/deps/oscal-deep-diff/node_modules/oscal-deep-diff \
-    #   $out/node_modules
-    
-    make_start () {
-      target="$1"
-      require="$2"
-      echo '#!/usr/bin/env node' >"$1"
-      echo "require('$2');" >>"$1"
-      chmod a+x "$1"
-    }
+    cp -r ${deps}/node_modules $out
 
-    make_start "$out/bin/oscal-deep-diff" \
-      "$out/node_modules/@oscal/oscal-deep-diff/lib/cli/cli.js"
+    cat <<EOF > $out/bin/oscal-deep-diff
+    #!/usr/bin/env node
+    require('$out/node_modules/@oscal/oscal-deep-diff/lib/cli/cli.js');
+    EOF
+
+    chmod a+x $out/bin/oscal-deep-diff
   '';
 
   dontUnpack = true;
-  dontBuild = true;
 }

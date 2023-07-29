@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   shellCommon = {
     enable = true;
@@ -35,7 +35,6 @@ in
 
   programs.zsh = {
     dotDir = ".config/zsh";
-    enableSyntaxHighlighting = true;
     enableAutosuggestions = true;
 
     history = {
@@ -44,6 +43,8 @@ in
       ignoreSpace = true;
       save = 20000;
       size = 20000;
+      extended = true;
+      share = false;
     };
 
     initExtra = ''
@@ -61,11 +62,15 @@ in
 
       # Highlight completions on tab
       zstyle ':completion:*' menu select
-
-      # Write to history on every command, but do not read from history
-      # Each session will appear to have its own history
-      setopt INC_APPEND_HISTORY
     '';
+
+    plugins = [
+      {
+        name = "fast-syntax-highlighting";
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+        src = pkgs.zsh-fast-syntax-highlighting;
+      }
+    ];
   } // shellCommon;
 
   programs.bash = {

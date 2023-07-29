@@ -1,0 +1,5 @@
+- name: Create the Cloudflare DDNS CronJob
+  kubernetes.core.k8s:
+    template: cloudflare-ddns-cronjob.yaml.j2
+    state: present
+    apply: true

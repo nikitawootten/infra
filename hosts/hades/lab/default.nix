@@ -30,25 +30,36 @@ in
   config = {
     virtualisation.arion.backend = "docker";
     lib.lab.mkServiceSubdomain = subdomain: "${subdomain}.${config.personal.lab.domain}";
-    lib.lab.mkConfigDir = name: "${config.personal.lab.config-dir}/${name}/";
+    lib.lab.mkConfigDir = name: "${config.personal.lab.config-dir}/${name}";
+
+    personal.lab.homepage.infrastructure-services = [
+      {
+        Pandora = {
+          icon = "pfsense.png";
+          href = "https://pandora.${config.personal.lab.base-domain}";
+          description = "pfSense Firewall";
+          # TODO set up pfSense API
+          # widget = {
+          #   type = "pfsense";
+          #   url = "https://pandora.arpa.nikita.computer";
+          #   username = "";
+          #   password = "";
+          #   wan = "WAN";
+          # };
+        };
+      }
+    ];
   };
 
   imports = [
     arion.nixosModules.arion
     agenix.nixosModules.default
+    ./auth
+    ./infra
+    ./media
+    ./support
     ./actual.nix
     ./grocy.nix
     ./homepage.nix
-    ./jellyfin.nix
-    ./keycloak.nix
-    ./oauth2-proxy.nix
-    ./openldap.nix
-    ./prowlarr.nix
-    ./radarr.nix
-    ./sonarr.nix
-    ./traefik.nix
-    ./transmission-ovpn.nix
-    ./watchtower.nix
-    ./postgres
   ];
 }

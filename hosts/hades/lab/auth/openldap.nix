@@ -63,7 +63,7 @@
     service = {
       container_name = "openldap";
       volumes = [
-        "/backplane/applications/openldap/:/var/lib/openldap/ldap"
+        "${config.lib.lab.mkConfigDir "openldap"}/:/var/lib/openldap/ldap"
         "${config.age.secrets.openldap.path}:/var/lib/openldap/rootpwd"
       ];
       useHostStore = true;

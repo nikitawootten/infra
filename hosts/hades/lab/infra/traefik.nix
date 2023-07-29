@@ -123,7 +123,7 @@ in
       volumes = [
         "${staticConfigFile}:/etc/traefik/traefik.yaml"
         "${dynamicConfigFile}:${dynamicConfigDirectory}/config.yaml"
-        "/backplane/applications/letsencrypt/:/letsencrypt"
+        "${config.lib.lab.mkConfigDir "letsencrypt"}/:/letsencrypt"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
       env_file = [ 

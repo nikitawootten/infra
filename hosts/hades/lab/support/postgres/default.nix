@@ -10,7 +10,7 @@
         PGDATA = "/var/lib/postgresql/data/pgdata";
       };
       volumes = [
-        "/backplane/applications/postgres:/var/lib/postgresql/data"
+        "${config.lib.lab.mkConfigDir "postgres"}/:/var/lib/postgresql/data"
         "${./init-dbs.sh}:/docker-entrypoint-initdb.d/init-dbs.sh"
       ];
       env_file = [

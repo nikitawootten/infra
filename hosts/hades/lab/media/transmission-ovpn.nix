@@ -13,8 +13,8 @@
       };
       env_file = [ config.age.secrets.transmission-ovpn.path ];
       volumes = [
-        "/backplane/applications/transmission-ovpn/:/config"
-        "/backplane/media/torrents/:/data"
+        "${config.lib.lab.mkConfigDir "transmission-ovpn"}/:/config"
+        "${config.personal.lab.media.media-dir}/torrents/:/data"
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "transmission-ovpn";
@@ -27,4 +27,21 @@
       restart = "unless-stopped";
     };
   };
+  
+  personal.lab.homepage.media-services = [
+    {
+      Tartarus = {
+        icon = "transmission.png";
+        href = "https://${config.lib.lab.mkServiceSubdomain "tartarus"}/transmission";
+        description = "Transmission: Download server";
+        server = "my-docker";
+        container = "transmission-ovpn";
+        widget = {
+          type = "transmission";
+          url = "http://transmission-ovpn:9091";
+          rpcUrl = "/transmission/";
+        };
+      };
+    }
+  ];
 }

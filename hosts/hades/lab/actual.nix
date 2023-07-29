@@ -8,7 +8,7 @@
         "5006:5006"
       ];
       volumes = [
-        "/backplane/applications/actual/:/data"
+        "${config.lib.lab.mkConfigDir "actual"}/:/data"
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "actual";

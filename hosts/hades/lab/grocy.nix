@@ -13,7 +13,7 @@
         "9283:80"
       ];
       volumes = [
-        "/backplane/applications/grocy/:/config"
+        "${config.lib.lab.mkConfigDir "grocy"}/:/config"
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "grocy";

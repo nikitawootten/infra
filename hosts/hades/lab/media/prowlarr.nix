@@ -17,7 +17,7 @@ in
         "9696:9696"
       ];
       volumes = [
-        "/backplane/applications/${service}/:/config"
+        "${config.lib.lab.mkConfigDir service}/:/config"
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = service;
@@ -26,4 +26,21 @@ in
       };
     };
   };
+
+  personal.lab.homepage.media-services = [
+    {
+      Lachesis = {
+        icon = "prowlarr.png";
+        href = "https://${config.lib.lab.mkServiceSubdomain "lachesis"}";
+        description = "Prowlarr: Indexer";
+        server = "my-docker";
+        container = "prowlarr";
+        widget = {
+          type = "prowlarr";
+          url = "http://prowlarr:9696";
+          key = "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}";
+        };
+      };
+    }
+  ];
 }

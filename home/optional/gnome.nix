@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  mkTuple = lib.hm.gvariant.mkTuple;
+in
 {
   home.packages = with pkgs; [
     gnomeExtensions.alphabetical-app-grid
@@ -33,6 +36,26 @@
       };
       "org/gnome/desktop/calendar" = {
         show-weekdate = true;
+      };
+      "org/gnome/desktop/wm/keybindings" = {
+        switch-to-workspace-left = [ "<Control><Super>Left" ];
+        switch-to-workspace-right = [ "<Control><Super>Right" ];
+      };
+      "org/gnome/desktop/input-sources" = {
+        sources = [
+          (mkTuple ["xkb" "us"])
+          (mkTuple ["xkb" "ru"])
+        ];
+      };
+      "org/gnome/desktop/peripherals/touchpad" = {
+        tap-to-click = true;
+        natural-scroll = true;
+      };
+      "org/gnome/desktop/peripherals/mouse" = {
+        natural-scroll = false;
+      };
+      "org/gtk/gtk4/settings/file-chooser" = {
+        show-hidden = true;
       };
     };
   };

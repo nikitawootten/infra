@@ -38,16 +38,16 @@ let
   mkHomeManagerNixOsModule = _: { username, system, modules ? [ ] }:
     [ home-manager.nixosModules.home-manager ] ++ map
       (module:
-        let
-          commonInherits = {
-            pkgs = import nixpkgs { inherit system overlays; };
-            lib = nixpkgs.lib;
-            inherit system;
-          } // specialArgs;
-        in
         {
           # Resolve import if path type is passed in
-          home-manager.users.${username} = if builtins.isPath module then (import module commonInherits) else module;
+          home-manager.users.${username} = { lib, ... }:
+            let
+              inherits = {
+                pkgs = import nixpkgs { inherit system overlays; };
+                inherit system lib;
+              } // specialArgs;
+            in
+              if builtins.isPath module then (import module inherits) else module;
         })
       (modules ++ (commonModules username system));
 in

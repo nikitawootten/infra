@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, overlays, isNixOsModule ? false, ... }@inputs:
+{ nixpkgs, home-manager, devenv, overlays, isNixOsModule ? false, ... }:
 let
   # Common modules shared by all configs
   commonModules = [
@@ -20,6 +20,10 @@ let
             inherit username;
             homeDirectory = "${homesDir}/${username}";
             stateVersion = "22.11";
+
+            packages = [
+              devenv.packages.${system}.devenv
+            ];
           };
         programs.home-manager.enable = true;
         nix = {

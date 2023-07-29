@@ -131,4 +131,8 @@ in
       enable = true;
     };
   };
+
+  home.packages = [
+    pkgs.bat
+  ];
 }

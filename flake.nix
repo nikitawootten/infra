@@ -5,15 +5,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    devenv.url = "github:cachix/devenv/latest";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, devenv, ... }:
     let
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       customPackages = import ./packages { inherit nixpkgs; };
       overlays = [ customPackages.overlay ];
       commonInherits = {
-        inherit nixpkgs home-manager overlays;
+        inherit nixpkgs home-manager devenv overlays;
       };
     in
     {

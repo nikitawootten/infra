@@ -74,13 +74,9 @@ in
   # `nixosModules` that can be consumed directly.
 {
   # Framework laptop running Arch Linux
-  "nikita@yukon" = mkHome "nikita" "x86_64-linux" [
-    ./git-signed.nix
-  ];
+  "nikita@yukon" = mkHome "nikita" "x86_64-linux" [ ];
   # Desktop running Fedora (single user Nix install due to SELinux)
-  "nikita@defiant" = mkHome "nikita" "x86_64-linux" [
-    ./git-signed.nix
-  ];
+  "nikita@defiant" = mkHome "nikita" "x86_64-linux" [ ];
   # Dell Poweredge R610 running NixOS
   # TODO configure SSH-Agent forwarding
   "nikita@danzek" = mkHome "nikita" "x86_64-linux" [ ];

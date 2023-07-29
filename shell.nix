@@ -9,10 +9,9 @@
       sha256 = lock.narHash;
     };
   in
-  import nixpkgs { overlays = [ (import ./packages).overlay ]; }
+  import nixpkgs { overlays = [ (import ./packages { inherit nixpkgs; }).overlay ]; }
 , ...
 }:
-
 pkgs.mkShell {
   NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
   name = "infra";

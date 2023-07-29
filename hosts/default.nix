@@ -1,4 +1,4 @@
-{ self, nixpkgs, home-manager, overlays, ... }@inputs:
+{ nixpkgs, home-manager, overlays, ... }@inputs:
 let
   homeConfigs = import ../home (inputs // { isNixOsModule = true; });
 

@@ -7,13 +7,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }:
     let
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       customPackages = import ./packages { inherit nixpkgs; };
       overlays = [ customPackages.overlay ];
       commonInherits = {
-        inherit inputs nixpkgs home-manager self overlays;
+        inherit nixpkgs home-manager overlays;
       };
     in
     {

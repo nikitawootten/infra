@@ -4,7 +4,7 @@ IN_NIXSHELL:=nix-shell shell.nix --command
 .PHONY: build genlock clean
 
 build: genlock
-	nix-build
+	$(IN_NIXSHELL) 'nix-build'
 
 genlock: yarn.lock yarn.nix
 

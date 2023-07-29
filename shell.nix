@@ -15,6 +15,7 @@
 
 pkgs.mkShell {
   NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+  name = "infra";
   packages = with pkgs; [
     nix
     git

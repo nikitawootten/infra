@@ -14,5 +14,8 @@
   };
 
   programs.git.extraConfig.core.editor = "hx";
-  home.sessionVariables = { EDITOR = "hx"; };
+  home.sessionVariables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
 }

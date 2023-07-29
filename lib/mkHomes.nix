@@ -1,14 +1,33 @@
 { nixpkgs
 , home-manager
 , homes
+, configBasePath
 , defaultModules ? [ ]
 , overlays ? [ ]
 , specialArgs ? { }
 , stateVersion ? "23.05"
 }:
 let
-  mkHomeManagerCommon = imports:
-    ({ lib, username, system, ... }: {
+  parseEntry = entry:
+    let
+      entryItems = builtins.split "@" entry;
+      username = builtins.elemAt entryItems 0;
+      hostname = if builtins.length entryItems == 3
+        then builtins.elemAt entryItems 2
+        else null;
+    in
+    { inherit username hostname; };
+  mkHomeManagerCommon = imports: hostname:
+    ({ lib, username, system, ... }: 
+    let
+      homeFolderPath = (if builtins.isNull hostname
+        then "${configBasePath}/${username}"
+        else "${configBasePath}/${username}@${hostname}");
+      homeFilePath = "${homeFolderPath}.nix";
+      homeImports = (lib.lists.optional (builtins.pathExists homeFolderPath) homeFolderPath) ++
+        (lib.lists.optional (builtins.pathExists homeFilePath) homeFilePath);
+    in
+    {
       imports = defaultModules ++ imports ++ [
         ({ pkgs, ... }: {
           nix = {
@@ -18,7 +37,7 @@ let
             '';
           };
         })
-      ];
+      ] ++ homeImports;
       home = {
         inherit username;
         homeDirectory = lib.mkDefault "${if (lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";
@@ -29,23 +48,33 @@ let
     });
 
   # Generates config compatible with HomeManager flake output
-  mkHomeManagerConfig = _: { username, system, modules ? [ ] }:
+  mkHomeManagerConfig = entry: { system, modules ? [ ] }:
+    let
+      parsedEntry = parseEntry entry;
+      username = parsedEntry.username;
+      hostname = parsedEntry.hostname;
+    in
     home-manager.lib.homeManagerConfiguration {
       # TODO: temporary workaround until config override works?
       pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
       # pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs // { inherit system username; };
-      modules = [ (mkHomeManagerCommon modules) ];
+      modules = [ (mkHomeManagerCommon modules hostname) ];
     };
 
   # Generates config compatible with NixOS modules
-  mkHomeManagerNixOsModules = _: { username, system, modules ? [ ] }:
+  mkHomeManagerNixOsModules = entry: { system, modules ? [ ] }:
+    let
+      parsedEntry = parseEntry entry;
+      username = parsedEntry.username;
+      hostname = parsedEntry.hostname;
+    in
     [
       home-manager.nixosModules.home-manager
       {
         # home-manager.useGlobalPkgs = true;
         home-manager.extraSpecialArgs = specialArgs // { inherit system username; };
-        home-manager.users.${username} = (mkHomeManagerCommon modules);
+        home-manager.users.${username} = (mkHomeManagerCommon modules hostname);
       }
     ];
 in

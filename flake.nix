@@ -17,26 +17,37 @@
 
   outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, arion, ... }:
     let
-      personalLib = import ./lib;
-      personalPackages = import ./packages { inherit nixpkgs personalLib; };
+      # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
+      lib = import ./lib;
+      personalPackages = import ./packages { inherit nixpkgs lib; };
       secrets = import ./secrets;
 
+      # Args passed to home-manager and nixos modules
       specialArgs = {
         inherit devenv nixos-hardware nix-index-database agenix arion secrets;
       };
 
-      homes = import ./home {
-        inherit nixpkgs home-manager specialArgs personalLib;
+      homeModules = import ./homeModules;
+      homes = lib.mkHomes {
+        inherit nixpkgs home-manager specialArgs;
         overlays = [ personalPackages.overlay ];
+        configBasePath = ./homes;
+        defaultModules = [ homeModules.default nix-index-database.hmModules.nix-index ];
+        homes = {
+          nikita.system = "x86_64-linux";
+          "nikita@voyager".system = "x86_64-linux";
+          "nikita@defiant".system = "x86_64-linux";
+          "nikita@hades".system = "x86_64-linux";
+          "naw2@PN118973".system = "aarch64-darwin";
+        };
       };
 
       forEachSystem = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ] f;
     in rec
     {
-      lib = import ./lib;
+      inherit lib homeModules;
 
       homeConfigurations = homes.homeConfigurations;
-
       nixosModules = import ./hostModules;
       nixosConfigurations = lib.mkHosts {
         inherit nixpkgs specialArgs;
@@ -60,7 +71,7 @@
       packages = personalPackages.packages;
 
       devShells = forEachSystem (system: {
-        default = import ./shell.nix { pkgs = import nixpkgs { inherit system; overlays = [ overlays.default ] ; }; };
+        default = import ./shell.nix { pkgs = import nixpkgs { inherit system; overlays = [ overlays.default ]; }; };
       });
     };
 }

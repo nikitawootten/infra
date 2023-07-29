@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.permitRootLogin = "no";
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+  };
   # Passwordless sudo when SSH'ing with keys
   security.pam.enableSSHAgentAuth = true;
 }

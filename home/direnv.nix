@@ -1,4 +1,4 @@
-{ ... }:
+{ devenv, system, ... }:
 {
   programs.direnv = {
     enable = true;
@@ -8,4 +8,7 @@
       enable = true;
     };
   };
+  home.packages = [
+    devenv.packages.${system}.devenv
+  ];
 }

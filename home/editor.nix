@@ -1,9 +1,8 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 {
   programs.helix = {
     enable = true;
     # Newer version of Helix available in unstable
-    package = pkgs-unstable.helix;
     settings = {
       theme = "monokai_pro";
       editor = {

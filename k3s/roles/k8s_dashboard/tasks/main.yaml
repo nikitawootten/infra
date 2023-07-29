@@ -1,0 +1,5 @@
+- name: Deploy the K8s dashboard
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml', split_lines=False) }}"
+    state: present
+    apply: true

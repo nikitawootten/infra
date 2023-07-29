@@ -1,0 +1,7 @@
+---
+- name: Provision K3s cluster
+  hosts: localhost
+  connection: local
+  roles:
+    - local
+    - k8s_dashboard

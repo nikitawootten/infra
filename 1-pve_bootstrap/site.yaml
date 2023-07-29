@@ -1,5 +1,0 @@
----
-- name: Configure Proxmox VE Hosts
-  hosts: pve
-  roles:
-    - pci

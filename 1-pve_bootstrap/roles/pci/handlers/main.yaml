@@ -1,5 +1,0 @@
-- name: Update grub configuration
-  ansible.builtin.command: update-grub
-  register: pci_grub_result
-  failed_when: pci_grub_result.rc != 0
-  changed_when: pci_grub_result.rc == 0

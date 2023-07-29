@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, devenv, overlays, isNixOsModule ? false, ... }@inputs:
+{ nixpkgs, nixpkgs-unstable, home-manager, devenv, overlays, isNixOsModule ? false, ... }@inputs:
 let
   # Common modules shared by all configs
   commonModules = [
@@ -42,6 +42,7 @@ let
       let
         commonInherits = inputs // {
           pkgs = import nixpkgs { inherit system overlays; };
+          pkgs-unstable = import nixpkgs-unstable { inherit system; };
           lib = nixpkgs.lib;
         };
       in
@@ -55,6 +56,9 @@ let
   mkHomeManagerConfig = _: system: modules:
     home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { inherit system overlays; };
+      extraSpecialArgs = {
+        pkgs-unstable = import nixpkgs-unstable { inherit system; };
+      };
       inherit modules;
     };
 in

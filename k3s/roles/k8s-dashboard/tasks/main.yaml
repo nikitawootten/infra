@@ -1,0 +1,10 @@
+- name: Deploy the K8s dashboard
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml', split_lines=False) }}"
+    state: present
+    apply: true
+- name: Create the K8s dashboard service account
+  kubernetes.core.k8s:
+    src: k8s-dash-service-account.yaml
+    state: present
+    apply: true

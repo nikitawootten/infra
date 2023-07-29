@@ -1,0 +1,12 @@
+---
+- name: Provision K3s cluster
+  hosts: localhost
+  connection: local
+  pre_tasks:
+    - name: Include repository secrets
+      ansible.builtin.include_vars:
+        file: ../../ansible_secrets.yaml
+        name: secrets
+  roles:
+    - cloudflare-ddns
+    - k8s-dashboard

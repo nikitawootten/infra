@@ -16,6 +16,7 @@ personalLib.mkHomes {
           ./optional/firefox.nix
           ./optional/vscode.nix
           ./optional/gnome.nix
+          ./optional/fonts.nix
         ];
       };
       # Desktop running Fedora (single user Nix install due to SELinux)

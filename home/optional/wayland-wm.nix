@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, ... }@input:
 {
   home.packages = with pkgs; [
     libnotify # for notify-send
@@ -10,6 +10,7 @@
     light # control backlight
     pulseaudio # for pactl
     playerctl
+    xdg-utils
   ];
 
   home.sessionVariables = {
@@ -20,10 +21,6 @@
 
   services.playerctld.enable = true;
 
-  programs.kitty = {
-    enable = true;
-  };
-
   services.mako = {
     enable = true;
   };
@@ -31,4 +28,16 @@
   programs.wofi = {
     enable = true;
   };
+
+  programs.kitty = {
+    enable = true;
+  };
+  home.sessionVariables.TERMINAL = "${pkgs.kitty}/bin/kitty";
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
+
+  xdg.mimeApps.enable = true;
 }

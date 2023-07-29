@@ -15,6 +15,7 @@ personalLib.mkHomes {
         modules = [
           ./optional/hyprland
           ./optional/firefox.nix
+          ./optional/wayland-wm.nix
           specialArgs.hyprland.homeManagerModules.default
         ];
       };

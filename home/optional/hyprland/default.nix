@@ -9,9 +9,6 @@ let
   };
 in
 {
-  imports = [
-    (import ../wayland-wm inputs)
-  ];
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig =

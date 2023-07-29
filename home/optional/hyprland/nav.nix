@@ -54,5 +54,5 @@ in
   ${eachWorkspace mods.focus "workspace"}
 
   # Move active window to a workspace with ${mods.focus} + SHIFT + [0-9]
-  ${eachWorkspace mods.focus "movetoworkspace"}
+  ${eachWorkspace mods.window "movetoworkspace"}
 ''

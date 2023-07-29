@@ -29,6 +29,8 @@
       };
 
       homes = import ./home commonInherits;
+
+      forEachSystem = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ] f;
     in
     {
       lib = personalLib;
@@ -40,10 +42,8 @@
       overlays.default = personalPackages.overlay;
       packages = personalPackages.packages;
 
-      devShells = nixpkgs.lib.genAttrs
-        [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
-        (system: {
-          default = import ./shell.nix { pkgs = import nixpkgs { inherit system overlays; }; };
-        });
+      devShells = forEachSystem (system: {
+        default = import ./shell.nix { pkgs = import nixpkgs { inherit system overlays; }; };
+      });
     };
 }

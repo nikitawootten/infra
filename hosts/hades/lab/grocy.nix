@@ -15,6 +15,13 @@
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "grocy";
+        subdomain = "pomegranate";
+      } // config.lib.lab.mkHomepageLabels {
+        name = "Pomegranate";
+        description = "Managing grocies in the underworld with Grocy";
+        group = "Home";
+        subdomain = "pomegranate";
+        icon = "grocy.png";
       };
       useHostStore = true;
     };

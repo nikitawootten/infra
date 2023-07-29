@@ -19,7 +19,14 @@
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "jellyfin";
+        subdomain = "hypnos";
         port = "8096";
+      } // config.lib.lab.mkHomepageLabels {
+        name = "Hypnos";
+        description = "Jellyfin media server";
+        group = "Media";
+        subdomain = "hypnos";
+        icon = "jellyfin.png";
       };
       useHostStore = true;
     };

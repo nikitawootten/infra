@@ -1,6 +1,5 @@
 { lib, pkgs, config, hostname, ...}:
 let
-  domain = "arpa.nikita.computer";
   env_secret = "traefik.env.age";
   staticConfig = {
     api.dashboard = true; # exposes the traefik dash to :8080
@@ -13,8 +12,8 @@ let
           certResolver = "primary";
           domains = [
             {
-              main = "${hostname}.${domain}";
-              sans = "*.${hostname}.${domain}";
+              main = "${hostname}.${config.lib.lab.domain}";
+              sans = "*.${hostname}.${config.lib.lab.domain}";
             }
           ];
         };
@@ -50,16 +49,20 @@ let
   configFile = builtins.toFile "traefik.yaml" (builtins.toJSON staticConfig);
 in
 {
+  lib.lab.domain = "arpa.nikita.computer";
   lib.lab.mkTraefikLabels = options: (
     let
       name = options.name;
       subdomain = if builtins.hasAttr "subdomain" options then options.subdomain else options.name;
       # created if port is specified
       service = if builtins.hasAttr "service" options then options.service else options.name;
+      host = if (builtins.hasAttr "root" options && options.root)
+        then "${hostname}.${config.lib.lab.domain}"
+        else "${subdomain}.${hostname}.${config.lib.lab.domain}";
     in
     {
       "traefik.enable" = "true";
-      "traefik.http.routers.${name}.rule" = "Host(`${subdomain}.${hostname}.${domain}`)";
+      "traefik.http.routers.${name}.rule" = "Host(`${host}`)";
       "traefik.http.routers.${name}.entrypoints" = "web,websecure";
       # TODO http -> https middleware redirect
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "port" options) {
@@ -97,7 +100,17 @@ in
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "traefik";
+        subdomain = "charon";
         service = "api@internal";
+      } // config.lib.lab.mkHomepageLabels {
+        name = "Charon";
+        description = "Traefik HTTP router";
+        group = "Infrastructure";
+        subdomain = "charon";
+        icon = "traefik.png";
+      } // {
+        "homepage.widget.type" = "traefik";
+        "homepage.widget.url" = "https://charon.${hostname}.${config.lib.lab.domain}";
       };
       useHostStore = true;
     };

@@ -20,7 +20,6 @@
         subdomain = "plutus";
         icon = "actual.png";
       };
-      useHostStore = true;
     };
   };
 }

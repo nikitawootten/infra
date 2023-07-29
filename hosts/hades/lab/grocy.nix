@@ -25,7 +25,6 @@
         subdomain = "pomegranate";
         icon = "grocy.png";
       };
-      useHostStore = true;
     };
   };
 }

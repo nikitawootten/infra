@@ -15,7 +15,7 @@ let
         {
           Pandora = {
             icon = "pfsense.png";
-            href = "https://pandora.${config.lib.lab.domain}";
+            href = "https://pandora.${config.personal.lab.base-domain}";
             description = "pfSense Firewall";
             # TODO set up pfSense API
             # widget = {
@@ -34,13 +34,13 @@ let
         {
           Hypnos = {
             icon = "jellyfin.png";
-            href = "https://hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
+            href = "https://${config.lib.lab.mkServiceSubdomain "hypnos"}";
             description = "Jellyfin: Media server";
             server = "my-docker";
             container = "jellyfin";
             widget = {
               type = "jellyfin";
-              url = "https://hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
+              url = "https://${config.lib.lab.mkServiceSubdomain "hypnos"}";
               key = "{{HOMEPAGE_VAR_JELLYFIN_APIKEY}}";
               enableBlocks = true;
               enableNowPlaying = true;
@@ -50,13 +50,13 @@ let
         {
           Tartarus = {
             icon = "transmission.png";
-            href = "https://tartarus.${config.networking.hostName}.${config.lib.lab.domain}/transmission";
+            href = "https://${config.lib.lab.mkServiceSubdomain "tartarus"}/transmission";
             description = "Transmission: Download server";
             server = "my-docker";
             container = "transmission-ovpn";
             widget = {
               type = "transmission";
-              url = "https://tartarus.${config.networking.hostName}.${config.lib.lab.domain}";
+              url = "https://${config.lib.lab.mkServiceSubdomain "tartarus"}";
               rpcUrl = "/transmission/";
             };
           };
@@ -64,13 +64,13 @@ let
         {
           Lachesis = {
             icon = "prowlarr.png";
-            href = "https://lachesis.${config.networking.hostName}.${config.lib.lab.domain}";
+            href = "https://${config.lib.lab.mkServiceSubdomain "lachesis"}";
             description = "Prowlarr: Indexer";
             server = "my-docker";
             container = "prowlarr";
             widget = {
               type = "prowlarr";
-              url = "https://lachesis.${config.networking.hostName}.${config.lib.lab.domain}";
+              url = "https://${config.lib.lab.mkServiceSubdomain "lachesis"}";
               key = "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}";
             };
           };
@@ -78,13 +78,13 @@ let
         {
           Clotho = {
             icon = "sonarr.png";
-            href = "https://clotho.${config.networking.hostName}.${config.lib.lab.domain}";
+            href = "https://${config.lib.lab.mkServiceSubdomain "clotho"}";
             description = "Sonarr: TV series management";
             server = "my-docker";
             container = "sonarr";
             widget = {
               type = "sonarr";
-              url = "https://clotho.${config.networking.hostName}.${config.lib.lab.domain}";
+              url = "https://${config.lib.lab.mkServiceSubdomain "clotho"}";
               key = "{{HOMEPAGE_VAR_SONARR_APIKEY}}";
             };
           };
@@ -92,13 +92,13 @@ let
         {
           Atropos = {
             icon = "radarr.png";
-            href = "https://atropos.${config.networking.hostName}.${config.lib.lab.domain}";
+            href = "https://${config.lib.lab.mkServiceSubdomain "atropos"}";
             description = "Radarr: TV series management";
             server = "my-docker";
             container = "radarr";
             widget = {
               type = "radarr";
-              url = "https://atropos.${config.networking.hostName}.${config.lib.lab.domain}";
+              url = "https://${config.lib.lab.mkServiceSubdomain "atropos"}";
               key = "{{HOMEPAGE_VAR_RADARR_APIKEY}}";
             };
           };
@@ -162,7 +162,7 @@ in
       "homepage.name" = name;
       "homepage.description" = description;
       "homepage.group" = group;
-      "homepage.href" = "https://${subdomain}.${config.networking.hostName}.${config.lib.lab.domain}";
+      "homepage.href" = "https://${config.lib.lab.mkServiceSubdomain subdomain}";
       "homepage.icon" = icon;
     });
 
@@ -187,7 +187,6 @@ in
         name = "homepage";
         root = true;
       };
-      useHostStore = true;
     };
   };
 }

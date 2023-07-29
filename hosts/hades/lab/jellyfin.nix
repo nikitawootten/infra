@@ -23,20 +23,7 @@
         name = "jellyfin";
         subdomain = "hypnos";
         port = "8096";
-      # } // config.lib.lab.mkHomepageLabels {
-      #   name = "Hypnos";
-      #   description = "Jellyfin media server";
-      #   group = "Media";
-      #   subdomain = "hypnos";
-      #   icon = "jellyfin.png";
-      # } // {
-      #   "homepage.widget.type" = "jellyfin";
-      #   "homepage.widget.url" = "hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
-      #   "homepage.widget.key" = "\"{{HOMEPAGE_VAR_JELLYFIN_APIKEY}}\"";
-      #   "homepage.widget.enableBlocks" = "true";
-      #   "homepage.widget.enableNowPlaying" = "true";
       };
-      useHostStore = true;
     };
   };
 

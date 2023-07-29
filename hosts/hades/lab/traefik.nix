@@ -15,8 +15,8 @@ let
           certResolver = "primary";
           domains = [
             {
-              main = "${config.networking.hostName}.${config.lib.lab.domain}";
-              sans = "*.${config.networking.hostName}.${config.lib.lab.domain}";
+              main = "${config.personal.lab.domain}";
+              sans = "*.${config.personal.lab.domain}";
             }
           ];
         };
@@ -59,7 +59,6 @@ let
   dynamicConfigFile = builtins.toFile "traefik_provider.yaml" (builtins.toJSON dynamicConfig);
 in
 {
-  lib.lab.domain = "arpa.nikita.computer";
   lib.lab.mkTraefikLabels = options: (
     let
       name = options.name;
@@ -67,8 +66,8 @@ in
       # created if port is specified
       service = if builtins.hasAttr "service" options then options.service else options.name;
       host = if (builtins.hasAttr "root" options && options.root)
-        then "${config.networking.hostName}.${config.lib.lab.domain}"
-        else "${subdomain}.${config.networking.hostName}.${config.lib.lab.domain}";
+        then "${config.personal.lab.domain}"
+        else config.lib.lab.mkServiceSubdomain subdomain;
     in
     {
       "traefik.enable" = "true";
@@ -98,7 +97,6 @@ in
       ports = [
         "80:80"
         "443:443"
-        "8080:8080"
       ];
       volumes = [
         "${staticConfigFile}:/etc/traefik/traefik.yaml"
@@ -121,15 +119,14 @@ in
         icon = "traefik.png";
       } // {
         "homepage.widget.type" = "traefik";
-        "homepage.widget.url" = "https://charon.${config.networking.hostName}.${config.lib.lab.domain}";
+        "homepage.widget.url" = "https://${config.lib.lab.mkServiceSubdomain "charon"}";
       };
-      useHostStore = true;
+      restart = "unless-stopped";
     };
   };
 
   networking.firewall.allowedTCPPorts = [
     80    # web entrypoint
     443   # websecure entrypoint
-    8080  # traefik spacial entrypoint
   ];
 }

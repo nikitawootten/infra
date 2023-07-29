@@ -9,7 +9,10 @@ let
   systems = [ voyager hades ];
 in
 {
-  "traefik.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "homepage.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "openldap.rootpw.age".publicKeys = [ nikita_voyager voyager hades ];
+  "traefik.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "transmission-ovpn.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "keycloak.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "postgres.env.age".publicKeys = [ nikita_voyager voyager hades ];
 }

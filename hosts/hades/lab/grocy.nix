@@ -6,6 +6,8 @@
       image = "lscr.io/linuxserver/grocy";
       environment = {
         TZ = "America/New_York";
+        PUID = 1000;
+        PGID = 1000;
       };
       ports = [
         "9283:80"

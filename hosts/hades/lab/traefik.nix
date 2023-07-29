@@ -4,8 +4,12 @@ let
   staticConfig = {
     api.dashboard = true; # exposes the traefik dash to :8080
     providers.docker.exposedbydefault = false;
+    providers.file.directory = dynamicConfigDirectory;
     entrypoints = {
-      web.address = ":80";
+      web = {
+        address = ":80";
+        http.middlewares = [ "https-only@file" ];
+      };
       websecure = {
         address = ":443";
         http.tls = {
@@ -19,6 +23,21 @@ let
         };
       };
     };
+    certificatesResolvers = {
+      primary = {
+        acme = {
+          email = "nikita.wootten@gmail.com";
+          storage = "/letsencrypt/acme-primary.json";
+          dnsChallenge.provider = "cloudflare";
+          dnsChallenge.delayBeforeCheck = 0;
+        };
+      };
+    };
+  };
+  staticConfigFile = builtins.toFile "traefik.yaml" (builtins.toJSON staticConfig);
+  dynamicConfigDirectory = "/etc/traefik/dynamic";
+  # For defining middlewares
+  dynamicConfig = {
     http.middlewares = {
       local-https = {
         chain.middlewares = [
@@ -32,21 +51,13 @@ let
       known-ips = {
         ipWhiteList.sourceRange = [
           "10.69.0.0/24"
+          # Tailscale subnet https://tailscale.com/kb/1015/100.x-addresses/
+          "100.64.0.0/10"
         ];
       };
     };
-    certificatesResolvers = {
-      primary = {
-        acme = {
-          email = "nikita.wootten@gmail.com";
-          storage = "/letsencrypt/acme-primary.json";
-          dnsChallenge.provider = "cloudflare";
-          dnsChallenge.delayBeforeCheck = 0;
-        };
-      };
-    };
   };
-  configFile = builtins.toFile "traefik.yaml" (builtins.toJSON staticConfig);
+  dynamicConfigFile = builtins.toFile "traefik_provider.yaml" (builtins.toJSON dynamicConfig);
 in
 {
   lib.lab.domain = "arpa.nikita.computer";
@@ -91,7 +102,8 @@ in
         "8080:8080"
       ];
       volumes = [
-        "${configFile}:/etc/traefik/traefik.yaml"
+        "${staticConfigFile}:/etc/traefik/traefik.yaml"
+        "${dynamicConfigFile}:${dynamicConfigDirectory}/config.yaml"
         "/backplane/applications/letsencrypt/:/letsencrypt"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];

@@ -10,4 +10,6 @@ let
 in
 {
   "traefik.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "homepage.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "transmission-ovpn.env.age".publicKeys = [ nikita_voyager voyager hades ];
 }

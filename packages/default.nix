@@ -2,8 +2,7 @@
 personalLib.mkPackageSet {
   inherit nixpkgs default-systems;
   packages = {
-    oscal-deep-diff = {
-      path = ./oscal-deep-diff;
-    };
+    oscal-cli.path = ./oscal-cli;
+    oscal-deep-diff.path = ./oscal-deep-diff;
   };
 }

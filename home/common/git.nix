@@ -30,9 +30,16 @@ in
     };
   };
 
-  home.packages = with pkgs; [
-    gh
-  ];
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      prompt = "enabled";
+    };
+    extensions = with pkgs; [
+      gh-dash
+    ];
+  };
 
   home.sessionVariables = {
     # Where I do my work

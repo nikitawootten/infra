@@ -36,5 +36,6 @@ in
 {
   danzek = mkSystem "nikita" "danzek" "x86_64-linux" [
     ./common/zfs.nix
+    ./common/tailscale.nix
   ];
 }

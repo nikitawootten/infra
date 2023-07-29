@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homer-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`danzek.zebra-nominal.ts.net`) && Path(`/homer`)
+      kind: Rule
+      services:
+        - name: homer
+          port: 8080
+  tls:
+    certResolver: tailscale

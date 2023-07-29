@@ -8,4 +8,16 @@
     chart_ref: traefik/traefik
     release_namespace: traefik
     create_namespace: true
-    values: {}
+    values:
+      certResolvers:
+        tailscale:
+          tailscale: {}
+        # letsEncrypt:
+        #   email:
+        #   dnsChallenge:
+        #     provider: cloudflare
+- name: Install Traefik CRDs
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml', split_lines=False) }}"
+    state: present
+    apply: true

@@ -2,7 +2,16 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: cloudflare-ddns-secret
-stringData: {{ secrets.cloudflareDdns }}
+{# stringData: {{ secrets.cloudflareDdns }} #}
+stringData:
+  ZONE_ID: "{{ zone_id }}"
+  RECORD_ID: "{{ record_id }}"
+  NAME: "{{ record_name }}"
+  TYPE: A
+  PROXIED: "{{ proxied }}"
+  TTL: "{{ refresh_minutes * 60 }}"
+  API_KEY: "{{ api_key }}"
+  CHECK_IP: https://domains.google.com/checkip
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -31,7 +40,7 @@ spec:
   failedJobsHistoryLimit: 5
   successfulJobsHistoryLimit: 5
   startingDeadlineSeconds: 60
-  schedule: "*/5 * * * *"
+  schedule: "*/{{ refresh_minutes }} * * * *"
   jobTemplate:
     metadata:
       name: cloudflare-ddns-job

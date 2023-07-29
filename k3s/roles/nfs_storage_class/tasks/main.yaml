@@ -10,5 +10,5 @@
     create_namespace: true
     values:
       nfs:
-        server: 192.168.101.1
-        path: /backplane/applications
+        server: "{{ nfs_server }}"
+        path: "{{ nfs_path }}"

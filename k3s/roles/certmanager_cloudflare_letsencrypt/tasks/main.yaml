@@ -1,0 +1,6 @@
+- name: Create the Cloudflare DNS01 challenge
+  kubernetes.core.k8s:
+    template: cloudflare-dns01-challenge.yaml.j2
+    namespace: cert-manager
+    state: present
+    apply: true

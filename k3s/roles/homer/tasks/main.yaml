@@ -8,12 +8,10 @@
     chart_ref: djjudas21/homer
     release_namespace: homer
     create_namespace: true
-    values:
-      ingress:
-        main:
-          enabled: true
-          hosts:
-            - host: homer.local
-              paths:
-                - path: /
-                  pathType: ImplementationSpecific
+    values: {}
+- name: Create Homer Ingress Route
+  kubernetes.core.k8s:
+    src: ingress-route.yaml
+    namespace: homer
+    state: present
+    apply: true

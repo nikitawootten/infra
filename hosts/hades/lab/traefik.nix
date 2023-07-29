@@ -116,7 +116,7 @@ in
         service = "api@internal";
       } // config.lib.lab.mkHomepageLabels {
         name = "Charon";
-        description = "Traefik HTTP router";
+        description = "Traefik: HTTP router";
         group = "Infrastructure";
         subdomain = "charon";
         icon = "traefik.png";

@@ -19,7 +19,7 @@ in
       ];
       volumes = [
         "/backplane/applications/transmission-ovpn/:/config"
-        "/backplane/media/:/data"
+        "/backplane/media/torrents/:/data"
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "transmission-ovpn";
@@ -28,6 +28,7 @@ in
       };
       capabilities = { NET_ADMIN = true; };
       sysctls = { "net.ipv6.conf.all.disable_ipv6" = 0; };
+      restart = "always";
       useHostStore = true;
     };
   };

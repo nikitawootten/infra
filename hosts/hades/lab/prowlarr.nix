@@ -4,7 +4,7 @@ let
   subdomain = "lachesis";
 in
 {
-  virtualisation.arion.projects.lab.settings.services.jackett = {
+  virtualisation.arion.projects.lab.settings.services.prowlarr = {
     service = {
       container_name = service;
       image = "lscr.io/linuxserver/${service}";
@@ -21,12 +21,6 @@ in
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = service;
-        inherit subdomain;
-      } // config.lib.lab.mkHomepageLabels {
-        name = "Lachesis";
-        description = "Prowlarr: Indexer";
-        group = "Media";
-        icon = "${service}.png";
         inherit subdomain;
       };
     };

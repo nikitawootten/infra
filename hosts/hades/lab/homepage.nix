@@ -8,14 +8,16 @@ let
     showStats = true;
   };
   settingsFile = builtins.toFile "homepage-settings.yaml" (builtins.toJSON settings);
+  # Currently all service widgets that require secrets must be defined here
+  # see https://github.com/benphelps/homepage/discussions/1713
   services = [
     {
-      "Infrastructure" = [
+      Infrastructure = [
         {
-          "Pandora" = {
+          Pandora = {
             icon = "pfsense.png";
             href = "https://pandora.${config.lib.lab.domain}";
-            description = "pfSense Router";
+            description = "pfSense Firewall";
             # TODO set up pfSense API
             # widget = {
             #   type = "pfsense";
@@ -29,12 +31,12 @@ let
       ];
     }
     {
-      "Media" = [
+      Media = [
         {
-          "Hypnos" = {
+          Hypnos = {
             icon = "jellyfin.png";
             href = "https://hypnos.${hostname}.${config.lib.lab.domain}";
-            description = "Jellyfin media server";
+            description = "Jellyfin: Media server";
             server = "my-docker";
             container = "jellyfin";
             widget = {
@@ -47,12 +49,45 @@ let
           };
         }
         {
-          "Tartarus" = {
+          Tartarus = {
             icon = "transmission.png";
             href = "https://tartarus.${hostname}.${config.lib.lab.domain}/transmission";
-            description = "Transmission download server";
+            description = "Transmission: Download server";
             server = "my-docker";
             container = "transmission-ovpn";
+            widget = {
+              type = "transmission";
+              url = "https://tartarus.${hostname}.${config.lib.lab.domain}";
+              rpcUrl = "/transmission/";
+            };
+          };
+        }
+        {
+          Lachesis = {
+            icon = "prowlarr.png";
+            href = "https://lachesis.${hostname}.${config.lib.lab.domain}";
+            description = "Prowlarr: Indexer";
+            server = "my-docker";
+            container = "prowlarr";
+            widget = {
+              type = "prowlarr";
+              url = "https://lachesis.${hostname}.${config.lib.lab.domain}";
+              key = "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}";
+            };
+          };
+        }
+        {
+          Clotho = {
+            icon = "sonarr.png";
+            href = "https://clotho.${hostname}.${config.lib.lab.domain}";
+            description = "Sonarr: TV series management";
+            server = "my-docker";
+            container = "sonarr";
+            widget = {
+              type = "sonarr";
+              url = "https://clotho.${hostname}.${config.lib.lab.domain}";
+              key = "{{HOMEPAGE_VAR_SONARR_APIKEY}}";
+            };
           };
         }
       ];
@@ -70,6 +105,8 @@ let
     {
       Development = [
         { CyberChef = [ { icon = "cyberchef.png"; href = "https://gchq.github.io/CyberChef/"; } ]; }
+        { "Nix Options Search" = [ { abbr = "NS"; href = "https://search.nixos.org/packages"; } ]; }
+        { "Arion Documentation" = [ { abbr = "AD"; href = "https://docs.hercules-ci.com/arion/"; } ]; }
       ];
     }
   ];

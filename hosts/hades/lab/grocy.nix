@@ -20,7 +20,7 @@
         subdomain = "pomegranate";
       } // config.lib.lab.mkHomepageLabels {
         name = "Pomegranate";
-        description = "Managing grocies in the underworld with Grocy";
+        description = "Grocy: Kitchen inventory management";
         group = "Home";
         subdomain = "pomegranate";
         icon = "grocy.png";

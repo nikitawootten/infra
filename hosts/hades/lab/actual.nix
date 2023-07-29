@@ -15,7 +15,7 @@
         subdomain = "plutus";
       } // config.lib.lab.mkHomepageLabels {
         name = "Plutus";
-        description = "Budget management with Actual";
+        description = "Actual: Budget management";
         group = "Home";
         subdomain = "plutus";
         icon = "actual.png";

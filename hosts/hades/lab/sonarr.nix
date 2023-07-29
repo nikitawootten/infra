@@ -17,12 +17,6 @@
       labels = config.lib.lab.mkTraefikLabels {
         name = "sonarr";
         subdomain = "clotho";
-      } // config.lib.lab.mkHomepageLabels {
-        name = "Clotho";
-        description = "Sonarr: TV series manager";
-        group = "Media";
-        subdomain = "clotho";
-        icon = "sonarr.png";
       };
     };
   };

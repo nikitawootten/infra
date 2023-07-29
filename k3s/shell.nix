@@ -29,4 +29,9 @@ pkgs.mkShell {
     python310Packages.pyyaml
     python310Packages.kubernetes
   ];
+
+  shellHook = ''
+    # make .temp_kubeconfig to regenerate
+    export KUBECONFIG=$(pwd)/.temp_kubeconfig
+  '';
 }

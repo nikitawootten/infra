@@ -8,5 +8,5 @@
         file: ../../ansible_secrets.yaml
         name: secrets
   roles:
-    - cloudflare-ddns
     - k8s-dashboard
+    - cloudflare-ddns

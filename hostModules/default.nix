@@ -1,0 +1,5 @@
+{
+  default = {
+    imports = [ ./common ];
+  };
+}

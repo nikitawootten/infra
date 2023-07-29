@@ -12,7 +12,6 @@ let
   # Also expects an associated ${username}@${hostname} home configuration
   mkSystem = hostname: { username, system, modules ? [ ] }:
     let
-      hostConfigurationPath = "${configBasePath}/${hostname}";
       homeModules =
         if (homeConfigs != null) then
           homeConfigs."${username}@${hostname}"
@@ -23,16 +22,18 @@ let
 
       specialArgs = {
         # Imports can use hostname and username
-        inherit username hostname;
+        inherit username;
       } // specialArgs;
 
       modules = [
         # Enable overlays
-        {
+        ({lib, ... }: {
+          networking.hostName = lib.mkDefault hostname;
           nixpkgs.overlays = overlays;
-        }
-        # Hardware-specific configuration
-        hostConfigurationPath
+          imports = [
+            "${configBasePath}/${hostname}"
+          ];
+        })
       ] ++ defaultModules ++ modules ++ homeModules;
     };
 in

@@ -1,6 +1,5 @@
-{ config, hostname, ... }:
+{ config, secrets, ... }:
 let
-  env_secret = "homepage.env.age";
   settings = {
     title = "Hades";
     theme = "dark";
@@ -35,13 +34,13 @@ let
         {
           Hypnos = {
             icon = "jellyfin.png";
-            href = "https://hypnos.${hostname}.${config.lib.lab.domain}";
+            href = "https://hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
             description = "Jellyfin: Media server";
             server = "my-docker";
             container = "jellyfin";
             widget = {
               type = "jellyfin";
-              url = "https://hypnos.${hostname}.${config.lib.lab.domain}";
+              url = "https://hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
               key = "{{HOMEPAGE_VAR_JELLYFIN_APIKEY}}";
               enableBlocks = true;
               enableNowPlaying = true;
@@ -51,13 +50,13 @@ let
         {
           Tartarus = {
             icon = "transmission.png";
-            href = "https://tartarus.${hostname}.${config.lib.lab.domain}/transmission";
+            href = "https://tartarus.${config.networking.hostName}.${config.lib.lab.domain}/transmission";
             description = "Transmission: Download server";
             server = "my-docker";
             container = "transmission-ovpn";
             widget = {
               type = "transmission";
-              url = "https://tartarus.${hostname}.${config.lib.lab.domain}";
+              url = "https://tartarus.${config.networking.hostName}.${config.lib.lab.domain}";
               rpcUrl = "/transmission/";
             };
           };
@@ -65,13 +64,13 @@ let
         {
           Lachesis = {
             icon = "prowlarr.png";
-            href = "https://lachesis.${hostname}.${config.lib.lab.domain}";
+            href = "https://lachesis.${config.networking.hostName}.${config.lib.lab.domain}";
             description = "Prowlarr: Indexer";
             server = "my-docker";
             container = "prowlarr";
             widget = {
               type = "prowlarr";
-              url = "https://lachesis.${hostname}.${config.lib.lab.domain}";
+              url = "https://lachesis.${config.networking.hostName}.${config.lib.lab.domain}";
               key = "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}";
             };
           };
@@ -79,13 +78,13 @@ let
         {
           Clotho = {
             icon = "sonarr.png";
-            href = "https://clotho.${hostname}.${config.lib.lab.domain}";
+            href = "https://clotho.${config.networking.hostName}.${config.lib.lab.domain}";
             description = "Sonarr: TV series management";
             server = "my-docker";
             container = "sonarr";
             widget = {
               type = "sonarr";
-              url = "https://clotho.${hostname}.${config.lib.lab.domain}";
+              url = "https://clotho.${config.networking.hostName}.${config.lib.lab.domain}";
               key = "{{HOMEPAGE_VAR_SONARR_APIKEY}}";
             };
           };
@@ -93,13 +92,13 @@ let
         {
           Atropos = {
             icon = "radarr.png";
-            href = "https://atropos.${hostname}.${config.lib.lab.domain}";
+            href = "https://atropos.${config.networking.hostName}.${config.lib.lab.domain}";
             description = "Radarr: TV series management";
             server = "my-docker";
             container = "radarr";
             widget = {
               type = "radarr";
-              url = "https://atropos.${hostname}.${config.lib.lab.domain}";
+              url = "https://atropos.${config.networking.hostName}.${config.lib.lab.domain}";
               key = "{{HOMEPAGE_VAR_RADARR_APIKEY}}";
             };
           };
@@ -163,11 +162,11 @@ in
       "homepage.name" = name;
       "homepage.description" = description;
       "homepage.group" = group;
-      "homepage.href" = "https://${subdomain}.${hostname}.${config.lib.lab.domain}";
+      "homepage.href" = "https://${subdomain}.${config.networking.hostName}.${config.lib.lab.domain}";
       "homepage.icon" = icon;
     });
 
-  age.secrets."${env_secret}".file = ../../secrets/${env_secret};
+  age.secrets.homepage.file = secrets.homepage;
 
   virtualisation.arion.projects.lab.settings.services.homepage = {
     service = {
@@ -183,9 +182,7 @@ in
         "${widgetsFile}:/config/widgets.yaml"
         "${dockerFile}:/config/docker.yaml"
       ];
-      env_file = [ 
-        config.age.secrets."${env_secret}".path
-      ];
+      env_file = [ config.age.secrets.homepage.path ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "homepage";
         root = true;

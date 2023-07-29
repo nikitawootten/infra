@@ -1,8 +1,18 @@
-{ pkgs, ... }:
+{ nixos-hardware, ... }:
 {
   imports = [
     ./hardware-configuration.nix
+    nixos-hardware.nixosModules.framework
   ];
+
+  personal.gnome.enable = true;
+  personal.networkmanager.enable = true;
+  personal.printing.enable = true;
+  personal.steam.enable = true;
+  personal.docker.enable = true;
+  personal.vpn.enable = true;
+  personal.wireshark.enable = true;
+  personal.flatpak.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

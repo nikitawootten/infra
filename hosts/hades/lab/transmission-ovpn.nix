@@ -1,9 +1,6 @@
-{ config, ... }:
-let
-  env_secret = "transmission-ovpn.env.age";
-in
+{ config, secrets, ... }:
 {
-  age.secrets."${env_secret}".file = ../../secrets/${env_secret};
+  age.secrets.transmission-ovpn.file = secrets.transmission-ovpn;
 
   virtualisation.arion.projects.lab.settings.services.transmission-ovpn = {
     service = {
@@ -14,9 +11,7 @@ in
         PUID = 1000;
         PGID = 1000;
       };
-      env_file = [ 
-        config.age.secrets."${env_secret}".path
-      ];
+      env_file = [ config.age.secrets.transmission-ovpn.path ];
       volumes = [
         "/backplane/applications/transmission-ovpn/:/config"
         "/backplane/media/torrents/:/data"

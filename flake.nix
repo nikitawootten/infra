@@ -19,31 +19,48 @@
     let
       personalLib = import ./lib;
       personalPackages = import ./packages { inherit nixpkgs personalLib; };
-      overlays = [ personalPackages.overlay ];
+      secrets = import ./secrets;
 
-      commonInherits = {
-        inherit nixpkgs home-manager overlays personalLib;
-        specialArgs = {
-          inherit devenv nixos-hardware nix-index-database agenix arion;
-        };
+      specialArgs = {
+        inherit devenv nixos-hardware nix-index-database agenix arion secrets;
       };
 
-      homes = import ./home commonInherits;
+      homes = import ./home {
+        inherit nixpkgs home-manager specialArgs personalLib;
+        overlays = [ personalPackages.overlay ];
+      };
 
       forEachSystem = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ] f;
-    in
+    in rec
     {
-      lib = personalLib;
+      lib = import ./lib;
+
       homeConfigurations = homes.homeConfigurations;
-      nixosConfigurations = import ./hosts (commonInherits // {
+
+      nixosModules = import ./hostModules;
+      nixosConfigurations = lib.mkHosts {
+        inherit nixpkgs specialArgs;
+        overlays = [ overlays.default ];
         homeConfigs = homes.nixosHomeModules;
-      });
+        configBasePath = ./hosts;
+        defaultModules = [ nixosModules.default ];
+        hosts = {
+          hades = {
+            username = "nikita";
+            system = "x86_64-linux";
+          };
+          voyager = {
+            username = "nikita";
+            system = "x86_64-linux";
+          };
+        };
+      };
 
       overlays.default = personalPackages.overlay;
       packages = personalPackages.packages;
 
       devShells = forEachSystem (system: {
-        default = import ./shell.nix { pkgs = import nixpkgs { inherit system overlays; }; };
+        default = import ./shell.nix { pkgs = import nixpkgs { inherit system; overlays = [ overlays.default ] ; }; };
       });
     };
 }

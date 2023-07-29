@@ -1,6 +1,5 @@
-{ lib, pkgs, config, hostname, ...}:
+{ lib, pkgs, config, secrets, ...}:
 let
-  env_secret = "traefik.env.age";
   staticConfig = {
     api.dashboard = true; # exposes the traefik dash to :8080
     providers.docker.exposedbydefault = false;
@@ -16,8 +15,8 @@ let
           certResolver = "primary";
           domains = [
             {
-              main = "${hostname}.${config.lib.lab.domain}";
-              sans = "*.${hostname}.${config.lib.lab.domain}";
+              main = "${config.networking.hostName}.${config.lib.lab.domain}";
+              sans = "*.${config.networking.hostName}.${config.lib.lab.domain}";
             }
           ];
         };
@@ -68,8 +67,8 @@ in
       # created if port is specified
       service = if builtins.hasAttr "service" options then options.service else options.name;
       host = if (builtins.hasAttr "root" options && options.root)
-        then "${hostname}.${config.lib.lab.domain}"
-        else "${subdomain}.${hostname}.${config.lib.lab.domain}";
+        then "${config.networking.hostName}.${config.lib.lab.domain}"
+        else "${subdomain}.${config.networking.hostName}.${config.lib.lab.domain}";
     in
     {
       "traefik.enable" = "true";
@@ -83,7 +82,7 @@ in
       "traefik.http.routers.${name}.service" = service;
     });
 
-  age.secrets."${env_secret}".file = ../../secrets/${env_secret};
+  age.secrets.traefik.file = secrets.traefik;
 
   virtualisation.arion.projects.lab.settings.services.traefik = {
     image.command = [
@@ -108,7 +107,7 @@ in
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
       env_file = [ 
-        config.age.secrets."${env_secret}".path
+        config.age.secrets.traefik.path
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "traefik";
@@ -122,7 +121,7 @@ in
         icon = "traefik.png";
       } // {
         "homepage.widget.type" = "traefik";
-        "homepage.widget.url" = "https://charon.${hostname}.${config.lib.lab.domain}";
+        "homepage.widget.url" = "https://charon.${config.networking.hostName}.${config.lib.lab.domain}";
       };
       useHostStore = true;
     };

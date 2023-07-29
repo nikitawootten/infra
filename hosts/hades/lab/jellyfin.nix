@@ -31,7 +31,7 @@
       #   icon = "jellyfin.png";
       # } // {
       #   "homepage.widget.type" = "jellyfin";
-      #   "homepage.widget.url" = "hypnos.${hostname}.${config.lib.lab.domain}";
+      #   "homepage.widget.url" = "hypnos.${config.networking.hostName}.${config.lib.lab.domain}";
       #   "homepage.widget.key" = "\"{{HOMEPAGE_VAR_JELLYFIN_APIKEY}}\"";
       #   "homepage.widget.enableBlocks" = "true";
       #   "homepage.widget.enableNowPlaying" = "true";

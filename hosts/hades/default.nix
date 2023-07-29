@@ -5,6 +5,9 @@
     ./lab
   ];
 
+  personal.zfs.enable = true;
+  personal.docker.enable = true;
+
   # TODO: derive this in a more pure way?
   networking.hostId = "2bda7775";
 

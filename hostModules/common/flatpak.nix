@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.flatpak;
+  cfg = config.personal.flatpak;
 in
 {
-  options.flatpak = {
+  options.personal.flatpak = {
     enable = lib.mkEnableOption "flatpak & flatpak installs";
     remotes = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;

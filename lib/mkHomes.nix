@@ -8,14 +8,14 @@
 }:
 let
   mkHomeManagerCommon = imports:
-    ({ username, system, ...}: {
+    ({ lib, username, system, ...}: {
       imports = defaultModules ++ imports;
       home = {
         inherit username;
-        homeDirectory = nixpkgs.lib.mkDefault "${if (nixpkgs.lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";
-        stateVersion = nixpkgs.lib.mkDefault stateVersion;
+        homeDirectory = lib.mkDefault "${if (lib.hasInfix "darwin" system) then "/Users" else "/home"}/${username}";
+        stateVersion = lib.mkDefault stateVersion;
       };
-      programs.home-manager.enable = nixpkgs.lib.mkDefault true;
+      programs.home-manager.enable = lib.mkDefault true;
     });
 
   # Generates config compatible with HomeManager flake output
@@ -31,9 +31,9 @@ let
     [ 
       home-manager.nixosModules.home-manager
       {
-          # home-manager.useGlobalPkgs = true;
-          home-manager.extraSpecialArgs = specialArgs // { inherit system username; };
-          home-manager.users.${username} = (mkHomeManagerCommon modules);
+        # home-manager.useGlobalPkgs = true;
+        home-manager.extraSpecialArgs = specialArgs // { inherit system username; };
+        home-manager.users.${username} = (mkHomeManagerCommon modules);
       }
     ];
 in

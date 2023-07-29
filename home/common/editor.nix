@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   programs.helix = {
     enable = true;
@@ -23,6 +23,11 @@
     EDITOR = "hx";
     VISUAL = "hx";
   };
+
+  # Required for `vscode-langservers-extracted
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "vscode"
+  ];
 
   home.packages = with pkgs; [
     nodePackages.vscode-langservers-extracted

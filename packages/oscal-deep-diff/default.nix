@@ -28,12 +28,14 @@ pkgs.stdenv.mkDerivation {
   nativeBuildInputs = with pkgs; [ ];
   buildInputs = with pkgs; [ ];
 
-  installPhase = ''
+  configurePhase = ''
     mkdir -p $out/bin
-    cp -r ${deps}/node_modules $out
+    ln -s ${deps}/node_modules $out
+  '';
 
+  installPhase = ''
     cat <<EOF > $out/bin/oscal-deep-diff
-    #!/usr/bin/env node
+    #!${pkgs.nodejs}/bin/node
     require('$out/node_modules/@oscal/oscal-deep-diff/lib/cli/cli.js');
     EOF
 

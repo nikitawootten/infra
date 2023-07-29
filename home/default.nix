@@ -48,5 +48,17 @@ in
 
   "naw2@PN118973" = mkHome "naw2" "aarch64-darwin" [{
     programs.git.userEmail = nixpkgs.lib.mkForce "nikita.wootten@nist.gov";
+    # output of `eval "$(/opt/homebrew/bin/brew shellenv)"`
+    home.sessionVariables = {
+      HOMEBREW_PREFIX = "/opt/homebrew";
+      HOMEBREW_CELLAR = "/opt/homebrew/Cellar";
+      HOMEBREW_REPOSITORY = "/opt/homebrew";
+      MANPATH = "/opt/homebrew/share/man\${MANPATH+:$MANPATH}:";
+      INFOPATH = "/opt/homebrew/share/info:\${INFOPATH:-}";
+    };
+    home.sessionPath = [
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
+    ];
   }];
 }

@@ -62,6 +62,8 @@ in
 
       # Highlight completions on tab
       zstyle ':completion:*' menu select
+      # And Shift-Tab should cycle backwards
+      bindkey '^[[Z' reverse-menu-complete
     '';
 
     plugins = [
@@ -134,5 +136,6 @@ in
 
   home.packages = [
     pkgs.bat
+    pkgs.tree
   ];
 }

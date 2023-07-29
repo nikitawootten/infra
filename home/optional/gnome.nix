@@ -45,8 +45,8 @@ in
       };
       "org/gnome/desktop/input-sources" = {
         sources = [
-          (mkTuple ["xkb" "us"])
-          (mkTuple ["xkb" "ru"])
+          (mkTuple [ "xkb" "us" ])
+          (mkTuple [ "xkb" "ru" ])
         ];
       };
       "org/gnome/desktop/peripherals/touchpad" = {
@@ -60,7 +60,7 @@ in
         show-hidden = true;
       };
       "org/gnome/shell/extensions/nightthemeswitcher/time" = {
-        nightthemeswitcher-ondemand-keybinding  = [ "<Shift><Super>t" ];
+        nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>t" ];
       };
       "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
         enabled = true;

@@ -8,7 +8,7 @@
 }:
 let
   mkHomeManagerCommon = imports:
-    ({ lib, username, system, ...}: {
+    ({ lib, username, system, ... }: {
       imports = defaultModules ++ imports;
       home = {
         inherit username;
@@ -31,7 +31,7 @@ let
 
   # Generates config compatible with NixOS modules
   mkHomeManagerNixOsModules = _: { username, system, modules ? [ ] }:
-    [ 
+    [
       home-manager.nixosModules.home-manager
       {
         # home-manager.useGlobalPkgs = true;

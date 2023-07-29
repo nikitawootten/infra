@@ -20,6 +20,14 @@ personalLib.mkHomes {
           ./optional/gnome.nix
           ./optional/sectools.nix
           ./optional/fonts.nix
+          ./optional/firefox-gnome-theme.nix
+          ./optional/firefox-sideberry-autohide.nix
+          {
+            firefoxConfig.sideberry-autohide = {
+              enable = true;
+              profiles = [ "default" ];
+            };
+          }
         ];
       };
       # Desktop running Fedora (single user Nix install due to SELinux)

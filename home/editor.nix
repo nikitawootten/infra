@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.helix = {
     enable = true;
@@ -17,4 +17,9 @@
     EDITOR = "hx";
     VISUAL = "hx";
   };
+
+  home.packages = with pkgs; [
+    # provided via overlay
+    vscode-langservers-extracted
+  ];
 }

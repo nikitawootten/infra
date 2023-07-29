@@ -1,0 +1,8 @@
+{
+    "name": "vscode-langservers-extracted",
+    "version": "1.0.0",
+    "license": "ISC",
+    "dependencies": {
+        "vscode-langservers-extracted": "4.6.0"
+    }
+}

@@ -1,4 +1,4 @@
-{ self, nixpkgs, home-manager, ... }@inputs:
+{ self, nixpkgs, home-manager, overlays, ... }@inputs:
 let
   homeConfigs = import ../home (inputs // { isNixOsModule = true; });
 
@@ -22,10 +22,14 @@ let
       };
 
       modules = [
-        # Hardware-specific configuration
-        ././${hostname}
+        # Enable overlays
+        {
+          nixpkgs.overlays = overlays;
+        }
         # Enable the use of home-manager modules
         home-manager.nixosModules.home-manager
+        # Hardware-specific configuration
+        ././${hostname}
       ] ++ commonModules ++ extraModules ++ homeConfigs."${username}@${hostname}";
     };
 in

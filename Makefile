@@ -34,5 +34,5 @@ remote-switch-nixos:
 
 	@echo Rebuilding configuration for $(HOST) on target $(USER)@$(ADDR)
 
-	$(IN_NIXSHELL) 'NIX_SSHOPTS=-t nixos-rebuild --flake ".#$(HOST)" --impure \
+	$(IN_NIXSHELL) 'NIX_SSHOPTS=-t nixos-rebuild --flake ".#$(HOST)" \
 		--target-host "$(USER)@$(ADDR)" --use-remote-sudo switch'

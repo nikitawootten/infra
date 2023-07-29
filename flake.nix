@@ -10,9 +10,11 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-
+      overlays = [
+        (import ./packages)
+      ];
       commonInherits = {
-        inherit inputs nixpkgs home-manager self;
+        inherit inputs nixpkgs home-manager self overlays;
       };
     in
     {
@@ -22,7 +24,7 @@
       devShells = nixpkgs.lib.genAttrs
         systems
         (system: {
-          default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; };
+          default = import ./shell.nix { pkgs = import nixpkgs { inherit system overlays; }; };
         });
     };
 }

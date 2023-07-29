@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, isNixOsModule ? false, ... }@inputs:
+{ nixpkgs, home-manager, overlays, isNixOsModule ? false, ... }@inputs:
 let
   # Common modules shared by all configs
   commonModules = [
@@ -29,7 +29,7 @@ let
     (module:
       let
         commonInherits = inputs // {
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs { inherit system overlays; };
           lib = nixpkgs.lib;
         };
       in
@@ -42,7 +42,7 @@ let
   # Generates config compatible with HomeManager flake output
   mkHomeManagerConfig = _: system: modules:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system overlays; };
       modules = modules ++ [
         # When running via home-manager also configure nix to use flakes 
         # TODO avoid thrashing when switching between home-manager and nixos

@@ -6,7 +6,7 @@ personalLib.mkHosts {
     ./common
   ];
   hosts = {
-    danzek = {
+    hades = {
       username = "nikita";
       system = "x86_64-linux";
       modules = [

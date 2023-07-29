@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   virtualisation.arion.projects.lab.settings.services.jellyfin = {
     service = {
@@ -17,12 +17,9 @@
         "/backplane/applications/jellyfin/:/config"
         "/backplane/media/:/media"
       ];
-      labels = {
-        "traefik.enable" = "true";
-        "traefik.http.routers.jellyfin.rule" = "Host(`danzek.arpa.nikita.computer`)";
-        "traefik.http.routers.jellyfin.entrypoints" = "web";
-        "traefik.http.routers.jellyfin.service" = "jellyfin";
-        "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
+      labels = config.lib.lab.mkTraefikLabels {
+        name = "jellyfin";
+        port = "8096";
       };
       useHostStore = true;
     };

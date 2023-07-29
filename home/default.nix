@@ -34,7 +34,7 @@ personalLib.mkHomes {
       "nikita@defiant" = default;
       # Dell Poweredge R610 running NixOS
       # TODO configure SSH-Agent forwarding
-      "nikita@danzek" = default;
+      "nikita@hades" = default;
       # Work machine running MacOS
       "naw2@PN118973" = {
         username = "naw2";

@@ -15,7 +15,7 @@
     arion.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, arion, ... }:
+  outputs = { nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, arion, ... }:
     let
       personalLib = import ./lib;
       personalPackages = import ./packages { inherit nixpkgs personalLib; };
@@ -24,7 +24,7 @@
       commonInherits = {
         inherit nixpkgs home-manager overlays personalLib;
         specialArgs = {
-          inherit devenv nixos-hardware nix-index-database arion;
+          inherit devenv nixos-hardware nix-index-database agenix arion;
         };
       };
 

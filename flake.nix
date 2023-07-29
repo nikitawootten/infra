@@ -1,5 +1,5 @@
 {
-  description = "Nikita's Nix-ified setup";
+  description = "My Nix-ified infrastructure and personal monorepo";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -10,22 +10,32 @@
 
   outputs = { nixpkgs, home-manager, devenv, ... }:
     let
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      customPackages = import ./packages { inherit nixpkgs; };
-      overlays = [ customPackages.overlay ];
+      personalLib = import ./lib;
+      personalPackages = import ./packages { inherit nixpkgs personalLib; };
+      overlays = [ personalPackages.overlay ];
+
       commonInherits = {
-        inherit nixpkgs home-manager devenv overlays;
+        inherit nixpkgs home-manager overlays personalLib;
+        specialArgs = {
+          inherit devenv;
+        };
+
       };
+
+      homes = import ./home commonInherits;
     in
     {
-      nixosConfigurations = import ./hosts commonInherits;
-      homeConfigurations = import ./home commonInherits;
+      lib = personalLib;
+      homeConfigurations = homes.homeConfigurations;
+      nixosConfigurations = import ./hosts (commonInherits // {
+        homeConfigs = homes.nixosHomeModules;
+      });
 
-      overlays.default = customPackages.overlay;
-      packages = customPackages.packages;
+      overlays.default = personalPackages.overlay;
+      packages = personalPackages.packages;
 
       devShells = nixpkgs.lib.genAttrs
-        systems
+        [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
         (system: {
           default = import ./shell.nix { pkgs = import nixpkgs { inherit system overlays; }; };
         });

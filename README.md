@@ -1,8 +1,8 @@
 # `infra`
 
-Welcome to my Nix-ified infrastructure.
+Welcome to my Nix-ified infrastructure and personal monorepo.
 
 ## Usage
 
-All common operations are defined in a [`Makefile`](./Makefile).
+Common operations are defined in the root [`Makefile`](./Makefile).
 To list Makefile targets run `make help`.

@@ -8,8 +8,9 @@
       url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
       sha256 = lock.narHash;
     };
+    personalLib = import ./lib;
   in
-  import nixpkgs { overlays = [ (import ./packages { inherit nixpkgs; }).overlay ]; }
+  import nixpkgs { overlays = [ (import ./packages { inherit nixpkgs personalLib; }).overlay ]; }
 , ...
 }:
 pkgs.mkShell {

@@ -23,10 +23,11 @@ pkgs.mkShell {
     nixpkgs-fmt
     rnix-lsp
     # For provisioning K8s resources
-    ansible
-    kubectl
-    kubevirt
-    jq
+    # TODO: separate concerns into multiple devshells
+    # ansible
+    # kubectl
+    # kubevirt
+    # jq
     home-manager
     hostname
   ];

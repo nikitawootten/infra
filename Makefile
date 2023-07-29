@@ -1,4 +1,4 @@
-SHELL:=/bin/bash
+SHELL:=/usr/bin/env bash
 
 # Run command in nix-shell for maximum reproducibility (idiot [me] proofing)
 # Command itself must be wrapped in quotes
@@ -27,7 +27,7 @@ ADDR=$(HOST)
 # e.x. make remote-switch-nixos HOST="" USER="" ADDR=""
 # or make remote-switch-nixos HOST="" USER="" (if HOST and ADDR are the same)
 remote-switch-nixos:
-	if [[ -z "$(HOST)" || -z "$(USER)" || -z "$(ADDR)" ]]; then \
+	@if [[ -z "$(HOST)" || -z "$(USER)" || -z "$(ADDR)" ]]; then \
   		echo 'one or more variables are undefined'; \
   		exit 1; \
 	fi

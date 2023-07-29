@@ -109,10 +109,7 @@ in
     '';
   } // shellCommon;
 
-  home.packages = [
-    pkgs.bat
-    pkgs.tree
-  ] ++ (
+  home.packages = (
     # packaged bash on MacOS is ancient
     if (lib.hasInfix "darwin" system) then with pkgs; [
       bashInteractive

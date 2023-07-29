@@ -4,8 +4,8 @@ let
   commonModules = [
     ./direnv.nix
     ./editor.nix
-    ./fzf.nix
     ./git.nix
+    ./misc-utils.nix
     ./shell.nix
     ./ssh.nix
     ./starship.nix

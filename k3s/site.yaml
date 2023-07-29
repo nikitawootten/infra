@@ -11,7 +11,7 @@
     - role: nfs_storage_class
       nfs_server: 192.168.101.1
       nfs_path: /backplane/applications
-    - k8s_dashboard
+    - role: k8s_dashboard
     - role: cloudflare_ddns
       zone_id: "{{ secrets.cloudflare_ddns.zone_id }}"
       record_id: "{{ secrets.cloudflare_ddns.record_id }}"
@@ -19,8 +19,4 @@
       api_key: "{{ secrets.cloudflare_ddns.api_key }}"
       refresh_minutes: 5
       proxied: true
-    - role: certmanager_cloudflare_letsencrypt
-      acme_email: "{{ secrets.acme.email }}"
-      letsencrypt_environment: production
-      cloudflare_token: "{{ secrets.cloudflare_ddns.api_key }}"
     - role: homer

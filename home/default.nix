@@ -1,16 +1,7 @@
 { nixpkgs, home-manager, personalLib, overlays, specialArgs, ... }:
 personalLib.mkHomes {
   inherit nixpkgs home-manager overlays specialArgs;
-  defaultModules = [
-    ./direnv.nix
-    ./editor.nix
-    ./git.nix
-    ./misc-utils.nix
-    ./shell.nix
-    ./ssh.nix
-    ./starship.nix
-    ./tmux.nix
-  ];
+  defaultModules = import ./common;
   homes =
     let
       default = {
@@ -19,8 +10,14 @@ personalLib.mkHomes {
       };
     in
     {
-      # Framework laptop running Arch Linux
-      "nikita@voyager" = default;
+      # Framework laptop running NixOS
+      "nikita@voyager" = default // {
+        modules = [
+          ./optional/hyprland
+          ./optional/firefox.nix
+          specialArgs.hyprland.homeManagerModules.default
+        ];
+      };
       # Desktop running Fedora (single user Nix install due to SELinux)
       "nikita@defiant" = default;
       # Dell Poweredge R610 running NixOS

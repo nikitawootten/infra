@@ -22,9 +22,5 @@
 
   users.users.nikita = {
     description = "Nikita Wootten";
-    packages = with pkgs; [
-      firefox
-    #  thunderbird
-    ];
   };
 }

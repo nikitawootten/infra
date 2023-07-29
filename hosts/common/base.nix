@@ -41,7 +41,10 @@
   ];
 
   nix = {
-    settings.trusted-users = [ "@wheel" ];
+    settings = {
+      auto-optimise-store = true;
+      trusted-users = [ "@wheel" ];
+    };
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes

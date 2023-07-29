@@ -2,9 +2,7 @@
 personalLib.mkHosts {
   inherit nixpkgs overlays homeConfigs specialArgs;
   configBasePath = ./.;
-  defaultModules = [
-    ./common
-  ];
+  defaultModules = import ./common;
   hosts = {
     danzek = {
       username = "nikita";
@@ -18,11 +16,12 @@ personalLib.mkHosts {
       system = "x86_64-linux";
       modules = [
         specialArgs.nixos-hardware.nixosModules.framework
-        ./optional/gnome.nix
+        # ./optional/gnome.nix
         ./optional/sound.nix
         ./optional/networkmanager.nix
         ./optional/flatpak.nix
         ./optional/printing.nix
+        ./optional/hyprland.nix
       ];
     };
   };

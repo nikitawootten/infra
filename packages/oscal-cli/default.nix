@@ -7,6 +7,7 @@
     };
   in
   import nixpkgs { }
+, jre ? pkgs.jre
 , ...
 }:
 let
@@ -34,6 +35,6 @@ pkgs.stdenv.mkDerivation {
 
   postFixup = ''
     wrapProgram $out/bin/${pname} \
-      --set JAVACMD ${pkgs.jre}/bin/java
+      --set JAVACMD ${jre}/bin/java
   '';
 }

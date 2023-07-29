@@ -4,5 +4,6 @@ personalLib.mkPackageSet {
   packages = {
     oscal-cli.path = ./oscal-cli;
     oscal-deep-diff.path = ./oscal-deep-diff;
+    xspec.path = ./xspec;
   };
 }

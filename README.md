@@ -27,3 +27,14 @@ To list Makefile targets run `make help`.
 ├── README.md
 └── shell.nix   # Shell environment for Makefile operations
 ```
+
+### Packages
+
+This flake contains an overlay with several packages that I rely on day to day:
+
+- [`oscal-cli`](./packages/oscal-cli/)
+- [`oscal-deep-diff`](./packages/oscal-deep-diff/)
+- [`xspec`](./packages/xspec/)
+
+These packages are **UNOFFICIAL**, experimental, potentially transient, and come with no guarantees or warranty.
+If you would like to see these packages submitted [upstream](https://github.com/NixOS/nixpkgs) or to the [NUR](https://nur.nix-community.org/), **please open an issue on this repository as a signal of interest**.

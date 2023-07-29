@@ -22,6 +22,13 @@ let
             stateVersion = "22.11";
           };
         programs.home-manager.enable = true;
+        nix = {
+          # NixOS overrides this
+          package = nixpkgs.lib.mkDefault nixpkgs.legacyPackages.${system}.nixFlakes;
+          extraOptions = ''
+            experimental-features = nix-command flakes
+          '';
+        };
       }
     ] ++ commonModules ++ extraModules);
 
@@ -44,22 +51,13 @@ let
   mkHomeManagerConfig = _: system: modules:
     home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { inherit system overlays; };
-      modules = modules ++ [
-        # When running via home-manager also configure nix to use flakes 
-        # TODO avoid thrashing when switching between home-manager and nixos
-        # Currently get the following error when run in nixos:
-        #   error: The option `home-manager.users.nikita.nix.package' is defined multiple times.
-        {
-          nix = {
-            package = nixpkgs.legacyPackages.${system}.nixFlakes;
-            extraOptions = ''
-              experimental-features = nix-command flakes
-            '';
-          };
-        }
-      ];
+      inherit modules;
     };
 in
+# TODO instead of generating a nixos module or home-manager configuration
+  # depending on the `isNixOsModule` input attr, wrap this configuration in a
+  # helper function that generates output attrs `.homeConfigs` and
+  # `nixosModules` that can be consumed directly.
 {
   "nikita@yukon" = mkHome "nikita" "x86_64-linux" [
     ./git-signed.nix

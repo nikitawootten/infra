@@ -5,7 +5,7 @@ secrets_path := ../../$(secrets_file)
 
 temp_kubeconfig_file := .temp_kubeconfig
 
-.PHONY: deploy dependencies dash_token clean
+.PHONY: deploy dependencies dash_token clean traefik_dashboard
 
 deploy: $(secrets_path) $(temp_kubeconfig_file) dependencies
 	K8S_AUTH_KUBECONFIG=$(temp_kubeconfig_file) ansible-playbook -i hosts site.yaml
@@ -28,8 +28,13 @@ dependencies:
 	@echo Downloading dependencies...
 	ansible-galaxy install -r requirements.yaml
 
-dash_token: $(temp_kubeconfig_file)
-	kubectl -n kubernetes-dashboard create token admin-user
 
 clean:
 	rm $(temp_kubeconfig_file)
+
+dash_token: $(temp_kubeconfig_file)
+	kubectl -n kubernetes-dashboard create token admin-user
+
+traefik_dashboard: $(temp_kubeconfig_file)
+	@echo Traefik dashboard will be accessible at http://127.0.0.1:9000/dashboard/
+	kubectl port-forward --namespace traefik `kubectl get pods --namespace traefik --selector "app.kubernetes.io/name=traefik" --output=name` 9000:9000

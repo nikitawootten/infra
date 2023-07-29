@@ -5,7 +5,10 @@
     6443 # needed to access k8s API
     10250 # needed by metrics-server
   ];
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  environment.systemPackages = [ pkgs.k3s ];
+  services.k3s = {
+    enable = true;
+    role = "server";
+    # Ingress configured by playbook
+    extraFlags = "--disable traefik";
+  };
 }

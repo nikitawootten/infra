@@ -85,7 +85,7 @@ in
   "naw2@PN118973" = mkHome "naw2" "aarch64-darwin" [{
     programs.git.userEmail = nixpkgs.lib.mkForce "nikita.wootten@nist.gov";
     programs.git.extraConfig.user.signingKey = nixpkgs.lib.mkForce
-      "key::sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBJ3Ve1vMP4vi5WObVQGsHj3O+E4i67EJo50YpSRkSWX+o+ASnrIyI7pP+7MRMHAbmBqvRR8XbQ0+KSk9woEC8fEAAAAEc3NoOg== nikita.wootten@nist.gov";
+      "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM5wxg2WEXR5Tb1+BtXJmKG1hqMKjzYcHQgB3jxZjiQhTS9qZugjFLjqtrOP4XySHYDVLTzFwlsTR4Bw+lveGz0= naw2@PN118973";
     # output of `eval "$(/opt/homebrew/bin/brew shellenv)"`
     home.sessionVariables = {
       HOMEBREW_PREFIX = "/opt/homebrew";

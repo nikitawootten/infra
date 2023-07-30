@@ -28,7 +28,7 @@
       Atropos = {
         icon = "radarr.png";
         href = "https://${config.lib.lab.mkServiceSubdomain "atropos"}";
-        description = "Radarr: TV series management";
+        description = "Radarr: Movie management";
         server = "my-docker";
         container = "radarr";
         widget = {

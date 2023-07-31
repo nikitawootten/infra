@@ -12,6 +12,7 @@ in
   };
 
   imports = [
+    ./ersatztv.nix
     ./jellyfin.nix
     ./prowlarr.nix
     ./radarr.nix

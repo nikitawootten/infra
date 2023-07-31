@@ -24,6 +24,7 @@
         subdomain = "hypnos";
         port = "8096";
       };
+      restart = "unless-stopped";
     };
   };
 

@@ -19,7 +19,7 @@ This lab is currently running on a Dell PowerEdge R610 with a PERC H200 re-flash
 ## TODO
 
 - [ ] OpenLDAP <-> Keycloak
-- [ ] [ErsatzTV](https://ersatztv.org/) custom "live channel" streams
+- [x] [ErsatzTV](https://ersatztv.org/) custom "live channel" streams
 - [ ] Observability (metrics, data, alerting) with [Grafana](https://grafana.com/)
 - [ ] Replace the hardware with my Dell PowerEdge R720XD (currently performing duty as a backup server)
 - [ ] Backup job

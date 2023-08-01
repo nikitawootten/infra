@@ -1,4 +1,4 @@
-{ lib, config, devenv, system, ... }:
+{ lib, config, devenv ? null, pkgs, ... }:
 let
   cfg = config.personal.direnv;
 in
@@ -16,11 +16,11 @@ in
         enable = true;
       };
     };
-    home.packages = [
-      devenv.packages.${system}.devenv
-    ];
     programs.git.ignores = [
       ".direnv"
+    ];
+    home.packages = lib.lists.optionals (!(builtins.isNull devenv)) [
+      devenv.packages.${pkgs.system}.devenv
     ];
   };
 }

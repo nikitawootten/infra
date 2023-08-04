@@ -48,6 +48,19 @@ in
       ];
     };
 
+    home.packages = with pkgs; [
+      gita
+    ];
+
+    programs.bash.initExtra = ''
+      source ${pkgs.gita}/share/bash-completion/completions/gita
+    '';
+
+    programs.zsh.initExtra = ''
+      autoload -U +X bashcompinit && bashcompinit
+      source ${pkgs.gita}/share/zsh/site-functions/gita
+    '';
+
     home.sessionVariables = {
       # Where I do my work
       GIT_WORKSPACE = "~/Documents/repos";

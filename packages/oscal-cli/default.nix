@@ -12,7 +12,7 @@
 }:
 let
   pname = "oscal-cli";
-  version = "0.3.3";
+  version = "1.0.0";
 in
 pkgs.stdenv.mkDerivation {
   inherit pname version;
@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation {
 
   src = pkgs.fetchzip {
     url = "https://repo1.maven.org/maven2/gov/nist/secauto/oscal/tools/oscal-cli/cli-core/${version}/cli-core-${version}-oscal-cli.zip";
-    sha256 = "sha256-8NlFVNhjD4VjxLU9U8HY2McLbleuNUPXG5kED1Vuldw=";
+    sha256 = "sha256-lxo1OVOl0GWivJaMYh/zheIj5s895DVj3xmZ5DeXX64=";
     stripRoot = false;
   };
 
@@ -37,4 +37,7 @@ pkgs.stdenv.mkDerivation {
     wrapProgram $out/bin/${pname} \
       --set JAVACMD ${jre}/bin/java
   '';
+
+  dontBuild = true;
+  dontInstall = true;
 }

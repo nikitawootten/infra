@@ -23,6 +23,7 @@ in
       parallel
       yq
       qrencode # useful for terminal -> phone communication
+      binutils
     ];
   };
 }

@@ -83,8 +83,10 @@
       overlays.default = personalPackages.overlay;
       packages = personalPackages.packages;
 
-      devShells = forEachSystem (system: {
-        default = import ./shell.nix { pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; }; };
+      devShells = forEachSystem (system: let
+        pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+      in {
+        default = import ./shell.nix { inherit pkgs; };
       });
     };
 }

@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.personal.printing;
 in
@@ -9,5 +9,11 @@ in
 
   config = lib.mkIf cfg.enable {
     services.printing.enable = lib.mkDefault true;
+
+    services.avahi.enable = true;
+    services.avahi.nssmdns = true;
+    services.avahi.openFirewall = true;
+
+    services.printing.drivers = with pkgs; [ hplip ];
   };
 }

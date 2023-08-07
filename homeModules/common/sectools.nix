@@ -13,8 +13,19 @@ in
 
     home.packages = with pkgs; [
       nmap
+      sqlmap
+      sqlitebrowser
+      whois
+      john
+      hashcat
+      ghidra
+      jd-gui
     ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
       burpsuite
+      aircrack-ng
+      macchanger
+      kismet
+      iw
     ]);
     # Fix font rendering for burpsuite
     home.sessionVariables._JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";

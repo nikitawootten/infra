@@ -26,6 +26,18 @@
       };
       restart = "unless-stopped";
     };
+    # Override the resulting output to enable GPU support
+    # See https://docs.docker.com/compose/gpu-support/
+    # TODO: submit a patch to Arion
+    out.service = {
+      deploy.resources.reservations.devices = [
+        {
+          driver = "nvidia";
+          count = 1;
+          capabilities = [ "gpu" ];
+        }
+      ];
+    };
   };
 
   personal.lab.homepage.media-services = [

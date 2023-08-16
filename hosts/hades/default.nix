@@ -7,6 +7,7 @@
 
   personal.zfs.enable = true;
   personal.docker.enable = true;
+  personal.nvidia.enable = true;
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;

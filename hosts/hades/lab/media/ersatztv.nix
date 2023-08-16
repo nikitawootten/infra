@@ -3,7 +3,7 @@
   virtualisation.arion.projects.lab.settings.services.ersatztv = {
     service = {
       container_name = "ersatztv";
-      image = "jasongdove/ersatztv";
+      image = "jasongdove/ersatztv:latest-nvidia";
       environment = {
         TZ = "America/New_York";
       };
@@ -23,6 +23,18 @@
         icon = "ersatztv.png";
       };
       restart = "unless-stopped";
+    };
+    # Override the resulting output to enable GPU support
+    # See https://docs.docker.com/compose/gpu-support/
+    # TODO: submit a patch to Arion
+    out.service = {
+      deploy.resources.reservations.devices = [
+        {
+          driver = "nvidia";
+          count = 1;
+          capabilities = [ "gpu" ];
+        }
+      ];
     };
   };
 }

@@ -6,6 +6,7 @@
     ./flatpak.nix
     ./gnome.nix
     ./networkmanager.nix
+    ./nvidia.nix
     ./printing.nix
     ./sound.nix
     ./ssh-server.nix

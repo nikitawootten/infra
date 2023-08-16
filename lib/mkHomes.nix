@@ -1,6 +1,5 @@
-{ nixpkgs
-, home-manager
-, homes
+{ nixpkgs, home-manager, ... }:
+{ homes
 , configBasePath
 , defaultModules ? [ ]
 , overlays ? [ ]

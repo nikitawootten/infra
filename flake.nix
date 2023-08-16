@@ -40,8 +40,8 @@
       };
 
       homes = self.lib.mkHomes {
-        inherit nixpkgs home-manager specialArgs;
-        overlays = [ personalPackages.overlay ];
+        inherit specialArgs;
+        overlays = [ self.overlays.default ];
         configBasePath = ./homes;
         defaultModules = [ self.homeModules.default nix-index-database.hmModules.nix-index ];
         homes = {
@@ -49,6 +49,7 @@
           "nikita@voyager".system = "x86_64-linux";
           "nikita@defiant".system = "x86_64-linux";
           "nikita@hades".system = "x86_64-linux";
+          "nikita@olympus".system = "x86_64-linux";
         };
       };
 
@@ -56,20 +57,24 @@
     in
     {
       # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
-      lib = import ./lib;
+      lib = import ./lib { inherit nixpkgs home-manager; };
 
       homeModules = import ./homeModules;
       homeConfigurations = homes.homeConfigurations;
 
       nixosModules = import ./hostModules;
       nixosConfigurations = self.lib.mkHosts {
-        inherit nixpkgs specialArgs;
+        inherit specialArgs;
         overlays = [ self.overlays.default ];
         homeConfigs = homes.nixosHomeModules;
         configBasePath = ./hosts;
         defaultModules = [ self.nixosModules.default ];
         hosts = {
           hades = {
+            username = "nikita";
+            system = "x86_64-linux";
+          };
+          olympus = {
             username = "nikita";
             system = "x86_64-linux";
           };

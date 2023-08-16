@@ -4,39 +4,24 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "mpt3sas" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "mpt3sas" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "zroot/root";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/ca26d2e0-aa17-4723-a77d-d53ad0a7eb5c";
+    fsType = "ext4";
+  };
 
-  fileSystems."/nix" =
-    { device = "zroot/root/nix";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    { device = "zroot/root/home";
-      fsType = "zfs";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/92B3-0310";
-      fsType = "vfat";
-    };
-
-  fileSystems."/boot-fallback" =
-    { device = "/dev/disk/by-uuid/92EE-4019";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/83DE-CDC2";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 
@@ -49,6 +34,10 @@
   # networking.interfaces.eno2.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno3.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno4.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp7s0f0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp7s0f1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp8s0f0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp8s0f1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

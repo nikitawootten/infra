@@ -20,6 +20,7 @@ in
       hashcat
       ghidra
       jd-gui
+      dbeaver
     ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
       burpsuite
       aircrack-ng

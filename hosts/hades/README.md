@@ -7,7 +7,7 @@ These containers are configured in the [`lab/`](./lab/) directory.
 
 ## Hardware
 
-This lab is currently running on a Dell PowerEdge R610 with a PERC H200 re-flashed for JBOD/software raid.
+This lab is currently running on a Dell PowerEdge R720XD with a PERC H310 re-flashed for JBOD/software raid.
 
 ## Features
 
@@ -21,5 +21,6 @@ This lab is currently running on a Dell PowerEdge R610 with a PERC H200 re-flash
 - [ ] OpenLDAP <-> Keycloak
 - [x] [ErsatzTV](https://ersatztv.org/) custom "live channel" streams
 - [ ] Observability (metrics, data, alerting) with [Grafana](https://grafana.com/)
-- [ ] Replace the hardware with my Dell PowerEdge R720XD (currently performing duty as a backup server)
+- [x] Replace the hardware with my Dell PowerEdge R720XD
+- [ ] Hardware transcoding
 - [ ] Backup job

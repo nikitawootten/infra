@@ -20,7 +20,6 @@ in
 
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
-      gnome.gnome-boxes
     ];
 
     environment.gnome.excludePackages = with pkgs.gnome; [

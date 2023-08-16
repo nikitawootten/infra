@@ -1,5 +1,5 @@
-{ nixpkgs
-, hosts
+{ nixpkgs, ... }:
+{ hosts
 , homeConfigs ? null
 , configBasePath
 , defaultModules ? [ ]

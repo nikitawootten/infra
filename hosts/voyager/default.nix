@@ -10,6 +10,7 @@
   personal.printing.enable = true;
   personal.steam.enable = true;
   personal.docker.enable = true;
+  personal.virtualbox.enable = true;
   personal.vpn.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;

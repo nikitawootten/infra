@@ -4,9 +4,10 @@ let
   users = [ nikita_voyager ];
 
   voyager = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOey5VJAfPHiW0fdhempd8XosrbGN2BCHIrJcxeCz5MK";
-  hades = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC3o2QhkX8GaEoQBZwdEMtvUFZOsQmapl8eXhFwSB+F";
+  olympus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC3o2QhkX8GaEoQBZwdEMtvUFZOsQmapl8eXhFwSB+F";
+  hades = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAhbHrBfTCi5TiyBVjhzjRJ4HzN5+JgY6rgvoaKP0ec";
 
-  systems = [ voyager hades ];
+  systems = [ voyager olympus hades ];
 in
 {
   "homepage.env.age".publicKeys = [ nikita_voyager voyager hades ];
@@ -17,4 +18,5 @@ in
   "postgres.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "oauth2-proxy.env.age".publicKeys = [ nikita_voyager voyager hades ];
   "watchtower.env.age".publicKeys = [ nikita_voyager voyager hades ];
+  "freshrss.env.age".publicKeys = [ nikita_voyager voyager hades ];
 }

@@ -7,7 +7,7 @@ in
     media-dir = lib.mkOption {
       type = lib.types.str;
       description = "The media directory";
-      default = "/backplane/media";
+      default = "/storage/media";
     };
   };
 

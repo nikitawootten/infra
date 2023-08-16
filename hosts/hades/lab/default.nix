@@ -23,7 +23,7 @@ in
     config-dir = lib.mkOption {
       type = lib.types.str;
       description = "The configuration directory";
-      default = "/backplane/applications";
+      default = "/storage/config";
     };
   };
 

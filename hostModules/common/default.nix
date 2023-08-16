@@ -13,6 +13,7 @@
     ./steam.nix
     ./tailscale.nix
     ./upgrade-diff.nix
+    ./virtualbox.nix
     ./vpn.nix
     ./wireshark.nix
     ./zfs.nix

@@ -47,7 +47,7 @@
         homes = {
           nikita.system = "x86_64-linux";
           "nikita@voyager".system = "x86_64-linux";
-          "nikita@defiant".system = "x86_64-linux";
+          "nikita@dionysus".system = "x86_64-linux";
           "nikita@hades".system = "x86_64-linux";
           "nikita@olympus".system = "x86_64-linux";
         };
@@ -79,6 +79,10 @@
             system = "x86_64-linux";
           };
           voyager = {
+            username = "nikita";
+            system = "x86_64-linux";
+          };
+          dionysus = {
             username = "nikita";
             system = "x86_64-linux";
           };

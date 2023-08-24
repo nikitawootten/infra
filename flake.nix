@@ -21,6 +21,7 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
     # Container management built on top of Docker-Compose
     arion = {
@@ -31,17 +32,16 @@
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, arion, ... }:
     let
-      personalPackages = import ./packages { inherit nixpkgs; lib = self.lib; };
       secrets = import ./secrets;
 
       # Args passed to home-manager and nixos modules
       specialArgs = {
         inherit devenv nixos-hardware nix-index-database agenix arion secrets;
+        personal-packages = self.packages;
       };
 
       homes = self.lib.mkHomes {
         inherit specialArgs;
-        overlays = [ self.overlays.default ];
         configBasePath = ./homes;
         defaultModules = [ self.homeModules.default nix-index-database.hmModules.nix-index ];
         homes = {
@@ -65,7 +65,6 @@
       nixosModules = import ./hostModules;
       nixosConfigurations = self.lib.mkHosts {
         inherit specialArgs;
-        overlays = [ self.overlays.default ];
         homeConfigs = homes.nixosHomeModules;
         configBasePath = ./hosts;
         defaultModules = [ self.nixosModules.default ];
@@ -85,11 +84,10 @@
         };
       };
 
-      overlays.default = personalPackages.overlay;
-      packages = personalPackages.packages;
+      packages = import ./packages { inherit nixpkgs; lib = self.lib; };
 
       devShells = forEachSystem (system: let
-        pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
         default = import ./shell.nix { inherit pkgs; };
       });

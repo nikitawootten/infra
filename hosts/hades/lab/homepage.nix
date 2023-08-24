@@ -58,7 +58,6 @@ in
           cputemp = true;
           uptime = true;
           units = "imperial";
-          disk = "/";
           label = "system";
         };
       }

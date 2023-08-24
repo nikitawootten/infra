@@ -3,7 +3,6 @@
 , homeConfigs ? null
 , configBasePath
 , defaultModules ? [ ]
-, overlays ? [ ]
 , specialArgs ? { }
 }:
 let
@@ -26,10 +25,8 @@ let
       } // specialArgs;
 
       modules = [
-        # Enable overlays
         ({lib, ... }: {
           networking.hostName = lib.mkDefault hostname;
-          nixpkgs.overlays = overlays;
           imports = [
             "${configBasePath}/${hostname}"
           ];

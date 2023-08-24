@@ -16,7 +16,7 @@ Beyond managing dotfiles, I have also experimented with [packaging some of my co
 ├── hostModules/ # Re-usable NixOS modules
 ├── hosts/       # NixOS configurations
 ├── lib/         # Re-usable flake utilities
-├── packages/    # My packages + overlay
+├── packages/    # My packages
 ├── Makefile     # Common operations defined here
 ├── README.md    # You are here
 └── shell.nix    # Shell environment for Makefile operations
@@ -24,7 +24,7 @@ Beyond managing dotfiles, I have also experimented with [packaging some of my co
 
 ### Packages
 
-This flake contains an overlay with several packages that I rely on day to day:
+This flake contains several packages that I rely on day to day:
 
 - [`oscal-cli`](./packages/oscal-cli/)
 - [`oscal-deep-diff`](./packages/oscal-deep-diff/)
@@ -43,7 +43,7 @@ I have created a few Flake helpers and placed them in [`lib/`](./lib):
 
 - [`mkHomes`](./lib/mkHomes.nix): Home-Manager configuration helper that generates Home-Manager and NixOS module compatible outputs and imports `user@hostname`-specific Home-Manager modules by path.
 - [`mkHosts`](./lib/mkHosts.nix): NixOS configuration helper that imports a corresponding Home-Manager configuration and imports `hostname`-specific NixOS modules by path.
-- [`mkPackageSet`](./lib/mkPackageSet.nix): Package and overlay helper that generates an overlay and package set given a set of derivations.
+- [`mkPackageSet`](./lib/mkPackageSet.nix): Package helper that generates a package set given a set of derivations.
 
 Refer to the [`flake.nix`](./flake.nix) for usage examples.
 

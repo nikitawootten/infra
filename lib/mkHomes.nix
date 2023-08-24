@@ -2,7 +2,6 @@
 { homes
 , configBasePath
 , defaultModules ? [ ]
-, overlays ? [ ]
 , specialArgs ? { }
 , stateVersion ? "23.05"
 }:
@@ -43,7 +42,6 @@ let
         stateVersion = lib.mkDefault stateVersion;
       };
       programs.home-manager.enable = lib.mkForce true;
-      nixpkgs = { inherit overlays; };
     });
 
   # Generates config compatible with HomeManager flake output
@@ -55,8 +53,7 @@ let
     in
     home-manager.lib.homeManagerConfiguration {
       # TODO: temporary workaround until config override works?
-      pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
-      # pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs // { inherit system username; };
       modules = [ (mkHomeManagerCommon modules hostname) ];
     };

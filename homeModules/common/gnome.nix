@@ -79,6 +79,10 @@ in
         "org/gnome/nautilus/list-view" = {
           "use-tree-view" = true;
         };
+        "org/gnome/mutter" = {
+          edge-tiling = true;
+          dynamic-workspaces = true;
+        };
       };
     };
   };

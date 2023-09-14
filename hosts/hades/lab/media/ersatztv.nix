@@ -15,6 +15,7 @@
       labels = config.lib.lab.mkTraefikLabels {
         name = "ersatztv";
         subdomain = "morpheus";
+        forwardAuth = true;
       } // config.lib.lab.mkHomepageLabels {
         name = "Morpheus";
         description = "ErsatzTV: Live TV server";

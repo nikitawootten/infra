@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   personal.vscode.enable = true;
   personal.gnome.enable = true;
   personal.fonts.enable = true;
@@ -9,4 +9,8 @@
     enable = true;
     profiles = [ "default" ];
   };
+
+  home.packages = with pkgs; [
+    tor-browser-bundle-bin
+  ];
 }

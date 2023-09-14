@@ -13,6 +13,7 @@ in
 
   imports = [
     ./ersatztv.nix
+    ./freshrss.nix
     ./jellyfin.nix
     ./prowlarr.nix
     ./radarr.nix

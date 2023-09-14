@@ -17,6 +17,8 @@
         OAUTH2_PROXY_REDIRECT_URL = "https://${config.lib.lab.mkServiceSubdomain "oauth"}/oauth2/callback";
         OAUTH2_PROXY_OIDC_ISSUER_URL = "https://${config.lib.lab.mkServiceSubdomain "cerberus"}/realms/master";
         OAUTH2_PROXY_EMAIL_DOMAINS = "*";
+        OAUTH2_PROXY_SCOPE = "openid email";
+        # OAUTH2_PROXY_CODE_CHALLENGE_METHOD = "S256";
         # OAUTH2_PROXY_COOKIE_SECRET = "";
         # OAUTH2_PROXY_CLIENT_SECRET = "";
         # https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/overview/#forwardauth-with-static-upstreams-configuration

@@ -60,12 +60,12 @@ let
       oauth-auth-redirect.forwardAuth = {
         address = "https://${config.lib.lab.mkServiceSubdomain "oauth"}/";
         trustForwardHeader = true;
-        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" ];
+        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" "X-Forwarded-User" "X-Forwarded-Email" "X-Forwarded-Preferred-Username" ];
       };
       oauth-auth-no-redirects.forwardAuth = {
         address = "https://${config.lib.lab.mkServiceSubdomain "oauth"}/oauth2/auth";
         trustForwardHeader = true;
-        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" ];
+        authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" "X-Forwarded-User" "X-Forwarded-Email" "X-Forwarded-Preferred-Username" ];
       };
     };
   };

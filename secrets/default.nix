@@ -1,4 +1,5 @@
 {
+  freshrss = ./freshrss.env.age;
   homepage = ./homepage.env.age;
   openldap = ./openldap.rootpw.age;
   traefik = ./traefik.env.age;

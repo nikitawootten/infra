@@ -22,5 +22,5 @@ This lab is currently running on a Dell PowerEdge R720XD with a PERC H310 re-fla
 - [x] [ErsatzTV](https://ersatztv.org/) custom "live channel" streams
 - [ ] Observability (metrics, data, alerting) with [Grafana](https://grafana.com/)
 - [x] Replace the hardware with my Dell PowerEdge R720XD
-- [ ] Hardware transcoding
+- [x] Hardware transcoding
 - [ ] Backup job

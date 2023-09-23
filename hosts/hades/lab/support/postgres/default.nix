@@ -5,7 +5,8 @@
   virtualisation.arion.projects.lab.settings.services.postgres = {
     service = {
       container_name = "postgres";
-      image = "postgres";
+      # Pinned due to upgrade incompatibilities
+      image = "postgres:15";
       environment = {
         PGDATA = "/var/lib/postgresql/data/pgdata";
       };

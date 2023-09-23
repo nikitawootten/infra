@@ -22,6 +22,7 @@
         # # Left at default value:
         # # OIDC_REMOTE_USER_CLAIM = "";
         # # OIDC_SCOPES = "";
+        CRON_MIN = "0,30";
       };
       env_file = [
         config.age.secrets.freshrss.path

@@ -6,8 +6,9 @@ let
   voyager = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOey5VJAfPHiW0fdhempd8XosrbGN2BCHIrJcxeCz5MK";
   olympus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC3o2QhkX8GaEoQBZwdEMtvUFZOsQmapl8eXhFwSB+F";
   hades = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAhbHrBfTCi5TiyBVjhzjRJ4HzN5+JgY6rgvoaKP0ec";
+  dionysus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJutM0WGtPHMkziyE9g2nHbxuL1YrJu1y8ysvG0TtAeA";
 
-  systems = [ voyager olympus hades ];
+  systems = [ voyager olympus hades dionysus ];
 in
 {
   "homepage.env.age".publicKeys = [ nikita_voyager voyager hades ];

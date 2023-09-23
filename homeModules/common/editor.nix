@@ -36,7 +36,13 @@ in
     allowedUnfreePackagesRegexs = [ "vscode" ];
 
     home.packages = with pkgs; [
+      # provides LSPs for CSS, SCSS, HTML, and JSON
       nodePackages.vscode-langservers-extracted
+      yaml-language-server
+      nodePackages.bash-language-server
+      # markdown LSP
+      marksman
+      # Nix LSP
       nil
     ];
   };

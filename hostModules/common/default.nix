@@ -3,6 +3,7 @@
   imports = [
     ./base.nix
     ./docker.nix
+    ./dslr-webcam.nix
     ./flatpak.nix
     ./gnome.nix
     ./networkmanager.nix

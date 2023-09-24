@@ -15,6 +15,12 @@
   personal.flatpak.enable = true;
   personal.nvidia.enable = true;
 
+  personal.dslr-webcam = {
+    enable = true;
+    camera-udev-product = "7b4/130/100"; # My beloved Olympus OM-D EM5 Mark II
+    ffmpeg-hwaccel = true;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

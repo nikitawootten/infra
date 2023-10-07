@@ -168,6 +168,21 @@
         "type": "github"
       }
     },
+    "flake-schemas": {
+      "locked": {
+        "lastModified": 1693615523,
+        "narHash": "sha256-LeyH24etXCxNJviWptyLy2DPT9xt+oOs/zE66To1iPY=",
+        "owner": "DeterminateSystems",
+        "repo": "flake-schemas",
+        "rev": "8940e872c4f8c7cd7d0a1ec169fa0a24697b1f1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "repo": "flake-schemas",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -359,6 +374,42 @@
         "type": "github"
       }
     },
+    "nixlib": {
+      "locked": {
+        "lastModified": 1693701915,
+        "narHash": "sha256-waHPLdDYUOHSEtMKKabcKIMhlUOHPOOPQ9UyFeEoovs=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "f5af57d3ef9947a70ac86e42695231ac1ad00c25",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixos-generators": {
+      "inputs": {
+        "nixlib": "nixlib",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1696058303,
+        "narHash": "sha256-eNqKWpF5zG0SrgbbtljFOrRgFgRzCc4++TMFADBMLnc=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "150f38bd1e09e20987feacb1b0d5991357532fb5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1696614066,
@@ -506,8 +557,10 @@
         "agenix": "agenix",
         "arion": "arion",
         "devenv": "devenv",
+        "flake-schemas": "flake-schemas",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
+        "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3"
       }

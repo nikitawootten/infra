@@ -1,5 +1,3 @@
 {
-  default = {
-    imports = [ ./common ];
-  };
+  personal.imports = [ ./personal ];
 }

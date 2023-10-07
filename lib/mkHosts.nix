@@ -27,6 +27,8 @@ let
       modules = [
         ({lib, ... }: {
           networking.hostName = lib.mkDefault hostname;
+          users.users.${username}.isNormalUser = lib.mkDefault true;
+
           imports = [
             "${configBasePath}/${hostname}"
           ];

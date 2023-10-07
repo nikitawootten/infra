@@ -1,8 +1,9 @@
-{ nixos-hardware, ... }:
+{ self, nixos-hardware, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.framework
+    self.nixosModules.personal
   ];
 
   personal.gnome.enable = true;

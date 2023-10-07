@@ -1,8 +1,9 @@
-{ ... }:
+{ self, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ./lab
+    self.nixosModules.personal
   ];
 
   personal.zfs.enable = true;

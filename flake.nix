@@ -28,76 +28,97 @@
       url = "github:hercules-ci/arion";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Create VM/images/containers off of NixOS modules
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Provides checks for additional output formats
+    flake-schemas.url = "github:DeterminateSystems/flake-schemas";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, devenv, nix-index-database, agenix, arion, ... }:
-    let
-      secrets = import ./secrets;
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    nixos-hardware,
+    devenv,
+    nix-index-database,
+    agenix,
+    arion,
+    nixos-generators,
+    flake-schemas,
+    ...
+  }: let
+    secrets = import ./secrets;
 
-      # Args passed to home-manager and nixos modules
-      specialArgs = {
-        inherit devenv nixos-hardware nix-index-database agenix arion secrets;
-        personal-packages = self.packages;
-      };
-
-      homes = self.lib.mkHomes {
-        inherit specialArgs;
-        configBasePath = ./homes;
-        defaultModules = [ self.homeModules.default nix-index-database.hmModules.nix-index ];
-        homes = {
-          nikita.system = "x86_64-linux";
-          "nikita@voyager".system = "x86_64-linux";
-          "nikita@dionysus".system = "x86_64-linux";
-          "nikita@hades".system = "x86_64-linux";
-          "nikita@olympus".system = "x86_64-linux";
-        };
-      };
-
-      forEachSystem = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ] f;
-    in
-    {
-      # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
-      lib = import ./lib { inherit nixpkgs home-manager; };
-
-      homeModules = import ./homeModules;
-      homeConfigurations = homes.homeConfigurations;
-
-      nixosModules = import ./hostModules;
-      nixosConfigurations = self.lib.mkHosts {
-        inherit specialArgs;
-        homeConfigs = homes.nixosHomeModules;
-        configBasePath = ./hosts;
-        defaultModules = [ self.nixosModules.default ];
-        hosts = {
-          hades = {
-            username = "nikita";
-            system = "x86_64-linux";
-          };
-          olympus = {
-            username = "nikita";
-            system = "x86_64-linux";
-          };
-          voyager = {
-            username = "nikita";
-            system = "x86_64-linux";
-          };
-          dionysus = {
-            username = "nikita";
-            system = "x86_64-linux";
-          };
-          raspi4_generic = {
-            username = "pi";
-            system = "aarch64-linux";
-          };
-        };
-      };
-
-      packages = import ./packages { inherit nixpkgs; lib = self.lib; };
-
-      devShells = forEachSystem (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = import ./shell.nix { inherit pkgs; };
-      });
+    # Args passed to home-manager and nixos modules
+    specialArgs = {
+      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets self;
     };
+
+    homes = self.lib.mkHomes {
+      inherit specialArgs;
+      configBasePath = ./homes;
+      defaultModules = [self.homeModules.personal nix-index-database.hmModules.nix-index];
+      homes = {
+        nikita.system = "x86_64-linux";
+        "nikita@voyager".system = "x86_64-linux";
+        "nikita@dionysus".system = "x86_64-linux";
+        "nikita@hades".system = "x86_64-linux";
+        "nikita@olympus".system = "x86_64-linux";
+        "pi@raspberrypi4".system = "aarch64-linux";
+      };
+    };
+
+    forEachSystem = f: nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"] f;
+  in {
+    schemas = flake-schemas.schemas;
+
+    # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
+    lib = import ./lib {inherit nixpkgs home-manager;};
+
+    homeModules = import ./homeModules;
+    homeConfigurations = homes.homeConfigurations;
+
+    nixosModules = import ./hostModules;
+    nixosConfigurations = self.lib.mkHosts {
+      inherit specialArgs;
+      homeConfigs = homes.nixosHomeModules;
+      configBasePath = ./hosts;
+      hosts = {
+        hades = {
+          username = "nikita";
+          system = "x86_64-linux";
+        };
+        olympus = {
+          username = "nikita";
+          system = "x86_64-linux";
+        };
+        voyager = {
+          username = "nikita";
+          system = "x86_64-linux";
+        };
+        dionysus = {
+          username = "nikita";
+          system = "x86_64-linux";
+        };
+        raspberrypi4 = {
+          username = "pi";
+          system = "aarch64-linux";
+        };
+      };
+    };
+
+    packages = import ./packages {
+      inherit nixpkgs;
+      lib = self.lib;
+    };
+
+    devShells = forEachSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = import ./shell.nix {inherit pkgs;};
+    });
+  };
 }

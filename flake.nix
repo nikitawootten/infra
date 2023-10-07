@@ -85,6 +85,10 @@
             username = "nikita";
             system = "x86_64-linux";
           };
+          raspi4_generic = {
+            username = "pi";
+            system = "aarch64-linux";
+          };
         };
       };
 

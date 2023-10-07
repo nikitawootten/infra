@@ -20,6 +20,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Needed to build aarch64 packages such as raspberry pi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.supportedFilesystems = [ "ntfs" ];
 
   # Setup keyfile

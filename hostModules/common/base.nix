@@ -8,8 +8,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    time.timeZone = "America/New_York";
-    i18n.defaultLocale = "en_US.UTF-8";
+    time.timeZone = lib.mkDefault "America/New_York";
+    i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
     i18n.extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
       LC_IDENTIFICATION = "en_US.UTF-8";

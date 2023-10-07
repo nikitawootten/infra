@@ -8,11 +8,11 @@
 let
   # Generate a NixOS system with some common modules
   # Expects hardware specific modules to be defined in ./${hostname}
-  # Also expects an associated ${username}@${hostname} home configuration
+  # Also optionally expects an associated ${username}@${hostname} home configuration
   mkSystem = hostname: { username, system, modules ? [ ] }:
     let
       homeModules =
-        if (homeConfigs != null) then
+        if (homeConfigs != null && builtins.hasAttr "${username}@${hostname}" homeConfigs) then
           homeConfigs."${username}@${hostname}"
         else [ ];
     in

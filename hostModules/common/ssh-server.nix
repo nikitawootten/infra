@@ -11,11 +11,11 @@ in
     services.openssh = {
       enable = true;
       settings = {
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
+        PermitRootLogin = lib.mkDefault "no";
+        PasswordAuthentication = lib.mkDefault false;
       };
     };
     # Passwordless sudo when SSH'ing with keys
-    security.pam.enableSSHAgentAuth = true;
+    security.pam.enableSSHAgentAuth = lib.mkDefault true;
   };
 }

@@ -3,7 +3,7 @@
 , configBasePath
 , defaultModules ? [ ]
 , specialArgs ? { }
-, stateVersion ? "23.05"
+, stateVersion ? "23.11"
 }:
 let
   parseEntry = entry:

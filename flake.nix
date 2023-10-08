@@ -33,6 +33,11 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Manage remote deployments of nodes
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Provides checks for additional output formats
     flake-schemas.url = "github:DeterminateSystems/flake-schemas";
   };
@@ -47,6 +52,7 @@
     agenix,
     arion,
     nixos-generators,
+    deploy-rs,
     flake-schemas,
     ...
   }: let
@@ -109,6 +115,15 @@
         };
       };
     };
+
+    deploy.nodes = {
+      hades.profiles.system = {
+        user = "nikita";
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.hades;
+      };
+    };
+
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     packages = import ./packages {
       inherit nixpkgs;

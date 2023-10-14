@@ -15,6 +15,7 @@
   personal.vpn.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
+  personal.zsa.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

@@ -19,6 +19,7 @@
     ./vpn.nix
     ./wireshark.nix
     ./zfs.nix
+    ./zsa.nix
   ];
 
   personal.base.enable = lib.mkDefault true;

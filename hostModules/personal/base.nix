@@ -30,8 +30,9 @@ in
 
     programs.zsh.enable = true;
 
+    users.groups.media = {};
     users.users.${username} = {
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "media" ];
       shell = pkgs.zsh;
     };
 

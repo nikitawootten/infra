@@ -1,8 +1,9 @@
-{ self, ... }:
+{ self, nixos-hardware, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
+    nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
   ];
 
   personal.gnome.enable = true;
@@ -14,13 +15,25 @@
   personal.vpn.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
-  personal.nvidia.enable = true;
+
+  personal.nvidia = {
+    enable = true;
+    headless = false;
+  };
+
+  personal.zsa.enable = true;
 
   personal.dslr-webcam = {
     enable = true;
     camera-udev-product = "7b4/130/100"; # My beloved Olympus OM-D EM5 Mark II
     ffmpeg-hwaccel = true;
   };
+
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

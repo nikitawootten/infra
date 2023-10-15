@@ -18,6 +18,7 @@
     ./tmux.nix
     ./upgrade-diff.nix
     ./vscode.nix
+    ./zellij.nix
   ];
 
   personal.direnv.enable = lib.mkDefault true;

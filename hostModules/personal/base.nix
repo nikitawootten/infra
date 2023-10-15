@@ -32,6 +32,8 @@ in
 
     users.groups.media = {};
     users.users.${username} = {
+      # Default user should have UID of 1000 for consistency
+      uid = lib.mkDefault 1000;
       extraGroups = [ "wheel" "media" ];
       shell = pkgs.zsh;
     };

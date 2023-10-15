@@ -25,5 +25,5 @@
   ];
 
   networking.hostId = "45389833";
-  boot.zfs.extraPools = [ "storage" ];
+  boot.zfs.extraPools = [ "storage" "storage2" ];
 }

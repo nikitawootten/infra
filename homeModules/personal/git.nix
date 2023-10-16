@@ -35,6 +35,7 @@ in
         tag.gpgsign = lib.mkDefault true;
         user.signingKey = lib.mkDefault "key::${key}";
       };
+      lfs.enable = true;
     };
 
     programs.gh = {

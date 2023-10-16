@@ -37,6 +37,7 @@ in
             "pano@elhan.io"
             "tailscale-status@maxgallup.github.com"
             "pip-on-top@rafostar.github.com"
+            "gsconnect@andyholmes.github.io"
           ];
         };
         "org/gnome/desktop/interface" = {

@@ -6,7 +6,11 @@
     self.nixosModules.personal
   ];
 
-  personal.gnome.enable = true;
+  personal.gnome = {
+    enable = true;
+    enableGSConnect = true;
+  };
+
   personal.networkmanager.enable = true;
   personal.printing.enable = true;
   personal.steam.enable = true;

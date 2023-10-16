@@ -1,10 +1,11 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, username, ... }:
 let
   cfg = config.personal.gnome;
 in
 {
   options.personal.gnome = {
     enable = lib.mkEnableOption "gnome configuration";
+    enableGSConnect = lib.mkEnableOption "gnome gsconnect configuration";
   };
 
   config = lib.mkIf cfg.enable {
@@ -18,9 +19,7 @@ in
     # Counter-intuitively required in order for Nix-managed gnome-extensions to be picked up
     programs.dconf.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      gnome.gnome-tweaks
-    ];
+    personal.sound.enable = lib.mkDefault true;
 
     environment.gnome.excludePackages = with pkgs.gnome; [
       tali # poker game
@@ -29,7 +28,29 @@ in
       atomix # puzzle game
     ];
 
-    personal.sound.enable = lib.mkDefault true;
-  };
+    environment.systemPackages = with pkgs; [
+      gnome.gnome-tweaks
+    ];
 
+    programs.kdeconnect = {
+      enable = cfg.enableGSConnect;
+      package = pkgs.gnomeExtensions.gsconnect;
+    };
+
+    # Enable user extensions and GSConnect extension
+    home-manager.users.${username}.imports = lib.lists.optional cfg.enableGSConnect {
+      dconf = {
+        enable = true;
+        settings = {
+          "org/gnome/shell" = {
+            disable-user-extensions = false;
+            # `gnome-extensions list` for a list
+            enabled-extensions = [
+              "gsconnect@andyholmes.github.io"
+            ];
+          };
+        };
+      };
+    };
+  };
 }

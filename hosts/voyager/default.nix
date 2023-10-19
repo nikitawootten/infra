@@ -1,4 +1,4 @@
-{ self, nixos-hardware, ... }:
+{ pkgs, self, nixos-hardware, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -20,6 +20,10 @@
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    google-chrome
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

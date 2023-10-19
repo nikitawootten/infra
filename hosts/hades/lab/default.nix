@@ -55,13 +55,6 @@ in
           description = "Dell Remote Management";
         };
       }
-      {
-        "Access Point" = {
-          icon = "omada.png";
-          href = "https://eap610-9c-53-22-97-36-b6.${config.personal.lab.base-domain}";
-          description = "TPLink Omada AP";
-        };
-      }
     ];
   };
 

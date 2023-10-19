@@ -91,6 +91,9 @@ in
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "port" options) {
       "traefik.http.routers.${name}.service" = service;
       "traefik.http.services.${service}.loadbalancer.server.port" = "${options.port}";
+    } // lib.attrsets.optionalAttrs (builtins.hasAttr "scheme" options) {
+      "traefik.http.routers.${name}.service" = service;
+      "traefik.http.services.${service}.loadbalancer.server.scheme" = "${options.scheme}";
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "service" options) {
       "traefik.http.routers.${name}.service" = service;
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "middleware" options) {

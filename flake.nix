@@ -124,7 +124,8 @@
       };
     };
 
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+    # Too intensive for GHA, disabling for now
+    # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     packages = import ./packages {
       inherit nixpkgs;

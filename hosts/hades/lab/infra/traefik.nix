@@ -70,6 +70,8 @@ let
     };
   };
   dynamicConfigFile = builtins.toFile "traefik_provider.yaml" (builtins.toJSON dynamicConfig);
+
+  subdomain = "traefik";
 in
 {
   lib.lab.mkTraefikLabels = options: (
@@ -134,14 +136,14 @@ in
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "traefik";
-        subdomain = "charon";
+        inherit subdomain;
         service = "api@internal";
         forwardAuth = true;
       } // config.lib.lab.mkHomepageLabels {
-        name = "Charon";
-        description = "Traefik: HTTP router";
+        name = "Traefik Dashboard";
+        description = "View Traefik configuration";
         group = "Infrastructure";
-        subdomain = "charon";
+        inherit subdomain;
         icon = "traefik.png";
       };
       restart = "unless-stopped";

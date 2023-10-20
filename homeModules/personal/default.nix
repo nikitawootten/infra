@@ -1,6 +1,7 @@
 { lib, ... }:
 {
   imports = [
+    ./gnome
     ./allowUnfreeRegexes.nix
     ./direnv.nix
     ./editor.nix
@@ -9,7 +10,6 @@
     ./firefox.nix
     ./fonts.nix
     ./git.nix
-    ./gnome.nix
     ./misc-utils.nix
     ./sectools.nix
     ./shell.nix

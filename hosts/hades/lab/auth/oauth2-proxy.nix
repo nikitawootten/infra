@@ -1,4 +1,7 @@
 { secrets, config, ... }:
+let
+  subdomain = "oauth";
+in
 {
   age.secrets.oauth2-proxy.file = secrets.oauth2-proxy;
 
@@ -33,13 +36,13 @@
       ports = [ "3002:3002" ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "oauth2-proxy";
-        subdomain = "oauth";
+        inherit subdomain;
         middleware = "auth-headers@file";
       } // config.lib.lab.mkHomepageLabels {
         name = "OAuth2 Proxy";
         description = "Traefik ForwardAuth Provider";
         group = "Infrastructure";
-        subdomain = "oauth";
+        inherit subdomain;
         icon = "https://oauth2-proxy.github.io/oauth2-proxy/img/logos/OAuth2_Proxy_icon.svg";
       };
       depends_on = [ "keycloak" ];

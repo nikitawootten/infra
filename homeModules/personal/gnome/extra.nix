@@ -23,13 +23,13 @@ in
         "org/gnome/desktop/calendar" = {
           show-weekdate = true;
         };
-        "/org/gtk/settings/file-chooser" = {
+        "org/gnome/desktop/interface" = {
           clock-format = "12h";
         };
-        "/org/gnome/system/location" = {
+        "org/gnome/system/location" = {
           enabled = true;
         };
-        "/org/gnome/desktop/datetime" = {
+        "org/gnome/desktop/datetime" = {
           automatic-timezone = true;
         };
       };

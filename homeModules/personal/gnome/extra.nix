@@ -1,6 +1,5 @@
 { pkgs, lib, config, ... }:
 let
-  mkTuple = lib.hm.gvariant.mkTuple;
   cfg = config.personal.gnome;
 in
 {
@@ -8,6 +7,7 @@ in
     home.packages = with pkgs; [
       gnomeExtensions.tailscale-status
       gnomeExtensions.pip-on-top
+      gnomeExtensions.caffeine
     ];
 
     dconf = {
@@ -18,6 +18,7 @@ in
           enabled-extensions = [
             "tailscale-status@maxgallup.github.com"
             "pip-on-top@rafostar.github.com"
+            "caffeine@patapon.info"
           ];
         };
         "org/gnome/desktop/calendar" = {

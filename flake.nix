@@ -57,10 +57,11 @@
     ...
   }: let
     secrets = import ./secrets;
+    keys = import ./keys;
 
     # Args passed to home-manager and nixos modules
     specialArgs = {
-      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets self;
+      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets keys self;
     };
 
     homes = self.lib.mkHomes {

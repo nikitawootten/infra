@@ -20,7 +20,7 @@ in
           enabled-extensions = [
             "AlphabeticalAppGrid@stuarthayhurst"
             "appindicatorsupport@rgcjonas.gmail.com"
-            "blur-my-shell@aunetx"
+            # "blur-my-shell@aunetx" # Disable for now due to performance issues & artifacts
             "burn-my-windows@schneegans.github.com"
             "nightthemeswitcher@romainvigier.fr"
           ];

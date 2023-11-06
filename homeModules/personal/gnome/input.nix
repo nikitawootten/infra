@@ -4,17 +4,21 @@ let
   cfg = config.personal.gnome;
 in
 {
+  options.personal.gnome = {
+    enablePaperWm = lib.mkEnableOption "PaperWM tiling extension";
+  };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       gnomeExtensions.pano
+      gnomeExtensions.paperwm
     ];
     dconf.settings = {
       "org/gnome/shell" = {
         enabled-extensions = [
           "pano@elhan.io"
-        ];
+        ] ++ lib.lists.optional cfg.enablePaperWm "paperwm@paperwm.github.com";
       };
-      "org/gnome/desktop/wm/keybindings" = {
+      "org/gnome/desktop/wm/keybindings" = lib.attrsets.optionalAttrs (!cfg.enablePaperWm) {
         switch-to-workspace-left = [ "<Control><Super>Left" ];
         switch-to-workspace-right = [ "<Control><Super>Right" ];
       };
@@ -34,12 +38,11 @@ in
       "org/gtk/gtk4/settings/file-chooser" = {
         show-hidden = true;
       };
-
       "org/gnome/nautilus/list-view" = {
-        "use-tree-view" = true;
+        use-tree-view = true;
       };
       "org/gnome/mutter" = {
-        edge-tiling = true;
+        edge-tiling = !cfg.enablePaperWm;
         dynamic-workspaces = true;
       };
     };

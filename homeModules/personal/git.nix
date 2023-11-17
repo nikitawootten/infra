@@ -1,21 +1,35 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, keys, ... }:
 let
   # FIDO2 key living on the first Yubikey
   # A note to myself for Arch installs:
   #   "libfido2" is not installed automatically!
-  key = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIgGx2KcXwXTYHMh5DOLzTq7YIBu0GngrYX9BYiCRnOvAAAABHNzaDo= nikita.wootten@gmail.com";
   cfg = config.personal.git;
 in
 {
   options.personal.git = {
     enable = lib.mkEnableOption "git config";
+    userName = lib.mkOption {
+      type = lib.types.str;
+      default = "Nikita Wootten";
+      description = "Name to use for git commits";
+    };
+    userEmail = lib.mkOption {
+      type = lib.types.str;
+      default = "nikita.wootten@gmail.com";
+      description = "Email to use for git commits";
+    };
+    signingKey = lib.mkOption {
+      type = lib.types.str;
+      default = "key::${keys.nikita_yubikey_1}";
+      description = "SSH key to use for git signing";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = lib.mkDefault true;
-      userName = lib.mkDefault "Nikita Wootten";
-      userEmail = lib.mkDefault "nikita.wootten@gmail.com";
+      userName = lib.mkDefault cfg.userName;
+      userEmail = lib.mkDefault cfg.userEmail;
       ignores = [
         ".DS_Store"
         "*~"
@@ -33,7 +47,7 @@ in
         gpg.format = lib.mkDefault "ssh";
         commit.gpgsign = lib.mkDefault true;
         tag.gpgsign = lib.mkDefault true;
-        user.signingKey = lib.mkDefault "key::${key}";
+        user.signingKey = lib.mkDefault cfg.signingKey;
       };
       lfs.enable = true;
     };
@@ -51,7 +65,7 @@ in
 
     home.sessionVariables = {
       # Where I do my work
-      GIT_WORKSPACE = "~/Documents/repos";
+      GIT_WORKSPACE = "~/Documents/workspace";
     };
   };
 }

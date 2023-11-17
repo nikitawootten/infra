@@ -57,7 +57,7 @@
     ...
   }: let
     secrets = import ./secrets;
-    keys = import ./keys;
+    keys = import ./keys.nix;
 
     # Args passed to home-manager and nixos modules
     specialArgs = {

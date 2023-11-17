@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    nixos-hardware.nixosModules.framework
+    nixos-hardware.nixosModules.framework-11th-gen-intel
     self.nixosModules.personal
   ];
 

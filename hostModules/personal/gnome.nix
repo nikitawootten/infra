@@ -5,7 +5,6 @@ in
 {
   options.personal.gnome = {
     enable = lib.mkEnableOption "gnome configuration";
-    enableGSConnect = lib.mkEnableOption "gnome gsconnect configuration";
   };
 
   config = lib.mkIf cfg.enable {
@@ -31,26 +30,5 @@ in
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
     ];
-
-    programs.kdeconnect = {
-      enable = cfg.enableGSConnect;
-      package = pkgs.gnomeExtensions.gsconnect;
-    };
-
-    # Enable user extensions and GSConnect extension
-    home-manager.users.${username}.imports = lib.lists.optional cfg.enableGSConnect {
-      dconf = {
-        enable = true;
-        settings = {
-          "org/gnome/shell" = {
-            disable-user-extensions = false;
-            # `gnome-extensions list` for a list
-            enabled-extensions = [
-              "gsconnect@andyholmes.github.io"
-            ];
-          };
-        };
-      };
-    };
   };
 }

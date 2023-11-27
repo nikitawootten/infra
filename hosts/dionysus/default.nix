@@ -6,10 +6,7 @@
     nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
   ];
 
-  personal.gnome = {
-    enable = true;
-    enableGSConnect = true;
-  };
+  personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
   personal.printing.enable = true;

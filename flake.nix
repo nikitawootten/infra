@@ -28,6 +28,8 @@
       url = "github:hercules-ci/arion";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Manage flatpaks
+    flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
     # Create VM/images/containers off of NixOS modules
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -51,6 +53,7 @@
     nix-index-database,
     agenix,
     arion,
+    flatpaks,
     nixos-generators,
     deploy-rs,
     flake-schemas,
@@ -61,7 +64,7 @@
 
     # Args passed to home-manager and nixos modules
     specialArgs = {
-      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets keys self;
+      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets keys flatpaks self;
     };
 
     homes = self.lib.mkHomes {

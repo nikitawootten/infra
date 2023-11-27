@@ -3,12 +3,16 @@ let
   cfg = config.personal.gnome;
 in
 {
+  options.personal.gnome = {
+    enableGSConnect = lib.mkEnableOption "GSConnect";
+  };
+
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       gnomeExtensions.tailscale-status
       gnomeExtensions.pip-on-top
       gnomeExtensions.caffeine
-    ];
+    ] ++ lib.lists.optional cfg.enableGSConnect pkgs.gnomeExtensions.gsconnect;
 
     dconf = {
       settings = {
@@ -19,7 +23,7 @@ in
             "tailscale-status@maxgallup.github.com"
             "pip-on-top@rafostar.github.com"
             "caffeine@patapon.info"
-          ];
+          ] ++ lib.lists.optional cfg.enableGSConnect "gsconnect@andyholmes.github.io";
         };
         "org/gnome/desktop/calendar" = {
           show-weekdate = true;

@@ -9,13 +9,13 @@ in
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      gnomeExtensions.pano
+      # gnomeExtensions.pano
       gnomeExtensions.paperwm
     ];
     dconf.settings = {
       "org/gnome/shell" = {
         enabled-extensions = [
-          "pano@elhan.io"
+          # "pano@elhan.io"
         ] ++ lib.lists.optional cfg.enablePaperWm "paperwm@paperwm.github.com";
       };
       "org/gnome/desktop/wm/keybindings" = lib.attrsets.optionalAttrs (!cfg.enablePaperWm) {
@@ -44,6 +44,9 @@ in
       "org/gnome/mutter" = {
         edge-tiling = !cfg.enablePaperWm;
         dynamic-workspaces = true;
+      };
+      "org/gnome/shell/extensions/paperwm" = {
+        show-workspace-indicator = false;
       };
     };
   };

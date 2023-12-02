@@ -24,6 +24,8 @@ in
       yq
       qrencode # useful for terminal -> phone communication
       binutils
+      inetutils
+      dnsutils
     ];
   };
 }

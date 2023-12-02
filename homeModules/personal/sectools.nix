@@ -15,7 +15,6 @@ in
       nmap
       sqlmap
       sqlitebrowser
-      whois
       john
       hashcat
       ghidra

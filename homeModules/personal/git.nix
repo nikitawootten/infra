@@ -42,6 +42,7 @@ in
         fetch.prune = lib.mkDefault true;
         pull.rebase = lib.mkDefault false;
         init.defaultBranch = lib.mkDefault "main";
+        push.autoSetupRemote = lib.mkDefault true;
 
         # signing
         gpg.format = lib.mkDefault "ssh";

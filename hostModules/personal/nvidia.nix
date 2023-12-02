@@ -10,6 +10,7 @@ in
       description = "If true, enable NVidia settings";
       default = true;
     };
+    betaDriver = lib.mkEnableOption "enable beta driver";
   };
 
   config = lib.mkIf cfg.enable {
@@ -27,7 +28,9 @@ in
       modesetting.enable = true;
       open = false;
       nvidiaSettings = !cfg.headless;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = if cfg.betaDriver
+        then config.boot.kernelPackages.nvidiaPackages.beta
+        else config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     virtualisation.docker.enableNvidia = true;

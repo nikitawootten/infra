@@ -1,6 +1,5 @@
-# Disclaimer: Although I am the author and current maintainer of
-# OSCAL-deep-diff, and while I work on this project as part of my job, this is
-# not an official package endorsed by my organization.
+# Disclaimer: Although I am the author of OSCAL-deep-diff, this is not an
+# official package endorsed by NIST.
 { pkgs ? let
     lock = (builtins.fromJSON (builtins.readFile ../../flake.lock)).nodes.nixpkgs.locked;
     nixpkgs = fetchTarball {

@@ -10,6 +10,11 @@
     };
     # Provides hardware-specific NixOS modules
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # Provides secureboot support
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Reproducible build environment
     devenv.url = "github:cachix/devenv/latest";
     # Provides a handy "command not found" nixpkgs hook
@@ -49,6 +54,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
+    lanzaboote,
     devenv,
     nix-index-database,
     agenix,
@@ -64,7 +70,7 @@
 
     # Args passed to home-manager and nixos modules
     specialArgs = {
-      inherit devenv nixos-hardware nix-index-database agenix arion nixos-generators secrets keys flatpaks self;
+      inherit devenv nixos-hardware lanzaboote nix-index-database agenix arion nixos-generators secrets keys flatpaks self;
     };
 
     homes = self.lib.mkHomes {
@@ -77,6 +83,7 @@
         "nikita@dionysus".system = "x86_64-linux";
         "nikita@hades".system = "x86_64-linux";
         "nikita@olympus".system = "x86_64-linux";
+        "nikita@cochrane".system = "x86_64-linux";
         "pi@raspberrypi4".system = "aarch64-linux";
       };
     };
@@ -110,6 +117,11 @@
           system = "x86_64-linux";
         };
         dionysus = {
+          username = "nikita";
+          system = "x86_64-linux";
+        };
+        # My GPD Pocket 2 mini-pc
+        cochrane = {
           username = "nikita";
           system = "x86_64-linux";
         };

@@ -25,5 +25,8 @@ pkgs.mkShell {
     # Editor support
     nixpkgs-fmt
     nil
+
+    # Secureboot
+    sbctl
   ];
 }

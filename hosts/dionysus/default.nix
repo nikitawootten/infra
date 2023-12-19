@@ -1,4 +1,4 @@
-{ self, nixos-hardware, ... }:
+{ self, pkgs, nixos-hardware, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -20,6 +20,13 @@
   personal.nvidia = {
     enable = true;
     headless = false;
+    suspend = true;
+  };
+
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [nvidia-vaapi-driver];
   };
 
   personal.zsa.enable = true;

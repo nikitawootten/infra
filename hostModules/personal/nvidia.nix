@@ -11,6 +11,7 @@ in
       default = true;
     };
     betaDriver = lib.mkEnableOption "enable beta driver";
+    suspend = lib.mkEnableOption "enable experimental suspend";
   };
 
   config = lib.mkIf cfg.enable {
@@ -25,13 +26,18 @@ in
     services.xserver.videoDrivers = ["nvidia"];
 
     hardware.nvidia = {
-      modesetting.enable = true;
-      open = false;
-      nvidiaSettings = !cfg.headless;
-      package = if cfg.betaDriver
-        then config.boot.kernelPackages.nvidiaPackages.beta
-        else config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = lib.mkDefault true;
+      open = lib.mkDefault false;
+      nvidiaSettings = lib.mkDefault (!cfg.headless);
+      package = lib.mkDefault (
+        if cfg.betaDriver
+          then config.boot.kernelPackages.nvidiaPackages.beta
+          else config.boot.kernelPackages.nvidiaPackages.stable
+        );
+      powerManagement.enable = lib.mkDefault cfg.suspend;
     };
+
+    boot.kernelParams = lib.lists.optional cfg.betaDriver "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
 
     virtualisation.docker.enableNvidia = true;
   };

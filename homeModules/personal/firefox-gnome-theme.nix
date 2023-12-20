@@ -3,8 +3,8 @@ let
   repo = pkgs.fetchFromGitHub {
     owner = "rafaelmardojai";
     repo = "firefox-gnome-theme";
-    rev = "v116";
-    sha256 = "sha256-0IS5na2WRSNWNygHhmZOcXhdrx2aFhCDQY8XVVeHf8Q=";
+    rev = "v121";
+    sha256 = "sha256-M+Cw6vh7xCDmIhyVuEPNmaNVUwpmdFQq8zlsXZTKees=";
   };
   profile = "default";
   cfg = config.personal.firefox.gnome-theme;
@@ -33,6 +33,11 @@ in
       userContent = ''
         @import "firefox-gnome-theme/userContent.css;
       '';
+
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "svg.context-properties.content.enabled" = true;
+      };
     };
   };
 }

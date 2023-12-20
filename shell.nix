@@ -25,8 +25,8 @@ pkgs.mkShell {
     # Editor support
     nixpkgs-fmt
     nil
-
+  ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
     # Secureboot
     sbctl
-  ];
+  ]);
 }

@@ -23,7 +23,12 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
-  boot.kernelParams = [ "fbcon=rotate:1" ];
+  boot.kernelParams = [
+    "fbcon=rotate:1"
+    "video=eDP-1:panel_orientation=right_side_up"
+  ];
+
+  fonts.fontconfig.subpixel.rgba = "vbgr";
 
   users.users.nikita = {
     description = "Nikita Wootten";

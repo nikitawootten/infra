@@ -3,10 +3,10 @@
 #   - https://www.tomoliver.net/posts/using-an-slr-as-a-webcam-nixos
 { pkgs, lib, config, ... }:
 let
-  cfg = config.personal.dslr-webcam;
+  cfg = config.dslr-webcam;
 in
 {
-  options.personal.dslr-webcam = {
+  options.dslr-webcam = {
     enable = lib.mkEnableOption "DSLR webcam";
     virtual-device-name = lib.mkOption {
       type = lib.types.str;

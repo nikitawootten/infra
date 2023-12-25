@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
+    self.nixosModules.dslr-webcam
     nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
   ];
 
@@ -31,7 +32,7 @@
 
   personal.zsa.enable = true;
 
-  personal.dslr-webcam = {
+  dslr-webcam = {
     enable = true;
     camera-udev-product = "7b4/130/100"; # My beloved Olympus OM-D EM5 Mark II
     ffmpeg-hwaccel = true;

@@ -11,17 +11,13 @@
         TZ = "America/New_York";
         # TODO restrict traefik to a predictable address?
         TRUSTED_PROXY = "172.17.0.0/16";
-        # OIDC_ENABLED = "1";
-        # OIDC_PROVIDER_METADATA_URL = "https://${config.lib.lab.mkServiceSubdomain "cerberus"}/realms/master/.well-known/openid-configuration";
-        # OIDC_CLIENT_ID = "freshrss";
-        # OIDC_X_FORWARDED_HEADERS = "X-Forwarded-For X-Forwarded-Port X-Forwarded-Proto";
+        OIDC_ENABLED = "1";
+        OIDC_PROVIDER_METADATA_URL = "https://${config.lib.lab.mkServiceSubdomain "authentik"}/application/o/freshrss/.well-known/openid-configuration";
+        OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Port X-Forwarded-Proto X-Forwarded-Host";
+        OIDC_SCOPES = "openid email profile";
         # # Defined in Age secret:
-        # # OIDC_CLIENT_SECRET = "";
-        # # head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32
-        # # OIDC_CLIENT_CRYPTO_KEY = "";
-        # # Left at default value:
-        # # OIDC_REMOTE_USER_CLAIM = "";
-        # # OIDC_SCOPES = "";
+        # OIDC_CLIENT_ID = "freshrss";
+        # OIDC_CLIENT_SECRET = "";
         CRON_MIN = "0,30";
       };
       env_file = [
@@ -34,8 +30,7 @@
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "freshrss";
-        subdomain = "nike";
-        # forwardAuth = true;
+        subdomain = "freshrss";
       };
       restart = "unless-stopped";
     };
@@ -43,9 +38,9 @@
 
   personal.lab.homepage.media-services = [
     {
-      Nike = {
+      FreshRSS = {
         icon = "freshrss.png";
-        href = "https://${config.lib.lab.mkServiceSubdomain "nike"}";
+        href = "https://${config.lib.lab.mkServiceSubdomain "freshrss"}";
         description = "Freshrss: RSS Reader";
         server = "my-docker";
         container = "freshrss";

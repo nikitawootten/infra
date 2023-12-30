@@ -67,6 +67,23 @@ let
         trustForwardHeader = true;
         authResponseHeaders = [ "X-Auth-Request-Access-Token" "Authorization" "X-Forwarded-User" "X-Forwarded-Email" "X-Forwarded-Preferred-Username" ];
       };
+      authentik.forwardAuth = {
+        address = "https://${config.lib.lab.mkServiceSubdomain "authentik"}/outpost.goauthentik.io/auth/traefik";
+        trustForwardHeader = true;
+        authResponseHeaders = [
+          "X-authentik-username"
+          "X-authentik-groups"
+          "X-authentik-email"
+          "X-authentik-name"
+          "X-authentik-uid"
+          "X-authentik-jwt"
+          "X-authentik-meta-jwks"
+          "X-authentik-meta-outpost"
+          "X-authentik-meta-provider"
+          "X-authentik-meta-app"
+          "X-authentik-meta-version"
+        ];
+      };
     };
   };
   dynamicConfigFile = builtins.toFile "traefik_provider.yaml" (builtins.toJSON dynamicConfig);

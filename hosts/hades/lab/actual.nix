@@ -12,12 +12,13 @@
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "actual";
-        subdomain = "plutus";
+        subdomain = "actual";
+        forwardAuth = true;
       } // config.lib.lab.mkHomepageLabels {
-        name = "Plutus";
+        name = "Actual";
         description = "Actual: Budget management";
         group = "Home";
-        subdomain = "plutus";
+        subdomain = "actual";
         icon = "actual.png";
       };
     };

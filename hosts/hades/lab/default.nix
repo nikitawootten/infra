@@ -64,7 +64,6 @@ in
     ./auth
     ./infra
     ./media
-    ./support
     ./actual.nix
     ./grocy.nix
     ./homepage.nix

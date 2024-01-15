@@ -118,11 +118,12 @@ in
     } // lib.attrsets.optionalAttrs (builtins.hasAttr "middleware" options) {
       "traefik.http.routers.${name}.middlewares" = "${options.middleware}";
     } // lib.attrsets.optionalAttrs forwardAuth {
-      "traefik.http.routers.${name}.middlewares" = "oauth-auth-redirect@file";
-      "traefik.http.routers.${name}-auth-redirect.rule" = "Host(`${host}`) && PathPrefix(`/oauth2/`)";
-      "traefik.http.routers.${name}-auth-redirect.middlewares" = "auth-headers@file";
-      # TODO can the name be determed a bit more reliably?
-      "traefik.http.routers.${name}-auth-redirect.service" = "oauth2-proxy-lab";
+      "traefik.http.routers.${name}.middlewares" = "authentik@file";
+      # "traefik.http.routers.${name}.middlewares" = "oauth-auth-redirect@file";
+      # "traefik.http.routers.${name}-auth-redirect.rule" = "Host(`${host}`) && PathPrefix(`/oauth2/`)";
+      # "traefik.http.routers.${name}-auth-redirect.middlewares" = "auth-headers@file";
+      # # TODO can the name be determed a bit more reliably?
+      # "traefik.http.routers.${name}-auth-redirect.service" = "oauth2-proxy-lab";
     });
 
   age.secrets.traefik.file = secrets.traefik;

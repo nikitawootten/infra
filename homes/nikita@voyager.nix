@@ -14,5 +14,7 @@
 
   home.packages = with pkgs; [
     tor-browser-bundle-bin
+    zoom-us
+    bluejeans-gui
   ];
 }

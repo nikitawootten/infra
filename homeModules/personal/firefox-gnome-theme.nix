@@ -3,8 +3,8 @@ let
   repo = pkgs.fetchFromGitHub {
     owner = "rafaelmardojai";
     repo = "firefox-gnome-theme";
-    rev = "v121";
-    sha256 = "sha256-M+Cw6vh7xCDmIhyVuEPNmaNVUwpmdFQq8zlsXZTKees=";
+    rev = "v121.1";
+    sha256 = "sha256-SYp0DRkO73i8XVyOdAlcP2ZItqx9DqraIEJy6mY/2Ng=";
   };
   profile = "default";
   cfg = config.personal.firefox.gnome-theme;

@@ -15,7 +15,5 @@ in
         PasswordAuthentication = lib.mkDefault false;
       };
     };
-    # Passwordless sudo when SSH'ing with keys
-    security.pam.enableSSHAgentAuth = lib.mkDefault true;
   };
 }

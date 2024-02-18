@@ -10,6 +10,10 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       fzf.enable = lib.mkDefault true;
+      zoxide = {
+        enable = lib.mkDefault true;
+        options = [ "--cmd cd" ];
+      };
       htop.enable = lib.mkDefault true;
       jq.enable = lib.mkDefault true;
       nix-index.enable = lib.mkDefault true;

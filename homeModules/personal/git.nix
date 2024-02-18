@@ -15,7 +15,7 @@ in
     };
     userEmail = lib.mkOption {
       type = lib.types.str;
-      default = "nikita.wootten@gmail.com";
+      default = "me@nikita.computer";
       description = "Email to use for git commits";
     };
     signingKey = lib.mkOption {
@@ -38,11 +38,15 @@ in
         "/scratch/" # I often have "scratch" directory for experiments
         ".direnv"
       ];
+      aliases = {
+        fpush = "push --force-with-lease";
+      };
       extraConfig = {
         fetch.prune = lib.mkDefault true;
         pull.rebase = lib.mkDefault false;
         init.defaultBranch = lib.mkDefault "main";
         push.autoSetupRemote = lib.mkDefault true;
+        rerere.enabled = lib.mkDefault true;
 
         # signing
         gpg.format = lib.mkDefault "ssh";

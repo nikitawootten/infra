@@ -23,9 +23,8 @@ in
     };
 
     # Configure keymap in X11
-    services.xserver = {
+    services.xserver.xkb = {
       layout = "us";
-      xkbVariant = "";
     };
 
     programs.zsh.enable = true;
@@ -48,6 +47,11 @@ in
       vim
       helix
     ];
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
 
     nix = {
       settings = {

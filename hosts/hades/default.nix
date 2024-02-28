@@ -6,11 +6,12 @@
     self.nixosModules.personal
   ];
 
+  # This machine is sometimes used as a build server
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   personal.zfs.enable = true;
   personal.docker.enable = true;
   personal.nvidia.enable = true;
-
-  personal.tailscale.enableSSH = true;
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;

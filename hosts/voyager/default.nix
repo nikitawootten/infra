@@ -19,6 +19,10 @@
   };
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
+  services.fprintd = {
+    enable = true;
+  };
+
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;

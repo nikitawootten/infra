@@ -39,20 +39,24 @@ switch-nixos: ## Switch local NixOS config
 build-nixos: ## Build local NixOS config
 	$(call IN_NIXSHELL,sudo nixos-rebuild dry-activate --flake .#)
 
-# Default to connecting to the hostname directly
-ADDR=$(HOST)
+# Default to connecting to the host directly
+TARGET=$(HOST)
+# Default to using the local machine as the builder
+BUILDER=
 
 .PHONY: remote-switch-nixos
-remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-nixos HOST="" USER="" ADDR="") ADDR defaults to HOST
-	@if [[ -z "$(HOST)" || -z "$(USER)" || -z "$(ADDR)" ]]; then \
+remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-nixos HOST="" TARGET="" BUILDER="") TARGET defaults to HOST, BUILDER can be undefined
+	@if [[ -z "$(HOST)" || -z "$(TARGET)" ]]; then \
   		echo 'one or more variables are undefined'; \
   		exit 1; \
 	fi
 
-	@echo Rebuilding configuration for $(HOST) on target $(USER)@$(ADDR)
+	@echo Rebuilding configuration for $(HOST) on target $(TARGET) \
+		$(if $(BUILDER),with builder $(BUILDER))
 
-	$(call IN_NIXSHELL,NIX_SSHOPTS=-t nixos-rebuild --flake ".#$(HOST)" \
-		--target-host "$(USER)@$(ADDR)" --use-remote-sudo switch)
+	$(call IN_NIXSHELL,nixos-rebuild --flake ".#$(HOST)" \
+		--target-host "$(HOST)" --use-remote-sudo switch \
+		$(if $(BUILDER),--build-host "$(BUILDER)"))
 
 # Utility roles
 

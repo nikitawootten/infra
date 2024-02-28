@@ -4,6 +4,7 @@ rec {
   nikita_voyager = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyxV6Jx53eFSFkl8z1yHOe0GYuG5SNCgf0s3nfJg/Ih";
   nikita_cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK//BoiABsGP0THb282KhGU0hLqUM2biGCK6qRcbZcMB";
   
+  # Trusted users for decrypting agenix secrets
   trusted_users = [ nikita_voyager ];
 
   # Host keys used for decrypting agenix secrets
@@ -14,4 +15,7 @@ rec {
   cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDG/GfRCnWYx7xhD0k8qxpzOYfVnhlsGiNIkk/TwHx2Q";
 
   systems = [ voyager olympus hades dionysus cochrane ];
+
+  # Keys used for ssh access
+  authorized_keys = [ nikita_yubikey_1 nikita_voyager];
 }

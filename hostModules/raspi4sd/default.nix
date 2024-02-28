@@ -1,4 +1,4 @@
-{ nixos-hardware, modulesPath, pkgs, ... }:
+{ nixos-hardware, modulesPath, pkgs, lib, ... }:
 {
   imports = [
     nixos-hardware.nixosModules.raspberry-pi-4
@@ -19,7 +19,7 @@
   };
 
   # bzip2 compression takes loads of time with emulation, skip it.
-  sdImage.compressImage = false;
+  sdImage.compressImage = lib.mkDefault true;
 
   # HACK for missing kernel module "sun4i-drm" causing build failure
   # More info here: https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
@@ -29,4 +29,9 @@
         super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
+
+  # Sane default for a new raspberry pi
+  networking.useDHCP = lib.mkDefault true;
+
+  # nixpkgs.crossSystem.system = "armv7l-linux";
 }

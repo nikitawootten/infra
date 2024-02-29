@@ -80,8 +80,6 @@ in
             };
           };
         };
-
-        reporting_enabled = false;
       };
     };
 

@@ -29,6 +29,8 @@ in
     };
 
     services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {
+      forceSSL = true;
+      useACMEHost = config.homelab.domain;
       locations."/" = {
           proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
           proxyWebsockets = true;

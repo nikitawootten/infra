@@ -5,14 +5,14 @@ in
 {
   imports = [
     ./observability
+    ./acme.nix
   ];
 
   options.homelab = {
     lan-domain = lib.mkOption {
       type = lib.types.str;
       description = "The base domain of the local network";
-      example = "local";
-      default = "arpa.nikita.computer";
+      example = "your-domain.com";
     };
     domain = lib.mkOption {
       type = lib.types.str;
@@ -25,7 +25,13 @@ in
 
   config = {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
-    services.nginx.enable = true;
+    services.nginx = {
+      enable = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+      recommendedGzipSettings = true;
+    };
     # Helper function to create a subdomain for a service
     lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";
   };

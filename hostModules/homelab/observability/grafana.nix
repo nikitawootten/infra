@@ -22,6 +22,10 @@ in
     services.grafana = {
       enable = true;
       settings.server.domain = lib.mkForce cfg.domain;
+      provision = {
+        enable = true;
+        datasources.settings.apiVersion = 1;
+      };
     };
 
     services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {

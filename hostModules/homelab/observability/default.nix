@@ -1,3 +1,7 @@
 {
-  imports = [ ./grafana.nix ];
+  imports = [
+    ./grafana.nix
+    ./prometheus.nix
+    ./loki.nix
+  ];
 }

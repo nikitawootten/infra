@@ -53,8 +53,4 @@
   # Enable swap on luks
   boot.initrd.luks.devices."luks-4a0aabeb-46fd-48b4-b11e-96ba338f25e7".device = "/dev/disk/by-uuid/4a0aabeb-46fd-48b4-b11e-96ba338f25e7";
   boot.initrd.luks.devices."luks-4a0aabeb-46fd-48b4-b11e-96ba338f25e7".keyFile = "/crypto_keyfile.bin";
-
-  users.users.nikita = {
-    description = "Nikita Wootten";
-  };
 }

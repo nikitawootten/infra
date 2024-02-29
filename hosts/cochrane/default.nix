@@ -29,8 +29,4 @@
   ];
 
   fonts.fontconfig.subpixel.rgba = "vbgr";
-
-  users.users.nikita = {
-    description = "Nikita Wootten";
-  };
 }

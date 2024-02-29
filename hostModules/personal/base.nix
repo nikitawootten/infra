@@ -35,6 +35,7 @@ in
       uid = lib.mkDefault 1000;
       extraGroups = [ "wheel" "media" ];
       shell = pkgs.zsh;
+      description = lib.mkDefault "Nikita";
     };
 
     services.fwupd.enable = lib.mkDefault true;

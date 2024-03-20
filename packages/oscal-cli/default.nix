@@ -12,7 +12,7 @@
 }:
 let
   pname = "oscal-cli";
-  version = "1.0.2";
+  version = "1.0.3";
 in
 pkgs.stdenv.mkDerivation {
   inherit pname version;
@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation {
 
   src = pkgs.fetchzip {
     url = "https://repo1.maven.org/maven2/gov/nist/secauto/oscal/tools/oscal-cli/cli-core/${version}/cli-core-${version}-oscal-cli.zip";
-    sha256 = "sha256-BD9OJgvxgF6W2jBp6Wb8RYJgxh21VWP/z9aLW78CY+U=";
+    sha256 = "sha256-s3pyOmYxMaq+EF009F3bq7xXVPQTWTcwZq+4AtNh2cU=";
     stripRoot = false;
   };
 

@@ -1,10 +1,10 @@
-{ self, pkgs, nixos-hardware, ... }:
+{ self, pkgs, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
     self.nixosModules.dslr-webcam
-    nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
   ];
 
   personal.gnome.enable = true;

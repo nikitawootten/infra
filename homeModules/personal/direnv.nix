@@ -1,4 +1,4 @@
-{ lib, config, devenv ? null, pkgs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 let
   cfg = config.personal.direnv;
 in
@@ -19,8 +19,8 @@ in
     programs.git.ignores = [
       ".direnv"
     ];
-    home.packages = lib.lists.optionals (!(builtins.isNull devenv)) [
-      devenv.packages.${pkgs.system}.devenv
+    home.packages = [
+      inputs.devenv.packages.${pkgs.system}.devenv
     ];
   };
 }

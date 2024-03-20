@@ -1,7 +1,7 @@
-{ nixos-hardware, modulesPath, pkgs, lib, ... }:
+{ inputs, modulesPath, pkgs, lib, ... }:
 {
   imports = [
-    nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     "${modulesPath}/installer/sd-card/sd-image.nix"
   ];
 

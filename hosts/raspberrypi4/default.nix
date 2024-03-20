@@ -1,10 +1,10 @@
-{ self, username, nixos-generators, ... }:
+{ self, inputs, username, ... }:
 {
   imports = [
     self.nixosModules.raspi4sd
     # By default, configure locale and ssh server, and some basic packages
     self.nixosModules.personal
-    nixos-generators.nixosModules.all-formats
+    inputs.nixos-generators.nixosModules.all-formats
   ];
 
   personal.tailscale.enable = false;

@@ -1,7 +1,7 @@
-{ self, config, lib, secrets, agenix, ... }:
+{ self, inputs, config, lib, secrets, ... }:
 {
   imports = [
-    agenix.nixosModules.default
+    inputs.agenix.nixosModules.default
 
     self.nixosModules.raspi4sd
     self.nixosModules.personal
@@ -12,9 +12,21 @@
 
   homelab.lan-domain = "arpa.nikita.computer";
 
-  homelab.observability.grafana.enable = true;
-  homelab.observability.prometheus.enable = true;
-  homelab.observability.loki.enable = true;
+  homelab.observability.enable = true;
+  homelab.homepage.enable = true;
+  services.homepage-dashboard.services = [
+    {
+      observability = [
+        {
+          Grafna = {
+            icon = "grafana.png";
+            href = config.homelab.observability.grafana.url;
+            description = "system monitoring";
+          };
+        }
+      ];
+    }
+  ];
 
   age.secrets.cloudflare-dns.file = secrets.traefik;
 

@@ -53,30 +53,22 @@
     self,
     nixpkgs,
     home-manager,
-    nixos-hardware,
-    lanzaboote,
-    devenv,
-    nix-index-database,
-    agenix,
-    arion,
-    flatpaks,
-    nixos-generators,
     deploy-rs,
     flake-schemas,
     ...
-  }: let
+  } @ inputs: let
     secrets = import ./secrets;
     keys = import ./keys.nix;
 
     # Args passed to home-manager and nixos modules
     specialArgs = {
-      inherit devenv nixos-hardware lanzaboote nix-index-database agenix arion nixos-generators secrets keys flatpaks self;
+      inherit self inputs secrets keys;
     };
 
     homes = self.lib.mkHomes {
       inherit specialArgs;
       configBasePath = ./homes;
-      defaultModules = [self.homeModules.personal nix-index-database.hmModules.nix-index];
+      defaultModules = [self.homeModules.personal inputs.nix-index-database.hmModules.nix-index];
       homes = {
         nikita.system = "x86_64-linux";
         "nikita@voyager".system = "x86_64-linux";

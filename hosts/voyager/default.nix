@@ -1,8 +1,8 @@
-{ self, nixos-hardware, ... }:
+{ self, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    nixos-hardware.nixosModules.framework-11th-gen-intel
+    inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
     self.nixosModules.personal
   ];
 

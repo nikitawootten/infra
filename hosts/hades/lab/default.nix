@@ -1,4 +1,4 @@
-{ lib, config, arion, agenix, ... }:
+{ inputs, lib, config, ... }:
 let
   cfg = config.personal.lab;
 in
@@ -59,8 +59,8 @@ in
   };
 
   imports = [
-    arion.nixosModules.arion
-    agenix.nixosModules.default
+    inputs.arion.nixosModules.arion
+    inputs.agenix.nixosModules.default
     ./auth
     ./infra
     ./media

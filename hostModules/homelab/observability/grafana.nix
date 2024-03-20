@@ -16,6 +16,12 @@ in
       description = "Grafana's domain";
       readOnly = true;
     };
+    url = lib.mkOption {
+      type = lib.types.str;
+      default = "https://${cfg.domain}";
+      description = "Grafana's URL";
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

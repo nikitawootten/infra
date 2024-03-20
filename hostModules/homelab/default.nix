@@ -6,6 +6,7 @@ in
   imports = [
     ./observability
     ./acme.nix
+    ./homepage.nix
   ];
 
   options.homelab = {

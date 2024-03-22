@@ -1,4 +1,4 @@
-{ lib, config, inputs, pkgs, ... }:
+{ lib, config, ... }:
 let
   cfg = config.personal.direnv;
 in
@@ -18,9 +18,6 @@ in
     };
     programs.git.ignores = [
       ".direnv"
-    ];
-    home.packages = [
-      inputs.devenv.packages.${pkgs.system}.devenv
     ];
   };
 }

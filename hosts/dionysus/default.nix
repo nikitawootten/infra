@@ -14,7 +14,6 @@
   personal.steam.enable = true;
   personal.docker.enable = true;
   # personal.virtualbox.enable = true;
-  personal.vpn.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
 
@@ -42,6 +41,14 @@
     enable = true;
     motherboard = "amd";
   };
+
+  # Multi-monitor support: Secondary monitor is rotated
+  boot.kernelParams = [
+    "video=HDMI-1:panel_orientation=left_side_up"
+  ];
+
+  # Needed to build aarch64 packages such as raspberry pi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
 
   # Bootloader.

@@ -30,5 +30,7 @@ in
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
     ];
+
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

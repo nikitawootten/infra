@@ -15,8 +15,6 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Reproducible build environment
-    devenv.url = "github:cachix/devenv/latest";
     # Provides a handy "command not found" nixpkgs hook
     nix-index-database = {
       url = "github:Mic92/nix-index-database";

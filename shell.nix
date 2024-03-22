@@ -27,6 +27,7 @@ pkgs.mkShell {
     nil
 
     pwgen
+    jq
   ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
     # Secureboot
     sbctl

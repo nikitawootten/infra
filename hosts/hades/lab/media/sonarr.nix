@@ -16,7 +16,7 @@
       ];
       labels = config.lib.lab.mkTraefikLabels {
         name = "sonarr";
-        subdomain = "clotho";
+        subdomain = "sonarr";
         forwardAuth = true;
       };
       restart = "unless-stopped";
@@ -25,10 +25,10 @@
 
   personal.lab.homepage.media-services = [
     {
-      Clotho = {
+      Sonarr = {
         icon = "sonarr.png";
-        href = "https://${config.lib.lab.mkServiceSubdomain "clotho"}";
-        description = "Sonarr: TV series management";
+        href = "https://${config.lib.lab.mkServiceSubdomain "sonarr"}";
+        description = "TV series management";
         server = "my-docker";
         container = "sonarr";
         widget = {

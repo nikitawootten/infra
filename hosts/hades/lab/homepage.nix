@@ -86,7 +86,7 @@ in
     virtualisation.arion.projects.lab.settings.services.homepage = {
       service = {
         container_name = "homepage";
-        image = "ghcr.io/benphelps/homepage";
+        image = "ghcr.io/gethomepage/homepage:latest";
         ports = [ "3000:3000" ];
         volumes = [
           "/var/run/docker.sock:/var/run/docker.sock:ro"

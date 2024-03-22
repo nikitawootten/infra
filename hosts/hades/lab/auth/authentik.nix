@@ -86,6 +86,7 @@ in
           icon = "authentik.png";
         } // {
           "traefik.docker.network" = "lab";
+          "traefik.http.routers.authentik.rule" = "Host(`${config.lib.lab.mkServiceSubdomain "authentik"}`) || PathPrefix(`/outpost.goauthentik.io/`)";
         };
       };
       worker.service = {

@@ -47,7 +47,7 @@ in
 
     programs.zsh = {
       dotDir = ".config/zsh";
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
 
       history = {
         expireDuplicatesFirst = true;

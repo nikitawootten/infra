@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.personal.nvidia;
 in
@@ -21,6 +21,9 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+      ];
     };
 
     services.xserver.videoDrivers = ["nvidia"];

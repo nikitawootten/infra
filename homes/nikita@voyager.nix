@@ -6,15 +6,13 @@
   personal.fonts.enable = true;
   personal.sectools.enable = true;
   personal.firefox.enable = true;
-  personal.firefox.gnome-theme.enable = true;
-  personal.firefox.sideberry-autohide = {
-    enable = true;
-    profiles = [ "default" ];
-  };
+  # personal.firefox.gnome-theme.enable = true;
+  # personal.firefox.sideberry-autohide = {
+  #   enable = true;
+  #   profiles = [ "default" ];
+  # };
 
   home.packages = with pkgs; [
     tor-browser-bundle-bin
-    zoom-us
-    bluejeans-gui
   ];
 }

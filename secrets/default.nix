@@ -6,4 +6,6 @@
   watchtower = ./watchtower.env.age;
   authentik-pg = ./authentik-pg.env.age;
   authentik = ./authentik.env.age;
+  keycloak-db-pw = ./keycloak-db-pw.age;
+  "wg.conf" = ./wg.conf.age;
 }

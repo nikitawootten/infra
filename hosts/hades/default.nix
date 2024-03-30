@@ -1,9 +1,11 @@
-{ self, ... }:
+{ self, inputs, config, secrets, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ./lab
+    inputs.agenix.nixosModules.default
+
     self.nixosModules.personal
+    self.nixosModules.homelab
   ];
 
   # This machine is sometimes used as a build server
@@ -12,6 +14,35 @@
   personal.zfs.enable = true;
   personal.docker.enable = true;
   personal.nvidia.enable = true;
+
+  homelab.lan-domain = "arpa.nikita.computer";
+  homelab.homepage.enable = true;
+
+  age.secrets.cloudflare-dns.file = secrets.traefik;
+  homelab.acme.email = "me@nikita.computer";
+  homelab.acme.dnsProvider = "cloudflare";
+  homelab.acme.credentialsFile = config.age.secrets.cloudflare-dns.path;
+
+  homelab.observability.enable = true;
+
+  # Media
+  age.secrets."wg.conf".file = secrets."wg.conf";
+  homelab.media = {
+    enable = true;
+    storageRoot = "/storage2/media";
+  };
+  homelab.vpn = {
+    enable = true;
+    wireguardConfigFile = config.age.secrets."wg.conf".path;
+    accessibleFrom = "10.69.0.0/24";
+  };
+
+  # Auth
+  age.secrets.keycloak-db-pw.file = secrets.keycloak-db-pw;
+  homelab.auth = {
+    enable = true;
+    keycloak.databasePasswordFile = config.age.secrets.keycloak-db-pw.path;
+  };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;

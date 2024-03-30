@@ -14,4 +14,7 @@ in
   "authentik-pg.env.age".publicKeys = hades_keyset;
   # Authentik secret
   "authentik.env.age".publicKeys = hades_keyset;
+
+  "keycloak-db-pw.age".publicKeys = hades_keyset;
+  "wg.conf.age".publicKeys = hades_keyset;
 }

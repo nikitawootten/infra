@@ -45,6 +45,7 @@
     };
     # Provides checks for additional output formats
     flake-schemas.url = "github:DeterminateSystems/flake-schemas";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
   };
 
   outputs = {

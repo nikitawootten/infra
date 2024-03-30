@@ -4,9 +4,12 @@ let
 in
 {
   imports = [
+    ./auth
+    ./media
     ./observability
     ./acme.nix
     ./homepage.nix
+    ./vpn.nix
   ];
 
   options.homelab = {
@@ -23,7 +26,6 @@ in
     };
   };
 
-
   config = {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     services.nginx = {
@@ -33,7 +35,29 @@ in
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
     };
+
     # Helper function to create a subdomain for a service
     lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";
+
+    lib.homelab.mkServiceOptionSet = name: subdomain: cfg: {
+      enable = lib.mkEnableOption name;
+      subdomain = lib.mkOption {
+        type = lib.types.str;
+        default = subdomain;
+        description = "${name}'s subdomain";
+      };
+      domain = lib.mkOption {
+        type = lib.types.str;
+        default = config.lib.homelab.mkServiceSubdomain cfg.subdomain;
+        description = "${name}'s domain";
+        readOnly = true;
+      };
+      url = lib.mkOption {
+        type = lib.types.str;
+        default = "https://${cfg.domain}";
+        description = "${name}'s URL";
+        readOnly = true;
+      };
+    };
   };
 }

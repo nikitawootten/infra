@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ self, inputs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -19,10 +19,6 @@
   };
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
-  services.fprintd = {
-    enable = true;
-  };
-
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
@@ -33,6 +29,8 @@
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
+
+  services.fprintd.enable = lib.mkForce false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

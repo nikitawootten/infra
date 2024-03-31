@@ -51,5 +51,14 @@ in
         '';
       };
     };
+
+    homelab.auth.homepageConfig.Keycloak = {
+      priority = lib.mkDefault 1;
+      config = {
+        description = "Keycloak";
+        href = "https://${cfg.domain}";
+        icon = "keycloak.png";
+      };
+    };
   };
 }

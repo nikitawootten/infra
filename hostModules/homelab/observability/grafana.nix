@@ -24,5 +24,14 @@ in
         recommendedProxySettings = true;
       };
     };
+
+    homelab.observability.homepageConfig.Grafana = {
+      priority = lib.mkDefault 1;
+      config = {
+        description = "Grafana";
+        href = "https://${cfg.domain}";
+        icon = "grafana.png";
+      };
+    };
   };
 }

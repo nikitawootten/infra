@@ -80,10 +80,6 @@ in
       type = lib.types.attrsOf itemGroupConfigType;
       default = {};
     };
-    widgets-declarative = lib.mkOption {
-      type = lib.types.attrsOf itemConfigType;
-      default = {};
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -92,7 +88,6 @@ in
     in {
       enable = true;
       services = toParentHomepageConfig service-cfg.services-declarative;
-      widgets = toParentHomepageConfig service-cfg.widgets-declarative;
       bookmarks = toParentHomepageConfig service-cfg.bookmarks-declarative;
     };
 

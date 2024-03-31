@@ -58,5 +58,14 @@ in
         protocol = "both";
       }];
     };
+
+    homelab.media.homepageConfig.Transmission = {
+      priority = lib.mkDefault 1;
+      config = {
+        description = "Transmission";
+        href = "https://${cfg.domain}";
+        icon = "transmission.png";
+      };
+    };
   };
 }

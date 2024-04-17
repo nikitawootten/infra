@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+    inputs.nix-topology.nixosModules.default
     self.nixosModules.personal
   ];
 
@@ -25,7 +26,6 @@
   personal.printing.enable = true;
   personal.steam.enable = true;
   personal.docker.enable = true;
-  # personal.virtualbox.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;

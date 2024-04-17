@@ -24,9 +24,9 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     vpnnamespaces.${cfg.namespace} = {
-      enable = true;
+      enable = cfg.enable;
       wireguardConfigFile = cfg.wireguardConfigFile;
       accessibleFrom = [ cfg.accessibleFrom ];
     };

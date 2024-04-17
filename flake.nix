@@ -38,22 +38,19 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Manage remote deployments of nodes
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    nix-topology = {
+      url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Provides checks for additional output formats
-    flake-schemas.url = "github:DeterminateSystems/flake-schemas";
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    deploy-rs,
-    flake-schemas,
+    flake-utils,
     ...
   } @ inputs: let
     secrets = import ./secrets;
@@ -64,26 +61,11 @@
       inherit self inputs secrets keys;
     };
 
-    homes = self.lib.mkHomes {
+    homes = import ./homes {
       inherit specialArgs;
-      configBasePath = ./homes;
-      defaultModules = [self.homeModules.personal inputs.nix-index-database.hmModules.nix-index];
-      homes = {
-        nikita.system = "x86_64-linux";
-        "nikita@voyager".system = "x86_64-linux";
-        "nikita@dionysus".system = "x86_64-linux";
-        "nikita@hades".system = "x86_64-linux";
-        "nikita@olympus".system = "x86_64-linux";
-        "nikita@cochrane".system = "x86_64-linux";
-        "pi@raspberrypi4".system = "aarch64-linux";
-        "nikita@iris".system = "aarch64-linux";
-      };
+      lib = self.lib;
     };
-
-    forEachSystem = f: nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"] f;
   in {
-    schemas = flake-schemas.schemas;
-
     # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
     lib = import ./lib {inherit nixpkgs home-manager;};
 
@@ -91,69 +73,57 @@
     homeConfigurations = homes.homeConfigurations;
 
     nixosModules = import ./hostModules;
-    nixosConfigurations = self.lib.mkHosts {
+    nixosConfigurations = import ./hosts {
       inherit specialArgs;
-      homeConfigs = homes.nixosHomeModules;
-      configBasePath = ./hosts;
-      hosts = {
-        hades = {
-          # My home server
-          username = "nikita";
-          system = "x86_64-linux";
-        };
-        olympus = {
-          # Old server, unused currently
-          username = "nikita";
-          system = "x86_64-linux";
-        };
-        voyager = {
-          # My laptop and main development machine
-          username = "nikita";
-          system = "x86_64-linux";
-        };
-        dionysus = {
-          # My desktop
-          username = "nikita";
-          system = "x86_64-linux";
-        };
-        cochrane = {
-          # My GPD Pocket 2 mini-laptop
-          username = "nikita";
-          system = "x86_64-linux";
-        };
-        raspberrypi4 = {
-          # Generic Raspberry Pi 4 (bootstrap config)
-          username = "pi";
-          system = "aarch64-linux";
-        };
-        iris = {
-          # My Raspberry Pi 4
-          username = "nikita";
-          system = "aarch64-linux";
-        };
-      };
-    };
-
-    deploy.nodes = {
-      hades = {
-        hostname = "hades";
-        user = "nikita";
-        profiles.system.path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.hades;
-      };
-    };
-
-    # Too intensive for GHA, disabling for now
-    # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-
-    packages = import ./packages {
-      inherit nixpkgs;
       lib = self.lib;
+      homeConfigs = homes.nixosHomeModules;
+    };
+  } // flake-utils.lib.eachDefaultSystem (system: rec {
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = [ inputs.nix-topology.overlays.default ];
     };
 
-    devShells = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = import ./shell.nix {inherit pkgs;};
-    });
-  };
+    packages = import ./packages { inherit pkgs; };
+
+    topology = import inputs.nix-topology {
+      inherit pkgs;
+      modules = [
+        ./topology.nix
+        # { nixosConfigurations = self.nixosConfigurations; }
+        {
+          nixosConfigurations = {
+            iris = self.nixosConfigurations.iris;
+            hades = self.nixosConfigurations.hades;
+            voyager = self.nixosConfigurations.voyager;
+            dionysus = self.nixosConfigurations.dionysus;
+          };
+        }
+      ];
+    };
+
+    devShells.default = pkgs.mkShell {
+      NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+      name = "infra";
+      packages = with pkgs; [
+        opentofu
+        
+        nix
+        git
+        # So that Home-Manager knows what configuration to target
+        hostname
+        # Editor support
+        nixpkgs-fmt
+        nil
+        pwgen
+        jq
+      ] ++ [
+        inputs.home-manager.packages.${system}.default
+        inputs.agenix.packages.${system}.default
+      ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
+        # Secureboot
+        sbctl
+      ]);
+    };
+  });
 }

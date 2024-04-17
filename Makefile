@@ -1,9 +1,6 @@
 SHELL:=/usr/bin/env bash
 
-# Run command in nix-shell for maximum reproducibility (idiot [me] proofing)
-define IN_NIXSHELL
-	nix-shell shell.nix --command '$1'
-endef
+NIX_CMD:=nix --experimental-features 'nix-command flakes'
 
 # This help command was adapted from https://github.com/tiiuae/sbomnix
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -15,29 +12,33 @@ help: ## Show this help message
 	} \
 	{ printf "\033[32m%-30s\033[0m %s\n", $$1, $$2 }'
 
+.PHONY: develop
+develop: ## Enter a nix-shell for development
+	$(NIX_CMD) develop
+
 .PHONY: test
 test: ## Test flake outputs with "nix flake check"
-	$(call IN_NIXSHELL,nix flake check)
+	$(NIX_CMD) flake check
 
 .PHONY: update
 update: ## Update "flake.lock"
-	$(call IN_NIXSHELL,nix flake update)
+	$(NIX_CMD) flake update
 
 .PHONY: switch-home
 switch-home: ## Switch local home-manager config
-	$(call IN_NIXSHELL,home-manager switch --flake .)
+	$(NIX_CMD) develop --command home-manager switch --flake .
 
 .PHONY: build-home
 build-home: ## Build local home-manager config
-	$(call IN_NIXSHELL,home-manager build --flake .)
+	$(NIX_CMD) develop --command home-manager build --flake .
 
 .PHONY: switch-nixos
 switch-nixos: ## Switch local NixOS config
-	$(call IN_NIXSHELL,sudo nixos-rebuild switch --flake .#)
+	sudo $(NIX_CMD) develop --command nixos-rebuild switch --flake .#
 
 .PHONY: build-nixos
 build-nixos: ## Build local NixOS config
-	$(call IN_NIXSHELL,sudo nixos-rebuild dry-activate --flake .#)
+	sudo $(NIX_CMD) develop --command nixos-rebuild dry-activate --flake .#
 
 # Default to connecting to the host directly
 TARGET=$(HOST)
@@ -54,12 +55,12 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 	@echo Rebuilding configuration for $(HOST) on target $(TARGET) \
 		$(if $(BUILDER),with builder $(BUILDER))
 
-	$(call IN_NIXSHELL,nixos-rebuild --flake ".#$(HOST)" \
+	$(NIX_CMD) develop --command nixos-rebuild --flake ".#$(HOST)" \
 		--target-host "$(HOST)" --use-remote-sudo switch \
-		$(if $(BUILDER),--build-host "$(BUILDER)"))
+		$(if $(BUILDER),--build-host "$(BUILDER)")
 
 # Utility roles
 
 .PHONY: get-hosts
 list-hosts: ## List NixOS configuration names
-	@$(call IN_NIXSHELL,nix flake show --json 2>/dev/null | jq -r ".nixosConfigurations | keys | .[] | @text")
+	@$(NIX_CMD) develop --command nix flake show --json 2>/dev/null | jq -r ".nixosConfigurations | keys | .[] | @text"

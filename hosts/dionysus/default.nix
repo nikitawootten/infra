@@ -5,6 +5,7 @@
     self.nixosModules.personal
     self.nixosModules.dslr-webcam
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+    inputs.nix-topology.nixosModules.default
   ];
 
   personal.gnome.enable = true;

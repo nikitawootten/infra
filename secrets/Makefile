@@ -1,4 +1,4 @@
-AGENIX_CMD:=nix run github:ryantm/agenix --
+AGENIX_CMD:=nix --experimental-features 'nix-command flakes' develop --command agenix
 
 .PHONY: edit
 edit:

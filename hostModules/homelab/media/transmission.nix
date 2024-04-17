@@ -60,7 +60,7 @@ in
     };
 
     homelab.media.homepageConfig.Transmission = {
-      priority = lib.mkDefault 1;
+      priority = lib.mkDefault 2;
       config = {
         description = "Transmission";
         href = "https://${cfg.domain}";

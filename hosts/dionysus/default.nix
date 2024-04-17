@@ -32,6 +32,8 @@
 
   personal.zsa.enable = true;
 
+  personal.adb.enable = true;
+
   dslr-webcam = {
     enable = true;
     camera-udev-product = "7b4/130/100"; # My beloved Olympus OM-D EM5 Mark II
@@ -42,6 +44,8 @@
     enable = true;
     motherboard = "amd";
   };
+
+  programs.nix-ld.enable = true;
 
   # Multi-monitor support: Secondary monitor is rotated
   boot.kernelParams = [

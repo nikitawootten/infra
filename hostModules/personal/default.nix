@@ -1,6 +1,7 @@
 { lib, ... }:
 {
   imports = [
+    ./adb.nix
     ./base.nix
     ./docker.nix
     ./flatpak.nix

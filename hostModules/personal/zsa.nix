@@ -1,8 +1,6 @@
 { config, lib, pkgs, username, ... }:
-let
-  cfg = config.personal.zsa;
-in
-{
+let cfg = config.personal.zsa;
+in {
   options.personal.zsa = {
     enable = lib.mkEnableOption "zsa udev rules + wally";
   };
@@ -12,7 +10,7 @@ in
     environment.systemPackages = with pkgs; [ wally-cli ];
 
     # User must be a part of "plugdev" to use wally without root
-    users.groups.plugdev = {};
-    users.users.${username}.extraGroups = [ "plugdev"];
+    users.groups.plugdev = { };
+    users.users.${username}.extraGroups = [ "plugdev" ];
   };
 }

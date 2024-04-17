@@ -1,13 +1,7 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.observability;
-in
-{
-  imports = [
-    ./grafana.nix
-    ./prometheus.nix
-    ./loki.nix
-  ];
+let cfg = config.homelab.observability;
+in {
+  imports = [ ./grafana.nix ./prometheus.nix ./loki.nix ];
 
   options.homelab.observability = {
     enable = lib.mkEnableOption "Enable basic observability stack";
@@ -19,7 +13,7 @@ in
     homepageConfig = lib.mkOption {
       type = lib.types.attrs;
       description = "Homepage configuration for the observability stack";
-      default = {};
+      default = { };
     };
   };
 

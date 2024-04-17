@@ -1,9 +1,8 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.media.radarr;
-in
-{
-  options.homelab.media.radarr = config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg;
+let cfg = config.homelab.media.radarr;
+in {
+  options.homelab.media.radarr =
+    config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg;
 
   config = lib.mkIf cfg.enable {
     services.radarr = {

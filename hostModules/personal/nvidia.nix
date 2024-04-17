@@ -1,8 +1,6 @@
 { lib, config, pkgs, ... }:
-let
-  cfg = config.personal.nvidia;
-in
-{
+let cfg = config.personal.nvidia;
+in {
   options.personal.nvidia = {
     enable = lib.mkEnableOption "nvidia configuration";
     headless = lib.mkOption {
@@ -21,26 +19,24 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        vaapiVdpau
-      ];
+      extraPackages = with pkgs; [ vaapiVdpau ];
     };
 
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
       modesetting.enable = lib.mkDefault true;
       open = lib.mkDefault false;
       nvidiaSettings = lib.mkDefault (!cfg.headless);
-      package = lib.mkDefault (
-        if cfg.betaDriver
-          then config.boot.kernelPackages.nvidiaPackages.beta
-          else config.boot.kernelPackages.nvidiaPackages.stable
-        );
+      package = lib.mkDefault (if cfg.betaDriver then
+        config.boot.kernelPackages.nvidiaPackages.beta
+      else
+        config.boot.kernelPackages.nvidiaPackages.stable);
       powerManagement.enable = lib.mkDefault cfg.suspend;
     };
 
-    boot.kernelParams = lib.lists.optional cfg.betaDriver "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
+    boot.kernelParams = lib.lists.optional cfg.betaDriver
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
 
     virtualisation.docker.enableNvidia = true;
 

@@ -1,5 +1,4 @@
-{ self, inputs, config, lib, secrets, ... }:
-{
+{ self, inputs, config, lib, secrets, ... }: {
   imports = [
     inputs.agenix.nixosModules.default
     inputs.nix-topology.nixosModules.default

@@ -1,14 +1,11 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.media.prowlarr;
-in
-{
-  options.homelab.media.prowlarr = config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg;
+let cfg = config.homelab.media.prowlarr;
+in {
+  options.homelab.media.prowlarr =
+    config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg;
 
   config = lib.mkIf cfg.enable {
-    services.prowlarr = {
-      enable = true;
-    };
+    services.prowlarr = { enable = true; };
 
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;

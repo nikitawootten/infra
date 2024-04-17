@@ -46,84 +46,82 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    flake-utils,
-    ...
-  } @ inputs: let
-    secrets = import ./secrets;
-    keys = import ./keys.nix;
+  outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs:
+    let
+      secrets = import ./secrets;
+      keys = import ./keys.nix;
 
-    # Args passed to home-manager and nixos modules
-    specialArgs = {
-      inherit self inputs secrets keys;
-    };
+      # Args passed to home-manager and nixos modules
+      specialArgs = { inherit self inputs secrets keys; };
 
-    homes = import ./homes {
-      inherit specialArgs;
-      lib = self.lib;
-    };
-  in {
-    # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
-    lib = import ./lib {inherit nixpkgs home-manager;};
+      homes = import ./homes {
+        inherit specialArgs;
+        lib = self.lib;
+      };
+    in {
+      # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
+      lib = import ./lib { inherit nixpkgs home-manager; };
 
-    homeModules = import ./homeModules;
-    homeConfigurations = homes.homeConfigurations;
+      homeModules = import ./homeModules;
+      homeConfigurations = homes.homeConfigurations;
 
-    nixosModules = import ./hostModules;
-    nixosConfigurations = import ./hosts {
-      inherit specialArgs;
-      lib = self.lib;
-      homeConfigs = homes.nixosHomeModules;
-    };
-  } // flake-utils.lib.eachDefaultSystem (system: rec {
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = [ inputs.nix-topology.overlays.default ];
-    };
+      nixosModules = import ./hostModules;
+      nixosConfigurations = import ./hosts {
+        inherit specialArgs;
+        lib = self.lib;
+        homeConfigs = homes.nixosHomeModules;
+      };
+    } // flake-utils.lib.eachDefaultSystem (system: rec {
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ inputs.nix-topology.overlays.default ];
+      };
 
-    packages = import ./packages { inherit pkgs; };
+      packages = import ./packages { inherit pkgs; };
 
-    topology = import inputs.nix-topology {
-      inherit pkgs;
-      modules = [
-        ./topology.nix
-        # { nixosConfigurations = self.nixosConfigurations; }
-        {
-          nixosConfigurations = {
-            iris = self.nixosConfigurations.iris;
-            hades = self.nixosConfigurations.hades;
-            voyager = self.nixosConfigurations.voyager;
-            dionysus = self.nixosConfigurations.dionysus;
-          };
-        }
-      ];
-    };
+      topology = import inputs.nix-topology {
+        inherit pkgs;
+        modules = [
+          ./topology.nix
+          # { nixosConfigurations = self.nixosConfigurations; }
+          {
+            nixosConfigurations = {
+              iris = self.nixosConfigurations.iris;
+              hades = self.nixosConfigurations.hades;
+              voyager = self.nixosConfigurations.voyager;
+              dionysus = self.nixosConfigurations.dionysus;
+            };
+          }
+        ];
+      };
 
-    devShells.default = pkgs.mkShell {
-      NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
-      name = "infra";
-      packages = with pkgs; [
-        opentofu
-        
-        nix
-        git
-        # So that Home-Manager knows what configuration to target
-        hostname
-        # Editor support
-        nixpkgs-fmt
-        nil
-        pwgen
-        jq
-      ] ++ [
-        inputs.home-manager.packages.${system}.default
-        inputs.agenix.packages.${system}.default
-      ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs; [
-        # Secureboot
-        sbctl
-      ]);
-    };
-  });
+      devShells.default = pkgs.mkShell {
+        NIX_CONFIG =
+          "extra-experimental-features = nix-command flakes repl-flake";
+        name = "infra";
+        packages = with pkgs;
+          [
+            opentofu
+
+            nix
+            git
+            # So that Home-Manager knows what configuration to target
+            hostname
+            # Editor support
+            nixpkgs-fmt
+            nil
+            pwgen
+            jq
+          ] ++ [
+            inputs.home-manager.packages.${system}.default
+            inputs.agenix.packages.${system}.default
+          ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
+            [
+              # Secureboot
+              sbctl
+            ]);
+      };
+
+      formatter = pkgs.nixfmt-classic;
+    });
 }

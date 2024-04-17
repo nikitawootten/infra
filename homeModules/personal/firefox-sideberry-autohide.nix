@@ -1,6 +1,5 @@
 { lib, config, ... }:
-let
-  cfg = config.personal.firefox.sideberry-autohide;
+let cfg = config.personal.firefox.sideberry-autohide;
 in {
   options.personal.firefox.sideberry-autohide = {
     enable = lib.mkEnableOption "sideberry autohide";

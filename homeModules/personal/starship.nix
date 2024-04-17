@@ -1,11 +1,7 @@
 { lib, config, ... }:
-let
-  cfg = config.personal.starship;
-in
-{
-  options.personal.starship = {
-    enable = lib.mkEnableOption "shell config";
-  };
+let cfg = config.personal.starship;
+in {
+  options.personal.starship = { enable = lib.mkEnableOption "shell config"; };
 
   config = lib.mkIf cfg.enable {
     # shells share a common prompt

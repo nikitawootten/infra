@@ -1,9 +1,8 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.media.jellyfin;
-in
-{
-  options.homelab.media.jellyfin = config.lib.homelab.mkServiceOptionSet "Jellyfin" "jellyfin" cfg;
+let cfg = config.homelab.media.jellyfin;
+in {
+  options.homelab.media.jellyfin =
+    config.lib.homelab.mkServiceOptionSet "Jellyfin" "jellyfin" cfg;
 
   config = lib.mkIf cfg.enable {
     services.jellyfin = {

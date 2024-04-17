@@ -1,3 +1,1 @@
-{
-  personal.imports = [ ./personal ];
-}
+{ personal.imports = [ ./personal ]; }

@@ -1,5 +1,4 @@
-{ self, inputs, config, secrets, ... }:
-{
+{ self, inputs, config, secrets, ... }: {
   imports = [
     ./hardware-configuration.nix
     inputs.agenix.nixosModules.default
@@ -50,12 +49,10 @@
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = false;
 
-  boot.loader.grub.mirroredBoots = [
-    {
-      devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
-      path = "/boot-fallback";
-    }
-  ];
+  boot.loader.grub.mirroredBoots = [{
+    devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
+    path = "/boot-fallback";
+  }];
 
   networking.hostId = "45389833";
   boot.zfs.extraPools = [ "storage" "storage2" ];

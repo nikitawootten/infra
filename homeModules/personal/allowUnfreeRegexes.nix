@@ -3,8 +3,7 @@
 let
   inherit (lib) mkOption types;
   cfg = config.allowedUnfreePackagesRegexs;
-in
-{
+in {
   options = {
     allowedUnfreePackagesRegexs = mkOption {
       default = [ ];
@@ -16,9 +15,9 @@ in
 
   config = {
     nixpkgs.config.allowUnfreePredicate = pkg:
-      let pkgName = (lib.getName pkg);
-          matchPackges = (reg: ! builtins.isNull (builtins.match reg pkgName));
-      in
-        builtins.any matchPackges cfg;
+      let
+        pkgName = lib.getName pkg;
+        matchPackges = reg: !builtins.isNull (builtins.match reg pkgName);
+      in builtins.any matchPackges cfg;
   };
 }

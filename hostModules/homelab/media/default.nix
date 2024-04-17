@@ -1,8 +1,6 @@
-{ lib, config, ...}:
-let
-  cfg = config.homelab.media;
-in
-{
+{ lib, config, ... }:
+let cfg = config.homelab.media;
+in {
   imports = [
     ./jellyfin.nix
     ./prowlarr.nix
@@ -30,12 +28,12 @@ in
     homepageConfig = lib.mkOption {
       type = lib.types.attrs;
       description = "Homepage configuration for the media stack";
-      default = {};
+      default = { };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
 
     homelab.media.jellyfin.enable = true;
     homelab.media.transmission.enable = true;
@@ -48,13 +46,11 @@ in
       config = cfg.homepageConfig;
     };
 
-    services.homepage-dashboard.widgets = [
-      {
-        resources = {
-          label = "Media Storage";
-          disk = cfg.storageRoot;
-        };
-      }
-    ];
+    services.homepage-dashboard.widgets = [{
+      resources = {
+        label = "Media Storage";
+        disk = cfg.storageRoot;
+      };
+    }];
   };
 }

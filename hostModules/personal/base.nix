@@ -1,11 +1,7 @@
 { pkgs, lib, config, username, ... }:
-let
-  cfg = config.personal.base;
-in
-{
-  options.personal.base = {
-    enable = lib.mkEnableOption "base configuration";
-  };
+let cfg = config.personal.base;
+in {
+  options.personal.base = { enable = lib.mkEnableOption "base configuration"; };
 
   config = lib.mkIf cfg.enable {
     time.timeZone = lib.mkDefault "America/New_York";
@@ -23,13 +19,11 @@ in
     };
 
     # Configure keymap in X11
-    services.xserver.xkb = {
-      layout = "us";
-    };
+    services.xserver.xkb = { layout = "us"; };
 
     programs.zsh.enable = true;
 
-    users.groups.media = {};
+    users.groups.media = { };
     users.users.${username} = {
       # Default user should have UID of 1000 for consistency
       uid = lib.mkDefault 1000;
@@ -40,14 +34,7 @@ in
 
     services.fwupd.enable = lib.mkDefault true;
 
-    environment.systemPackages = with pkgs; [
-      gnumake
-      wget
-      git
-      tmux
-      vim
-      helix
-    ];
+    environment.systemPackages = with pkgs; [ gnumake wget git tmux vim helix ];
 
     programs.gnupg.agent = {
       enable = true;

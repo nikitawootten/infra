@@ -1,8 +1,6 @@
 { lib, config, ... }:
-let
-  cfg = config.personal.flatpak;
-in
-{
+let cfg = config.personal.flatpak;
+in {
   options.personal.flatpak = {
     enable = lib.mkEnableOption "flatpak & flatpak installs";
     remotes = lib.mkOption {

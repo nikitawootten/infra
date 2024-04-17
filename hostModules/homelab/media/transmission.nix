@@ -1,9 +1,8 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.media.transmission;
-in
-{
-  options.homelab.media.transmission = config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg;
+let cfg = config.homelab.media.transmission;
+in {
+  options.homelab.media.transmission =
+    config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg;
 
   config = lib.mkIf cfg.enable {
     services.transmission = {
@@ -12,7 +11,8 @@ in
       settings = {
         download-dir = "${config.homelab.media.storageRoot}/torrents/completed";
         incomplete-dir-enabled = true;
-        incomplete-dir = "${config.homelab.media.storageRoot}/torrents/incomplete";
+        incomplete-dir =
+          "${config.homelab.media.storageRoot}/torrents/incomplete";
         watch-dir-enabled = true;
         watch-dir = "${config.homelab.media.storageRoot}/torrents/watch";
 
@@ -30,7 +30,9 @@ in
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://192.168.15.1:${toString config.services.transmission.settings.rpc-port}";
+        proxyPass = "http://192.168.15.1:${
+            toString config.services.transmission.settings.rpc-port
+          }";
         recommendedProxySettings = true;
         extraConfig = ''
           proxy_pass_header X-Transmission-Session-Id;
@@ -48,11 +50,11 @@ in
     };
 
     vpnnamespaces.${config.homelab.vpn.namespace} = {
-      portMappings = let
-        port = config.services.transmission.settings.rpc-port;
-      in [
-        { from = port; to = port; }
-      ];
+      portMappings = let port = config.services.transmission.settings.rpc-port;
+      in [{
+        from = port;
+        to = port;
+      }];
       openVPNPorts = [{
         port = config.services.transmission.settings.peer-port;
         protocol = "both";

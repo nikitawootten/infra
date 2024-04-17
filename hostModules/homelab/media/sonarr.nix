@@ -1,9 +1,8 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.media.sonarr;
-in
-{
-  options.homelab.media.sonarr = config.lib.homelab.mkServiceOptionSet "Sonarr" "sonarr" cfg;
+let cfg = config.homelab.media.sonarr;
+in {
+  options.homelab.media.sonarr =
+    config.lib.homelab.mkServiceOptionSet "Sonarr" "sonarr" cfg;
 
   config = lib.mkIf cfg.enable {
     services.sonarr = {

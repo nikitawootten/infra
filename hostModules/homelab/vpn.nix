@@ -1,11 +1,7 @@
 { lib, config, inputs, ... }:
-let
-  cfg = config.homelab.vpn;
-in
-{
-  imports = [
-    inputs.vpnconfinement.nixosModules.default
-  ];
+let cfg = config.homelab.vpn;
+in {
+  imports = [ inputs.vpnconfinement.nixosModules.default ];
 
   options.homelab.vpn = {
     enable = lib.mkEnableOption "Enable VPN confinement";

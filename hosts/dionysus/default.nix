@@ -1,5 +1,4 @@
-{ self, pkgs, inputs, ... }:
-{
+{ self, pkgs, inputs, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -27,7 +26,7 @@
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
-    extraPackages = with pkgs; [nvidia-vaapi-driver];
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   personal.zsa.enable = true;
@@ -48,13 +47,10 @@
   programs.nix-ld.enable = true;
 
   # Multi-monitor support: Secondary monitor is rotated
-  boot.kernelParams = [
-    "video=HDMI-1:panel_orientation=left_side_up"
-  ];
+  boot.kernelParams = [ "video=HDMI-1:panel_orientation=left_side_up" ];
 
   # Needed to build aarch64 packages such as raspberry pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

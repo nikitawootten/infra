@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }:
-let
-  cfg = config.personal.vpn;
-in
-{
+let cfg = config.personal.vpn;
+in {
   options.personal.vpn = {
     enable = lib.mkEnableOption "Desktop VPN configuration";
   };

@@ -1,11 +1,7 @@
 { lib, config, username, ... }:
-let
-  cfg = config.personal.virtualbox;
-in
-{
-  options.personal.virtualbox = {
-    enable = lib.mkEnableOption "Virtualbox";
-  };
+let cfg = config.personal.virtualbox;
+in {
+  options.personal.virtualbox = { enable = lib.mkEnableOption "Virtualbox"; };
 
   config = lib.mkIf cfg.enable {
     # TODO

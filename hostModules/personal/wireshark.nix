@@ -1,8 +1,6 @@
 { pkgs, lib, config, username, ... }:
-let
-  cfg = config.personal.wireshark;
-in
-{
+let cfg = config.personal.wireshark;
+in {
   options.personal.wireshark = {
     enable = lib.mkEnableOption "wireshark configuration";
   };

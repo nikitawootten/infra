@@ -13,11 +13,8 @@ let
   '';
 
   cfg = config.personal.shell;
-in
-{
-  options.personal.shell = {
-    enable = lib.mkEnableOption "shell config";
-  };
+in {
+  options.personal.shell = { enable = lib.mkEnableOption "shell config"; };
 
   config = lib.mkIf cfg.enable {
     home.shellAliases = {
@@ -35,9 +32,7 @@ in
       zfe = "$EDITOR $(fzf)";
     };
 
-    home.sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    home.sessionPath = [ "$HOME/.local/bin" ];
 
     home.sessionVariables = {
       GOPATH = "$HOME/go";
@@ -80,20 +75,15 @@ in
         ${sourceNixSingleUser}
       '';
 
-      plugins = [
-        {
-          name = "fast-syntax-highlighting";
-          file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
-          src = pkgs.zsh-fast-syntax-highlighting;
-        }
-      ];
+      plugins = [{
+        name = "fast-syntax-highlighting";
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+        src = pkgs.zsh-fast-syntax-highlighting;
+      }];
     } // shellCommon;
 
     programs.bash = {
-      historyControl = [
-        "ignoredups"
-        "ignorespace"
-      ];
+      historyControl = [ "ignoredups" "ignorespace" ];
       initExtra = ''
         # C-backspace
         stty werase \^H
@@ -117,8 +107,7 @@ in
     } // shellCommon;
 
     # packaged bash on MacOS is ancient
-    home.packages = lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [
-      bashInteractive
-    ]);
+    home.packages =
+      lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [ bashInteractive ]);
   };
 }

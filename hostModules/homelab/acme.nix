@@ -1,8 +1,6 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.acme;
-in
-{
+let cfg = config.homelab.acme;
+in {
   options.homelab.acme = {
     email = lib.mkOption {
       type = lib.types.str;

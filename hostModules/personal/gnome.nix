@@ -1,8 +1,6 @@
 { pkgs, lib, config, username, ... }:
-let
-  cfg = config.personal.gnome;
-in
-{
+let cfg = config.personal.gnome;
+in {
   options.personal.gnome = {
     enable = lib.mkEnableOption "gnome configuration";
   };
@@ -27,9 +25,7 @@ in
       atomix # puzzle game
     ];
 
-    environment.systemPackages = with pkgs; [
-      gnome.gnome-tweaks
-    ];
+    environment.systemPackages = with pkgs; [ gnome.gnome-tweaks ];
 
     # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };

@@ -4,8 +4,7 @@ let
   # A note to myself for Arch installs:
   #   "libfido2" is not installed automatically!
   cfg = config.personal.git;
-in
-{
+in {
   options.personal.git = {
     enable = lib.mkEnableOption "git config";
     userName = lib.mkOption {
@@ -38,9 +37,7 @@ in
         "/scratch/" # I often have "scratch" directory for experiments
         ".direnv"
       ];
-      aliases = {
-        fpush = "push --force-with-lease";
-      };
+      aliases = { fpush = "push --force-with-lease"; };
       extraConfig = {
         fetch.prune = lib.mkDefault true;
         pull.rebase = lib.mkDefault false;
@@ -63,9 +60,7 @@ in
         git_protocol = "ssh";
         prompt = "enabled";
       };
-      extensions = with pkgs; [
-        gh-dash
-      ];
+      extensions = with pkgs; [ gh-dash ];
     };
 
     home.sessionVariables = {

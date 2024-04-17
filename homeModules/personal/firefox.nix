@@ -1,18 +1,11 @@
 { pkgs, lib, config, ... }:
-let
-  cfg = config.personal.firefox;
-in
-{
-  options.personal.firefox = {
-    enable = lib.mkEnableOption "firefox";
-  };
-
+let cfg = config.personal.firefox;
+in {
+  options.personal.firefox = { enable = lib.mkEnableOption "firefox"; };
 
   config = lib.mkIf cfg.enable {
     # needed for speech synthesis
-    home.packages = with pkgs; [
-      speechd
-    ];
+    home.packages = with pkgs; [ speechd ];
 
     programs.firefox = {
       enable = true;

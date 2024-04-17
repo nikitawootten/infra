@@ -1,5 +1,4 @@
-{ self, inputs, username, ... }:
-{
+{ self, inputs, username, ... }: {
   imports = [
     self.nixosModules.raspi4sd
     # By default, configure locale and ssh server, and some basic packages

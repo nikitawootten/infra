@@ -1,8 +1,6 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.observability.loki;
-in
-{
+let cfg = config.homelab.observability.loki;
+in {
   options.homelab.observability.loki = {
     enable = lib.mkEnableOption "Loki & Promtail";
   };
@@ -18,9 +16,7 @@ in
           lifecycler = {
             address = "127.0.0.1";
             ring = {
-              kvstore = {
-                store = "inmemory";
-              };
+              kvstore = { store = "inmemory"; };
               replication_factor = 1;
             };
           };
@@ -52,9 +48,7 @@ in
             shared_store = "filesystem";
           };
 
-          filesystem = {
-            directory = "/var/lib/loki/chunks";
-          };
+          filesystem = { directory = "/var/lib/loki/chunks"; };
         };
 
         limits_config = {
@@ -62,9 +56,7 @@ in
           reject_old_samples_max_age = "168h";
         };
 
-        chunk_store_config = {
-          max_look_back_period = "0s";
-        };
+        chunk_store_config = { max_look_back_period = "0s"; };
 
         table_manager = {
           retention_deletes_enabled = false;
@@ -74,11 +66,7 @@ in
         compactor = {
           working_directory = "/var/lib/loki";
           shared_store = "filesystem";
-          compactor_ring = {
-            kvstore = {
-              store = "inmemory";
-            };
-          };
+          compactor_ring = { kvstore = { store = "inmemory"; }; };
         };
       };
     };
@@ -90,11 +78,12 @@ in
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = {
-          filename = "/tmp/positions.yaml";
-        };
+        positions = { filename = "/tmp/positions.yaml"; };
         clients = [{
-          url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push";
+          url = "http://127.0.0.1:${
+              toString
+              config.services.loki.configuration.server.http_listen_port
+            }/loki/api/v1/push";
         }];
         scrape_configs = [{
           job_name = "journal";
@@ -117,7 +106,9 @@ in
       name = "Loki";
       type = "loki";
       access = "proxy";
-      url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}";
+      url = "http://127.0.0.1:${
+          toString config.services.loki.configuration.server.http_listen_port
+        }";
     }];
   };
 }

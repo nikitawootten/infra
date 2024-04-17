@@ -1,11 +1,7 @@
-{ lib, config, ...}:
-let
-  cfg = config.homelab.auth;
-in
-{
-  imports = [
-    ./keycloak.nix
-  ];
+{ lib, config, ... }:
+let cfg = config.homelab.auth;
+in {
+  imports = [ ./keycloak.nix ];
 
   options.homelab.auth = {
     enable = lib.mkEnableOption "Enable auth stack";
@@ -17,7 +13,7 @@ in
     homepageConfig = lib.mkOption {
       type = lib.types.attrs;
       description = "Homepage configuration for the auth stack";
-      default = {};
+      default = { };
     };
   };
 

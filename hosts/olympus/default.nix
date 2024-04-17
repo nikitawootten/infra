@@ -1,9 +1,5 @@
-{ self, ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-    self.nixosModules.personal
-  ];
+{ self, ... }: {
+  imports = [ ./hardware-configuration.nix self.nixosModules.personal ];
 
   personal.zfs.enable = true;
   personal.docker.enable = true;

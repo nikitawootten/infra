@@ -8,8 +8,7 @@ let
   };
   profile = "default";
   cfg = config.personal.firefox.gnome-theme;
-in
-{
+in {
   options.personal.firefox.gnome-theme = {
     enable = lib.mkEnableOption "firefox gnome theme";
   };

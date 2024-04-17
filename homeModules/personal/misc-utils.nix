@@ -1,8 +1,6 @@
 { lib, config, pkgs, ... }:
-let
-  cfg = config.personal.misc-utils;
-in
-{
+let cfg = config.personal.misc-utils;
+in {
   options.personal.misc-utils = {
     enable = lib.mkEnableOption "misc utilities";
   };

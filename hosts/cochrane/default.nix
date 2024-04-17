@@ -1,9 +1,5 @@
-{ self, ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-    self.nixosModules.personal
-  ];
+{ self, ... }: {
+  imports = [ ./hardware-configuration.nix self.nixosModules.personal ];
 
   personal.gnome.enable = true;
 
@@ -22,10 +18,8 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
-  boot.kernelParams = [
-    "fbcon=rotate:1"
-    "video=eDP-1:panel_orientation=right_side_up"
-  ];
+  boot.kernelParams =
+    [ "fbcon=rotate:1" "video=eDP-1:panel_orientation=right_side_up" ];
 
   fonts.fontconfig.subpixel.rgba = "vbgr";
 }

@@ -1,11 +1,7 @@
 { lib, config, pkgs, ... }:
-let
-  cfg = config.personal.editor;
-in
-{
-  options.personal.editor = {
-    enable = lib.mkEnableOption "editor config";
-  };
+let cfg = config.personal.editor;
+in {
+  options.personal.editor = { enable = lib.mkEnableOption "editor config"; };
 
   config = lib.mkIf cfg.enable {
     programs.helix = {

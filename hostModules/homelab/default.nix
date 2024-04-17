@@ -1,16 +1,8 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab;
-in
-{
-  imports = [
-    ./auth
-    ./media
-    ./observability
-    ./acme.nix
-    ./homepage.nix
-    ./vpn.nix
-  ];
+let cfg = config.homelab;
+in {
+  imports =
+    [ ./auth ./media ./observability ./acme.nix ./homepage.nix ./vpn.nix ];
 
   options.homelab = {
     lan-domain = lib.mkOption {

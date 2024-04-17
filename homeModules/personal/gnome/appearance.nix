@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }:
-let
-  cfg = config.personal.gnome;
-in
-{
+let cfg = config.personal.gnome;
+in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       gnomeExtensions.alphabetical-app-grid
@@ -25,9 +23,7 @@ in
             "nightthemeswitcher@romainvigier.fr"
           ];
         };
-        "org/gnome/desktop/interface" = {
-          gtk-theme = "adw-gtk3";
-        };
+        "org/gnome/desktop/interface" = { gtk-theme = "adw-gtk3"; };
         "org/gnome/shell/extensions/nightthemeswitcher/time" = {
           nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>t" ];
         };
@@ -36,9 +32,7 @@ in
           day = "adw-gtk3";
           night = "adw-gtk3-dark";
         };
-        "org/gnome/Console" = {
-          theme = "auto";
-        };
+        "org/gnome/Console" = { theme = "auto"; };
       };
     };
   };

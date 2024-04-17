@@ -1,8 +1,6 @@
 { lib, config, username, keys, ... }:
-let
-  cfg = config.personal.ssh-server;
-in
-{
+let cfg = config.personal.ssh-server;
+in {
   options.personal.ssh-server = {
     enable = lib.mkEnableOption "ssh server configuration";
   };

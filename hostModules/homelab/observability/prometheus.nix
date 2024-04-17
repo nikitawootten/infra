@@ -1,8 +1,6 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab.observability.prometheus;
-in
-{
+let cfg = config.homelab.observability.prometheus;
+in {
   options.homelab.observability.prometheus = {
     enable = lib.mkEnableOption "Prometheus";
   };
@@ -14,10 +12,7 @@ in
       exporters = {
         node = {
           port = 9002;
-          enabledCollectors = [
-            "systemd"
-            "processes"
-          ];
+          enabledCollectors = [ "systemd" "processes" ];
           enable = true;
         };
       };
@@ -26,7 +21,9 @@ in
         job_name = config.networking.hostName;
         static_configs = [{
           targets = [
-            "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
+            "127.0.0.1:${
+              toString config.services.prometheus.exporters.node.port
+            }"
           ];
         }];
       }];

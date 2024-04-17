@@ -1,4 +1,4 @@
-{ lib, specialArgs }:
+{ lib, specialArgs, }:
 lib.mkHomes {
   inherit specialArgs;
   configBasePath = ./.;

@@ -10,10 +10,12 @@
     };
     # Provides hardware-specific NixOS modules
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    flake-utils.url = "github:numtide/flake-utils";
     # Provides secureboot support
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     # Provides a handy "command not found" nixpkgs hook
     nix-index-database = {
@@ -26,24 +28,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    # Container management built on top of Docker-Compose
-    arion = {
-      url = "github:hercules-ci/arion";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Manage flatpaks
-    flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
     # Create VM/images/containers off of NixOS modules
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    vpnconfinement = {
+      url = "github:Maroka-chan/VPN-Confinement";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-graph = {
+      url = "github:nikitawootten/flake-graph";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs:
@@ -111,9 +113,11 @@
             nil
             pwgen
             jq
+            graphviz
           ] ++ [
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default
+            inputs.flake-graph.packages.${system}.default
           ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
             [
               # Secureboot

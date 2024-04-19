@@ -59,9 +59,28 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 		--target-host "$(HOST)" --use-remote-sudo switch \
 		$(if $(BUILDER),--build-host "$(BUILDER)")
 
+.PHONY: artifacts
+artifacts: topology flake-graph ## Build all artifacts
+
+out:
+	mkdir out
+
 .PHONY: topology
-topology: ## Build the network topology diagram
+topology: out/topology.svg ## Build the nix-topology diagram
+
+out/topology.svg: out flake.nix
 	$(NIX_CMD) build .#topology.$(shell make --silent get-system).config.output
+	cp result/main.svg out/topology.svg
+
+.PHONY: flake-graph
+flake-graph: out/flake-graph.svg ## Build the flake-graph diagram
+
+out/flake-graph.svg: out flake.lock
+	$(NIX_CMD) develop --command flake-graph flake.lock | dot -Tsvg > out/flake-graph.svg
+
+.PHONY: clean
+clean: ## Clean all artifacts
+	rm -rf out
 
 # Utility roles
 

@@ -3,3 +3,5 @@ result
 .terraform
 
 *.tfstate*
+
+out

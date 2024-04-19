@@ -7,7 +7,7 @@ Welcome to my Nix-ified infrastructure and personal monorepo.
 ## Projects
 
 This repository contains my Nix-related experiments.
-Beyond managing dotfiles, I have also experimented with [packaging some of my commonly used applications](#packages), [managing a homelab worth of containers with Arion](#homelab), and [packaging a few flake utilities](#flake-utilities).
+Beyond managing dotfiles, I have also experimented with [packaging some of my commonly used applications](#packages), [managing a homelab worth of services](#homelab), and [packaging a few flake utilities](#flake-utilities).
 
 ```text
 .
@@ -35,7 +35,9 @@ If you would like to see these packages submitted [upstream](https://github.com/
 
 ### Homelab
 
-The NixOS configuration [`Hades`](./hosts/hades/) uses [Arion](https://github.com/hercules-ci/arion) to deploy a fully featured home server.
+The [`homelab` NixOS module](./hostModules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
+
+For usage examples, refer to the [`hades`](./hosts/hades/) and [`iris`](./hosts/iris/) host configurations:
 
 ### Flake Utilities
 
@@ -43,9 +45,8 @@ I have created a few Flake helpers and placed them in [`lib/`](./lib):
 
 - [`mkHomes`](./lib/mkHomes.nix): Home-Manager configuration helper that generates Home-Manager and NixOS module compatible outputs and imports `user@hostname`-specific Home-Manager modules by path.
 - [`mkHosts`](./lib/mkHosts.nix): NixOS configuration helper that imports a corresponding Home-Manager configuration and imports `hostname`-specific NixOS modules by path.
-- [`mkPackageSet`](./lib/mkPackageSet.nix): Package helper that generates a package set given a set of derivations.
 
-Refer to the [`flake.nix`](./flake.nix) for usage examples.
+Refer to the [`flake.nix`](./flake.nix) for usage.
 
 ## Usage
 

@@ -2,7 +2,6 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
-    inputs.nix-topology.nixosModules.default
     self.nixosModules.personal
   ];
 

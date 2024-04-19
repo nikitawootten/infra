@@ -7,6 +7,14 @@
     inputs.nix-topology.nixosModules.default
   ];
 
+  topology.self = {
+    hardware.info = "AMD Threadripper 2920X + NVIDIA 2080TI desktop";
+    interfaces = {
+      enp8s0 = { };
+      wlp5s0 = { };
+    };
+  };
+
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;

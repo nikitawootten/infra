@@ -23,6 +23,7 @@ in {
   config = {
     vpnnamespaces.${cfg.namespace} = {
       enable = cfg.enable;
+    } // lib.mkIf cfg.enable {
       wireguardConfigFile = cfg.wireguardConfigFile;
       accessibleFrom = [ cfg.accessibleFrom ];
     };

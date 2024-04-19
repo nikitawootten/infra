@@ -8,6 +8,11 @@
     self.nixosModules.homelab
   ];
 
+  topology.self = {
+    hardware.info = "Dell R720XD server";
+    interfaces = { eno1 = { }; };
+  };
+
   # This machine is sometimes used as a build server
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

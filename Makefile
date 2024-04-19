@@ -59,8 +59,16 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 		--target-host "$(HOST)" --use-remote-sudo switch \
 		$(if $(BUILDER),--build-host "$(BUILDER)")
 
+.PHONY: topology
+topology: ## Build the network topology diagram
+	$(NIX_CMD) build .#topology.$(shell make --silent get-system).config.output
+
 # Utility roles
 
 .PHONY: get-hosts
 list-hosts: ## List NixOS configuration names
 	@$(NIX_CMD) develop --command nix flake show --json 2>/dev/null | jq -r ".nixosConfigurations | keys | .[] | @text"
+
+.PHONY: get-system
+get-system: ## Get the current system name
+	@$(NIX_CMD) eval --impure --raw --expr 'builtins.currentSystem'

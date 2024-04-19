@@ -88,7 +88,6 @@
             nixosConfigurations = {
               iris = self.nixosConfigurations.iris;
               hades = self.nixosConfigurations.hades;
-              voyager = self.nixosConfigurations.voyager;
               dionysus = self.nixosConfigurations.dionysus;
             };
           }

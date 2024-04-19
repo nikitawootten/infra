@@ -55,5 +55,10 @@ in {
         icon = "grafana.png";
       };
     };
+
+    topology.self.services.grafana = {
+      info = lib.mkForce "";
+      details.listen.text = lib.mkForce cfg.domain;
+    };
   };
 }

@@ -1,8 +1,15 @@
-{ lib, config, ... }:
+{ inputs, lib, config, ... }:
 let cfg = config.homelab;
 in {
-  imports =
-    [ ./auth ./media ./observability ./acme.nix ./homepage.nix ./vpn.nix ];
+  imports = [
+    ./auth
+    ./media
+    ./observability
+    ./acme.nix
+    ./homepage.nix
+    ./vpn.nix
+    inputs.nix-topology.nixosModules.default
+  ];
 
   options.homelab = {
     lan-domain = lib.mkOption {
@@ -26,6 +33,10 @@ in {
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
+    };
+
+    topology.self.services.nginx = {
+      hidden = true;
     };
 
     # Helper function to create a subdomain for a service

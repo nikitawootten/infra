@@ -1,12 +1,19 @@
 { self, inputs, config, lib, secrets, ... }: {
   imports = [
     inputs.agenix.nixosModules.default
-    inputs.nix-topology.nixosModules.default
 
     self.nixosModules.raspi4sd
     self.nixosModules.personal
     self.nixosModules.homelab
   ];
+
+  topology.self = {
+    hardware.info = "Raspberry Pi 4";
+    interfaces = {
+      end0 = { };
+      wlan0 = { };
+    };
+  };
 
   sdImage.compressImage = lib.mkForce true;
 

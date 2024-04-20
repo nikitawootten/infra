@@ -28,5 +28,9 @@ in {
         icon = "sonarr.png";
       };
     };
+
+    topology.self.services.sonarr = {
+      details.listen.text = lib.mkForce cfg.domain;
+    };
   };
 }

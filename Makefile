@@ -70,13 +70,13 @@ topology: out/topology.svg ## Build the nix-topology diagram
 
 out/topology.svg: out flake.nix
 	$(NIX_CMD) build .#topology.$(shell make --silent get-system).config.output
-	cp result/main.svg out/topology.svg
+	cp --no-preserve=mode result/main.svg out/topology.svg
 
 .PHONY: flake-graph
 flake-graph: out/flake-graph.svg ## Build the flake-graph diagram
 
 out/flake-graph.svg: out flake.lock
-	$(NIX_CMD) develop --command flake-graph flake.lock | dot -Tsvg > out/flake-graph.svg
+	$(NIX_CMD) develop --command bash -c 'flake-graph flake.lock | dot -Tsvg > out/flake-graph.svg'
 
 .PHONY: clean
 clean: ## Clean all artifacts
@@ -86,7 +86,7 @@ clean: ## Clean all artifacts
 
 .PHONY: get-hosts
 list-hosts: ## List NixOS configuration names
-	@$(NIX_CMD) develop --command nix flake show --json 2>/dev/null | jq -r ".nixosConfigurations | keys | .[] | @text"
+	@$(NIX_CMD) develop --command bash -c 'nix flake show --json 2>/dev/null | jq -r ".nixosConfigurations | keys | .[] | @text"'
 
 .PHONY: get-system
 get-system: ## Get the current system name

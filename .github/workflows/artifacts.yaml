@@ -1,0 +1,31 @@
+name: Artifacts
+on:
+  push:
+    branches:
+      - main
+jobs:
+  generate:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: make artifacts
+      # Note: I'd prefer to use commit artifacts here, but GitHub does not
+      #   expose a URL to refer to the latest run of a specific workflow.
+      - name: Upload flake-graph.svg
+        uses: exuanbo/actions-deploy-gist@v1.1.4
+        with:
+          gist_id: "a0b5b3e0afdaaa8e02ace16b955da7ec"
+          token: ${{ secrets.GIST_TOKEN }}
+          file_path: out/flake-graph.svg
+          gist_file_name: flake-graph.svg
+      - name: Upload topology.svg
+        uses: exuanbo/actions-deploy-gist@v1.1.4
+        with:
+          gist_id: "a0b5b3e0afdaaa8e02ace16b955da7ec"
+          token: ${{ secrets.GIST_TOKEN }}
+          file_path: out/topology.svg
+          gist_file_name: topology.svg

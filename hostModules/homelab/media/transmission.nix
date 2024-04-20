@@ -69,5 +69,9 @@ in {
         icon = "transmission.png";
       };
     };
+
+    topology.self.services.transmission = {
+      details.listen.text = lib.mkForce cfg.domain;
+    };
   };
 }

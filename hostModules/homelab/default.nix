@@ -35,9 +35,7 @@ in {
       recommendedGzipSettings = true;
     };
 
-    topology.self.services.nginx = {
-      hidden = true;
-    };
+    topology.self.services.nginx = { hidden = true; };
 
     # Helper function to create a subdomain for a service
     lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";

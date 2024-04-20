@@ -4,6 +4,9 @@
 
 Welcome to my Nix-ified infrastructure and personal monorepo.
 
+![man made horrors beyond comprehension](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/flake-graph.svg)
+*Flake dependency diagram [generated](./.github/workflows/artifacts.yaml) with [`nikitawootten/flake-graph`](https://github.com/nikitawootten/flake-graph).*
+
 ## Projects
 
 This repository contains my Nix-related experiments.
@@ -19,7 +22,6 @@ Beyond managing dotfiles, I have also experimented with [packaging some of my co
 ├── packages/    # My packages
 ├── Makefile     # Common operations defined here
 ├── README.md    # You are here
-└── shell.nix    # Shell environment for Makefile operations
 ```
 
 ### Packages
@@ -35,6 +37,9 @@ If you would like to see these packages submitted [upstream](https://github.com/
 
 ### Homelab
 
+![network diagram](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/topology.svg)
+*Network diagram [generated](./.github/workflows/artifacts.yaml) with [`oddlama/nix-topology`](https://github.com/oddlama/nix-topology).*
+
 The [`homelab` NixOS module](./hostModules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
 
 For usage examples, refer to the [`hades`](./hosts/hades/) and [`iris`](./hosts/iris/) host configurations:
@@ -46,7 +51,7 @@ I have created a few Flake helpers and placed them in [`lib/`](./lib):
 - [`mkHomes`](./lib/mkHomes.nix): Home-Manager configuration helper that generates Home-Manager and NixOS module compatible outputs and imports `user@hostname`-specific Home-Manager modules by path.
 - [`mkHosts`](./lib/mkHosts.nix): NixOS configuration helper that imports a corresponding Home-Manager configuration and imports `hostname`-specific NixOS modules by path.
 
-Refer to the [`flake.nix`](./flake.nix) for usage.
+Refer to [`flake.nix`](./flake.nix) for usage.
 
 ## Usage
 

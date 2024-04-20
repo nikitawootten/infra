@@ -25,5 +25,9 @@ in {
         icon = "prowlarr.png";
       };
     };
+
+    topology.self.services.prowlarr = {
+      details.listen.text = lib.mkForce cfg.domain;
+    };
   };
 }

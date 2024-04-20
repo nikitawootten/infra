@@ -16,6 +16,7 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks";
     };
     # Provides a handy "command not found" nixpkgs hook
     nix-index-database = {
@@ -41,14 +42,21 @@
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     };
     flake-graph = {
       url = "github:nikitawootten/flake-graph";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks, ... }@inputs:
     let
       secrets = import ./secrets;
       keys = import ./keys.nix;
@@ -96,20 +104,28 @@
         ];
       };
 
+      checks = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixfmt.enable = true;
+            nixfmt.package = pkgs.nixfmt-classic;
+          };
+        };
+      };
+
       devShells.default = pkgs.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
         NIX_CONFIG =
           "extra-experimental-features = nix-command flakes repl-flake";
         name = "infra";
         packages = with pkgs;
           [
-            opentofu
-
             nix
             git
             # So that Home-Manager knows what configuration to target
             hostname
             # Editor support
-            nixpkgs-fmt
             nil
             pwgen
             jq
@@ -118,7 +134,8 @@
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default
             inputs.flake-graph.packages.${system}.default
-          ] ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
+          ] ++ self.checks.${system}.pre-commit-check.enabledPackages
+          ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
             [
               # Secureboot
               sbctl

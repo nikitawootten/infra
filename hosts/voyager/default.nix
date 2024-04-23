@@ -28,6 +28,9 @@
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
 
+  personal.virtualbox.enable = true;
+  personal.vpn.enable = true;
+
   services.fprintd.enable = lib.mkForce false;
 
   # Bootloader.

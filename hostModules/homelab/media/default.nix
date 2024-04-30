@@ -3,6 +3,7 @@ let cfg = config.homelab.media;
 in {
   imports = [
     ./jellyfin.nix
+    ./jellyseerr.nix
     ./prowlarr.nix
     ./radarr.nix
     ./sonarr.nix
@@ -40,6 +41,7 @@ in {
     homelab.media.prowlarr.enable = true;
     homelab.media.radarr.enable = true;
     homelab.media.sonarr.enable = true;
+    homelab.media.jellyseerr.enable = true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
       priority = lib.mkDefault 4;

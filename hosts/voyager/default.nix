@@ -1,7 +1,8 @@
-{ self, inputs, lib, ... }: {
+{ self, inputs, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+    inputs.lanzaboote.nixosModules.lanzaboote
     self.nixosModules.personal
   ];
 
@@ -34,9 +35,15 @@
   services.fprintd.enable = lib.mkForce false;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.lanzaboote.enable = true;
+  boot.lanzaboote.pkiBundle = "/etc/secureboot";
+
+  personal.adb.enable = true;
+
+  environment.systemPackages = with pkgs; [ sbctl android-studio ];
 
   # Needed to build aarch64 packages such as raspberry pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

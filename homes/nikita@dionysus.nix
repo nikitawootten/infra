@@ -11,6 +11,8 @@
   #   profiles = [ "default" ];
   # };
 
+  personal.cluster-admin.enable = true;
+
   programs.firefox.profiles.default.settings = {
     "gfx.webrender.all" = true; # Force enable GPU acceleration
     "media.ffmpeg.vaapi.enabled" = true;

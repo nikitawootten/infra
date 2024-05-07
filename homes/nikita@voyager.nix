@@ -12,5 +12,7 @@
   #   profiles = [ "default" ];
   # };
 
+  personal.cluster-admin.enable = true;
+
   home.packages = with pkgs; [ tor-browser-bundle-bin ];
 }

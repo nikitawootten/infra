@@ -18,6 +18,11 @@ in {
         shell.zsh_indicator = "";
         # no nerdfont
         nodejs.symbol = "[⬢](bold green) ";
+        nix_shell = {
+          # Remove extra space
+          symbol = "❄️";
+          impure_msg = "";
+        };
       };
       enableZshIntegration = true;
       enableBashIntegration = true;

@@ -2,6 +2,7 @@
   imports = [
     ./gnome
     ./allowUnfreeRegexes.nix
+    ./cluster-admin.nix
     ./direnv.nix
     ./editor.nix
     ./firefox-gnome-theme.nix

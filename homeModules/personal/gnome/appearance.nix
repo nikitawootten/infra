@@ -6,7 +6,6 @@ in {
       gnomeExtensions.alphabetical-app-grid
       gnomeExtensions.appindicator
       gnomeExtensions.blur-my-shell
-      gnomeExtensions.burn-my-windows
       gnomeExtensions.night-theme-switcher
       # libadwaita lookalike for gtk3
       adw-gtk3
@@ -18,8 +17,7 @@ in {
           enabled-extensions = [
             "AlphabeticalAppGrid@stuarthayhurst"
             "appindicatorsupport@rgcjonas.gmail.com"
-            # "blur-my-shell@aunetx" # Disable for now due to performance issues & artifacts
-            "burn-my-windows@schneegans.github.com"
+            "blur-my-shell@aunetx"
             "nightthemeswitcher@romainvigier.fr"
           ];
         };

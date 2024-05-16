@@ -3,6 +3,7 @@
     ./gnome
     ./allowUnfreeRegexes.nix
     ./cluster-admin.nix
+    ./darwin.nix
     ./direnv.nix
     ./editor.nix
     ./firefox-gnome-theme.nix

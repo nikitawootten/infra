@@ -6,6 +6,8 @@ rec {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyxV6Jx53eFSFkl8z1yHOe0GYuG5SNCgf0s3nfJg/Ih";
   nikita_cochrane =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK//BoiABsGP0THb282KhGU0hLqUM2biGCK6qRcbZcMB";
+  nikita_persephone =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHkzbA1xpyYLvsOcfabO+MZiWIjWTI6FYXBKdNud7js5";
 
   # Trusted users for decrypting agenix secrets
   trusted_users = [ nikita_voyager ];

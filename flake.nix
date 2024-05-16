@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Provides hardware-specific NixOS modules
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
@@ -28,6 +32,7 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.darwin.follows = "darwin";
     };
     # Create VM/images/containers off of NixOS modules
     nixos-generators = {
@@ -55,8 +60,8 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, flake-utils, pre-commit-hooks
+    , ... }@inputs:
     let
       secrets = import ./secrets;
       keys = import ./keys.nix;
@@ -81,6 +86,11 @@
         lib = self.lib;
         homeConfigs = homes.nixosHomeModules;
       };
+
+      darwinConfigurations =
+        import ./darwinHosts { inherit darwin specialArgs; };
+
+      darwinModules = import ./darwinModules;
     } // flake-utils.lib.eachDefaultSystem (system: rec {
       pkgs = import nixpkgs {
         inherit system;
@@ -130,6 +140,7 @@
             pwgen
             jq
             graphviz
+            helix
           ] ++ [
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default

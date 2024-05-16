@@ -40,6 +40,10 @@ switch-nixos: ## Switch local NixOS config
 build-nixos: ## Build local NixOS config
 	sudo $(NIX_CMD) develop --command nixos-rebuild dry-activate --flake .#
 
+.PHONY: switch-darwin
+switch-darwin:
+	$(NIX_CMD) run nix-darwin -- switch --flake .#
+
 # Default to connecting to the host directly
 TARGET=$(HOST)
 # Default to using the local machine as the builder

@@ -1,0 +1,38 @@
+darwinHosts/persephone/
+	Mac Mini, mostly used for work
+
+hosts/cochrane/
+	GPD Pocket 2 mini-computer, neglected & seldom used
+hosts/dionysus/
+	Custom-build workhorse (Ryzen 2920X, NVIDIA 2080ti)
+hosts/hades/
+	Dell PowerEdge R720XD, primary home server
+hosts/iris/
+	Raspberry Pi 4, secondary home server
+hosts/olympus/
+	Dell PowerEdge R610, currently unused
+hosts/raspberrypi4/
+	Raspberry Pi 4 bootstrap configuration
+hosts/voyager/
+	Framework 13 (11th Gen Intel), primary laptop
+
+hostModules/dslr-webcam/
+	Module I use to configure my Olympus OM-D camera as a webcam
+hostModules/homelab/
+	Re-usable homelab modules for media, observability, and more
+hostModules/raspi4sd/
+	Raspberry Pi 4 SD card configuration
+hostModules/personal/
+	Misc. server and desktop config
+
+homeModules/personal/
+	Misc. config, dotfiles, applications, and hacky utilities
+	Makes every computer it infects feel like home
+	Note: Look around before using unless you want to become me
+
+lib/
+	NixOS and Home-Manager configuration helpers
+	Note: currently being phased out
+
+secrets/
+	Age secrets managed by AgeNix

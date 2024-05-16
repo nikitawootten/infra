@@ -141,6 +141,7 @@
             jq
             graphviz
             helix
+            tree
           ] ++ [
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default

@@ -1,6 +1,6 @@
 SHELL:=/usr/bin/env bash
 
-NIX_CMD:=nix --experimental-features 'nix-command flakes'
+NIX_CMD:=nix --experimental-features 'nix-command flakes' --no-warn-dirty
 
 # This help command was adapted from https://github.com/tiiuae/sbomnix
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -95,3 +95,7 @@ list-hosts: ## List NixOS configuration names
 .PHONY: get-system
 get-system: ## Get the current system name
 	@$(NIX_CMD) eval --impure --raw --expr 'builtins.currentSystem'
+
+.PHONY: directory
+directory: ## Print information about important directories in this repository
+	@$(NIX_CMD) develop --command tree -dL 2 --info --noreport

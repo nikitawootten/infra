@@ -1,5 +1,7 @@
-{ self, inputs, keys, ... }: {
-  imports = [ inputs.home-manager.darwinModules.home-manager ];
+{ lib, self, inputs, keys, ... }: {
+  imports = [ inputs.home-manager.darwinModules.home-manager ./fonts.nix ];
+
+  personal.fonts.enable = lib.mkDefault true;
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;

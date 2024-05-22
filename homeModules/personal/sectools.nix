@@ -9,7 +9,7 @@ in {
     nixpkgs.config.allowUnfree = true;
 
     home.packages = with pkgs;
-      [ nmap sqlmap sqlitebrowser john hashcat ghidra jd-gui dbeaver ]
+      [ nmap sqlmap sqlitebrowser john hashcat ghidra jd-gui dbeaver-bin ]
       ++ lib.lists.optionals pkgs.stdenv.isLinux
       (with pkgs; [ burpsuite aircrack-ng macchanger kismet iw ]);
     # Fix font rendering for burpsuite

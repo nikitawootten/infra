@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.personal.libvirt;
 in {
   options.personal.libvirt = {
@@ -6,7 +6,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.users.${username}.extraGroups = [ "libvirtd" ];
+    users.users.${config.personal.user.name}.extraGroups = [ "libvirtd" ];
     virtualisation = {
       libvirtd = {
         enable = true;

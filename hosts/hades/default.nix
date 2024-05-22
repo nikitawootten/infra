@@ -21,7 +21,6 @@
   personal.nvidia.enable = true;
 
   homelab.lan-domain = "arpa.nikita.computer";
-  homelab.homepage.enable = true;
 
   age.secrets.cloudflare-dns.file = secrets.traefik;
   homelab.acme.email = "me@nikita.computer";
@@ -59,6 +58,7 @@
     path = "/boot-fallback";
   }];
 
+  networking.hostName = "hades";
   networking.hostId = "45389833";
   boot.zfs.extraPools = [ "storage" "storage2" ];
 }

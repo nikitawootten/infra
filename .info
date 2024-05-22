@@ -9,10 +9,6 @@ hosts/hades/
 	Dell PowerEdge R720XD, primary home server
 hosts/iris/
 	Raspberry Pi 4, secondary home server
-hosts/olympus/
-	Dell PowerEdge R610, currently unused
-hosts/raspberrypi4/
-	Raspberry Pi 4 bootstrap configuration
 hosts/voyager/
 	Framework 13 (11th Gen Intel), primary laptop
 
@@ -30,9 +26,6 @@ homeModules/personal/
 	Makes every computer it infects feel like home
 	Note: Look around before using unless you want to become me
 
-lib/
-	NixOS and Home-Manager configuration helpers
-	Note: currently being phased out
 
 secrets/
 	Age secrets managed by AgeNix

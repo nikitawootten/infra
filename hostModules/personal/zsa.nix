@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, ... }:
 let cfg = config.personal.zsa;
 in {
   options.personal.zsa = {
@@ -11,6 +11,6 @@ in {
 
     # User must be a part of "plugdev" to use wally without root
     users.groups.plugdev = { };
-    users.users.${username}.extraGroups = [ "plugdev" ];
+    users.users.${config.personal.user.name}.extraGroups = [ "plugdev" ];
   };
 }

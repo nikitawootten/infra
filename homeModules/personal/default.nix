@@ -1,7 +1,6 @@
-{ lib, ... }: {
+{ inputs, lib, ... }: {
   imports = [
     ./gnome
-    ./allowUnfreeRegexes.nix
     ./cluster-admin.nix
     ./darwin.nix
     ./direnv.nix
@@ -20,7 +19,10 @@
     ./upgrade-diff.nix
     ./vscode.nix
     ./zellij.nix
+    inputs.nix-index-database.hmModules.nix-index
   ];
+
+  programs.home-manager.enable = lib.mkForce true;
 
   personal.direnv.enable = lib.mkDefault true;
   personal.editor.enable = lib.mkDefault true;

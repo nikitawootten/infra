@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.personal.gnome;
 in {
   options.personal.gnome = {

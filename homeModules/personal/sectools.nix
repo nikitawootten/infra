@@ -6,7 +6,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    allowedUnfreePackagesRegexs = [ "burpsuite" ];
     nixpkgs.config.allowUnfree = true;
 
     home.packages = with pkgs;

@@ -24,13 +24,14 @@ test: ## Test flake outputs with "nix flake check"
 update: ## Update "flake.lock"
 	$(NIX_CMD) flake update
 
-.PHONY: switch-home
-switch-home: ## Switch local home-manager config
-	$(NIX_CMD) develop --command home-manager switch --flake .
-
-.PHONY: build-home
-build-home: ## Build local home-manager config
-	$(NIX_CMD) develop --command home-manager build --flake .
+# NOTE: These targets are not used atm
+# .PHONY: switch-home
+# switch-home: ## Switch local home-manager config
+# 	$(NIX_CMD) develop --command home-manager switch --flake .
+# 
+# .PHONY: build-home
+# build-home: ## Build local home-manager config
+# 	$(NIX_CMD) develop --command home-manager build --flake .
 
 .PHONY: switch-nixos
 switch-nixos: ## Switch local NixOS config

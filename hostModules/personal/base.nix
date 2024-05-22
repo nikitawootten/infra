@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.personal.base;
 in {
   options.personal.base = { enable = lib.mkEnableOption "base configuration"; };
@@ -23,15 +23,6 @@ in {
 
     programs.zsh.enable = true;
 
-    users.groups.media = { };
-    users.users.${username} = {
-      # Default user should have UID of 1000 for consistency
-      uid = lib.mkDefault 1000;
-      extraGroups = [ "wheel" "media" ];
-      shell = pkgs.zsh;
-      description = lib.mkDefault "Nikita";
-    };
-
     services.fwupd.enable = lib.mkDefault true;
 
     environment.systemPackages = with pkgs; [ gnumake wget git tmux vim helix ];
@@ -55,6 +46,8 @@ in {
         options = "--delete-older-than 30d";
       };
     };
+
+    nixpkgs.config.allowUnfree = true;
 
     security.sudo.execWheelOnly = true;
 

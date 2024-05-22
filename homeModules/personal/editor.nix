@@ -28,9 +28,6 @@ in {
       VISUAL = "hx";
     };
 
-    # Required for `vscode-langservers-extracted
-    allowedUnfreePackagesRegexs = [ "vscode" ];
-
     home.packages = with pkgs; [
       # provides LSPs for CSS, SCSS, HTML, and JSON
       nodePackages.vscode-langservers-extracted

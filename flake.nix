@@ -68,28 +68,14 @@
 
       # Args passed to home-manager and nixos modules
       specialArgs = { inherit self inputs secrets keys; };
-
-      homes = import ./homes {
-        inherit specialArgs;
-        lib = self.lib;
-      };
     in {
-      # Contains top-level helpers for defining home-manager, nixos, and packaging configurations
-      lib = import ./lib { inherit nixpkgs home-manager; };
-
       homeModules = import ./homeModules;
-      homeConfigurations = homes.homeConfigurations;
 
       nixosModules = import ./hostModules;
-      nixosConfigurations = import ./hosts {
-        inherit specialArgs;
-        lib = self.lib;
-        homeConfigs = homes.nixosHomeModules;
-      };
+      nixosConfigurations = import ./hosts { inherit specialArgs nixpkgs; };
 
       darwinConfigurations =
         import ./darwinHosts { inherit darwin specialArgs; };
-
       darwinModules = import ./darwinModules;
     } // flake-utils.lib.eachDefaultSystem (system: rec {
       pkgs = import nixpkgs {
@@ -114,13 +100,11 @@
         ];
       };
 
-      checks = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            nixfmt.enable = true;
-            nixfmt.package = pkgs.nixfmt-classic;
-          };
+      checks.pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt.enable = true;
+          nixfmt.package = pkgs.nixfmt-classic;
         };
       };
 

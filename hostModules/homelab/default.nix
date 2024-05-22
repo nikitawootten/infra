@@ -7,6 +7,7 @@ in {
     ./observability
     ./acme.nix
     ./homepage.nix
+    ./ntfs.nix
     ./vpn.nix
     inputs.nix-topology.nixosModules.default
   ];
@@ -60,5 +61,8 @@ in {
         readOnly = true;
       };
     };
+
+    homelab.ntfs.enable = lib.mkDefault true;
+    homelab.homepage.enable = lib.mkDefault true;
   };
 }

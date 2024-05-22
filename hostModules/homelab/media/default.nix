@@ -31,17 +31,20 @@ in {
       description = "Homepage configuration for the media stack";
       default = { };
     };
+    enableSambaShare =
+      lib.mkEnableOption "Enable Samba share for media storage";
   };
 
   config = lib.mkIf cfg.enable {
     users.groups.${cfg.group} = { };
 
-    homelab.media.jellyfin.enable = true;
-    homelab.media.transmission.enable = true;
-    homelab.media.prowlarr.enable = true;
-    homelab.media.radarr.enable = true;
-    homelab.media.sonarr.enable = true;
-    homelab.media.jellyseerr.enable = true;
+    homelab.media.jellyfin.enable = lib.mkDefault true;
+    homelab.media.transmission.enable = lib.mkDefault true;
+    homelab.media.prowlarr.enable = lib.mkDefault true;
+    homelab.media.radarr.enable = lib.mkDefault true;
+    homelab.media.sonarr.enable = lib.mkDefault true;
+    homelab.media.jellyseerr.enable = lib.mkDefault true;
+    homelab.media.enableSambaShare = lib.mkDefault true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
       priority = lib.mkDefault 4;
@@ -54,5 +57,16 @@ in {
         disk = cfg.storageRoot;
       };
     }];
+
+    services.samba.shares = lib.mkIf cfg.enableSambaShare {
+      media = {
+        path = cfg.storageRoot;
+        writable = true;
+        createMask = "0775";
+        directoryMask = "0775";
+        "force group" = cfg.group;
+        comment = "Media storage";
+      };
+    };
   };
 }

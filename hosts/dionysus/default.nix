@@ -1,4 +1,4 @@
-{ self, pkgs, inputs, ... }: {
+{ self, pkgs, inputs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -50,6 +50,29 @@
   services.hardware.openrgb = {
     enable = true;
     motherboard = "amd";
+  };
+
+  networking.hostName = "dionysus";
+  home-manager.users.${config.personal.user.name} = {
+    personal.vscode.enable = true;
+    personal.gnome.enable = true;
+    personal.gnome.enableGSConnect = true;
+    personal.fonts.enable = true;
+    personal.sectools.enable = true;
+    personal.firefox.enable = true;
+    # personal.firefox.gnome-theme.enable = true;
+    # personal.firefox.sideberry-autohide = {
+    #   enable = true;
+    #   profiles = [ "default" ];
+    # };
+
+    personal.cluster-admin.enable = true;
+
+    programs.firefox.profiles.default.settings = {
+      "gfx.webrender.all" = true; # Force enable GPU acceleration
+      "media.ffmpeg.vaapi.enabled" = true;
+      "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
+    };
   };
 
   programs.nix-ld.enable = true;

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.personal.wireshark;
 in {
   options.personal.wireshark = {
@@ -6,7 +6,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.users.${username}.extraGroups = [ "wireshark" ];
+    users.users.${config.personal.user.name}.extraGroups = [ "wireshark" ];
     programs.wireshark.enable = lib.mkForce true;
     programs.wireshark.package = lib.mkDefault pkgs.wireshark;
   };

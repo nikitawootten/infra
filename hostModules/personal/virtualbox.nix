@@ -1,4 +1,4 @@
-{ lib, config, username, ... }:
+{ lib, config, ... }:
 let cfg = config.personal.virtualbox;
 in {
   options.personal.virtualbox = { enable = lib.mkEnableOption "Virtualbox"; };
@@ -8,6 +8,6 @@ in {
     nixpkgs.config.allowUnfree = true;
     virtualisation.virtualbox.host.enable = true;
     virtualisation.virtualbox.host.enableExtensionPack = true;
-    users.users.${username}.extraGroups = [ "vboxusers" ];
+    users.users.${config.personal.user.name}.extraGroups = [ "vboxusers" ];
   };
 }

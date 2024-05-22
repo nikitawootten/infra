@@ -1,4 +1,4 @@
-{ lib, config, username, keys, ... }:
+{ lib, config, keys, ... }:
 let cfg = config.personal.ssh-server;
 in {
   options.personal.ssh-server = {
@@ -14,6 +14,7 @@ in {
       };
     };
 
-    users.users.${username}.openssh.authorizedKeys.keys = keys.authorized_keys;
+    users.users.${config.personal.user.name}.openssh.authorizedKeys.keys =
+      keys.authorized_keys;
   };
 }

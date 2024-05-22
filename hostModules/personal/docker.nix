@@ -1,4 +1,4 @@
-{ lib, config, username, ... }:
+{ lib, config, ... }:
 let cfg = config.personal.docker;
 in {
   options.personal.docker = {
@@ -7,6 +7,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     virtualisation.docker.enable = true;
-    users.users.${username}.extraGroups = [ "docker" ];
+    users.users.${config.personal.user.name}.extraGroups = [ "docker" ];
   };
 }

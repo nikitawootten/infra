@@ -26,4 +26,6 @@
   homelab.acme.email = "me@nikita.computer";
   homelab.acme.dnsProvider = "cloudflare";
   homelab.acme.credentialsFile = config.age.secrets.cloudflare-dns.path;
+
+  networking.hostName = "iris";
 }

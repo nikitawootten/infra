@@ -14,6 +14,7 @@
     ./steam.nix
     ./tailscale.nix
     ./upgrade-diff.nix
+    ./user.nix
     ./virtualbox.nix
     ./vpn.nix
     ./wireshark.nix

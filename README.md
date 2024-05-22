@@ -33,7 +33,6 @@ $ make directory
 │        ⎧ Misc. config, dotfiles, applications, and hacky utilities
 │        ⎨ Makes every computer it infects feel like home
 │        ⎩ Note: Look around before using unless you want to become me
-├── homes
 ├── hostModules
 │   ├── dslr-webcam
 │   │    { Module I use to configure my Olympus OM-D camera as a webcam
@@ -52,15 +51,8 @@ $ make directory
 │   │    { Dell PowerEdge R720XD, primary home server
 │   ├── iris
 │   │    { Raspberry Pi 4, secondary home server
-│   ├── olympus
-│   │    { Dell PowerEdge R610, currently unused
-│   ├── raspberrypi4
-│   │    { Raspberry Pi 4 bootstrap configuration
 │   └── voyager
 │        { Framework 13 (11th Gen Intel), primary laptop
-├── lib
-│    ⎧ NixOS and Home-Manager configuration helpers
-│    ⎩ Note: currently being phased out
 ├── packages
 │   ├── oscal-cli
 │   ├── oscal-deep-diff

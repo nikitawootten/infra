@@ -6,6 +6,7 @@ in {
     ./jellyseerr.nix
     ./prowlarr.nix
     ./radarr.nix
+    ./readarr.nix
     ./sonarr.nix
     ./transmission.nix
   ];
@@ -42,6 +43,7 @@ in {
     homelab.media.transmission.enable = lib.mkDefault true;
     homelab.media.prowlarr.enable = lib.mkDefault true;
     homelab.media.radarr.enable = lib.mkDefault true;
+    homelab.media.readarr.enable = lib.mkDefault true;
     homelab.media.sonarr.enable = lib.mkDefault true;
     homelab.media.jellyseerr.enable = lib.mkDefault true;
     homelab.media.enableSambaShare = lib.mkDefault true;

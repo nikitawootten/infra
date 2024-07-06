@@ -29,11 +29,12 @@
     enable = true;
     headless = false;
     suspend = true;
+    betaDriver = true;
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
@@ -70,9 +71,11 @@
 
     programs.firefox.profiles.default.settings = {
       "gfx.webrender.all" = true; # Force enable GPU acceleration
-      "media.ffmpeg.vaapi.enabled" = true;
-      "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
+      #  "media.ffmpeg.vaapi.enabled" = true;
+      #  "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
     };
+
+    home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
   };
 
   programs.nix-ld.enable = true;

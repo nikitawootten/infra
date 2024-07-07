@@ -30,6 +30,7 @@ in {
     };
 
     topology.self.services.readarr = {
+      name = "Readarr";
       details.listen.text = lib.mkForce cfg.domain;
     };
   };

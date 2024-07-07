@@ -2,37 +2,39 @@
 let cfg = config.homelab.media.transmission;
 in {
   options.homelab.media.transmission =
-    config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg;
+    (config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg)
+    // {
+      transmissionEnvFile = lib.mkOption {
+        type = lib.types.path;
+        description = "Path to the Transmission env file";
+      };
+    };
 
   config = lib.mkIf cfg.enable {
-    services.transmission = {
-      enable = true;
-      group = config.homelab.media.group;
-      settings = {
-        download-dir = "${config.homelab.media.storageRoot}/torrents/completed";
-        incomplete-dir-enabled = true;
-        incomplete-dir =
-          "${config.homelab.media.storageRoot}/torrents/incomplete";
-        watch-dir-enabled = true;
-        watch-dir = "${config.homelab.media.storageRoot}/torrents/watch";
-
-        rpc-whitelist = "127.*,192.168.*,10.*";
-        rpc-whitelist-enabled = true;
-        rpc-host-whitelist-enabled = true;
-        rpc-host-whitelist = cfg.domain;
-        rpc-bind-address = "192.168.15.1"; # Bind RPC/WebUI to bridge address
-
-        rpc-authentication-required = false;
+    virtualisation.oci-containers.containers.transmission = {
+      image = "haugene/transmission-openvpn";
+      environment = {
+        # TODO: Set up a user for Transmission
+        PUID = "1000";
+        PGID = toString config.users.groups.${config.homelab.media.group}.gid;
+        LOCAL_NETWORK = "10.69.0.0/24";
+        OPENVPN_OPTS = "--inactive 3600 --ping 10 --ping-exit 60";
       };
+      environmentFiles = [ cfg.transmissionEnvFile ];
+      ports = [ "9091:9091" ];
+      volumes = [
+        "${config.homelab.media.storageRoot}/torrents:/data"
+        "${config.homelab.media.storageRoot}/config/transmission:/config"
+      ];
+      extraOptions =
+        [ "--cap-add=NET_ADMIN,NET_RAW,mknod" "--device" "/dev/net/tun" ];
     };
 
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://192.168.15.1:${
-            toString config.services.transmission.settings.rpc-port
-          }";
+        proxyPass = "http://127.0.0.1:9091";
         recommendedProxySettings = true;
         extraConfig = ''
           proxy_pass_header X-Transmission-Session-Id;
@@ -42,23 +44,6 @@ in {
           proxy_pass_header X-Transmission-Session-Id;
         '';
       };
-    };
-
-    systemd.services.transmission.vpnconfinement = {
-      enable = true;
-      vpnnamespace = config.homelab.vpn.namespace;
-    };
-
-    vpnnamespaces.${config.homelab.vpn.namespace} = {
-      portMappings = let port = config.services.transmission.settings.rpc-port;
-      in [{
-        from = port;
-        to = port;
-      }];
-      openVPNPorts = [{
-        port = config.services.transmission.settings.peer-port;
-        protocol = "both";
-      }];
     };
 
     homelab.media.homepageConfig.Transmission = {
@@ -71,6 +56,8 @@ in {
     };
 
     topology.self.services.transmission = {
+      name = "Transmission";
+      icon = "services.transmission";
       details.listen.text = lib.mkForce cfg.domain;
     };
   };

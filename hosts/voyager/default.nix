@@ -45,6 +45,8 @@
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
   };
 
+  programs.nix-ld.enable = true;
+
   networking.hostName = "voyager";
 
   # Bootloader.

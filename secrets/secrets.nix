@@ -5,5 +5,5 @@ let
 in {
   "traefik.env.age".publicKeys = [ keys.hades keys.iris ] ++ keys.trusted_users;
   "keycloak-db-pw.age".publicKeys = hades_keyset;
-  "wg.conf.age".publicKeys = hades_keyset;
+  "transmission.env.age".publicKeys = hades_keyset;
 }

@@ -8,7 +8,6 @@ in {
     ./acme.nix
     ./homepage.nix
     ./ntfs.nix
-    ./vpn.nix
     inputs.nix-topology.nixosModules.default
   ];
 

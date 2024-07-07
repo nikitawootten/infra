@@ -30,16 +30,13 @@
   homelab.observability.enable = true;
 
   # Media
-  age.secrets."wg.conf".file = secrets."wg.conf";
+  age.secrets."transmission".file = secrets."transmission";
   homelab.media = {
     enable = true;
     storageRoot = "/storage2/media";
+    transmission.transmissionEnvFile = config.age.secrets."transmission".path;
   };
-  homelab.vpn = {
-    enable = true;
-    wireguardConfigFile = config.age.secrets."wg.conf".path;
-    accessibleFrom = "10.69.0.0/24";
-  };
+  users.groups.media.gid = 993;
 
   # Auth
   age.secrets.keycloak-db-pw.file = secrets.keycloak-db-pw;

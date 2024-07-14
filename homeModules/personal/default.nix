@@ -10,6 +10,7 @@
     ./firefox.nix
     ./fonts.nix
     ./git.nix
+    ./kitty.nix
     ./misc-utils.nix
     ./sectools.nix
     ./shell.nix

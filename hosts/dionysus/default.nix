@@ -61,6 +61,7 @@
     personal.fonts.enable = true;
     personal.sectools.enable = true;
     personal.firefox.enable = true;
+    personal.kitty.enable = true;
     # personal.firefox.gnome-theme.enable = true;
     # personal.firefox.sideberry-autohide = {
     #   enable = true;

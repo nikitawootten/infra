@@ -5,8 +5,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     fonts = {
-      enableFontDir = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
         jetbrains-mono
         noto-fonts
         noto-fonts-cjk

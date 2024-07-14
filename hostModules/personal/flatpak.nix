@@ -1,24 +1,26 @@
-{ lib, config, ... }:
+{ inputs, lib, config, ... }:
 let cfg = config.personal.flatpak;
 in {
+  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+
   options.personal.flatpak = {
-    enable = lib.mkEnableOption "flatpak & flatpak installs";
-    remotes = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      description = "The flatpak remotes to enable (name -> URL)";
-    };
-    apps = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      description = "The flatpak apps to install";
-    };
+    enable = lib.mkEnableOption "manage installed flatpak";
   };
 
   config = lib.mkIf cfg.enable {
-    services.flatpak.enable = true;
-    # systemd.services.flatpak_nixos_appinstall = {
-    #   description = "Management hook to ensure";
-    #   wantedBy = [ "multi-user.target" ];
-    #   after = [ "network.target" ];
-    # };
+    services.flatpak = {
+      enable = true;
+      # Common packages that I use
+      packages = [
+        "com.brave.Browser"
+        "com.discordapp.Discord"
+        "com.google.Chrome"
+        "com.logseq.Logseq"
+        "com.slack.Slack"
+        "com.spotify.Client"
+        "org.libreoffice.LibreOffice"
+        "org.signal.Signal"
+      ];
+    };
   };
 }

@@ -34,6 +34,8 @@
       inputs.home-manager.follows = "home-manager";
       inputs.darwin.follows = "darwin";
     };
+    # Declerative management of flatpaks
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     # Create VM/images/containers off of NixOS modules
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

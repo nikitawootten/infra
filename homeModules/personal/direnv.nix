@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.personal.direnv;
 in {
   options.personal.direnv = { enable = lib.mkEnableOption "direnv config"; };
@@ -6,10 +6,10 @@ in {
   config = lib.mkIf cfg.enable {
     programs.direnv = {
       enable = true;
-      enableZshIntegration = true;
-      enableBashIntegration = true;
       nix-direnv = { enable = true; };
     };
     programs.git.ignores = [ ".direnv" ];
+
+    home.packages = with pkgs; [ devenv ];
   };
 }

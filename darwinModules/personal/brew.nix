@@ -16,5 +16,9 @@ in {
       casks =
         [ "arc" "discord" "figma" "google-chrome" "notion" "slack" "zoom" ];
     };
+
+    programs.zsh.shellInit = ''
+      export PATH=$PATH:${config.homebrew.brewPrefix}
+    '';
   };
 }

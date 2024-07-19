@@ -9,5 +9,7 @@
     home = "/Users/nikita";
   };
 
+  homebrew.casks = [ "xcodes" ];
+
   networking.hostName = "persephone";
 }

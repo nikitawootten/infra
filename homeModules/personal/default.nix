@@ -1,6 +1,7 @@
 { inputs, lib, ... }: {
   imports = [
     ./gnome
+    ./roles
     ./cluster-admin.nix
     ./darwin.nix
     ./direnv.nix

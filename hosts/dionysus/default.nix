@@ -77,6 +77,8 @@
     };
 
     home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
+
+    personal.roles.work.enable = true;
   };
 
   programs.nix-ld.enable = true;

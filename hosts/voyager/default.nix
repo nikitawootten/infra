@@ -29,20 +29,20 @@
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
   personal.virtualbox.enable = true;
-  personal.vpn.enable = true;
 
   services.fprintd.enable = lib.mkForce false;
 
   home-manager.users.${config.personal.user.name} = {
     personal.vscode.enable = true;
     personal.gnome.enable = true;
-    personal.gnome.enablePaperWm = true;
     personal.gnome.enableGSConnect = true;
     personal.fonts.enable = true;
     personal.sectools.enable = true;
     personal.firefox.enable = true;
     personal.cluster-admin.enable = true;
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
+
+    personal.roles.work.enable = true;
   };
 
   programs.nix-ld.enable = true;

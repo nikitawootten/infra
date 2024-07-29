@@ -16,7 +16,6 @@
     ./upgrade-diff.nix
     ./user.nix
     ./virtualbox.nix
-    ./vpn.nix
     ./wireshark.nix
     ./zfs.nix
     ./zsa.nix

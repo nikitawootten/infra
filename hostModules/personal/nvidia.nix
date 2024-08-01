@@ -5,7 +5,7 @@ in {
     enable = lib.mkEnableOption "nvidia configuration";
     headless = lib.mkOption {
       type = lib.types.bool;
-      description = "If true, enable NVidia settings";
+      description = "If not true, enable NVidia settings";
       default = true;
     };
     betaDriver = lib.mkEnableOption "enable beta driver";
@@ -34,8 +34,10 @@ in {
       powerManagement.enable = lib.mkDefault cfg.suspend;
     };
 
-    boot.kernelParams = lib.lists.optional cfg.betaDriver
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
+    boot.kernelParams = lib.lists.optionals cfg.betaDriver [
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      "nvidia.NVreg_EnableGpuFirmware=0"
+    ];
 
     virtualisation.docker.enableNvidia = true;
   };

@@ -15,7 +15,7 @@
     };
   };
 
-  personal.gnome.enable = true;
+  personal.kde.enable = true;
 
   personal.networkmanager.enable = true;
   personal.printing.enable = true;

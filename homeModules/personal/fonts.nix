@@ -15,7 +15,7 @@ in {
 
     dconf.settings = {
       "org/gnome/desktop/interface" = {
-        monospace-font-name = "JetBrains Mono 10";
+        monospace-font-name = lib.mkDefault "JetBrains Mono 10";
       };
     };
   };

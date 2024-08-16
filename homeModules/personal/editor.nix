@@ -8,7 +8,7 @@ in {
       enable = true;
       # Newer version of Helix available in unstable
       settings = {
-        theme = "monokai_pro";
+        theme = lib.mkDefault "monokai_pro";
         editor = {
           cursorline = true;
           indent-guides.render = true;

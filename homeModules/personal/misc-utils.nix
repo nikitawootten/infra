@@ -13,6 +13,7 @@ in {
         options = [ "--cmd cd" ];
       };
       htop.enable = lib.mkDefault true;
+      btop.enable = lib.mkDefault true;
       jq.enable = lib.mkDefault true;
       nix-index.enable = lib.mkDefault true;
     };

@@ -32,6 +32,12 @@
 
   services.fprintd.enable = lib.mkForce false;
 
+  stylix.enable = true;
+  stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/1p/wallhaven-1pomov.jpg";
+    sha256 = "sha256-BnxTBI7qoXU/eXPWBm/jXCK9oNgOAA/6whj/aD5N2kk=";
+  };
+
   home-manager.users.${config.personal.user.name} = {
     personal.vscode.enable = true;
     personal.gnome.enable = true;

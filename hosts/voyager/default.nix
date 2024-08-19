@@ -39,16 +39,15 @@
   };
 
   home-manager.users.${config.personal.user.name} = {
-    personal.vscode.enable = true;
-    personal.gnome.enable = true;
     personal.gnome.enableGSConnect = true;
     personal.fonts.enable = true;
-    personal.sectools.enable = true;
-    personal.firefox.enable = true;
-    personal.cluster-admin.enable = true;
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
 
     personal.roles.work.enable = true;
+
+    imports = [ self.homeModules.protonmail-bridge ];
+    services.protonmail-bridge.enable = true;
+    services.protonmail-bridge.enableGitSendEmail = true;
   };
 
   programs.nix-ld.enable = true;

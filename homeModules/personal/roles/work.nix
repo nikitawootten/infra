@@ -16,6 +16,7 @@ in {
         exec ${pkgs.awscli2}/bin/aws "$@"
       '')
       beekeeper-studio
+      protonmail-desktop
     ];
 
     xdg.desktopEntries.httpie-desktop = {
@@ -25,5 +26,10 @@ in {
       terminal = false;
       categories = [ "Application" "Network" ];
     };
+
+    personal.cluster-admin.enable = lib.mkDefault true;
+    personal.sectools.enable = lib.mkDefault true;
+    personal.vscode.enable = lib.mkDefault true;
+    personal.firefox.enable = lib.mkDefault true;
   };
 }

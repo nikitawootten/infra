@@ -9,6 +9,11 @@
           name = "JetBrains Mono";
         };
       };
+
+      cursor = {
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
+      };
     };
   };
 }

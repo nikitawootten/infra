@@ -32,5 +32,10 @@ in {
         "org/gnome/desktop/datetime" = { automatic-timezone = true; };
       };
     };
+
+    programs.git = {
+      package = pkgs.gitFull;
+      extraConfig.credential.helper = "libsecret";
+    };
   };
 }

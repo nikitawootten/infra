@@ -6,6 +6,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home-manager.sharedModules = [{ personal.gnome.enable = true; }];
+
     personal.sound.enable = lib.mkDefault true;
 
     services.xserver.enable = true;

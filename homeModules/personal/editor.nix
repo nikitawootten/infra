@@ -30,7 +30,7 @@ in {
 
     home.packages = with pkgs; [
       # provides LSPs for CSS, SCSS, HTML, and JSON
-      nodePackages.vscode-langservers-extracted
+      # nodePackages.vscode-langservers-extracted
       yaml-language-server
       nodePackages.bash-language-server
       # markdown LSP

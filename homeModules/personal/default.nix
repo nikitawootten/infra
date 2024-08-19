@@ -1,4 +1,4 @@
-{ inputs, lib, ... }: {
+{ self, inputs, lib, ... }: {
   imports = [
     ./gnome
     ./roles

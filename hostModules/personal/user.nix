@@ -26,10 +26,10 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       extraSpecialArgs = { inherit self inputs secrets keys; };
-      users.${cfg.name} = {
+      sharedModules = [{
         home.stateVersion = config.system.stateVersion;
         imports = [ self.homeModules.personal ];
-      };
+      }];
     };
   };
 }

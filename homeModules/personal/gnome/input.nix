@@ -40,6 +40,7 @@ in {
       "org/gnome/shell/extensions/paperwm" = {
         show-workspace-indicator = false;
       };
+      "org/gnome/desktop/interface" = { gtk-enable-primary-paste = false; };
     };
   };
 }

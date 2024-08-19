@@ -25,7 +25,6 @@ in {
 
     hardware.nvidia = {
       modesetting.enable = lib.mkDefault true;
-      open = lib.mkDefault false;
       nvidiaSettings = lib.mkDefault (!cfg.headless);
       package = lib.mkDefault (if cfg.betaDriver then
         config.boot.kernelPackages.nvidiaPackages.beta
@@ -39,6 +38,6 @@ in {
       "nvidia.NVreg_EnableGpuFirmware=0"
     ];
 
-    virtualisation.docker.enableNvidia = true;
+    hardware.nvidia-container-toolkit.enable = true;
   };
 }

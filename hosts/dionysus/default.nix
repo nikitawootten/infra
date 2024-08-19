@@ -15,7 +15,7 @@
     };
   };
 
-  personal.kde.enable = true;
+  personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
   personal.printing.enable = true;
@@ -54,6 +54,13 @@
   };
 
   networking.hostName = "dionysus";
+
+  stylix.enable = true;
+  stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/1p/wallhaven-1pym61.jpg";
+    sha256 = "sha256-jj/vKZTW1zwWK/dd8CewVbpCS7xdA/DC65yqPxFRxYU=";
+  };
+
   home-manager.users.${config.personal.user.name} = {
     personal.gnome.enableGSConnect = true;
     personal.fonts.enable = true;

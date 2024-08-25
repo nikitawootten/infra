@@ -26,6 +26,7 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       extraSpecialArgs = { inherit self inputs secrets keys; };
+      users.${config.personal.user.name} = { };
       sharedModules = [{
         home.stateVersion = config.system.stateVersion;
         imports = [ self.homeModules.personal ];

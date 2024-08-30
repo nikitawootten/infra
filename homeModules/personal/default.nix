@@ -13,6 +13,7 @@
     ./git.nix
     ./kitty.nix
     ./misc-utils.nix
+    ./niri.nix
     ./sectools.nix
     ./shell.nix
     ./ssh.nix

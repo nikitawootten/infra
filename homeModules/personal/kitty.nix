@@ -11,5 +11,7 @@ in {
         name = lib.mkDefault "JetBrains Mono";
       };
     };
+
+    programs.fuzzel.settings.main.terminal = "kitty -e";
   };
 }

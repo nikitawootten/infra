@@ -50,6 +50,9 @@ in {
         commit.gpgsign = lib.mkDefault true;
         tag.gpgsign = lib.mkDefault true;
         user.signingKey = lib.mkDefault cfg.signingKey;
+
+        # Rewrite GitHub HTTPS remotes as SSH remotes
+        url."ssh://git@github.com/".insteadOf = "https://github.com/";
       };
       lfs.enable = true;
     };

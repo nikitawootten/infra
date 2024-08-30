@@ -5,7 +5,7 @@ rec {
   nikita_voyager =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyxV6Jx53eFSFkl8z1yHOe0GYuG5SNCgf0s3nfJg/Ih";
   nikita_cochrane =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK//BoiABsGP0THb282KhGU0hLqUM2biGCK6qRcbZcMB";
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWBe6veTROKSNV/iieADl5/8tQ0un/VNN5UTaBDkvp6";
   nikita_persephone =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHkzbA1xpyYLvsOcfabO+MZiWIjWTI6FYXBKdNud7js5";
 
@@ -22,7 +22,7 @@ rec {
   dionysus =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJutM0WGtPHMkziyE9g2nHbxuL1YrJu1y8ysvG0TtAeA";
   cochrane =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDG/GfRCnWYx7xhD0k8qxpzOYfVnhlsGiNIkk/TwHx2Q";
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH+EQFMwbqttKiVOkiMSranPH22J4XZwTtAhWIJB74D";
   iris =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHl+0G2PgZRw08WSvYtqbRg708uTON6hVMX0Kcwt2VL/";
 

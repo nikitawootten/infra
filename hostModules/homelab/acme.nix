@@ -29,8 +29,6 @@ in {
 
       certs.${config.homelab.domain} = {
         extraDomainNames = [ "*.${config.homelab.domain}" ];
-        # This is intended to be used on a local network
-        dnsPropagationCheck = false;
       };
     };
 

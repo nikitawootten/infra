@@ -1,7 +1,5 @@
-{ self, inputs, config, lib, secrets, ... }: {
+{ self, config, lib, secrets, ... }: {
   imports = [
-    inputs.agenix.nixosModules.default
-
     self.nixosModules.raspi4sd
     self.nixosModules.personal
     self.nixosModules.homelab

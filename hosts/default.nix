@@ -24,4 +24,9 @@
     inherit specialArgs;
     modules = [ ./iris ];
   };
+  hermes = nixpkgs.lib.nixosSystem {
+    system = "aarch64-linux";
+    inherit specialArgs;
+    modules = [ ./hermes ];
+  };
 }

@@ -9,6 +9,7 @@ in {
     ./homepage.nix
     ./samba.nix
     inputs.nix-topology.nixosModules.default
+    inputs.agenix.nixosModules.default
   ];
 
   options.homelab = {

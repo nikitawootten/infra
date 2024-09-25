@@ -60,7 +60,7 @@ in {
       };
     }];
 
-    services.samba.shares = lib.mkIf cfg.enableSambaShare {
+    services.samba.settings = lib.mkIf cfg.enableSambaShare {
       media = {
         path = cfg.storageRoot;
         writable = true;

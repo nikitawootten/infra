@@ -11,11 +11,11 @@ in {
       enable = true;
       package = pkgs.samba4Full;
       openFirewall = true;
-      extraConfig = ''
-        server smb encrypt = required
+      settings.global = {
+        "server smb encrypt" = "required";
         # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
-        server min protocol = SMB3_00
-      '';
+        "server min protocol" = "SMB3_00";
+      };
     };
 
     services.avahi = {

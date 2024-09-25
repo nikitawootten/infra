@@ -1,9 +1,6 @@
-{ self, inputs, config, secrets, ... }: {
+{ self, config, secrets, ... }: {
   imports = [
     ./hardware-configuration.nix
-    inputs.agenix.nixosModules.default
-    inputs.nix-topology.nixosModules.default
-
     self.nixosModules.personal
     self.nixosModules.homelab
   ];

@@ -23,6 +23,7 @@ in {
             "tailscale-status@maxgallup.github.com"
             "pip-on-top@rafostar.github.com"
             "caffeine@patapon.info"
+            "system-monitor@gnome-shell-extensions.gcampax.github.com"
           ] ++ lib.lists.optional cfg.enableGSConnect
             "gsconnect@andyholmes.github.io";
         };

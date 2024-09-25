@@ -60,6 +60,7 @@
     url = "https://w.wallhaven.cc/full/1p/wallhaven-1pym61.jpg";
     sha256 = "sha256-jj/vKZTW1zwWK/dd8CewVbpCS7xdA/DC65yqPxFRxYU=";
   };
+  stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
     personal.gnome.enableGSConnect = true;

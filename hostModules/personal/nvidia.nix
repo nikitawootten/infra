@@ -24,6 +24,7 @@ in {
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
+      open = true;
       modesetting.enable = lib.mkDefault true;
       nvidiaSettings = lib.mkDefault (!cfg.headless);
       package = lib.mkDefault (if cfg.betaDriver then

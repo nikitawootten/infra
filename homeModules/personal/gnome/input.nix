@@ -7,16 +7,11 @@ in {
     enablePaperWm = lib.mkEnableOption "PaperWM tiling extension";
   };
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs;
-      [
-        # gnomeExtensions.pano
-        gnomeExtensions.paperwm
-      ];
+    home.packages = with pkgs; [ gnomeExtensions.pano gnomeExtensions.paperwm ];
     dconf.settings = {
       "org/gnome/shell" = {
-        enabled-extensions = [
-          # "pano@elhan.io"
-        ] ++ lib.lists.optional cfg.enablePaperWm "paperwm@paperwm.github.com";
+        enabled-extensions = [ "pano@elhan.io" ]
+          ++ lib.lists.optional cfg.enablePaperWm "paperwm@paperwm.github.com";
       };
       "org/gnome/desktop/wm/keybindings" =
         lib.attrsets.optionalAttrs (!cfg.enablePaperWm) {

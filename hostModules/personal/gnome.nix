@@ -16,7 +16,7 @@ in {
 
     programs.dconf.enable = true;
 
-    environment.gnome.excludePackages = with pkgs.gnome; [
+    environment.gnome.excludePackages = with pkgs; [
       tali # poker game
       iagno # go game
       hitori # sudoku game

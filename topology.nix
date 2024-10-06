@@ -24,15 +24,13 @@ in {
     info = "TP-Link gigabit managed switch";
     interfaceGroups = [[ "eth0" "eth1" "eth2" "eth3" ]];
 
-    connections.eth1 = mkConnection "iris" "end0";
-    connections.eth2 = mkConnection "hades" "eno1";
-    connections.eth3 = mkConnection "ap1" "eth0";
+    connections.eth1 = mkConnection "ap1" "eth0";
+    connections.eth2 = mkConnection "iris" "end0";
+    connections.eth3 = mkConnection "hades" "eno1";
   };
 
   nodes.ap1 = mkDevice "access-point-1" {
     info = "TP-Link EAP610";
     interfaceGroups = [[ "eth0" "wlan0" ]];
-
-    connections.wlan0 = mkConnection "dionysus" "wlp5s0";
   };
 }

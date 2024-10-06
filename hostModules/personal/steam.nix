@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 let cfg = config.personal.steam;
 in {
   options.personal.steam = {
@@ -14,5 +14,8 @@ in {
         "steam-runtime"
       ];
     programs.steam = { enable = true; };
+
+    # Thunder store client
+    environment.systemPackages = with pkgs; [ r2modman ];
   };
 }

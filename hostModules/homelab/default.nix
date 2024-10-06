@@ -2,7 +2,6 @@
 let cfg = config.homelab;
 in {
   imports = [
-    ./auth
     ./media
     ./observability
     ./acme.nix
@@ -22,7 +21,6 @@ in {
       type = lib.types.str;
       description = "The domain all services will be deployed under";
       default = "${config.networking.hostName}.${cfg.lan-domain}";
-      readOnly = true;
     };
   };
 

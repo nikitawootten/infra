@@ -16,6 +16,7 @@
   personal.zfs.enable = true;
   personal.docker.enable = true;
   personal.nvidia.enable = true;
+  hardware.nvidia.open = false;
 
   homelab.lan-domain = "arpa.nikita.computer";
 
@@ -34,13 +35,6 @@
     transmission.transmissionEnvFile = config.age.secrets."transmission".path;
   };
   users.groups.media.gid = 993;
-
-  # Auth
-  age.secrets.keycloak-db-pw.file = secrets.keycloak-db-pw;
-  homelab.auth = {
-    enable = true;
-    keycloak.databasePasswordFile = config.age.secrets.keycloak-db-pw.path;
-  };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;

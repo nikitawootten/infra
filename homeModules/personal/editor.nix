@@ -37,6 +37,7 @@ in {
       marksman
       # Nix LSP
       nil
+      nixfmt-classic
     ];
   };
 }

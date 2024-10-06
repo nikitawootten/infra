@@ -19,14 +19,6 @@ in {
       protonmail-desktop
     ];
 
-    xdg.desktopEntries.httpie-desktop = {
-      name = "HTTPie Desktop";
-      genericName = "HTTP Client";
-      exec = "${pkgs.httpie-desktop}/bin/httpie-desktop %u";
-      terminal = false;
-      categories = [ "Application" "Network" ];
-    };
-
     personal.cluster-admin.enable = lib.mkDefault true;
     personal.sectools.enable = lib.mkDefault true;
     personal.vscode.enable = lib.mkDefault true;

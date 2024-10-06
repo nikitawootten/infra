@@ -25,6 +25,6 @@ in {
 
     environment.systemPackages = with pkgs; [ gnome-tweaks ];
 
-    # environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

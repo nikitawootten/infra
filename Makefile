@@ -76,6 +76,7 @@ topology: out/topology.svg ## Build the nix-topology diagram
 out/topology.svg: out flake.nix
 	$(NIX_CMD) build .#topology.$(shell make --silent get-system).config.output
 	cp --no-preserve=mode result/main.svg out/topology.svg
+	cp --no-preserve=mode result/network.svg out/network.svg
 
 .PHONY: flake-graph
 flake-graph: out/flake-graph.svg ## Build the flake-graph diagram

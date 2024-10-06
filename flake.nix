@@ -107,6 +107,7 @@
               iris = self.nixosConfigurations.iris;
               hades = self.nixosConfigurations.hades;
               dionysus = self.nixosConfigurations.dionysus;
+              hermes = self.nixosConfigurations.hermes;
             };
           }
         ];
@@ -114,10 +115,7 @@
 
       checks.pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
-        hooks = {
-          nixfmt.enable = true;
-          nixfmt.package = pkgs.nixfmt-classic;
-        };
+        hooks = { nixfmt-classic.enable = true; };
       };
 
       devShells.default = pkgs.mkShell {

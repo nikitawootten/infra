@@ -25,8 +25,10 @@ rec {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH+EQFMwbqttKiVOkiMSranPH22J4XZwTtAhWIJB74D";
   iris =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHl+0G2PgZRw08WSvYtqbRg708uTON6hVMX0Kcwt2VL/";
+  hermes =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEujTbZxPrwrEaeW343jqs1CtaNPWOB8cUaQppNNPRkS";
 
-  systems = [ voyager olympus hades dionysus cochrane iris ];
+  systems = [ voyager olympus hades dionysus cochrane iris hermes ];
 
   # Keys used for ssh access
   authorized_keys = [ nikita_yubikey_1 nikita_voyager ];

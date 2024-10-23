@@ -37,7 +37,7 @@ in {
         auto-optimise-store = true;
         trusted-users = [ "@wheel" ];
       };
-      package = pkgs.nixFlakes;
+      package = pkgs.nixVersions.stable;
       extraOptions = ''
         experimental-features = nix-command flakes
       '';

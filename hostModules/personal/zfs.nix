@@ -4,8 +4,8 @@ in {
   options.personal.zfs = { enable = lib.mkEnableOption "zfs modules"; };
 
   config = lib.mkIf cfg.enable {
-    # hold kernel version to latest that supports zfs
-    boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    services.zfs.autoScrub.enable = true;
+
     boot.supportedFilesystems = [ "zfs" ];
   };
 }

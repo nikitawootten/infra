@@ -120,8 +120,7 @@
 
       devShells.default = pkgs.mkShell {
         inherit (self.checks.${system}.pre-commit-check) shellHook;
-        NIX_CONFIG =
-          "extra-experimental-features = nix-command flakes repl-flake";
+        NIX_CONFIG = "extra-experimental-features = nix-command flakes";
         name = "infra";
         packages = with pkgs;
           [
@@ -130,7 +129,7 @@
             # So that Home-Manager knows what configuration to target
             hostname
             # Editor support
-            nil
+            nixd
             pwgen
             jq
             graphviz

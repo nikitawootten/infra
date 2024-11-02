@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let cfg = config.personal.base;
 in {
   options.personal.base = { enable = lib.mkEnableOption "base configuration"; };
@@ -45,6 +45,7 @@ in {
         automatic = true;
         options = "--delete-older-than 30d";
       };
+      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     };
 
     nixpkgs.config.allowUnfree = true;

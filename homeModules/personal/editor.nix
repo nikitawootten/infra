@@ -36,7 +36,7 @@ in {
       # markdown LSP
       marksman
       # Nix LSP
-      nil
+      nixd
       nixfmt-classic
     ];
   };

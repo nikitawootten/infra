@@ -1,4 +1,4 @@
-{ self, config, secrets, ... }: {
+{ self, config, secrets, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -31,8 +31,10 @@
   age.secrets."transmission".file = secrets."transmission";
   homelab.media = {
     enable = true;
-    storageRoot = "/storage2/media";
+    mediaRoot = "/menagerie";
+    configRoot = "/storage/config";
     transmission.transmissionEnvFile = config.age.secrets."transmission".path;
+    ersatztv.image = "jasongdove/ersatztv:latest-nvidia";
   };
   users.groups.media.gid = 993;
 
@@ -49,4 +51,17 @@
   networking.hostName = "hades";
   networking.hostId = "45389833";
   boot.zfs.extraPools = [ "storage" "storage2" ];
+
+  environment.systemPackages = with pkgs; [ mergerfs ];
+  fileSystems."/menagerie" = {
+    fsType = "fuse.mergerfs";
+    device = "/storage*/media";
+    options = [
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=mfs"
+      "minfreespace=100G"
+      "fsname=menageriePool"
+    ];
+  };
 }

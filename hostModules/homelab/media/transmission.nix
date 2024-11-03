@@ -23,8 +23,8 @@ in {
       environmentFiles = [ cfg.transmissionEnvFile ];
       ports = [ "9091:9091" ];
       volumes = [
-        "${config.homelab.media.storageRoot}/torrents:/data"
-        "${config.homelab.media.storageRoot}/config/transmission:/config"
+        "${config.homelab.media.mediaRoot}/torrents:/data"
+        "${config.homelab.media.configRoot}/transmission:/config"
       ];
       extraOptions =
         [ "--cap-add=NET_ADMIN,NET_RAW,mknod" "--device" "/dev/net/tun" ];

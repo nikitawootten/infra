@@ -62,6 +62,9 @@
       "category.create=mfs"
       "minfreespace=100G"
       "fsname=menageriePool"
+      # "x-systemd.requires=/storage/media"
+      # "x-systemd.requires=/storage2/media"
+      "x-systemd.requires=zfs-mount.service"
     ];
   };
 }

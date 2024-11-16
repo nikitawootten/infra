@@ -49,6 +49,11 @@
     imports = [ self.homeModules.protonmail-bridge ];
     services.protonmail-bridge.enable = true;
     services.protonmail-bridge.enableGitSendEmail = true;
+
+    dconf.settings."org/gnome/mutter" = {
+      experimental-features =
+        [ "scale-monitor-framebuffer" "xwayland-native-scaling" ];
+    };
   };
 
   programs.nix-ld.enable = true;

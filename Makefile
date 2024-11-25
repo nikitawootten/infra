@@ -61,7 +61,7 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 		$(if $(BUILDER),with builder $(BUILDER))
 
 	$(NIX_CMD) develop --command nixos-rebuild --flake ".#$(HOST)" \
-		--target-host "$(HOST)" --use-remote-sudo switch \
+		--target-host "$(TARGET)" --use-remote-sudo switch \
 		$(if $(BUILDER),--build-host "$(BUILDER)")
 
 .PHONY: artifacts

@@ -10,6 +10,8 @@
     interfaces = { eno1 = { }; };
   };
 
+  services.tailscale.extraSetFlags = [ "--advertise-exit-node" ];
+
   # This machine is sometimes used as a build server
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

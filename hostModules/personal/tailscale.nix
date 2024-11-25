@@ -8,8 +8,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      # If SSH server is enabled, enable tailscale ssh
-      extraUpFlags =
+      extraSetFlags =
         lib.lists.optional config.personal.ssh-server.enable "--ssh";
     };
     networking.firewall.checkReversePath = "loose";

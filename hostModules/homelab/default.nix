@@ -32,6 +32,13 @@ in {
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
+
+      virtualHosts._ = {
+        forceSSL = true;
+        useACMEHost = cfg.domain;
+        default = true;
+        locations."/" = { return = "404"; };
+      };
     };
 
     topology.self.services.nginx = { hidden = true; };

@@ -8,8 +8,8 @@
     ./editor.nix
     ./firefox.nix
     ./fonts.nix
+    ./ghostty.nix
     ./git.nix
-    ./kitty.nix
     ./misc-utils.nix
     ./niri.nix
     ./sectools.nix

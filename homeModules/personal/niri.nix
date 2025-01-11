@@ -21,7 +21,7 @@ in {
           "Mod+Shift+Slash".action = show-hotkey-overlay;
           "Mod+Q".action = close-window;
           "Mod+D".action = spawn "fuzzel";
-          "Mod+T".action = spawn "kitty";
+          "Mod+T".action = spawn "ghostty";
           "Print".action = screenshot;
           "Ctrl+Print".action = screenshot-screen;
           "Alt+Print".action = screenshot-window;
@@ -227,7 +227,7 @@ in {
 
     programs.fuzzel.enable = true;
 
-    personal.kitty.enable = true;
+    personal.ghostty.enable = true;
 
     services.ssh-agent.enable = true;
   };

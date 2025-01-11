@@ -3,7 +3,7 @@
 
   personal.vscode.enable = true;
   personal.cluster-admin.enable = true;
-  personal.kitty.enable = true;
+  personal.ghostty.enable = true;
 
   personal.git.signingKey = keys.nikita_persephone;
 

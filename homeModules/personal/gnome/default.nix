@@ -4,6 +4,8 @@ in {
   options.personal.gnome = { enable = lib.mkEnableOption "gnome config"; };
 
   config = lib.mkIf cfg.enable {
+    personal.ghostty.enable = lib.mkDefault true;
+
     dconf = {
       enable = true;
       settings = { "org/gnome/shell".disable-user-extensions = false; };

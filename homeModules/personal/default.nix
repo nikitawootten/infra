@@ -1,4 +1,4 @@
-{ self, inputs, lib, ... }: {
+{ inputs, lib, ... }: {
   imports = [
     ./gnome
     ./roles
@@ -6,8 +6,6 @@
     ./darwin.nix
     ./direnv.nix
     ./editor.nix
-    ./firefox-gnome-theme.nix
-    ./firefox-sideberry-autohide.nix
     ./firefox.nix
     ./fonts.nix
     ./git.nix

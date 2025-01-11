@@ -6,8 +6,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.allowUnfree = true;
-
     home.packages = with pkgs;
       [ nmap sqlmap sqlitebrowser john hashcat ghidra dbeaver-bin ]
       ++ lib.lists.optionals pkgs.stdenv.isLinux

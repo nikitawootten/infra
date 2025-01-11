@@ -10,6 +10,10 @@ in {
       group = config.homelab.media.group;
     };
 
+    # TODO: Remove once Sonarr build is updated: https://github.com/NixOS/nixpkgs/issues/360592
+    nixpkgs.config.permittedInsecurePackages =
+      [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
+
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;
       useACMEHost = config.homelab.domain;

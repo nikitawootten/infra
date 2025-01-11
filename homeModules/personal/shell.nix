@@ -51,7 +51,7 @@ in {
         save = 20000;
         size = 20000;
         extended = true;
-        share = false;
+        share = true;
       };
 
       initExtra = ''

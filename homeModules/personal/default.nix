@@ -1,6 +1,5 @@
 { inputs, lib, ... }: {
   imports = [
-    ./gnome
     ./roles
     ./cluster-admin.nix
     ./darwin.nix
@@ -10,6 +9,7 @@
     ./fonts.nix
     ./ghostty.nix
     ./git.nix
+    ./gnome.nix
     ./misc-utils.nix
     ./niri.nix
     ./sectools.nix

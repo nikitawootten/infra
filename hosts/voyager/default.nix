@@ -40,7 +40,6 @@
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
-    personal.gnome.enableGSConnect = true;
     personal.fonts.enable = true;
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
 

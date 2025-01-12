@@ -19,12 +19,12 @@
   };
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
+  personal.roles.work.enable = true;
+
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
-  personal.printing.enable = true;
   personal.steam.enable = true;
-  personal.docker.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
@@ -42,8 +42,6 @@
   home-manager.users.${config.personal.user.name} = {
     personal.fonts.enable = true;
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
-
-    personal.roles.work.enable = true;
 
     imports = [ self.homeModules.protonmail-bridge ];
     services.protonmail-bridge.enable = true;
@@ -65,8 +63,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.lanzaboote.enable = true;
   boot.lanzaboote.pkiBundle = "/etc/secureboot";
-
-  personal.adb.enable = true;
 
   environment.systemPackages = with pkgs; [ sbctl android-studio ];
 

@@ -18,12 +18,11 @@
     };
   };
 
+  personal.roles.work.enable = true;
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
-  personal.printing.enable = true;
   personal.steam.enable = true;
-  personal.docker.enable = true;
   # personal.virtualbox.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
@@ -35,15 +34,7 @@
     betaDriver = true;
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
-  };
-
   personal.zsa.enable = true;
-
-  personal.adb.enable = true;
 
   dslr-webcam = {
     enable = true;
@@ -75,27 +66,12 @@
       "media.ffmpeg.vaapi.enabled" = true;
       "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
     };
-
-    personal.roles.work.enable = true;
   };
 
   programs.nix-ld.enable = true;
 
   # Disable auto-suspend
   services.xserver.displayManager.gdm.autoSuspend = false;
-  # AC-8 copy-pasta
-  services.xserver.displayManager.gdm.banner = ''
-    You are accessing a private information system, which includes:
-    1) this computer,
-    2) this computer network,
-    3) all computers connected to this network, and
-    4) all devices and storage media attached to this network or to a computer on this network.
-    You understand and consent to the following:
-    - you may access this information system for authorized use only;
-    - you have no reasonable expectation of privacy regarding any communication of data transiting or stored on this information system;
-    - at any time and for any lawful purpose, we may monitor, intercept, and search and seize any communication or data transiting or stored on this information system;
-    - and any communications or data transiting or stored on this information system may be disclosed or used for any lawful purpose.
-  '';
 
   # Multi-monitor support: Secondary monitor is rotated
   boot.kernelParams = [ "video=HDMI-1:panel_orientation=left_side_up" ];

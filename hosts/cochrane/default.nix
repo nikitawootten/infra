@@ -37,8 +37,7 @@
 
   networking.hostName = "cochrane";
 
-  personal.niri.enable = true;
-
+  personal.gnome.enable = true;
   programs.nix-ld.enable = true;
 
   stylix.enable = true;
@@ -56,10 +55,5 @@
     personal.firefox.enable = true;
 
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
-
-    programs.niri.settings.outputs.eDP-1 = {
-      transform.rotation = 270;
-      scale = 1.25;
-    };
   };
 }

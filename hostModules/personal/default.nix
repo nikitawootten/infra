@@ -5,9 +5,7 @@
     ./docker.nix
     ./flatpak.nix
     ./gnome.nix
-    ./kde.nix
     ./networkmanager.nix
-    ./niri.nix
     ./nvidia.nix
     ./printing.nix
     ./sound.nix

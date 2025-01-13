@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     # Dotfiles management
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -59,11 +58,7 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.flake-utils.follows = "flake-utils";
     };
     disko = {
       url = "github:nix-community/disko";

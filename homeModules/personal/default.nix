@@ -11,7 +11,6 @@
     ./git.nix
     ./gnome.nix
     ./misc-utils.nix
-    ./niri.nix
     ./sectools.nix
     ./shell.nix
     ./ssh.nix

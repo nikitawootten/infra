@@ -5,7 +5,9 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Dotfiles management
     home-manager = {
-      url = "github:nix-community/home-manager";
+      # Temporary workaround until https://github.com/danth/stylix/issues/865 is fixed
+      url =
+        "github:nix-community/home-manager/45c07fcf7d28b5fb3ee189c260dee0a2e4d14317";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
@@ -15,7 +17,7 @@
     # Provides hardware-specific NixOS modules
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
-    # Provides secureboot support
+    # Provides secure boot support
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +35,7 @@
       inputs.home-manager.follows = "home-manager";
       inputs.darwin.follows = "darwin";
     };
-    # Declerative management of flatpaks
+    # Declarative management of flatpaks
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     # Create VM/images/containers off of NixOS modules
     nixos-generators = {
@@ -136,7 +138,7 @@
           ] ++ self.checks.${system}.pre-commit-check.enabledPackages
           ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
             [
-              # Secureboot
+              # Secure boot
               sbctl
             ]);
       };

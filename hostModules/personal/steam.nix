@@ -6,14 +6,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        "steam"
-        "steam-original"
-        "steam-run"
-        "steam-runtime"
-      ];
-    programs.steam = { enable = true; };
+    nixpkgs.config.allowUnfree = true;
+    programs.steam.enable = true;
 
     # Thunder store client
     environment.systemPackages = with pkgs; [ r2modman ];

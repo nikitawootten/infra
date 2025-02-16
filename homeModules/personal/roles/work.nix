@@ -8,8 +8,6 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       httpie-desktop
-      # TODO: re-enable after https://github.com/NixOS/nixpkgs/pull/330789 is merged
-      # nomachine-client
       # AWS CLI currently pollutes the user PYTHONPATH, causing issues with virtual environments
       (writeShellScriptBin "aws" ''
         unset PYTHONPATH

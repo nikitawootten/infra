@@ -1,7 +1,9 @@
 { ... }: {
-  programs.zellij.enable = true;
-
-  # Zellij has moved to the KDL format for configuration
-  # xdg.configFile."zellij/config.kdl".text = ''
-  # '';
+  programs.zellij = {
+    enable = true;
+    # Disable auto-start on shell creation
+    enableZshIntegration = false;
+    enableBashIntegration = false;
+    enableFishIntegration = false;
+  };
 }

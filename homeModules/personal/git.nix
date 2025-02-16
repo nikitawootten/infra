@@ -38,18 +38,18 @@ in {
         ".direnv"
       ];
       aliases = { fpush = "push --force-with-lease"; };
+      signing = {
+        format = lib.mkDefault "ssh";
+        signByDefault = lib.mkDefault true;
+        key = lib.mkDefault cfg.signingKey;
+      };
+      maintenance.enable = lib.mkDefault true;
       extraConfig = {
         fetch.prune = lib.mkDefault true;
         pull.rebase = lib.mkDefault false;
         init.defaultBranch = lib.mkDefault "main";
         push.autoSetupRemote = lib.mkDefault true;
         rerere.enabled = lib.mkDefault true;
-
-        # signing
-        gpg.format = lib.mkDefault "ssh";
-        commit.gpgsign = lib.mkDefault true;
-        tag.gpgsign = lib.mkDefault true;
-        user.signingKey = lib.mkDefault cfg.signingKey;
 
         # Rewrite GitHub HTTPS remotes as SSH remotes
         url."ssh://git@github.com/".insteadOf = "https://github.com/";

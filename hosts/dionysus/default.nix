@@ -23,7 +23,7 @@
 
   personal.networkmanager.enable = true;
   personal.steam.enable = true;
-  # personal.virtualbox.enable = true;
+  personal.virtualbox.enable = true;
   personal.wireshark.enable = true;
   personal.flatpak.enable = true;
 
@@ -55,7 +55,7 @@
     sha256 = "sha256-jj/vKZTW1zwWK/dd8CewVbpCS7xdA/DC65yqPxFRxYU=";
   };
   stylix.base16Scheme =
-    "${pkgs.base16-schemes}/share/themes/atelier-estuary.yaml";
+    "${pkgs.base16-schemes}/share/themes/atelier-seaside.yaml";
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {

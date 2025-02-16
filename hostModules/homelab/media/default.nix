@@ -51,7 +51,7 @@ in {
     homelab.media.radarr.enable = lib.mkDefault true;
     homelab.media.readarr.enable = lib.mkDefault true;
     homelab.media.sonarr.enable = lib.mkDefault true;
-    homelab.media.jellyseerr.enable = lib.mkDefault true;
+    homelab.media.jellyseerr.enable = lib.mkDefault false;
     homelab.media.enableSambaShare = lib.mkDefault true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {

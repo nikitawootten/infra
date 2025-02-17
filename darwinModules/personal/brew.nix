@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 let cfg = config.personal.brew;
 in {
   options.personal.brew = { enable = lib.mkEnableOption "homebrew config"; };
@@ -13,8 +13,21 @@ in {
 
       brews = [ ];
 
-      casks =
-        [ "arc" "discord" "figma" "google-chrome" "notion" "slack" "zoom" ];
+      casks = [
+        "arc"
+        "discord"
+        "figma"
+        "google-chrome"
+        "notion"
+        "slack"
+        "zoom"
+        "proton-pass"
+        "stats"
+        "sf-symbols"
+        "obsidian"
+        "ghostty"
+        "httpie"
+      ];
     };
 
     programs.zsh.shellInit = ''

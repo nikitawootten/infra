@@ -17,5 +17,8 @@
 
     # Disabling for now due to lack of SSH resident key support in MacOS's packaged SSH agent
     programs.git.extraConfig.commit.gpgsig = lib.mkForce false;
+
+    # Disable once https://github.com/NixOS/nixpkgs/issues/366581 is resolved
+    programs.firefox.package = pkgs.firefox-unwrapped;
   };
 }

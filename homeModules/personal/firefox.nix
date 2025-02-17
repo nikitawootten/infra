@@ -4,8 +4,8 @@ in {
   options.personal.firefox = { enable = lib.mkEnableOption "firefox"; };
 
   config = lib.mkIf cfg.enable {
-    # needed for speech synthesis
-    home.packages = with pkgs; [ speechd ];
+    # needed for speech synthesis (only on linux)
+    home.packages = lib.lists.optional pkgs.stdenv.isLinux pkgs.speechd;
 
     programs.firefox = {
       enable = true;

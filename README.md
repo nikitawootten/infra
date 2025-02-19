@@ -5,7 +5,7 @@
 Welcome to my Nix-ified infrastructure and personal monorepo.
 
 ![man made horrors beyond comprehension](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/flake-graph.svg)
-*Flake dependency diagram [generated](./.github/workflows/artifacts.yaml) with [`nikitawootten/flake-graph`](https://github.com/nikitawootten/flake-graph).*
+_Flake dependency diagram [generated](./.github/workflows/artifacts.yaml) with [`nikitawootten/flake-graph`](https://github.com/nikitawootten/flake-graph)._
 
 ## Contents
 
@@ -20,24 +20,29 @@ To list Makefile targets run `make help`.
 <!--
 TODO: When I'm feeling really bored, generate automatically with a pre-commit hook
 -->
+
 ```console
 $ make directory
 .
 ├── darwinHosts
+│   ├── defiant
+│   │    { MacBook Pro M4
 │   └── persephone
-│        { Mac Mini, mostly used for work
+│        { Work Mac Mini M2
 ├── darwinModules
 │   └── personal
 ├── homeModules
-│   └── personal
-│        ⎧ Misc. config, dotfiles, applications, and hacky utilities
-│        ⎨ Makes every computer it infects feel like home
-│        ⎩ Note: Look around before using unless you want to become me
+│   ├── personal
+│   │    ⎧ Misc. config, dotfiles, applications, and hacky utilities
+│   │    ⎨ Makes every computer it infects feel like home
+│   │    ⎩ Note: Look around before using unless you want to become me
+│   └── protonmail-bridge
 ├── hostModules
 │   ├── dslr-webcam
 │   │    { Module I use to configure my Olympus OM-D camera as a webcam
 │   ├── homelab
 │   │    { Re-usable homelab modules for media, observability, and more
+│   ├── omada-controller
 │   ├── personal
 │   │    { Misc. server and desktop config
 │   └── raspi4sd
@@ -49,6 +54,7 @@ $ make directory
 │   │    { Custom-build workhorse (Ryzen 2920X, NVIDIA 2080ti)
 │   ├── hades
 │   │    { Dell PowerEdge R720XD, primary home server
+│   ├── hermes
 │   ├── iris
 │   │    { Raspberry Pi 4, secondary home server
 │   └── voyager
@@ -75,7 +81,7 @@ If you would like to see these packages submitted [upstream](https://github.com/
 ### Homelab
 
 ![network diagram](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/topology.svg)
-*Network diagram [generated](./.github/workflows/artifacts.yaml) with [`oddlama/nix-topology`](https://github.com/oddlama/nix-topology).*
+_Network diagram [generated](./.github/workflows/artifacts.yaml) with [`oddlama/nix-topology`](https://github.com/oddlama/nix-topology)._
 
 The [`homelab` NixOS module](./hostModules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
 

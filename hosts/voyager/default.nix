@@ -20,12 +20,12 @@
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
   personal.roles.work.enable = true;
+  personal.roles.play.enable = true;
+  personal.roles.security.enable = true;
 
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
-  personal.steam.enable = true;
-  personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
   personal.virtualbox.enable = true;

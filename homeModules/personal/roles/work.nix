@@ -14,7 +14,6 @@ in {
       ];
 
     personal.cluster-admin.enable = lib.mkDefault true;
-    personal.sectools.enable = lib.mkDefault true;
     personal.vscode.enable = lib.mkDefault true;
     personal.firefox.enable = lib.mkDefault true;
   };

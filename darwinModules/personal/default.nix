@@ -2,7 +2,9 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
     inputs.stylix.darwinModules.stylix
+    ./roles
     ./brew.nix
+    ./dock.nix
     ./fonts.nix
     ./system.nix
   ];

@@ -11,22 +11,17 @@ in {
         cleanup = "zap";
       };
 
-      brews = [ ];
-
       casks = [
         "arc"
         "discord"
-        "figma"
-        "google-chrome"
-        "notion"
-        "slack"
-        "zoom"
         "proton-pass"
         "stats"
-        "sf-symbols"
         "obsidian"
         "ghostty"
-        "httpie"
+        "signal"
+        "spotify"
+        "protonvpn"
+        "proton-drive"
       ];
     };
 

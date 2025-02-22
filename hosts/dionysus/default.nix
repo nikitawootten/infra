@@ -19,12 +19,12 @@
   };
 
   personal.roles.work.enable = true;
+  personal.roles.play.enable = true;
+  personal.roles.security.enable = true;
   personal.gnome.enable = true;
 
   personal.networkmanager.enable = true;
-  personal.steam.enable = true;
   personal.virtualbox.enable = true;
-  personal.wireshark.enable = true;
   personal.flatpak.enable = true;
 
   personal.nvidia = {

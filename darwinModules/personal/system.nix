@@ -20,6 +20,11 @@
         ShowStatusBar = true; # show status bar
       };
 
+      NSGlobalDomain = {
+        # Full keyboard navigation
+        AppleKeyboardUIMode = 3;
+      };
+
       CustomUserPreferences = {
         NSGlobalDomain = {
           # Add a context menu item for showing the Web Inspector in web views
@@ -34,13 +39,6 @@
 
         "com.apple.AdLib" = { allowApplePersonalizedAdvertising = false; };
       };
-
-      dock = {
-        autohide = true;
-        orientation = "bottom";
-        wvous-tl-corner = 2; # show mission control (gnome parity)
-        mru-spaces = false; # don't rearrange my spaces
-      };
     };
 
     keyboard = {
@@ -48,4 +46,7 @@
       remapCapsLockToEscape = true;
     };
   };
+
+  # Add ability to used TouchID for sudo authentication
+  security.pam.enableSudoTouchIdAuth = true;
 }

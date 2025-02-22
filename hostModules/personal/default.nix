@@ -11,13 +11,11 @@
     ./sound.nix
     ./ssh-server.nix
     ./printing.nix
-    ./steam.nix
     ./stylix.nix
     ./tailscale.nix
     ./upgrade-diff.nix
     ./user.nix
     ./virtualbox.nix
-    ./wireshark.nix
     ./zfs.nix
     ./zsa.nix
   ];

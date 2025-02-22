@@ -1,8 +1,8 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.personal.sectools;
+{ pkgs, config, lib, ... }:
+let cfg = config.personal.roles.security;
 in {
-  options.personal.sectools = {
-    enable = lib.mkEnableOption "install additional security tools";
+  options.personal.roles.security = {
+    enable = lib.mkEnableOption "Security tools";
   };
 
   config = lib.mkIf cfg.enable {

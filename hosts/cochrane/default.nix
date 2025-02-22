@@ -5,12 +5,12 @@
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
+  personal.roles.play.enable = true;
+  personal.roles.security.enable = true;
+  personal.roles.work.enable = true;
+
   personal.networkmanager.enable = true;
-  personal.printing.enable = true;
-  personal.steam.enable = true;
-  personal.docker.enable = true;
   #personal.virtualbox.enable = true;
-  personal.wireshark.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
 
@@ -49,11 +49,6 @@
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
   home-manager.users.${config.personal.user.name} = {
-    personal.vscode.enable = true;
-    personal.fonts.enable = true;
-    personal.sectools.enable = true;
-    personal.firefox.enable = true;
-
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
   };
 }

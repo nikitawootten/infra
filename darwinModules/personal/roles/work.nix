@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, ... }:
 let cfg = config.personal.roles.work;
 in {
   options.personal.roles.work = {
@@ -9,6 +9,10 @@ in {
     # Enable corresponding home-manager module
     home-manager.sharedModules = [{ personal.roles.work.enable = true; }];
 
+    homebrew.masApps = {
+      AppleDeveloper = 640199958;
+      TestFlight = 899247664;
+    };
     homebrew.brews = [ "swiftlint" ];
     homebrew.casks = [
       "figma"

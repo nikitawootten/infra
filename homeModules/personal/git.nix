@@ -46,13 +46,28 @@ in {
       maintenance.enable = lib.mkDefault true;
       extraConfig = {
         fetch.prune = lib.mkDefault true;
+        fetch.pruneTags = lib.mkDefault true;
+        fetch.all = lib.mkDefault true;
         pull.rebase = lib.mkDefault false;
         init.defaultBranch = lib.mkDefault "main";
         push.autoSetupRemote = lib.mkDefault true;
         rerere.enabled = lib.mkDefault true;
 
         # Rewrite GitHub HTTPS remotes as SSH remotes
-        url."ssh://git@github.com/".insteadOf = "https://github.com/";
+        # Note: disabled for now, has unintended side effects
+        # url."ssh://git@github.com/".insteadOf = "https://github.com/";
+
+        column.ui = lib.mkDefault "auto";
+        branch.sort = lib.mkDefault "-committerdate";
+        tag.sort = lib.mkDefault "version:refname";
+
+        diff.algorithm = lib.mkDefault "histogram";
+        diff.colorMoved = lib.mkDefault "plain";
+        diff.mnemonicPrefix = lib.mkDefault true;
+        diff.renames = lib.mkDefault true;
+
+        help.autocorrect = lib.mkDefault "prompt";
+        commit.verbose = lib.mkDefault true;
       };
       lfs.enable = true;
     };

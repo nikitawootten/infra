@@ -41,6 +41,8 @@ in {
       };
     };
 
+    environment.enableAllTerminfo = true;
+
     topology.self.services.nginx = { hidden = true; };
 
     # Helper function to create a subdomain for a service

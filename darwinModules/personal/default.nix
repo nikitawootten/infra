@@ -1,4 +1,4 @@
-{ lib, self, inputs, secrets, keys, ... }: {
+{ lib, self, inputs, secrets, keys, pkgs, ... }: {
   imports = [
     inputs.home-manager.darwinModules.home-manager
     inputs.stylix.darwinModules.stylix
@@ -28,4 +28,7 @@
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = 4;
   system.configurationRevision = self.rev or self.dirtyRev or null;
+
+  # Needed to build remote nixos systems
+  environment.systemPackages = with pkgs; [ nixos-rebuild ];
 }

@@ -11,8 +11,9 @@ in {
         cleanup = "zap";
       };
 
+      masApps = { Tailscale = 1475387142; };
+
       casks = [
-        "arc"
         "discord"
         "proton-pass"
         "stats"
@@ -22,6 +23,18 @@ in {
         "spotify"
         "protonvpn"
         "proton-drive"
+        "zed"
+        "jordanbaird-ice"
+        "blender"
+        "krita"
+        "maccy"
+        "darktable"
+        "orion"
+        "jellyfin-media-player"
+        "unity"
+        "godot"
+        "keka"
+        "raspberry-pi-imager"
       ];
     };
 

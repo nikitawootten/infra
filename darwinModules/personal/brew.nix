@@ -15,6 +15,7 @@ in {
 
       casks = [
         "discord"
+        "element"
         "proton-pass"
         "stats"
         "obsidian"
@@ -35,6 +36,8 @@ in {
         "godot"
         "keka"
         "raspberry-pi-imager"
+        "tor-browser"
+        "obs"
       ];
     };
 

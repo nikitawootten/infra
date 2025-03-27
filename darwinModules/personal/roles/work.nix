@@ -13,7 +13,8 @@ in {
       AppleDeveloper = 640199958;
       TestFlight = 899247664;
     };
-    homebrew.brews = [ "swiftlint" ];
+    homebrew.brews =
+      [ "swiftlint" "xcbeautify" "xcode-build-server" "swift-format" ];
     homebrew.casks = [
       "figma"
       "google-chrome"

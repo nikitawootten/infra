@@ -37,7 +37,25 @@ in {
         "/scratch/" # I often have "scratch" directory for experiments
         ".direnv"
       ];
-      aliases = { fpush = "push --force-with-lease"; };
+      aliases = {
+        aliases = "config --get-regexp alias";
+        fpush = "push --force-with-lease";
+        # The origin remote's HEAD branch (e.g. "main" or "master")
+        default-branch =
+          "!basename $(git symbolic-ref refs/remotes/origin/HEAD --short)";
+        dbranch = "default-branch";
+        checkout-default = "!git checkout $(git default-branch)";
+        checkd = "checkout-default";
+        checkout-pull-default =
+          "!git checkout $(git default-branch) && git pull";
+        checkpd = "checkout-pull-default";
+        # Checkout and pull the origin's default branch, create a new branch
+        workon = ''
+          !f(){ new_branch=nikitawootten/$1; echo "Starting work on $new_branch"; git checkout-pull-default; git checkout -b $new_branch; }; f'';
+        stash-workon = ''
+          !f(){ git stash push -m "Stashing work in progress"; git workon $1; git stash pop; }; f'';
+        sworkon = "stash-workon";
+      };
       signing = {
         format = lib.mkDefault "ssh";
         signByDefault = lib.mkDefault true;

@@ -7,7 +7,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs;
-      [ awscli2 ] ++ lib.lists.optionals pkgs.stdenv.isLinux [
+      [ awscli2 redis ] ++ lib.lists.optionals pkgs.stdenv.isLinux [
         httpie-desktop
         beekeeper-studio
         protonmail-desktop

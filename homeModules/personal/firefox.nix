@@ -71,8 +71,8 @@ in {
 
           # Via https://github.com/LudovicoPiero/dotfiles/blob/main/cells/workstations/homeProfiles/firefox/__search.nix
           search = {
-            default = "Google";
-            order = [ "Google" "DuckDuckGo" ];
+            default = "google";
+            order = [ "google" "ddg" ];
             force = true;
             engines = {
               "GitHub" = {
@@ -156,7 +156,7 @@ in {
                 definedAliases = [ "nw" ];
               };
 
-              "YouTube" = {
+              "youtube" = {
                 urls = [{
                   template =
                     "https://www.youtube.com/results?search_query={searchTerms}";
@@ -164,18 +164,14 @@ in {
                 definedAliases = [ "yt" ];
               };
 
-              "Bing".metaData.hidden = true;
-              "Google".metaData.alias = "g";
-              "DuckDuckGo".metaData.alias = "d";
+              "bing".metaData.hidden = true;
+              "google".metaData.alias = "g";
+              "ddg".metaData.alias = "d";
             };
           };
         };
       };
     };
     home.sessionVariables.BROWSER = "firefox";
-
-    stylix.targets.firefox.firefoxGnomeTheme.enable =
-      lib.mkDefault config.personal.gnome.enable;
-    stylix.targets.firefox.profileNames = [ "default" ];
   };
 }

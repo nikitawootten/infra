@@ -11,7 +11,6 @@
     ./sound.nix
     ./ssh-server.nix
     ./printing.nix
-    ./stylix.nix
     ./tailscale.nix
     ./upgrade-diff.nix
     ./user.nix

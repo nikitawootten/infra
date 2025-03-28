@@ -6,8 +6,6 @@ in {
   config = lib.mkIf cfg.enable {
     programs.vscode.enable = true;
 
-    stylix.targets.vscode.enable = false;
-
     home.packages = with pkgs; [ code-cursor ];
   };
 }

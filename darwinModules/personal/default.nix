@@ -1,7 +1,6 @@
 { lib, self, inputs, secrets, keys, pkgs, ... }: {
   imports = [
     inputs.home-manager.darwinModules.home-manager
-    inputs.stylix.darwinModules.stylix
     ./roles
     ./brew.nix
     ./dock.nix

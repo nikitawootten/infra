@@ -5,7 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Dotfiles management
     home-manager = {
-      # Temporary workaround until https://github.com/danth/stylix/issues/865 is fixed
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -55,20 +54,14 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, flake-utils, pre-commit-hooks
-    , ... }@inputs:
+  outputs =
+    { self, nixpkgs, darwin, flake-utils, pre-commit-hooks, ... }@inputs:
     let
       secrets = import ./secrets;
       keys = import ./keys.nix;

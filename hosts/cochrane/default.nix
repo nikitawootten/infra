@@ -40,14 +40,6 @@
   personal.gnome.enable = true;
   programs.nix-ld.enable = true;
 
-  stylix.enable = true;
-  stylix.image = pkgs.fetchurl {
-    url =
-      "https://github.com/dracula/wallpaper/blob/master/first-collection/nixos.png?raw=true";
-    sha256 = "sha256-hJBs+1MYSAqxb9+ENP0AsHdUrvjTzjobGv57dx5pPGE=";
-  };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-
   home-manager.users.${config.personal.user.name} = {
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
   };

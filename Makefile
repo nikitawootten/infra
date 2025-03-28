@@ -45,6 +45,17 @@ build-nixos: ## Build local NixOS config
 switch-darwin:
 	$(NIX_CMD) run nix-darwin -- switch --flake .#
 
+.PHONY: switch
+switch: ## Switch NixOS or Darwin config
+	@if [ "$$(uname)" = "Darwin" ]; then \
+		$(MAKE) switch-darwin; \
+	elif [ -d /etc/nixos/ ]; then \
+		$(MAKE) switch-nixos; \
+	else \
+		echo "Unsupported configuration"; \
+		exit 1; \
+	fi
+
 # Default to connecting to the host directly
 TARGET=$(HOST)
 # Default to using the local machine as the builder

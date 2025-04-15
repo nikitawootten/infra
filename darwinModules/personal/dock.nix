@@ -3,6 +3,7 @@
     defaults = {
       dock = {
         autohide = true;
+        show-recents = false;
         orientation = "bottom";
         wvous-tl-corner = 2; # show mission control (gnome parity)
         mru-spaces = false; # don't rearrange my spaces

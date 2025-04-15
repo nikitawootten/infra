@@ -20,6 +20,13 @@ in {
           "C-l" = ":toggle-option soft-wrap.enable";
         };
       };
+      languages = {
+        language = [{
+          name = "xml";
+          language-servers = [ "lemminx" ];
+        }];
+        language-server = { lemminx.command = lib.getExe pkgs.lemminx; };
+      };
     };
 
     programs.git.extraConfig.core.editor = "hx";

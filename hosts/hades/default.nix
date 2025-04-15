@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     self.nixosModules.personal
     self.nixosModules.homelab
+    ./minecraft.nix
   ];
 
   topology.self = {

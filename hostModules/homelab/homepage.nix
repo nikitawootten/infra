@@ -92,6 +92,7 @@ in {
         enable = true;
         services = toParentHomepageConfig service-cfg.services-declarative;
         bookmarks = toParentHomepageConfig service-cfg.bookmarks-declarative;
+        allowedHosts = cfg.domain;
       };
 
     services.nginx.virtualHosts."${cfg.domain}" = {

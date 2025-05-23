@@ -1,4 +1,4 @@
-{ lib, self, inputs, secrets, keys, pkgs, ... }: {
+{ lib, self, inputs, pkgs, ... }: {
   imports = [
     inputs.home-manager.darwinModules.home-manager
     ./roles
@@ -8,20 +8,13 @@
     ./rancher.nix
     ./system.nix
     ./upgrade-diff.nix
+    ./user.nix
   ];
 
   personal.fonts.enable = lib.mkDefault true;
   personal.brew.enable = lib.mkDefault true;
   personal.upgrade-diff.enable = lib.mkDefault true;
   personal.rancher.enable = lib.mkDefault true;
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.extraSpecialArgs = { inherit self inputs secrets keys; };
-  home-manager.sharedModules = [{
-    home.stateVersion = "24.11";
-    imports = [ self.homeModules.personal ];
-  }];
 
   programs.zsh.enable = true;
 

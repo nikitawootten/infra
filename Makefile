@@ -43,7 +43,8 @@ build-nixos: ## Build local NixOS config
 
 .PHONY: switch-darwin
 switch-darwin:
-	$(NIX_CMD) run nix-darwin -- switch --flake .#
+	sudo $(NIX_CMD) run nix-darwin -- switch --flake .#
+	/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
 .PHONY: switch
 switch: ## Switch NixOS or Darwin config

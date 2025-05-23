@@ -3,11 +3,6 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  users.users.nikita = {
-    name = "nikita";
-    home = "/Users/nikita";
-  };
-
   # An unfortunate artifact from migrating from determinate nix to the official nix installer
   ids.gids.nixbld = 350;
 

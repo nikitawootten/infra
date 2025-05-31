@@ -39,7 +39,7 @@
               content = {
                 type = "swap";
                 discardPolicy = "both";
-                resumeDevice = true; # resume from hiberation from this device
+                resumeDevice = true; # resume from hibernation from this device
               };
             };
           };

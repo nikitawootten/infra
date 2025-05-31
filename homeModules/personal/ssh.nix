@@ -9,6 +9,10 @@
         hostname = "ssh.github.com";
         port = 443;
       };
+      "codeberg.org" = {
+        user = "git";
+        identitiesOnly = true;
+      };
     } // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       # On darwin systems, force SSH to use the MacOS keychain
       "*" = {
@@ -20,7 +24,7 @@
         };
       };
     };
-    # Escape hatch allow additional configs in ~/.ssh/confid.d/
+    # Escape hatch allow additional configs in ~/.ssh/config.d/
     includes = [ "config.d/*" ];
   };
 }

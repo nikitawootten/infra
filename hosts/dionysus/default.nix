@@ -1,4 +1,4 @@
-{ self, pkgs, inputs, config, ... }: {
+{ self, inputs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -18,8 +18,13 @@
     };
   };
 
-  personal.roles.work.enable = true;
   personal.roles.play.enable = true;
+  # ALVR with support for the quest 2
+  programs.alvr.enable = true;
+  programs.alvr.openFirewall = true;
+  programs.adb.enable = true;
+  users.users.${config.personal.user.name}.extraGroups = [ "adbusers" ];
+
   personal.roles.security.enable = true;
   personal.gnome.enable = true;
 
@@ -51,6 +56,8 @@
 
   home-manager.users.${config.personal.user.name} = {
     personal.fonts.enable = true;
+    personal.vscode.enable = true;
+    personal.firefox.enable = true;
 
     programs.firefox.profiles.default.settings = {
       "gfx.webrender.all" = true; # Force enable GPU acceleration
@@ -62,7 +69,7 @@
   programs.nix-ld.enable = true;
 
   # Disable auto-suspend
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
 
   # Multi-monitor support: Secondary monitor is rotated
   boot.kernelParams = [ "video=HDMI-1:panel_orientation=left_side_up" ];

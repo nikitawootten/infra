@@ -42,7 +42,7 @@ in {
           tap-to-click = true;
           natural-scroll = true;
         };
-        "org/gnome/desktop/peripherals/mouse" = { natural-scroll = false; };
+        "org/gnome/desktop/peripherals/mouse" = { natural-scroll = true; };
         "org/gtk/gtk4/settings/file-chooser" = { show-hidden = true; };
         "org/gnome/nautilus/list-view" = { use-tree-view = true; };
         "org/gnome/mutter" = {

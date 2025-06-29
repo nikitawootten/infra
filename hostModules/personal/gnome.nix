@@ -11,8 +11,8 @@ in {
     personal.sound.enable = lib.mkDefault true;
 
     services.xserver.enable = true;
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
 
     programs.dconf.enable = true;
 
@@ -28,7 +28,7 @@ in {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     # AC-8 copy-pasta
-    services.xserver.displayManager.gdm.banner = ''
+    services.displayManager.gdm.banner = ''
       You are accessing a private information system, which includes:
       1) this computer,
       2) this computer network,

@@ -12,11 +12,8 @@ in {
       enable = true;
       # Common packages that I use
       packages = [
-        "com.brave.Browser"
         "com.discordapp.Discord"
         "com.google.Chrome"
-        "com.logseq.Logseq"
-        "com.slack.Slack"
         "com.spotify.Client"
         "org.libreoffice.LibreOffice"
         "org.signal.Signal"

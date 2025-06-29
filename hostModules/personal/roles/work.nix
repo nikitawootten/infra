@@ -16,5 +16,7 @@ in {
     programs.adb.enable = true;
     users.users.${config.personal.user.name}.extraGroups = [ "adbusers" "kvm" ];
     environment.systemPackages = [ pkgs.android-studio ];
+
+    services.flatpak.packages = [ "com.slack.Slack" ];
   };
 }

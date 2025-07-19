@@ -7,6 +7,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     programs = {
+      gpg.enable = lib.mkDefault true;
       fzf.enable = lib.mkDefault true;
       zoxide = {
         enable = lib.mkDefault true;

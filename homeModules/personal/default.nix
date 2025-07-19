@@ -18,7 +18,7 @@
     ./upgrade-diff.nix
     ./vscode.nix
     ./zellij.nix
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
   ];
 
   programs.home-manager.enable = lib.mkForce true;

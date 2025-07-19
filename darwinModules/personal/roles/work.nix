@@ -26,6 +26,7 @@ in {
       "android-studio"
       "android-platform-tools"
       "proxyman"
+      "kiro"
     ];
   };
 }

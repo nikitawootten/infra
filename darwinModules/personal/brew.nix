@@ -12,7 +12,7 @@ in {
       };
 
       masApps = { Tailscale = 1475387142; };
-      brews = [ "mas" ];
+      brews = [ "mas" "scrcpy" ];
       casks = [
         "discord"
         "element"
@@ -39,6 +39,9 @@ in {
         "tor-browser"
         "obs"
         "utm"
+        "google-chrome"
+        "soduto"
+        "qflipper"
       ];
     };
 

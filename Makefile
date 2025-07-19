@@ -72,11 +72,11 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 	@echo Rebuilding configuration for $(HOST) on target $(TARGET) \
 		$(if $(BUILDER),with builder $(BUILDER))
 
-	$(NIX_CMD) develop --command nixos-rebuild --flake ".#$(HOST)" \
+	$(NIX_CMD) run nixpkgs#nixos-rebuild-ng -- \
+		--flake ".#$(HOST)" \
 		--target-host "$(TARGET)" \
 		$(if $(BUILDER),--build-host "$(BUILDER)") \
-		$(if $(FAST),--fast) \
-		--use-remote-sudo switch
+		--ask-sudo-password switch
 
 .PHONY: artifacts
 artifacts: topology flake-graph ## Build all artifacts

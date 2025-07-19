@@ -30,6 +30,14 @@
 
   homelab.observability.enable = true;
 
+  age.secrets.kanidm-password.file = secrets."kanidm-password";
+  age.secrets.kanidm-password.owner = "kanidm";
+
+  homelab.auth = {
+    enable = true;
+    kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
+  };
+
   # Media
   age.secrets."transmission".file = secrets."transmission";
   homelab.media = {

@@ -6,4 +6,5 @@ in {
   "traefik.env.age".publicKeys = [ keys.hades keys.iris keys.hermes ]
     ++ keys.trusted_users;
   "transmission.env.age".publicKeys = hades_keyset;
+  "kanidm-password.age".publicKeys = hades_keyset;
 }

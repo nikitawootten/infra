@@ -2,6 +2,7 @@
 let cfg = config.homelab.media;
 in {
   imports = [
+    ./audiobookshelf.nix
     ./ersatztv.nix
     ./jellyfin.nix
     ./jellyseerr.nix
@@ -43,6 +44,7 @@ in {
   config = lib.mkIf cfg.enable {
     users.groups.${cfg.group} = { };
 
+    homelab.media.audiobookshelf.enable = lib.mkDefault true;
     homelab.media.ersatztv.enable = lib.mkDefault true;
     homelab.media.jellyfin.enable = lib.mkDefault true;
     homelab.media.transmission.enable = lib.mkDefault true;

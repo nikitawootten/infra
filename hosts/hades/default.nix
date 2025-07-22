@@ -40,12 +40,17 @@
 
   # Media
   age.secrets."transmission".file = secrets."transmission";
+  age.secrets.audiobookshelf-client-secret.file =
+    secrets.audiobookshelf-client-secret;
+  age.secrets.audiobookshelf-client-secret.owner = "kanidm";
   homelab.media = {
     enable = true;
     mediaRoot = "/menagerie";
     configRoot = "/storage/config";
     transmission.transmissionEnvFile = config.age.secrets."transmission".path;
     ersatztv.image = "jasongdove/ersatztv:latest-nvidia";
+    audiobookshelf.clientSecretFile =
+      config.age.secrets.audiobookshelf-client-secret.path;
   };
   users.groups.media.gid = 993;
 

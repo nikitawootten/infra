@@ -7,4 +7,5 @@ in {
     ++ keys.trusted_users;
   "transmission.env.age".publicKeys = hades_keyset;
   "kanidm-password.age".publicKeys = hades_keyset;
+  "audiobookshelf-client-secret.age".publicKeys = hades_keyset;
 }

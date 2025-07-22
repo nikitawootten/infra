@@ -34,6 +34,12 @@ in {
         enable = true;
         adminPasswordFile = cfg.adminPasswordFile;
         idmAdminPasswordFile = cfg.adminPasswordFile;
+        persons.nikita = {
+          displayName = "Nikita";
+          legalName = "Nikita";
+          mailAddresses = [ "me@nikita.computer" ];
+          groups = lib.attrNames config.services.kanidm.provision.groups;
+        };
       };
     };
 

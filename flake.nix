@@ -124,6 +124,7 @@
             graphviz
             helix
             tree
+            openssl
           ] ++ [
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default

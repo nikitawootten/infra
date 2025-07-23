@@ -1,5 +1,7 @@
 { lib, config, ... }:
-let cfg = config.homelab.media.ersatztv;
+let
+  cfg = config.homelab.media.ersatztv;
+  kanidmGroup = "ersatztv_users";
 in {
   options.homelab.media.ersatztv =
     (config.lib.homelab.mkServiceOptionSet "ErsatzTV" "ersatztv" cfg) // {
@@ -39,6 +41,19 @@ in {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
         recommendedProxySettings = true;
+      };
+    };
+    services.oauth2-proxy.nginx.virtualHosts.${cfg.domain} = {
+      allowed_groups = [ kanidmGroup ];
+    };
+    homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
+
+    homelab.media.homepageConfig.ErsatzTV = {
+      priority = lib.mkDefault 5;
+      config = {
+        description = "ErsatzTV";
+        href = "https://${cfg.domain}";
+        icon = "ersatztv.png";
       };
     };
   };

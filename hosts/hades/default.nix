@@ -32,10 +32,17 @@
 
   age.secrets.kanidm-password.file = secrets."kanidm-password";
   age.secrets.kanidm-password.owner = "kanidm";
-
+  age.secrets.oauth2-proxy-client-secret.file =
+    secrets.oauth2-proxy-client-secret;
+  age.secrets.oauth2-proxy-client-secret.owner = "kanidm";
+  age.secrets.oauth2-proxy-config.file = secrets.oauth2-proxy-config;
+  age.secrets.oauth2-proxy-config.owner = "oauth2-proxy";
   homelab.auth = {
     enable = true;
     kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
+    oauth2-proxy.clientSecretFile =
+      config.age.secrets.oauth2-proxy-client-secret.path;
+    oauth2-proxy.keyFile = config.age.secrets.oauth2-proxy-config.path;
   };
 
   # Media
@@ -43,6 +50,12 @@
   age.secrets.audiobookshelf-client-secret.file =
     secrets.audiobookshelf-client-secret;
   age.secrets.audiobookshelf-client-secret.owner = "kanidm";
+  age.secrets.sonarr-basic-auth.file = secrets."sonarr-basic-auth";
+  age.secrets.sonarr-basic-auth.owner = "nginx";
+  age.secrets.radarr-basic-auth.file = secrets."radarr-basic-auth";
+  age.secrets.radarr-basic-auth.owner = "nginx";
+  age.secrets.prowlarr-basic-auth.file = secrets."prowlarr-basic-auth";
+  age.secrets.prowlarr-basic-auth.owner = "nginx";
   homelab.media = {
     enable = true;
     mediaRoot = "/menagerie";
@@ -51,6 +64,9 @@
     ersatztv.image = "jasongdove/ersatztv:latest-nvidia";
     audiobookshelf.clientSecretFile =
       config.age.secrets.audiobookshelf-client-secret.path;
+    sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
+    radarr.authHeaderFile = config.age.secrets."radarr-basic-auth".path;
+    prowlarr.authHeaderFile = config.age.secrets."prowlarr-basic-auth".path;
   };
   users.groups.media.gid = 993;
 

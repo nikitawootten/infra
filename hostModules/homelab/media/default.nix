@@ -5,7 +5,6 @@ in {
     ./audiobookshelf.nix
     ./ersatztv.nix
     ./jellyfin.nix
-    ./jellyseerr.nix
     ./prowlarr.nix
     ./radarr.nix
     ./sonarr.nix
@@ -51,7 +50,6 @@ in {
     homelab.media.prowlarr.enable = lib.mkDefault true;
     homelab.media.radarr.enable = lib.mkDefault true;
     homelab.media.sonarr.enable = lib.mkDefault true;
-    homelab.media.jellyseerr.enable = lib.mkDefault false;
     homelab.media.enableSambaShare = lib.mkDefault true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {

@@ -15,7 +15,7 @@ in {
     };
   };
 
-  imports = [ ./kanidm.nix ];
+  imports = [ ./kanidm.nix ./oauth2-proxy.nix ];
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
@@ -24,5 +24,6 @@ in {
     };
 
     homelab.auth.kanidm.enable = lib.mkDefault true;
+    homelab.auth.oauth2-proxy.enable = lib.mkDefault true;
   };
 }

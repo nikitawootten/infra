@@ -8,4 +8,9 @@ in {
   "transmission.env.age".publicKeys = hades_keyset;
   "kanidm-password.age".publicKeys = hades_keyset;
   "audiobookshelf-client-secret.age".publicKeys = hades_keyset;
+  "oauth2-proxy-client-secret.age".publicKeys = hades_keyset;
+  "oauth2-proxy-config.age".publicKeys = hades_keyset;
+  "sonarr-basic-auth.age".publicKeys = hades_keyset;
+  "radarr-basic-auth.age".publicKeys = hades_keyset;
+  "prowlarr-basic-auth.age".publicKeys = hades_keyset;
 }

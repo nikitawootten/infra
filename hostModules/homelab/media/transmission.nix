@@ -1,5 +1,7 @@
 { lib, config, ... }:
-let cfg = config.homelab.media.transmission;
+let
+  cfg = config.homelab.media.transmission;
+  kanidmGroup = "transmission_users";
 in {
   options.homelab.media.transmission =
     (config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg)
@@ -45,6 +47,10 @@ in {
         '';
       };
     };
+    services.oauth2-proxy.nginx.virtualHosts.${cfg.domain} = {
+      allowed_groups = [ kanidmGroup ];
+    };
+    homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
     homelab.media.homepageConfig.Transmission = {
       priority = lib.mkDefault 2;

@@ -94,7 +94,8 @@ in {
       servers = { "localhost:4180" = { }; };
     };
 
-    services.kanidm.provision.groups = lib.genAttrs cfg.groups (_: { });
+    services.kanidm.provision.groups =
+      lib.genAttrs cfg.groups (_: { overwriteMembers = false; });
     services.kanidm.provision.systems.oauth2.${clientId} = {
       displayName = "OAuth2 Proxy";
       originUrl = [ "${cfg.url}/oauth2/callback" ];

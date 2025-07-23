@@ -30,8 +30,12 @@ in {
       };
     };
 
-    services.kanidm.provision.groups.${kanidmGroup} = { };
-    services.kanidm.provision.groups.${kanidmAdminGroup} = { };
+    services.kanidm.provision.groups.${kanidmGroup} = {
+      overwriteMembers = false;
+    };
+    services.kanidm.provision.groups.${kanidmAdminGroup} = {
+      overwriteMembers = false;
+    };
     services.kanidm.provision.systems.oauth2.audiobookshelf = {
       displayName = "AudioBookShelf";
       originUrl = [

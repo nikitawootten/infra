@@ -1,8 +1,37 @@
 { lib, config, ... }:
-let cfg = config.homelab.observability.grafana;
+let
+  cfg = config.homelab.observability.grafana;
+  clientId = "grafana";
+  adminGroup = "grafana_admins";
+  editorGroup = "grafana_editors";
+  groups = [ adminGroup editorGroup ];
+  idp = let domain = config.homelab.auth.kanidm.domain;
+  in {
+    # Thanks to @griffi-gh for this snippet
+    # Via https://github.com/girl-pp-ua/nixos-infra/blob/f06b49cc501d9e4cd7fb77345739a9efb5389deb/lib/idp.nix
+    oidc_discovery_prefix = "https://${domain}/oauth2/openid/${clientId}";
+    oidc_discovery =
+      "https://${domain}/oauth2/openid/${clientId}/.well-known/openid-configuration";
+    rfc8144_authorization_server_metadata =
+      "https://${domain}/oauth2/openid/${clientId}/.well-known/oauth-authorization-server";
+    user_auth = "https://${domain}/ui/oauth2";
+    api_auth = "https://${domain}/oauth2/authorise";
+    token_endpoint = "https://${domain}/oauth2/token";
+    rfc7662_token_introspection = "https://${domain}/oauth2/token/introspect";
+    rfc7662_token_revocation = "https://${domain}/oauth2/token/revoke";
+    oidc_issuer_uri = "https://${domain}/oauth2/openid/${clientId}";
+    oidc_user_info = "https://${domain}/oauth2/openid/${clientId}/userinfo";
+    token_signing_public_key =
+      "https://${domain}/oauth2/openid/${clientId}/public_key.jwk";
+  };
 in {
   options.homelab.observability.grafana =
-    config.lib.homelab.mkServiceOptionSet "Grafana" "grafana" cfg;
+    config.lib.homelab.mkServiceOptionSet "Grafana" "grafana" cfg // {
+      clientSecretFile = lib.mkOption {
+        type = lib.types.path;
+        description = "File containing the Grafana client secret";
+      };
+    };
 
   config = lib.mkIf cfg.enable {
     services.grafana = {
@@ -10,23 +39,29 @@ in {
 
       settings = {
         server.domain = lib.mkForce cfg.domain;
-        # } // lib.mkIf config.homelab.auth.enable {
-        #   auth.generic_oauth = let
-        #     auth-domain = config.homelab.auth.keycloak.domain;
-        #     auth-realm = "lab";
-        #   in {
-        #     enabled = true;
-        #     name = "Keycloak-OAuth";
-        #     allow_sign_up = true;
-        #     scopes = "openid email profile offline_access roles";
-        #     email_attribute_path = "email";
-        #     login_attribute_path = "username";
-        #     name_attribute_path = "full_name";
-        #     auth_url = "${auth-domain}/realms/${auth-realm}/protocol/openid-connect/auth";
-        #     token_url = "${auth-domain}/realms/${auth-realm}/protocol/openid-connect/token";
-        #     api_url = "${auth-domain}/realms/${auth-realm}/protocol/openid-connect/userinfo";
-        #     role_attribute_path = "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
-        #   };
+        server.root_url = lib.mkForce cfg.url;
+        auth.disable_login_form = true;
+        auth.disable_signout_menu = true;
+        "auth.basic".enabled = false;
+        "auth.generic_oauth" = {
+          enabled = true;
+          name = "Kanidm";
+          client_id = clientId;
+          client_secret = "$__file{${cfg.clientSecretFile}}";
+          auto_login = true;
+          allow_sign_up = true;
+          allow_assign_grafana_admin = true;
+          scopes = "openid email profile roles";
+          email_attribute_path = "email";
+          login_attribute_path = "preferred_username";
+          name_attribute_path = "full_name";
+          auth_url = idp.user_auth;
+          token_url = idp.token_endpoint;
+          api_url = idp.oidc_user_info;
+          use_pkce = true;
+          role_attribute_path =
+            "contains(roles[*], '${adminGroup}') && 'Admin' || contains(roles[*], '${editorGroup}') && 'Editor' || 'Viewer'";
+        };
       };
       provision = {
         enable = true;
@@ -34,18 +69,33 @@ in {
       };
     };
 
-    services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} =
-      {
-        forceSSL = true;
-        useACMEHost = config.homelab.domain;
-        locations."/" = {
-          proxyPass = "http://${
-              toString config.services.grafana.settings.server.http_addr
-            }:${toString config.services.grafana.settings.server.http_port}";
-          proxyWebsockets = true;
-          recommendedProxySettings = true;
-        };
+    services.nginx.virtualHosts.${cfg.domain} = {
+      forceSSL = true;
+      useACMEHost = config.homelab.domain;
+      locations."/" = {
+        proxyPass = "http://${
+            toString config.services.grafana.settings.server.http_addr
+          }:${toString config.services.grafana.settings.server.http_port}";
+        proxyWebsockets = true;
+        recommendedProxySettings = true;
       };
+    };
+
+    services.kanidm.provision.groups =
+      lib.genAttrs groups (_: { overwriteMembers = false; });
+    services.kanidm.provision.systems.oauth2.${clientId} = {
+      displayName = "Grafana";
+      originUrl = "${cfg.url}/login/generic_oauth";
+      originLanding = cfg.url;
+      preferShortUsername = true;
+      basicSecretFile = cfg.clientSecretFile;
+      scopeMaps =
+        lib.genAttrs groups (group: [ "email" "openid" "profile" "roles" ]);
+      claimMaps.roles = {
+        joinType = "array";
+        valuesByGroup = lib.genAttrs groups (group: [ group ]);
+      };
+    };
 
     homelab.observability.homepageConfig.Grafana = {
       priority = lib.mkDefault 1;
@@ -60,5 +110,8 @@ in {
       info = lib.mkForce "";
       details.listen.text = lib.mkForce cfg.domain;
     };
+
+    systemd.services.grafana.after =
+      lib.optionals config.homelab.auth.kanidm.enable [ "kanidm.service" ];
   };
 }

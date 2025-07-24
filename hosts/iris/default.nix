@@ -18,9 +18,6 @@
 
   homelab.lan-domain = "arpa.nikita.computer";
 
-  homelab.observability.enable = true;
-  homelab.homepage.enable = true;
-
   age.secrets.cloudflare-dns.file = secrets.traefik;
   homelab.acme.email = "me@nikita.computer";
   homelab.acme.dnsProvider = "cloudflare";

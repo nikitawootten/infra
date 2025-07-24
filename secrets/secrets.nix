@@ -13,4 +13,5 @@ in {
   "sonarr-basic-auth.age".publicKeys = hades_keyset;
   "radarr-basic-auth.age".publicKeys = hades_keyset;
   "prowlarr-basic-auth.age".publicKeys = hades_keyset;
+  "grafana-client-secret.age".publicKeys = hades_keyset;
 }

@@ -28,7 +28,13 @@
   homelab.acme.dnsProvider = "cloudflare";
   homelab.acme.credentialsFile = config.age.secrets.cloudflare-dns.path;
 
+  age.secrets.grafana-client-secret.file = secrets.grafana-client-secret;
+  age.secrets.grafana-client-secret.owner = "kanidm";
+  age.secrets.grafana-client-secret.group = "grafana";
+  age.secrets.grafana-client-secret.mode = "0440";
   homelab.observability.enable = true;
+  homelab.observability.grafana.clientSecretFile =
+    config.age.secrets.grafana-client-secret.path;
 
   age.secrets.kanidm-password.file = secrets."kanidm-password";
   age.secrets.kanidm-password.owner = "kanidm";

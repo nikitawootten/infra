@@ -97,12 +97,13 @@ in {
       };
     };
 
-    homelab.observability.homepageConfig.Grafana = {
+    homelab.observability.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 1;
       config = {
-        description = "Grafana";
-        href = "https://${cfg.domain}";
+        description = "Data visualization and monitoring";
+        href = cfg.url;
         icon = "grafana.png";
+        siteMonitor = cfg.url;
       };
     };
 

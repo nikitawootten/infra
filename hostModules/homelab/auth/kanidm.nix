@@ -54,12 +54,13 @@ in {
       };
     };
 
-    homelab.auth.homepageConfig.Kanidm = {
+    homelab.auth.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 1;
       config = {
-        description = "Kanidm";
+        description = "SSO and identity provider";
         href = cfg.url;
         icon = "kanidm.png";
+        siteMonitor = cfg.url;
       };
     };
   };

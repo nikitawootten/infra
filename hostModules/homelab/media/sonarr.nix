@@ -2,6 +2,7 @@
 let
   cfg = config.homelab.media.sonarr;
   kanidmGroup = "sonarr_users";
+  serviceUrl = "http://127.0.0.1:8989";
 in {
   options.homelab.media.sonarr =
     config.lib.homelab.mkServiceOptionSet "Sonarr" "sonarr" cfg // {
@@ -30,7 +31,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8989";
+        proxyPass = serviceUrl;
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = lib.optionalString (cfg.authHeaderFile != null) ''
@@ -44,12 +45,18 @@ in {
     };
     homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.Sonarr = {
+    homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 3;
       config = {
-        description = "Sonarr";
-        href = "https://${cfg.domain}";
+        description = "TV show download manager";
+        href = cfg.url;
         icon = "sonarr.png";
+        siteMonitor = serviceUrl;
+        widget = {
+          type = "sonarr";
+          url = serviceUrl;
+          key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+        };
       };
     };
 

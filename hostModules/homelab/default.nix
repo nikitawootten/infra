@@ -68,6 +68,12 @@ in {
         description = "${name}'s URL";
         readOnly = true;
       };
+      name = lib.mkOption {
+        type = lib.types.str;
+        default = name;
+        description = "The name of the service";
+        readOnly = true;
+      };
     };
 
     homelab.samba.enable = lib.mkDefault true;

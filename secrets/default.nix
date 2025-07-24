@@ -9,4 +9,5 @@
   radarr-basic-auth = ./radarr-basic-auth.age;
   prowlarr-basic-auth = ./prowlarr-basic-auth.age;
   grafana-client-secret = ./grafana-client-secret.age;
+  homepage-environment = ./homepage-environment.age;
 }

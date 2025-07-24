@@ -2,6 +2,7 @@
 let
   cfg = config.homelab.media.prowlarr;
   kanidmGroup = "prowlarr_users";
+  serviceUrl = "http://127.0.0.1:9696";
 in {
   options.homelab.media.prowlarr =
     config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg // {
@@ -27,7 +28,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:9696";
+        proxyPass = serviceUrl;
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = lib.optionalString (cfg.authHeaderFile != null) ''
@@ -41,12 +42,18 @@ in {
     };
     homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.Prowlarr = {
+    homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 5;
       config = {
-        description = "Prowlarr";
-        href = "https://${cfg.domain}";
+        description = "Indexer manager";
+        href = cfg.url;
         icon = "prowlarr.png";
+        siteMonitor = serviceUrl;
+        widget = {
+          type = "prowlarr";
+          url = serviceUrl;
+          key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+        };
       };
     };
 

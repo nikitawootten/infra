@@ -2,6 +2,7 @@
 let
   cfg = config.homelab.media.transmission;
   kanidmGroup = "transmission_users";
+  serviceUrl = "http://127.0.0.1:9091";
 in {
   options.homelab.media.transmission =
     (config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg)
@@ -36,7 +37,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:9091";
+        proxyPass = serviceUrl;
         recommendedProxySettings = true;
         extraConfig = ''
           proxy_pass_header X-Transmission-Session-Id;
@@ -52,17 +53,18 @@ in {
     };
     homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.Transmission = {
+    homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 2;
       config = {
-        description = "Transmission";
-        href = "https://${cfg.domain}";
+        description = "Web torrent client";
+        href = cfg.url;
         icon = "transmission.png";
+        siteMonitor = serviceUrl;
       };
     };
 
     topology.self.services.transmission = {
-      name = "Transmission";
+      name = cfg.name;
       icon = "services.transmission";
       details.listen.text = lib.mkForce cfg.domain;
     };

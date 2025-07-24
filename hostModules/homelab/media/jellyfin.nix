@@ -22,12 +22,18 @@ in {
 
     networking.firewall.allowedUDPPorts = [ 1900 7359 ];
 
-    homelab.media.homepageConfig.Jellyfin = {
-      priority = lib.mkDefault 1;
+    homelab.media.homepageConfig.${cfg.name} = {
+      priority = lib.mkDefault 6;
       config = {
-        description = "Jellyfin";
-        href = "https://${cfg.domain}";
+        description = "TV show and movie server";
+        href = cfg.url;
         icon = "jellyfin.png";
+        siteMonitor = cfg.url;
+        widget = {
+          type = "jellyfin";
+          url = cfg.url;
+          key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+        };
       };
     };
 

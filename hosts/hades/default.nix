@@ -76,6 +76,10 @@
   };
   users.groups.media.gid = 993;
 
+  age.secrets.homepage-environment.file = secrets.homepage-environment;
+  services.homepage-dashboard.environmentFile =
+    config.age.secrets."homepage-environment".path;
+
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";

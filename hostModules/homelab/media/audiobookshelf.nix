@@ -37,7 +37,7 @@ in {
       overwriteMembers = false;
     };
     services.kanidm.provision.systems.oauth2.audiobookshelf = {
-      displayName = "AudioBookShelf";
+      displayName = cfg.name;
       originUrl = [
         "${cfg.url}/auth/openid/callback"
         "${cfg.url}/auth/openid/mobile-redirect"
@@ -54,12 +54,13 @@ in {
       };
     };
 
-    homelab.media.homepageConfig.AudioBookShelf = {
-      priority = lib.mkDefault 6;
+    homelab.media.homepageConfig.${cfg.name} = {
+      priority = lib.mkDefault 7;
       config = {
-        description = "AudioBookShelf";
+        description = "Podcast and audiobook server";
         href = cfg.url;
         icon = "audiobookshelf.png";
+        siteMonitor = cfg.url;
       };
     };
   };

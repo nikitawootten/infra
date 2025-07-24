@@ -48,12 +48,13 @@ in {
     };
     homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.ErsatzTV = {
+    homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 5;
       config = {
-        description = "ErsatzTV";
-        href = "https://${cfg.domain}";
+        description = "Manage custom IPTV steams";
+        href = cfg.url;
         icon = "ersatztv.png";
+        siteMonitor = "http://127.0.0.1:${toString cfg.port}";
       };
     };
   };

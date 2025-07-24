@@ -2,6 +2,7 @@
 let
   cfg = config.homelab.media.radarr;
   kanidmGroup = "radarr_users";
+  serviceUrl = "http://127.0.0.1:7878";
 in {
   options.homelab.media.radarr =
     config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg // {
@@ -30,7 +31,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:7878";
+        proxyPass = serviceUrl;
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = lib.optionalString (cfg.authHeaderFile != null) ''
@@ -44,12 +45,18 @@ in {
     };
     homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.Radarr = {
+    homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 4;
       config = {
-        description = "Radarr";
-        href = "https://${cfg.domain}";
+        description = "Movie download manager";
+        href = cfg.url;
         icon = "radarr.png";
+        siteMonitor = serviceUrl;
+        widget = {
+          type = "radarr";
+          url = serviceUrl;
+          key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
+        };
       };
     };
 

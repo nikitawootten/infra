@@ -2,6 +2,7 @@
 let cfg = config.homelab;
 in {
   imports = [
+    ./household
     ./infra
     ./media
     ./acme.nix

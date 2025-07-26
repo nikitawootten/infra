@@ -73,6 +73,13 @@
   };
   users.groups.media.gid = 993;
 
+  age.secrets.actual-client-secret.file = secrets."actual-client-secret";
+  age.secrets.actual-client-secret.owner = "kanidm";
+  homelab.household = {
+    enable = true;
+    actual.clientSecretFile = config.age.secrets."actual-client-secret".path;
+  };
+
   age.secrets.homepage-environment.file = secrets.homepage-environment;
   services.homepage-dashboard.environmentFile =
     config.age.secrets."homepage-environment".path;

@@ -28,14 +28,6 @@
   homelab.acme.dnsProvider = "cloudflare";
   homelab.acme.credentialsFile = config.age.secrets.cloudflare-dns.path;
 
-  age.secrets.grafana-client-secret.file = secrets.grafana-client-secret;
-  age.secrets.grafana-client-secret.owner = "kanidm";
-  age.secrets.grafana-client-secret.group = "grafana";
-  age.secrets.grafana-client-secret.mode = "0440";
-  homelab.observability.enable = true;
-  homelab.observability.grafana.clientSecretFile =
-    config.age.secrets.grafana-client-secret.path;
-
   age.secrets.kanidm-password.file = secrets."kanidm-password";
   age.secrets.kanidm-password.owner = "kanidm";
   age.secrets.oauth2-proxy-client-secret.file =
@@ -43,12 +35,17 @@
   age.secrets.oauth2-proxy-client-secret.owner = "kanidm";
   age.secrets.oauth2-proxy-config.file = secrets.oauth2-proxy-config;
   age.secrets.oauth2-proxy-config.owner = "oauth2-proxy";
-  homelab.auth = {
+  age.secrets.grafana-client-secret.file = secrets.grafana-client-secret;
+  age.secrets.grafana-client-secret.owner = "kanidm";
+  age.secrets.grafana-client-secret.group = "grafana";
+  age.secrets.grafana-client-secret.mode = "0440";
+  homelab.infra = {
     enable = true;
     kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
     oauth2-proxy.clientSecretFile =
       config.age.secrets.oauth2-proxy-client-secret.path;
     oauth2-proxy.keyFile = config.age.secrets.oauth2-proxy-config.path;
+    grafana.clientSecretFile = config.age.secrets.grafana-client-secret.path;
   };
 
   # Media

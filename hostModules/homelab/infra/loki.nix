@@ -1,7 +1,7 @@
 { lib, config, ... }:
-let cfg = config.homelab.observability.loki;
+let cfg = config.homelab.infra.loki;
 in {
-  options.homelab.observability.loki = {
+  options.homelab.infra.loki = {
     enable = lib.mkEnableOption "Loki & Promtail";
   };
 

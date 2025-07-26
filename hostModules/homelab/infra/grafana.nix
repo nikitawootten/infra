@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.homelab.observability.grafana;
+  cfg = config.homelab.infra.grafana;
   clientId = "grafana";
   adminGroup = "grafana_admins";
   editorGroup = "grafana_editors";
   groups = [ adminGroup editorGroup ];
-  idp = let domain = config.homelab.auth.kanidm.domain;
+  idp = let domain = config.homelab.infra.kanidm.domain;
   in {
     # Thanks to @griffi-gh for this snippet
     # Via https://github.com/girl-pp-ua/nixos-infra/blob/f06b49cc501d9e4cd7fb77345739a9efb5389deb/lib/idp.nix
@@ -25,7 +25,7 @@ let
       "https://${domain}/oauth2/openid/${clientId}/public_key.jwk";
   };
 in {
-  options.homelab.observability.grafana =
+  options.homelab.infra.grafana =
     config.lib.homelab.mkServiceOptionSet "Grafana" "grafana" cfg // {
       clientSecretFile = lib.mkOption {
         type = lib.types.path;
@@ -97,7 +97,7 @@ in {
       };
     };
 
-    homelab.observability.homepageConfig.${cfg.name} = {
+    homelab.infra.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 1;
       config = {
         description = "Data visualization and monitoring";
@@ -113,6 +113,6 @@ in {
     };
 
     systemd.services.grafana.after =
-      lib.optionals config.homelab.auth.kanidm.enable [ "kanidm.service" ];
+      lib.optionals config.homelab.infra.kanidm.enable [ "kanidm.service" ];
   };
 }

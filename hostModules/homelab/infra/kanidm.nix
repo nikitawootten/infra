@@ -1,9 +1,9 @@
 { pkgs, lib, config, ... }:
 let
-  cfg = config.homelab.auth.kanidm;
+  cfg = config.homelab.infra.kanidm;
   inherit (config.security.acme.certs.${config.homelab.domain}) directory;
 in {
-  options.homelab.auth.kanidm =
+  options.homelab.infra.kanidm =
     (config.lib.homelab.mkServiceOptionSet "Kanidm" "idp" cfg) // {
       adminPasswordFile = lib.mkOption {
         type = lib.types.path;
@@ -54,7 +54,7 @@ in {
       };
     };
 
-    homelab.auth.homepageConfig.${cfg.name} = {
+    homelab.infra.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 1;
       config = {
         description = "SSO and identity provider";

@@ -51,7 +51,7 @@ in {
     services.oauth2-proxy.nginx.virtualHosts.${cfg.domain} = {
       allowed_groups = [ kanidmGroup ];
     };
-    homelab.auth.oauth2-proxy.groups = [ kanidmGroup ];
+    homelab.infra.oauth2-proxy.groups = [ kanidmGroup ];
 
     homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 2;

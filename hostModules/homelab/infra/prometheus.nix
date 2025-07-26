@@ -1,7 +1,7 @@
 { lib, config, ... }:
-let cfg = config.homelab.observability.prometheus;
+let cfg = config.homelab.infra.prometheus;
 in {
-  options.homelab.observability.prometheus = {
+  options.homelab.infra.prometheus = {
     enable = lib.mkEnableOption "Prometheus";
   };
 

@@ -1,8 +1,8 @@
 { config, lib, ... }:
 let
-  cfg = config.homelab.auth.oauth2-proxy;
+  cfg = config.homelab.infra.oauth2-proxy;
   clientId = "oauth2-proxy";
-  idp = let domain = config.homelab.auth.kanidm.domain;
+  idp = let domain = config.homelab.infra.kanidm.domain;
   in {
     # Thanks to @griffi-gh for this snippet
     # Via https://github.com/girl-pp-ua/nixos-infra/blob/f06b49cc501d9e4cd7fb77345739a9efb5389deb/lib/idp.nix
@@ -22,7 +22,7 @@ let
       "https://${domain}/oauth2/openid/${clientId}/public_key.jwk";
   };
 in {
-  options.homelab.auth.oauth2-proxy =
+  options.homelab.infra.oauth2-proxy =
     config.lib.homelab.mkServiceOptionSet "OAuth2 Proxy" "oauth2" cfg // {
       # TODO: Can this be derived from     services.oauth2-proxy.nginx.virtualHosts.<name>.allowed_groups
       groups = lib.mkOption {
@@ -111,6 +111,6 @@ in {
     };
 
     systemd.services.oauth2-proxy.after =
-      lib.optionals config.homelab.auth.kanidm.enable [ "kanidm.service" ];
+      lib.optionals config.homelab.infra.kanidm.enable [ "kanidm.service" ];
   };
 }

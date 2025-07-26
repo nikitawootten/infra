@@ -2,9 +2,8 @@
 let cfg = config.homelab;
 in {
   imports = [
-    ./auth
+    ./infra
     ./media
-    ./observability
     ./acme.nix
     ./homepage.nix
     ./samba.nix

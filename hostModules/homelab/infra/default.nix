@@ -34,5 +34,14 @@ in {
     homelab.infra.grafana.enable = true;
     homelab.infra.prometheus.enable = true;
     homelab.infra.loki.enable = true;
+
+    homelab.infra.homepageConfig."Pandora" = {
+      priority = lib.mkDefault 15;
+      config = {
+        description = "Ubiquiti Cloud Gateway Ultra";
+        href = "https://192.168.1.1";
+        icon = "ubiquiti-unifi.png";
+      };
+    };
   };
 }

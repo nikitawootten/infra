@@ -112,5 +112,15 @@ in {
 
     systemd.services.oauth2-proxy.after =
       lib.optionals config.homelab.infra.kanidm.enable [ "kanidm.service" ];
+
+    homelab.infra.homepageConfig.${cfg.name} = {
+      priority = lib.mkDefault 9;
+      config = {
+        description = "SSO compatibility layer";
+        href = cfg.url;
+        icon = "oauth2-proxy.png";
+        siteMonitor = cfg.url;
+      };
+    };
   };
 }

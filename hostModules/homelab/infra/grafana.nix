@@ -98,7 +98,7 @@ in {
     };
 
     homelab.infra.homepageConfig.${cfg.name} = {
-      priority = lib.mkDefault 1;
+      priority = lib.mkDefault 5;
       config = {
         description = "Data visualization and monitoring";
         href = cfg.url;

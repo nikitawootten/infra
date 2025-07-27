@@ -11,4 +11,6 @@
   grafana-client-secret = ./grafana-client-secret.age;
   homepage-environment = ./homepage-environment.age;
   actual-client-secret = ./actual-client-secret.age;
+  mealie-client-secret = ./mealie-client-secret.age;
+  mealie-env = ./mealie.env.age;
 }

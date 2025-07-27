@@ -15,7 +15,7 @@ in {
     };
   };
 
-  imports = [ ./actual.nix ];
+  imports = [ ./actual.nix ./mealie.nix ];
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
@@ -24,5 +24,6 @@ in {
     };
 
     homelab.household.actual.enable = lib.mkDefault true;
+    homelab.household.mealie.enable = lib.mkDefault true;
   };
 }

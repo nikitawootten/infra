@@ -16,4 +16,6 @@ in {
   "grafana-client-secret.age".publicKeys = hades_keyset;
   "homepage-environment.age".publicKeys = hades_keyset;
   "actual-client-secret.age".publicKeys = hades_keyset;
+  "mealie-client-secret.age".publicKeys = hades_keyset;
+  "mealie.env.age".publicKeys = hades_keyset;
 }

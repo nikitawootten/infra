@@ -36,6 +36,16 @@ in {
       description = "Homepage configuration for the media stack";
       default = { };
     };
+    managementHomepageCategory = lib.mkOption {
+      type = lib.types.str;
+      default = "Media Management";
+      description = "Homepage category for the media management stack";
+    };
+    managementHomepageConfig = lib.mkOption {
+      type = lib.types.attrs;
+      description = "Homepage configuration for the media management stack";
+      default = { };
+    };
     enableSambaShare =
       lib.mkEnableOption "Enable Samba share for media storage";
   };
@@ -53,9 +63,14 @@ in {
     homelab.media.enableSambaShare = lib.mkDefault true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
-      priority = lib.mkDefault 4;
+      priority = lib.mkDefault 10;
       config = cfg.homepageConfig;
     };
+    services.homepage-dashboard.services-declarative.${cfg.managementHomepageCategory} =
+      {
+        priority = lib.mkDefault 5;
+        config = cfg.managementHomepageConfig;
+      };
 
     services.homepage-dashboard.widgets = [{
       resources = {

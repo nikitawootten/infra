@@ -25,7 +25,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
-      priority = lib.mkDefault 3;
+      priority = lib.mkDefault 6;
       config = cfg.homepageConfig;
     };
 

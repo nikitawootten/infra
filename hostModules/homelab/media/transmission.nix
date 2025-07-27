@@ -53,7 +53,7 @@ in {
     };
     homelab.infra.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.${cfg.name} = {
+    homelab.media.managementHomepageConfig.${cfg.name} = {
       priority = lib.mkDefault 2;
       config = {
         description = "Web torrent client";

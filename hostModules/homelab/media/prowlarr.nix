@@ -42,7 +42,7 @@ in {
     };
     homelab.infra.oauth2-proxy.groups = [ kanidmGroup ];
 
-    homelab.media.homepageConfig.${cfg.name} = {
+    homelab.media.managementHomepageConfig.${cfg.name} = {
       priority = lib.mkDefault 5;
       config = {
         description = "Indexer manager";

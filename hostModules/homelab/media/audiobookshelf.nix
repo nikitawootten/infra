@@ -61,6 +61,11 @@ in {
         href = cfg.url;
         icon = "audiobookshelf.png";
         siteMonitor = cfg.url;
+        widget = {
+          type = "audiobookshelf";
+          url = cfg.url;
+          key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}";
+        };
       };
     };
   };

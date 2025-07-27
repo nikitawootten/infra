@@ -12,7 +12,10 @@ in {
     };
 
   config = lib.mkIf cfg.enable {
-    services.actual = { enable = true; };
+    services.actual = {
+      enable = true;
+      settings.port = 3001; # Default conflicts with Grafana
+    };
 
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;

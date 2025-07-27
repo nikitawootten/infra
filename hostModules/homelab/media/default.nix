@@ -5,6 +5,7 @@ in {
     ./audiobookshelf.nix
     ./ersatztv.nix
     ./jellyfin.nix
+    ./miniflux.nix
     ./prowlarr.nix
     ./radarr.nix
     ./sonarr.nix
@@ -61,6 +62,7 @@ in {
     homelab.media.radarr.enable = lib.mkDefault true;
     homelab.media.sonarr.enable = lib.mkDefault true;
     homelab.media.enableSambaShare = lib.mkDefault true;
+    homelab.media.miniflux.enable = lib.mkDefault true;
 
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {
       priority = lib.mkDefault 10;

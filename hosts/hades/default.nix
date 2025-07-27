@@ -59,6 +59,9 @@
   age.secrets.radarr-basic-auth.owner = "nginx";
   age.secrets.prowlarr-basic-auth.file = secrets."prowlarr-basic-auth";
   age.secrets.prowlarr-basic-auth.owner = "nginx";
+  age.secrets.miniflux-client-secret.file = secrets.miniflux-client-secret;
+  age.secrets.miniflux-client-secret.owner = "kanidm";
+  age.secrets.miniflux-env.file = secrets.miniflux-env;
   homelab.media = {
     enable = true;
     mediaRoot = "/menagerie";
@@ -70,6 +73,8 @@
     sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
     radarr.authHeaderFile = config.age.secrets."radarr-basic-auth".path;
     prowlarr.authHeaderFile = config.age.secrets."prowlarr-basic-auth".path;
+    miniflux.clientSecretFile = config.age.secrets.miniflux-client-secret.path;
+    miniflux.envFile = config.age.secrets.miniflux-env.path;
   };
   users.groups.media.gid = 993;
 

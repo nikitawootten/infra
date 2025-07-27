@@ -18,4 +18,6 @@ in {
   "actual-client-secret.age".publicKeys = hades_keyset;
   "mealie-client-secret.age".publicKeys = hades_keyset;
   "mealie.env.age".publicKeys = hades_keyset;
+  "miniflux-client-secret.age".publicKeys = hades_keyset;
+  "miniflux.env.age".publicKeys = hades_keyset;
 }

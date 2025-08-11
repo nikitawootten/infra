@@ -21,7 +21,7 @@ in {
       enable = true;
       createDatabaseLocally = true;
       config = {
-        LISTEN_ADDR = "localhost:3003";
+        LISTEN_ADDR = "localhost:3010";
         CREATE_ADMIN = "0";
         OAUTH2_PROVIDER = "oidc";
         OAUTH2_CLIENT_ID = clientId;

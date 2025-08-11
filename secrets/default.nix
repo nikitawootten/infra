@@ -15,4 +15,5 @@
   mealie-env = ./mealie.env.age;
   miniflux-client-secret = ./miniflux-client-secret.age;
   miniflux-env = ./miniflux.env.age;
+  immich-client-secret = ./immich-client-secret.age;
 }

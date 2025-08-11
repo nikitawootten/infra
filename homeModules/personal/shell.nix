@@ -41,7 +41,7 @@ in {
     };
 
     programs.zsh = {
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
       autosuggestion.enable = true;
 
       history = {

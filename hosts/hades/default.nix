@@ -83,11 +83,14 @@
   age.secrets.mealie-client-secret.file = secrets."mealie-client-secret";
   age.secrets.mealie-client-secret.owner = "kanidm";
   age.secrets.mealie-env.file = secrets."mealie-env";
+  age.secrets.immich-client-secret.file = secrets."immich-client-secret";
+  age.secrets.immich-client-secret.owner = "kanidm";
   homelab.household = {
     enable = true;
     actual.clientSecretFile = config.age.secrets."actual-client-secret".path;
     mealie.clientSecretFile = config.age.secrets."mealie-client-secret".path;
     mealie.envFile = config.age.secrets."mealie-env".path;
+    immich.clientSecretFile = config.age.secrets."immich-client-secret".path;
   };
 
   age.secrets.homepage-environment.file = secrets.homepage-environment;

@@ -111,7 +111,10 @@ in {
     };
 
     systemd.services.oauth2-proxy.after =
-      lib.optionals config.homelab.infra.kanidm.enable [ "kanidm.service" ];
+      lib.optionals config.homelab.infra.kanidm.enable [
+        "kanidm.service"
+        "nginx.service"
+      ];
 
     homelab.infra.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 9;

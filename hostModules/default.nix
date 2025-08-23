@@ -4,5 +4,4 @@
   dslr-webcam.imports = [ ./dslr-webcam ];
   homelab.imports = [ ./homelab ];
   homepage-declarative.imports = [ ./homepage-declarative ];
-  omada-controller.imports = [ ./omada-controller ];
 }

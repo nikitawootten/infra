@@ -16,7 +16,7 @@ in {
     users.users.${cfg.name} = {
       # Default user should have UID of 1000 for consistency
       uid = lib.mkDefault 1000;
-      extraGroups = [ "wheel" "media" "tty" ];
+      extraGroups = [ "wheel" "media" "tty" "video" ];
       shell = lib.mkForce pkgs.zsh;
       description = lib.mkDefault "Nikita";
       isNormalUser = lib.mkDefault true;

@@ -3,6 +3,7 @@
     ./roles
     ./base.nix
     ./docker.nix
+    ./niri.nix
     ./flatpak.nix
     ./gnome.nix
     ./networkmanager.nix
@@ -11,6 +12,7 @@
     ./sound.nix
     ./ssh-server.nix
     ./printing.nix
+    ./stylix.nix
     ./tailscale.nix
     ./upgrade-diff.nix
     ./user.nix

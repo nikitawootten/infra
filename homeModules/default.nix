@@ -1,4 +1,1 @@
-{
-  personal.imports = [ ./personal ];
-  protonmail-bridge.imports = [ ./protonmail-bridge ];
-}
+{ personal.imports = [ ./personal ]; }

@@ -7,5 +7,7 @@ in {
     programs.vscode.enable = true;
 
     home.packages = with pkgs; [ code-cursor ];
+
+    stylix.targets.vscode.enable = false;
   };
 }

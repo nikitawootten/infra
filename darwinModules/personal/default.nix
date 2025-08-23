@@ -1,5 +1,6 @@
 { lib, self, inputs, pkgs, ... }: {
   imports = [
+    inputs.stylix.darwinModules.stylix
     inputs.home-manager.darwinModules.home-manager
     ./roles
     ./brew.nix

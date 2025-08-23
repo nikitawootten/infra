@@ -32,17 +32,15 @@ $ make directory
 ├── darwinModules
 │   └── personal
 ├── homeModules
-│   ├── personal
-│   │    ⎧ Misc. config, dotfiles, applications, and hacky utilities
-│   │    ⎨ Makes every computer it infects feel like home
-│   │    ⎩ Note: Look around before using unless you want to become me
-│   └── protonmail-bridge
+│   └── personal
+│        ⎧ Misc. config, dotfiles, applications, and hacky utilities
+│        ⎨ Makes every computer it infects feel like home
+│        ⎩ Note: Look around before using unless you want to become me
 ├── hostModules
 │   ├── dslr-webcam
 │   │    { Module I use to configure my Olympus OM-D camera as a webcam
 │   ├── homelab
 │   │    { Re-usable homelab modules for media, observability, and more
-│   ├── omada-controller
 │   ├── personal
 │   │    { Misc. server and desktop config
 │   └── raspi4sd

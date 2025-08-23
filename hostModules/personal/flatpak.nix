@@ -19,6 +19,11 @@ in {
         "org.signal.Signal"
         "md.obsidian.Obsidian"
       ];
+      uninstallUnmanaged = true;
+      update.auto = {
+        enable = true;
+        onCalendar = "weekly";
+      };
     };
   };
 }

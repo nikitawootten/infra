@@ -19,11 +19,29 @@
   };
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
-  personal.roles.work.enable = true;
   personal.roles.play.enable = true;
   personal.roles.security.enable = true;
 
-  personal.gnome.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  personal.niri.enable = true;
+  home-manager.sharedModules = [{
+    programs.niri.settings = {
+      outputs."eDP-1" = {
+        scale = 1.5;
+        variable-refresh-rate = true;
+      };
+    };
+  }];
+
+  stylix.enable = true;
+  stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
+    sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
+  };
+  stylix.base16Scheme =
+    "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
+  stylix.polarity = "dark";
 
   personal.networkmanager.enable = true;
   personal.flatpak.enable = true;
@@ -36,14 +54,14 @@
     personal.fonts.enable = true;
     home.packages = with pkgs; [ tor-browser-bundle-bin ];
 
-    imports = [ self.homeModules.protonmail-bridge ];
-    services.protonmail-bridge.enable = true;
-    services.protonmail-bridge.enableGitSendEmail = true;
-
     dconf.settings."org/gnome/mutter" = {
       experimental-features =
         [ "scale-monitor-framebuffer" "xwayland-native-scaling" ];
     };
+
+    personal.firefox.enable = true;
+    personal.vscode.enable = true;
+    personal.cluster-admin.enable = true;
   };
 
   programs.nix-ld.enable = true;

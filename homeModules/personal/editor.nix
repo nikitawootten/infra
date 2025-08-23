@@ -14,6 +14,7 @@ in {
           indent-guides.render = true;
           soft-wrap.enable = true;
           lsp.display-inlay-hints = true;
+          lsp.display-messages = true;
         };
         keys.normal = {
           "C-s" = ":w";
@@ -21,12 +22,37 @@ in {
         };
       };
       languages = {
-        language = [{
-          name = "xml";
-          language-servers = [ "lemminx" ];
-        }];
-        language-server = { lemminx.command = lib.getExe pkgs.lemminx; };
+        language = [
+          {
+            name = "xml";
+            language-servers = [ "lemminx" ];
+          }
+          {
+            name = "python";
+            language-servers = [ "pyright" ];
+          }
+        ];
+        language-server = {
+          lemminx.command = lib.getExe pkgs.lemminx;
+          pyright = {
+            command = "${pkgs.pyright}/bin/pyright-langserver";
+            args = [ "--stdio" ];
+            config = { };
+          };
+        };
       };
+      extraPackages = with pkgs; [
+        # provides LSPs for CSS, SCSS, HTML, and JSON
+        # nodePackages.vscode-langservers-extracted
+        yaml-language-server
+        nodePackages.bash-language-server
+        # markdown LSP
+        marksman
+        # Nix LSP
+        nixd
+        nixfmt-classic
+        shellcheck
+      ];
     };
 
     programs.git.extraConfig.core.editor = "hx";
@@ -34,17 +60,5 @@ in {
       EDITOR = "hx";
       VISUAL = "hx";
     };
-
-    home.packages = with pkgs; [
-      # provides LSPs for CSS, SCSS, HTML, and JSON
-      # nodePackages.vscode-langservers-extracted
-      yaml-language-server
-      nodePackages.bash-language-server
-      # markdown LSP
-      marksman
-      # Nix LSP
-      nixd
-      nixfmt-classic
-    ];
   };
 }

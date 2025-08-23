@@ -28,7 +28,6 @@ in {
         "jordanbaird-ice"
         "blender"
         "krita"
-        "maccy"
         "darktable"
         "orion"
         "jellyfin-media-player"

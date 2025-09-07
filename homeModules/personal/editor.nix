@@ -17,6 +17,8 @@ in {
           lsp.display-messages = true;
         };
         keys.normal = {
+          space.space = "file_picker";
+          space.n = ":lsp-workspace-command today";
           "C-s" = ":w";
           "C-l" = ":toggle-option soft-wrap.enable";
         };
@@ -41,19 +43,21 @@ in {
           };
         };
       };
-      extraPackages = with pkgs; [
-        # provides LSPs for CSS, SCSS, HTML, and JSON
-        # nodePackages.vscode-langservers-extracted
-        yaml-language-server
-        nodePackages.bash-language-server
-        # markdown LSP
-        marksman
-        # Nix LSP
-        nixd
-        nixfmt-classic
-        shellcheck
-      ];
     };
+
+    home.packages = with pkgs; [
+      # provides LSPs for CSS, SCSS, HTML, and JSON
+      # nodePackages.vscode-langservers-extracted
+      yaml-language-server
+      nodePackages.bash-language-server
+      # Nix LSP
+      nixd
+      nixfmt-classic
+      shellcheck
+      markdown-oxide
+      sourcekit-lsp
+      kotlin-language-server
+    ];
 
     programs.git.extraConfig.core.editor = "hx";
     home.sessionVariables = {

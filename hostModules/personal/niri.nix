@@ -14,7 +14,7 @@ in {
     };
 
     services.xserver.enable = true;
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     programs.file-roller.enable = true;
@@ -34,6 +34,8 @@ in {
 
     home-manager.sharedModules = [
       ({ config, pkgs, ... }: {
+        personal.fonts.enable = true;
+
         programs.niri = {
           settings = {
             spawn-at-startup = [
@@ -50,7 +52,6 @@ in {
               "Mod+Shift+E".action = quit;
               "Mod+Shift+Slash".action = show-hotkey-overlay;
               "Mod+Shift+Q".action = close-window;
-              "Mod+Backspace".action = close-window;
               "Mod+D".action = spawn "fuzzel";
               "Mod+T".action = spawn [ "nautilus" "--new-window" ];
               "Mod+Return".action = spawn "ghostty";
@@ -336,26 +337,20 @@ in {
 
         services.swayidle = {
           enable = true;
-          events = [
-            {
-              event = "before-sleep";
-              command = "swaylock";
-            }
-            {
-              event = "lock";
-              command = "swaylock";
-            }
-          ];
           timeouts = [
             {
               timeout = 5 * 60;
-              command = "swaylock";
+              command = "${lib.getExe pkgs.swaylock-effects} -f";
             }
             {
-              timeout = 30 * 60;
+              timeout = 6 * 60;
               command = "systemctl suspend";
             }
           ];
+          events = [{
+            event = "before-sleep";
+            command = "${lib.getExe pkgs.swaylock-effects} -f";
+          }];
         };
 
         programs.swaylock = {

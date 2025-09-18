@@ -55,6 +55,8 @@ in {
       };
 
       initContent = ''
+        bindkey -v
+
         # C-x C-e edit command in $VISUAL editor (parity with bash)
         zle -N edit-command-line
         bindkey '^x^e' edit-command-line
@@ -109,5 +111,7 @@ in {
     # packaged bash on MacOS is ancient
     home.packages =
       lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [ bashInteractive ]);
+
+    programs.ripgrep.enable = true;
   };
 }

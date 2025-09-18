@@ -66,10 +66,14 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs, darwin, flake-utils, pre-commit-hooks, ... }@inputs:
+    { self, nixpkgs, darwin, flake-utils, pre-commit-hooks, nvf, ... }@inputs:
     let
       secrets = import ./secrets;
       keys = import ./keys.nix;
@@ -91,7 +95,14 @@
         overlays = [ inputs.nix-topology.overlays.default ];
       };
 
-      packages = import ./packages { inherit pkgs; };
+      packages = (import ./packages { inherit pkgs; }) // {
+        editor = let
+          nvfConfig = nvf.lib.neovimConfiguration {
+            inherit pkgs;
+            modules = [ ./editor.nix ];
+          };
+        in nvfConfig.neovim;
+      };
 
       topology = import inputs.nix-topology {
         inherit pkgs;
@@ -130,7 +141,6 @@
             pwgen
             jq
             graphviz
-            helix
             tree
             openssl
           ] ++ [

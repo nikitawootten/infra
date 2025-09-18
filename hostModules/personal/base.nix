@@ -25,7 +25,7 @@ in {
 
     services.fwupd.enable = lib.mkDefault true;
 
-    environment.systemPackages = with pkgs; [ gnumake wget git tmux vim helix ];
+    environment.systemPackages = with pkgs; [ gnumake wget git tmux ];
 
     programs.gnupg.agent = {
       enable = true;

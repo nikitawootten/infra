@@ -99,7 +99,7 @@
         editor = let
           nvfConfig = nvf.lib.neovimConfiguration {
             inherit pkgs;
-            modules = [ ./editor.nix ];
+            modules = [ ./editor ];
           };
         in nvfConfig.neovim;
       };

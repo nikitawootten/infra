@@ -24,11 +24,7 @@ in {
     services.gnome.sushi.enable = true;
     services.gvfs.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      nautilus
-      swaybg
-      xwayland-satellite-stable
-    ];
+    environment.systemPackages = with pkgs; [ nautilus swaybg ];
 
     hardware.brillo.enable = true;
 
@@ -40,13 +36,12 @@ in {
           settings = {
             spawn-at-startup = [
               { command = [ "systemctl" "--user" "start" "waybar.service" ]; }
-              { command = [ "xwayland-satellite" ]; }
               {
                 command =
                   [ "${pkgs.swaybg}/bin/swaybg" "-i" "${config.stylix.image}" ];
               }
             ];
-            environment.DISPLAY = ":0";
+            xwayland-satellite.enable = true;
             binds = with config.lib.niri.actions; {
               # Basic interaction
               "Mod+Shift+E".action = quit;
@@ -206,6 +201,7 @@ in {
               "Mod+Tab".action = switch-focus-between-floating-and-tiling;
               "Mod+Shift+Tab".action = toggle-window-floating;
             };
+            layout.background-color = "transparent";
             input = {
               focus-follows-mouse = {
                 enable = true;
@@ -258,12 +254,10 @@ in {
                 default-window-height = { fixed = 270; };
               }
             ];
-            layer-rules = [
-              # {
-              #   matches.namespace = "^wallpaper$";
-              #   place-within-backdrop = true;
-              # }
-            ];
+            layer-rules = [{
+              matches = [{ namespace = "^wallpaper$"; }];
+              place-within-backdrop = true;
+            }];
             clipboard.disable-primary = true;
             prefer-no-csd = true;
           };

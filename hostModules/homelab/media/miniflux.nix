@@ -22,7 +22,7 @@ in {
       createDatabaseLocally = true;
       config = {
         LISTEN_ADDR = "localhost:3010";
-        CREATE_ADMIN = "0";
+        CREATE_ADMIN = 0;
         OAUTH2_PROVIDER = "oidc";
         OAUTH2_CLIENT_ID = clientId;
         # OAUTH2_CLIENT_SECRET provided via envFile

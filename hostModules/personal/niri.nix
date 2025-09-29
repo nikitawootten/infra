@@ -15,6 +15,7 @@ in {
 
     services.xserver.enable = true;
     services.displayManager.gdm.enable = true;
+    security.pam.services.gdm.enableGnomeKeyring = true;
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     programs.file-roller.enable = true;
@@ -49,7 +50,7 @@ in {
               "Mod+Shift+Q".action = close-window;
               "Mod+D".action = spawn "fuzzel";
               "Mod+T".action = spawn [ "nautilus" "--new-window" ];
-              "Mod+Return".action = spawn "ghostty";
+              "Mod+Return".action = spawn [ "ghostty" "+new-window" ];
               "Mod+Shift+Return".action = spawn [ "ghostty" "--title=floatme" ];
               "Print".action = screenshot;
               # "Ctrl+Print".action = screenshot-screen;
@@ -272,12 +273,12 @@ in {
           enable = true;
           systemd.enable = true;
           settings = [{
-            height = 30;
+            height = 25;
             layer = "top";
             position = "bottom";
-            tray = { spacing = 10; };
+            tray = { spacing = 15; };
             modules-left = [ "niri/workspaces" "niri/window" "idle_inhibitor" ];
-            modules-center = [ "privacy" "systemd-failed-units" ];
+            modules-center = [ "privacy" ];
             modules-right = [
               "tray"
               "network"
@@ -289,11 +290,11 @@ in {
             ];
 
             backlight = {
-              format = "{percent}% {icon} ";
+              format = "{icon}";
               format-icons = [ "" "" ];
             };
             battery = {
-              format = "{capacity}% {icon} ";
+              format = "{capacity}% {icon}";
               format-icons = [ "" "" "" "" "" ];
             };
             clock = {
@@ -309,18 +310,18 @@ in {
               };
             };
             idle_inhibitor = {
-              format = "{icon} ";
+              format = "{icon}";
               format-icons.activated = "";
               format-icons.deactivated = "";
             };
             "network" = {
-              format-wifi = "{essid} ({signalStrength}%)  ";
-              format-ethernet = "{ipaddr}/{cidr} 󰊗 ";
+              format-wifi = "{essid} ";
+              format-ethernet = "{ipaddr}/{cidr} 󰊗";
               format-disconnected = "";
             };
             "niri/window" = { max-length = 50; };
             pulseaudio = {
-              format = "{volume}% {icon} ";
+              format = "{volume}% {icon}";
               format-bluetooth = "{volume}% {icon}";
               format-muted = "";
               format-icons.default = [ "" "" ];

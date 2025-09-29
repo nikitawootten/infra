@@ -32,6 +32,8 @@
         java.enable = true;
         kotlin.enable = true;
         bash.enable = true;
+        lua.enable = true;
+        yaml.enable = true;
       };
 
       utility.sleuth.enable = true;
@@ -49,12 +51,28 @@
       binds.whichKey.enable = true;
       comments.comment-nvim.enable = true;
 
-      keymaps = [{
-        key = "<leader>f?";
-        mode = "n";
-        silent = true;
-        action = "<Cmd>Telescope keymaps<CR>";
-      }];
+      keymaps = [
+        {
+          key = "<leader>f?";
+          mode = "n";
+          silent = true;
+          action = "<Cmd>Telescope keymaps<CR>";
+        }
+        {
+          key = "<leader><leader>";
+          mode = "n";
+          silent = true;
+          action = "<Cmd>Telescope find_files<CR>";
+        }
+        {
+          key = "<leader>tc";
+          mode = "n";
+          silent = true;
+          action = "<Cmd>Copilot suggestion toggle_auto_trigger<CR>";
+        }
+      ];
+
+      assistant.copilot.enable = true;
     };
   };
 }

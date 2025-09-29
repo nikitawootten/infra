@@ -18,7 +18,7 @@
       statusline = {
         lualine = {
           enable = true;
-          theme = "dracula";
+          theme = "tokyonight";
         };
       };
 
@@ -29,8 +29,11 @@
 
       theme = {
         enable = true;
-        name = "dracula";
+        name = "tokyonight";
+        style = "night";
       };
+
+      binds.whichKey.setupOpts.preset = "helix";
     };
   };
 }

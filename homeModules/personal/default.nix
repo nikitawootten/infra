@@ -1,6 +1,7 @@
 { inputs, lib, ... }: {
   imports = [
     ./roles
+    ./bridge.nix
     ./cluster-admin.nix
     ./darwin.nix
     ./direnv.nix

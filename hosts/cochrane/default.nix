@@ -1,4 +1,4 @@
-{ pkgs, self, inputs, config, keys, ... }: {
+{ pkgs, self, inputs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -61,7 +61,8 @@
 
   home-manager.users.${config.personal.user.name} = {
     home.packages = with pkgs; [ tor-browser-bundle-bin zed-editor ];
-
-    personal.git.signingKey = keys.nikita_cochrane;
+    personal.bridge.enable = true;
+    programs.git.extraConfig.credential.helper =
+      "${pkgs.gitFull}/bin/git-credential-libsecret";
   };
 }

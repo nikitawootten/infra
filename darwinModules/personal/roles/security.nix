@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, ... }:
 let cfg = config.personal.roles.security;
 in {
   options.personal.roles.security = {
@@ -10,6 +10,6 @@ in {
     home-manager.sharedModules = [{ personal.roles.security.enable = true; }];
 
     homebrew.brews = [ "ipsw" ];
-    homebrew.casks = [ "wireshark" ];
+    homebrew.casks = [ "wireshark-app" ];
   };
 }

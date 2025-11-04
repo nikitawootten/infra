@@ -7,7 +7,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs;
-      [ awscli2 redis uv python3 nodejs claude-code ]
+      [ awscli2 claude-code basedpyright rustup ]
       ++ lib.lists.optionals pkgs.stdenv.isLinux [ httpie-desktop ];
 
     personal.cluster-admin.enable = lib.mkDefault true;

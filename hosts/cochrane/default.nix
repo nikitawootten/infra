@@ -62,7 +62,7 @@
   home-manager.users.${config.personal.user.name} = {
     home.packages = with pkgs; [ tor-browser-bundle-bin zed-editor ];
     personal.bridge.enable = true;
-    programs.git.extraConfig.credential.helper =
+    programs.git.settings.credential.helper =
       "${pkgs.gitFull}/bin/git-credential-libsecret";
   };
 }

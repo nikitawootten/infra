@@ -21,7 +21,7 @@ in {
       "notion"
       "slack"
       "zoom"
-      "httpie"
+      "httpie-desktop"
       "sf-symbols"
       "android-studio"
       "android-platform-tools"

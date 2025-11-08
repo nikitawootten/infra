@@ -1,6 +1,7 @@
 { lib, pkgs, ... }: {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false; # deprecation
     matchBlocks = {
       "github.com" = {
         user = "git";
@@ -13,14 +14,19 @@
         user = "git";
         identitiesOnly = true;
       };
-    } // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
-      # On darwin systems, force SSH to use the MacOS keychain
       "*" = {
-        extraOptions = {
-          # Mitigating https://github.com/NixOS/nixpkgs/issues/15686 for now
+        forwardAgent = false;
+        addKeysToAgent = "yes";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
+        extraOptions = lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
           IgnoreUnknown = "AddKeysToAgent,UseKeychain";
-          UseKeychain = "yes";
-          AddKeysToAgent = "yes";
         };
       };
     };

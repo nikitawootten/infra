@@ -23,9 +23,9 @@ in {
     home.packages = with pkgs; [
       kubectl
       kubectx
-
       helm-with-plugins
       helmfile-with-plugins
+      helm-ls
     ];
 
     programs.starship.settings.kubernetes.disabled = false;

@@ -43,6 +43,7 @@ in {
     programs.zsh = {
       dotDir = "${config.xdg.configHome}/zsh";
       autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
 
       history = {
         expireDuplicatesFirst = true;
@@ -55,8 +56,6 @@ in {
       };
 
       initContent = ''
-        bindkey -v
-
         # C-x C-e edit command in $VISUAL editor (parity with bash)
         zle -N edit-command-line
         bindkey '^x^e' edit-command-line
@@ -76,12 +75,6 @@ in {
 
         ${sourceNixSingleUser}
       '';
-
-      plugins = [{
-        name = "fast-syntax-highlighting";
-        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
-        src = pkgs.zsh-fast-syntax-highlighting;
-      }];
     } // shellCommon;
 
     programs.bash = {

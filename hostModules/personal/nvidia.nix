@@ -18,7 +18,7 @@ in {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ vaapiVdpau nvidia-vaapi-driver ];
+      extraPackages = with pkgs; [ libva-vdpau-driver nvidia-vaapi-driver ];
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];

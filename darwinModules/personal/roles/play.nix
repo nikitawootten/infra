@@ -9,6 +9,6 @@ in {
     # Enable corresponding home-manager module
     home-manager.sharedModules = [{ personal.roles.play.enable = true; }];
 
-    homebrew.casks = [ "steam" "prismLauncher" ];
+    homebrew.casks = [ "steam" "prismLauncher" "kicad" "freecad" "calibre" ];
   };
 }

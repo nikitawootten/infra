@@ -12,7 +12,7 @@ in {
       };
 
       masApps = { Tailscale = 1475387142; };
-      brews = [ "mas" "scrcpy" ];
+      brews = [ "mas" ];
       casks = [
         "discord"
         "element"
@@ -34,7 +34,6 @@ in {
         "unity"
         "godot"
         "keka"
-        "raspberry-pi-imager"
         "tor-browser"
         "obs"
         "utm"

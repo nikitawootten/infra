@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [ ./filetree.nix ./theme.nix ];
 
   config = {
@@ -20,10 +20,9 @@
         enableTreesitter = true;
 
         nix.enable = true;
-        nix.format.package = pkgs.nixfmt-classic;
         nix.format.type = "nixfmt";
         python.enable = true;
-        python.format.type = "black-and-isort";
+        python.format.type = [ "black" "isort" ];
         rust.enable = true;
         go.enable = true;
         html.enable = true;

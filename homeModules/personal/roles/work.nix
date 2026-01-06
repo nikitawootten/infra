@@ -15,7 +15,13 @@ in {
         nixd
         vscode-json-languageserver
         nodejs_24
-      ] ++ lib.lists.optionals pkgs.stdenv.isLinux [ httpie-desktop ];
+        scrcpy
+      ] ++ (lib.lists.optionals pkgs.stdenv.isLinux [ httpie-desktop ])
+      ++ (lib.lists.optionals pkgs.stdenv.isDarwin [
+        swiftlint
+        xcbeautify
+        swift-format
+      ]);
 
     personal.cluster-admin.enable = lib.mkDefault true;
     personal.vscode.enable = lib.mkDefault true;

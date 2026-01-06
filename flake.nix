@@ -19,7 +19,7 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks";
+      inputs.pre-commit.follows = "pre-commit-hooks";
     };
     # Provides a handy "command not found" nixpkgs hook
     nix-index-database = {

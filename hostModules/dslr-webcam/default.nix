@@ -1,1 +1,4 @@
-{ ... }: { imports = [ ./dslr-webcam.nix ]; }
+{ ... }:
+{
+  imports = [ ./dslr-webcam.nix ];
+}

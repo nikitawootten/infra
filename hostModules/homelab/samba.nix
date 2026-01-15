@@ -1,7 +1,14 @@
 # Adopted from https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6
-{ lib, config, pkgs, ... }:
-let cfg = config.homelab.samba;
-in {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.homelab.samba;
+in
+{
   options.homelab.samba = {
     enable = lib.mkEnableOption "Enable samba config";
   };

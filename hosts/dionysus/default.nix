@@ -1,4 +1,11 @@
-{ self, inputs, config, pkgs, ... }: {
+{
+  self,
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -12,8 +19,7 @@
     interfaces = {
       enp8s0 = { };
       wlp5s0 = {
-        physicalConnections =
-          [ (config.lib.topology.mkConnection "ap1" "wlan0") ];
+        physicalConnections = [ (config.lib.topology.mkConnection "ap1" "wlan0") ];
       };
     };
   };

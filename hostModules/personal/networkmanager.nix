@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.personal.networkmanager;
-in {
+let
+  cfg = config.personal.networkmanager;
+in
+{
   options.personal.networkmanager = {
     enable = lib.mkEnableOption "networkmanager configuration";
   };

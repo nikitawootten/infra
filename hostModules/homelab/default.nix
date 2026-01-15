@@ -1,6 +1,13 @@
-{ inputs, lib, config, ... }:
-let cfg = config.homelab;
-in {
+{
+  inputs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.homelab;
+in
+{
   imports = [
     ./household
     ./infra
@@ -26,7 +33,10 @@ in {
   };
 
   config = {
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
     services.nginx = {
       enable = true;
       recommendedOptimisation = true;
@@ -38,13 +48,17 @@ in {
         forceSSL = true;
         useACMEHost = cfg.domain;
         default = true;
-        locations."/" = { return = "404"; };
+        locations."/" = {
+          return = "404";
+        };
       };
     };
 
     environment.enableAllTerminfo = true;
 
-    topology.self.services.nginx = { hidden = true; };
+    topology.self.services.nginx = {
+      hidden = true;
+    };
 
     # Helper function to create a subdomain for a service
     lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";

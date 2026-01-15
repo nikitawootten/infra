@@ -1,4 +1,5 @@
-{ inputs, lib, ... }: {
+{ inputs, lib, ... }:
+{
   imports = [
     ./roles
     ./bridge.nix

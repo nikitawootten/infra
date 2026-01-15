@@ -3,23 +3,23 @@ let
   cfg = config.homelab.media.radarr;
   kanidmGroup = "radarr_users";
   serviceUrl = "http://127.0.0.1:7878";
-in {
-  options.homelab.media.radarr =
-    config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg // {
-      authHeaderFile = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
-        description = lib.mdDoc ''
-          Path to a file containing the basic auth credentials used by Radarr.
-          The file should contain a single line in the format:
-          ```
-          proxy_set_header Authorization "Basic <base64-encoded-credentials>";
-          ```
-          where `<base64-encoded-credentials>` is the base64 encoding of `username:password`.
-          ```
-        '';
-      };
+in
+{
+  options.homelab.media.radarr = config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg // {
+    authHeaderFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = lib.mdDoc ''
+        Path to a file containing the basic auth credentials used by Radarr.
+        The file should contain a single line in the format:
+        ```
+        proxy_set_header Authorization "Basic <base64-encoded-credentials>";
+        ```
+        where `<base64-encoded-credentials>` is the base64 encoding of `username:password`.
+        ```
+      '';
     };
+  };
 
   config = lib.mkIf cfg.enable {
     services.radarr = {

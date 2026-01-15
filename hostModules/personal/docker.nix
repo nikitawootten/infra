@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.personal.docker;
-in {
+let
+  cfg = config.personal.docker;
+in
+{
   options.personal.docker = {
     enable = lib.mkEnableOption "docker configuration";
   };

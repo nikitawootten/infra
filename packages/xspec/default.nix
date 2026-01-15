@@ -1,16 +1,22 @@
-{ pkgs ? let
-  lock = (builtins.fromJSON
-    (builtins.readFile ../../flake.lock)).nodes.nixpkgs.locked;
-  nixpkgs = fetchTarball {
-    url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
-    sha256 = lock.narHash;
-  };
-in import nixpkgs { }, jre ? pkgs.jre
-, saxon_cp ? "${pkgs.saxon-he}/saxon9he.jar", ... }:
+{
+  pkgs ?
+    let
+      lock = (builtins.fromJSON (builtins.readFile ../../flake.lock)).nodes.nixpkgs.locked;
+      nixpkgs = fetchTarball {
+        url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+        sha256 = lock.narHash;
+      };
+    in
+    import nixpkgs { },
+  jre ? pkgs.jre,
+  saxon_cp ? "${pkgs.saxon-he}/saxon9he.jar",
+  ...
+}:
 let
   pname = "xspec";
   version = "2.2.4";
-in pkgs.stdenv.mkDerivation {
+in
+pkgs.stdenv.mkDerivation {
   inherit pname version;
 
   buildInputs = with pkgs; [ makeWrapper ];

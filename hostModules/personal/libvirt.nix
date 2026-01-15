@@ -1,6 +1,13 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.personal.libvirt;
-in {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.libvirt;
+in
+{
   options.personal.libvirt = {
     enable = lib.mkEnableOption "virt configuration";
   };
@@ -30,13 +37,15 @@ in {
     ];
     programs.virt-manager.enable = true;
 
-    programs.dconf.profiles.user.databases = [{
-      settings = {
-        "org/virt-manager/virt-manager/connections" = {
-          autoconnect = [ "qemu:///system" ];
-          uris = [ "qemu:///system" ];
+    programs.dconf.profiles.user.databases = [
+      {
+        settings = {
+          "org/virt-manager/virt-manager/connections" = {
+            autoconnect = [ "qemu:///system" ];
+            uris = [ "qemu:///system" ];
+          };
         };
-      };
-    }];
+      }
+    ];
   };
 }

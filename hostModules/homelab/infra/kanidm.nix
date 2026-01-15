@@ -1,15 +1,20 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.homelab.infra.kanidm;
   inherit (config.security.acme.certs.${config.homelab.domain}) directory;
-in {
-  options.homelab.infra.kanidm =
-    (config.lib.homelab.mkServiceOptionSet "Kanidm" "idp" cfg) // {
-      adminPasswordFile = lib.mkOption {
-        type = lib.types.path;
-        description = "File containing the Kanidm admin password";
-      };
+in
+{
+  options.homelab.infra.kanidm = (config.lib.homelab.mkServiceOptionSet "Kanidm" "idp" cfg) // {
+    adminPasswordFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing the Kanidm admin password";
     };
+  };
 
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 636 ];

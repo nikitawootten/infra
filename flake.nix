@@ -71,35 +71,53 @@
   };
 
   outputs =
-    { self, nixpkgs, darwin, flake-utils, pre-commit-hooks, nvf, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      darwin,
+      flake-utils,
+      pre-commit-hooks,
+      nvf,
+      ...
+    }@inputs:
     let
       secrets = import ./secrets;
       keys = import ./keys.nix;
 
       # Args passed to home-manager and nixos modules
-      specialArgs = { inherit self inputs secrets keys; };
-    in {
+      specialArgs = {
+        inherit
+          self
+          inputs
+          secrets
+          keys
+          ;
+      };
+    in
+    {
       homeModules = import ./homeModules;
 
       nixosModules = import ./hostModules;
       nixosConfigurations = import ./hosts { inherit specialArgs nixpkgs; };
 
-      darwinConfigurations =
-        import ./darwinHosts { inherit darwin specialArgs; };
+      darwinConfigurations = import ./darwinHosts { inherit darwin specialArgs; };
       darwinModules = import ./darwinModules;
-    } // flake-utils.lib.eachDefaultSystem (system: rec {
+    }
+    // flake-utils.lib.eachDefaultSystem (system: rec {
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ inputs.nix-topology.overlays.default ];
       };
 
       packages = (import ./packages { inherit pkgs; }) // {
-        editor = let
-          nvfConfig = nvf.lib.neovimConfiguration {
-            inherit pkgs;
-            modules = [ ./editor ];
-          };
-        in nvfConfig.neovim;
+        editor =
+          let
+            nvfConfig = nvf.lib.neovimConfiguration {
+              inherit pkgs;
+              modules = [ ./editor ];
+            };
+          in
+          nvfConfig.neovim;
       };
 
       topology = import inputs.nix-topology {
@@ -120,14 +138,17 @@
 
       checks.pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
-        hooks = { nixfmt-classic.enable = true; };
+        hooks = {
+          nixfmt.enable = true;
+        };
       };
 
       devShells.default = pkgs.mkShell {
         inherit (self.checks.${system}.pre-commit-check) shellHook;
         NIX_CONFIG = "extra-experimental-features = nix-command flakes";
         name = "infra";
-        packages = with pkgs;
+        packages =
+          with pkgs;
           [
             nix
             nixos-rebuild
@@ -141,18 +162,22 @@
             graphviz
             tree
             openssl
-          ] ++ [
+          ]
+          ++ [
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default
             inputs.flake-graph.packages.${system}.default
-          ] ++ self.checks.${system}.pre-commit-check.enabledPackages
-          ++ lib.lists.optionals pkgs.stdenv.isLinux (with pkgs;
+          ]
+          ++ self.checks.${system}.pre-commit-check.enabledPackages
+          ++ lib.lists.optionals pkgs.stdenv.isLinux (
+            with pkgs;
             [
               # Secure boot
               sbctl
-            ]);
+            ]
+          );
       };
 
-      formatter = pkgs.nixfmt-classic;
+      formatter = pkgs.nixfmt-tree;
     });
 }

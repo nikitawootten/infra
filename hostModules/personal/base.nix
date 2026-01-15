@@ -1,7 +1,17 @@
-{ pkgs, lib, config, inputs, ... }:
-let cfg = config.personal.base;
-in {
-  options.personal.base = { enable = lib.mkEnableOption "base configuration"; };
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
+let
+  cfg = config.personal.base;
+in
+{
+  options.personal.base = {
+    enable = lib.mkEnableOption "base configuration";
+  };
 
   config = lib.mkIf cfg.enable {
     time.timeZone = lib.mkDefault "America/New_York";
@@ -19,13 +29,20 @@ in {
     };
 
     # Configure keymap in X11
-    services.xserver.xkb = { layout = "us"; };
+    services.xserver.xkb = {
+      layout = "us";
+    };
 
     programs.zsh.enable = true;
 
     services.fwupd.enable = lib.mkDefault true;
 
-    environment.systemPackages = with pkgs; [ gnumake wget git tmux ];
+    environment.systemPackages = with pkgs; [
+      gnumake
+      wget
+      git
+      tmux
+    ];
 
     programs.gnupg.agent = {
       enable = true;

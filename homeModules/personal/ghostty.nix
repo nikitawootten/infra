@@ -1,7 +1,11 @@
 { config, lib, ... }:
-let cfg = config.personal.ghostty;
-in {
-  options.personal.ghostty = { enable = lib.mkEnableOption ""; };
+let
+  cfg = config.personal.ghostty;
+in
+{
+  options.personal.ghostty = {
+    enable = lib.mkEnableOption "";
+  };
 
   config = lib.mkIf cfg.enable {
     programs.ghostty = {

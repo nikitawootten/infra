@@ -1,4 +1,5 @@
-{ nixpkgs, specialArgs }: {
+{ nixpkgs, specialArgs }:
+{
   hades = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     inherit specialArgs;

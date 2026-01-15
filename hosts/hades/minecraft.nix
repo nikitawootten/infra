@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   virtualisation.oci-containers.containers.minecraft-server = {
     image = "itzg/minecraft-server";
     environment = {
@@ -13,7 +14,10 @@
       RCON_PASSWORD = "zapzap123";
       LEVEL_TYPE = "minecraft:amplified";
     };
-    ports = [ "25565:25565" "25575:25575" ];
+    ports = [
+      "25565:25565"
+      "25575:25575"
+    ];
     volumes = [ "/home/nikita/minecraft:/data" ];
   };
 }

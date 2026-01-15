@@ -1,5 +1,9 @@
-{ ... }: {
-  imports = [ ./filetree.nix ./theme.nix ];
+{ ... }:
+{
+  imports = [
+    ./filetree.nix
+    ./theme.nix
+  ];
 
   config = {
     vim = {
@@ -22,7 +26,10 @@
         nix.enable = true;
         nix.format.type = [ "nixfmt" ];
         python.enable = true;
-        python.format.type = [ "black" "isort" ];
+        python.format.type = [
+          "black"
+          "isort"
+        ];
         rust.enable = true;
         go.enable = true;
         html.enable = true;

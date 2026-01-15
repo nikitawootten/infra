@@ -1,7 +1,16 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.personal.firefox;
-in {
-  options.personal.firefox = { enable = lib.mkEnableOption "firefox"; };
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.firefox;
+in
+{
+  options.personal.firefox = {
+    enable = lib.mkEnableOption "firefox";
+  };
 
   config = lib.mkIf cfg.enable {
     # needed for speech synthesis (only on linux)
@@ -47,8 +56,7 @@ in {
             "network.allow-experiments" = false;
 
             # DO NOT POCKET
-            "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-              false;
+            "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
             "extensions.pocket.enabled" = false;
 
             "browser.tabs.firefox-view" = false;
@@ -56,10 +64,8 @@ in {
 
             # DO NOT SPONSOR
             "browser.startup.page" = 3;
-            "browser.newtabpage.activity-stream.feeds.discoverystreamfeed" =
-              false;
-            "browser.newtabpage.activity-stream.feeds.section.topstories" =
-              false;
+            "browser.newtabpage.activity-stream.feeds.discoverystreamfeed" = false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
             "browser.newtabpage.activity-stream.showSponsored" = false;
             "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
 
@@ -72,95 +78,102 @@ in {
           # Via https://github.com/LudovicoPiero/dotfiles/blob/main/cells/workstations/homeProfiles/firefox/__search.nix
           search = {
             default = "google";
-            order = [ "google" "ddg" ];
+            order = [
+              "google"
+              "ddg"
+            ];
             force = true;
             engines = {
               "GitHub" = {
-                urls = [{
-                  template =
-                    "https://github.com/search?q={searchTerms}&type=code";
-                }];
+                urls = [
+                  {
+                    template = "https://github.com/search?q={searchTerms}&type=code";
+                  }
+                ];
                 definedAliases = [ "gh" ];
               };
 
               "Nix Packages" = {
-                urls = [{
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      {
+                        name = "channel";
+                        value = "unstable";
+                      }
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
 
-                icon =
-                  "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "np" ];
               };
 
               "Home-Manager" = {
-                urls = [{
-                  template = "https://home-manager-options.extranix.com";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                    {
-                      name = "release";
-                      value = "master";
-                    }
-                  ];
-                }];
+                urls = [
+                  {
+                    template = "https://home-manager-options.extranix.com";
+                    params = [
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                      {
+                        name = "release";
+                        value = "master";
+                      }
+                    ];
+                  }
+                ];
                 definedAliases = [ "hm" ];
               };
 
               "NixOS Options" = {
-                urls = [{
-                  template = "https://search.nixos.org/options";
-                  params = [
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/options";
+                    params = [
+                      {
+                        name = "channel";
+                        value = "unstable";
+                      }
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
 
-                icon =
-                  "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "no" ];
               };
 
               "NixOS Wiki" = {
-                urls =
-                  [{ template = "https://wiki.nixos.org/wiki/{searchTerms}"; }];
-                icon =
-                  "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                urls = [ { template = "https://wiki.nixos.org/wiki/{searchTerms}"; } ];
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "nw" ];
               };
 
               "youtube" = {
-                urls = [{
-                  template =
-                    "https://www.youtube.com/results?search_query={searchTerms}";
-                }];
+                urls = [
+                  {
+                    template = "https://www.youtube.com/results?search_query={searchTerms}";
+                  }
+                ];
                 definedAliases = [ "yt" ];
               };
 

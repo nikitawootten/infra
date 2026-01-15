@@ -1,4 +1,11 @@
-{ lib, self, inputs, pkgs, ... }: {
+{
+  lib,
+  self,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   imports = [
     inputs.stylix.darwinModules.stylix
     inputs.home-manager.darwinModules.home-manager

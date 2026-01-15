@@ -1,6 +1,13 @@
-{ inputs, lib, config, ... }:
-let cfg = config.personal.flatpak;
-in {
+{
+  inputs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.flatpak;
+in
+{
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
 
   options.personal.flatpak = {

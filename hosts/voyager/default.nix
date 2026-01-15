@@ -1,4 +1,12 @@
-{ self, inputs, lib, pkgs, config, ... }: {
+{
+  self,
+  inputs,
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
@@ -16,22 +24,23 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
   personal.niri.enable = true;
-  home-manager.sharedModules = [{
-    programs.niri.settings = {
-      outputs."eDP-1" = {
-        scale = 1.5;
-        variable-refresh-rate = true;
+  home-manager.sharedModules = [
+    {
+      programs.niri.settings = {
+        outputs."eDP-1" = {
+          scale = 1.5;
+          variable-refresh-rate = true;
+        };
       };
-    };
-  }];
+    }
+  ];
 
   stylix.enable = true;
   stylix.image = pkgs.fetchurl {
     url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
     sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
   };
-  stylix.base16Scheme =
-    "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
   stylix.polarity = "dark";
 
   personal.networkmanager.enable = true;
@@ -46,8 +55,10 @@
     home.packages = with pkgs; [ tor-browser ];
 
     dconf.settings."org/gnome/mutter" = {
-      experimental-features =
-        [ "scale-monitor-framebuffer" "xwayland-native-scaling" ];
+      experimental-features = [
+        "scale-monitor-framebuffer"
+        "xwayland-native-scaling"
+      ];
     };
 
     personal.firefox.enable = true;
@@ -66,7 +77,10 @@
   boot.lanzaboote.enable = true;
   boot.lanzaboote.pkiBundle = "/etc/secureboot";
 
-  environment.systemPackages = with pkgs; [ sbctl android-studio ];
+  environment.systemPackages = with pkgs; [
+    sbctl
+    android-studio
+  ];
 
   # Needed to build aarch64 packages such as raspberry pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -75,7 +89,9 @@
 
   # Setup keyfile
   boot.initrd.systemd.enable = true;
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
 
   # Enable swap on luks
   boot.initrd.luks.devices."luks-4a0aabeb-46fd-48b4-b11e-96ba338f25e7".device =

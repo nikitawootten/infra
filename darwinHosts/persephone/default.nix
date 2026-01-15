@@ -1,4 +1,5 @@
-{ config, self, ... }: {
+{ config, self, ... }:
+{
   imports = [ self.darwinModules.personal ];
 
   home-manager.users.${config.system.primaryUser} = import ./nikita.nix;

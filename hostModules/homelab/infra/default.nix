@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.homelab.infra;
-in {
+let
+  cfg = config.homelab.infra;
+in
+{
   options.homelab.infra = {
     enable = lib.mkEnableOption "Enable infrastructure stack";
     homepageCategory = lib.mkOption {

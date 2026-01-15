@@ -2,9 +2,11 @@
 let
   cfg = config.homelab.media.ersatztv;
   kanidmGroup = "ersatztv_users";
-in {
+in
+{
   options.homelab.media.ersatztv =
-    (config.lib.homelab.mkServiceOptionSet "ErsatzTV" "ersatztv" cfg) // {
+    (config.lib.homelab.mkServiceOptionSet "ErsatzTV" "ersatztv" cfg)
+    // {
       configDir = lib.mkOption {
         type = lib.types.str;
         default = "${config.homelab.media.configRoot}/ersatztv";

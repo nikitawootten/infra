@@ -1,4 +1,13 @@
-{ config, lib, self, inputs, secrets, keys, ... }: {
+{
+  config,
+  lib,
+  self,
+  inputs,
+  secrets,
+  keys,
+  ...
+}:
+{
   imports = [ inputs.home-manager.darwinModules.home-manager ];
 
   system.primaryUser = lib.mkDefault "nikita";
@@ -11,15 +20,24 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit self inputs secrets keys; };
+    extraSpecialArgs = {
+      inherit
+        self
+        inputs
+        secrets
+        keys
+        ;
+    };
     users.${config.system.primaryUser} = { };
-    sharedModules = [{
-      home.stateVersion = "24.11";
-      imports = [
-        self.homeModules.personal
-        # Note: Stylix seems not to import its home module properly
-        inputs.stylix.homeModules.stylix
-      ];
-    }];
+    sharedModules = [
+      {
+        home.stateVersion = "24.11";
+        imports = [
+          self.homeModules.personal
+          # Note: Stylix seems not to import its home module properly
+          inputs.stylix.homeModules.stylix
+        ];
+      }
+    ];
   };
 }

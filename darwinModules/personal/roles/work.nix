@@ -1,13 +1,15 @@
 { config, lib, ... }:
-let cfg = config.personal.roles.work;
-in {
+let
+  cfg = config.personal.roles.work;
+in
+{
   options.personal.roles.work = {
     enable = lib.mkEnableOption "Work related software and configuration";
   };
 
   config = lib.mkIf cfg.enable {
     # Enable corresponding home-manager module
-    home-manager.sharedModules = [{ personal.roles.work.enable = true; }];
+    home-manager.sharedModules = [ { personal.roles.work.enable = true; } ];
 
     homebrew.masApps = {
       AppleDeveloper = 640199958;

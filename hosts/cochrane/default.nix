@@ -1,4 +1,11 @@
-{ pkgs, self, inputs, config, ... }: {
+{
+  pkgs,
+  self,
+  inputs,
+  config,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -31,38 +38,43 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
-  boot.kernelParams =
-    [ "fbcon=rotate:1" "video=eDP-1:panel_orientation=right_side_up" ];
+  boot.kernelParams = [
+    "fbcon=rotate:1"
+    "video=eDP-1:panel_orientation=right_side_up"
+  ];
 
   fonts.fontconfig.subpixel.rgba = "vbgr";
 
   networking.hostName = "cochrane";
 
   personal.niri.enable = true;
-  home-manager.sharedModules = [{
-    programs.niri.settings = {
-      outputs.eDP-1 = {
-        scale = 1.5;
-        transform.rotation = 270;
+  home-manager.sharedModules = [
+    {
+      programs.niri.settings = {
+        outputs.eDP-1 = {
+          scale = 1.5;
+          transform.rotation = 270;
+        };
+        layout.gaps = 8;
+        layout.border.width = 2;
       };
-      layout.gaps = 8;
-      layout.border.width = 2;
-    };
-  }];
+    }
+  ];
   programs.nix-ld.enable = true;
   stylix.enable = true;
   stylix.image = pkgs.fetchurl {
     url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
     sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
   };
-  stylix.base16Scheme =
-    "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
-    home.packages = with pkgs; [ tor-browser zed-editor ];
+    home.packages = with pkgs; [
+      tor-browser
+      zed-editor
+    ];
     personal.bridge.enable = true;
-    programs.git.settings.credential.helper =
-      "${pkgs.gitFull}/bin/git-credential-libsecret";
+    programs.git.settings.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
   };
 }

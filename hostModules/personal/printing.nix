@@ -1,6 +1,13 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.personal.printing;
-in {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.personal.printing;
+in
+{
   options.personal.printing = {
     enable = lib.mkEnableOption "printing configuration";
   };

@@ -1,6 +1,12 @@
 # Bootstrapped via the following command:
 # $ nix run github:nix-community/nixos-anywhere -- --flake .#hermes <user@host> --build-on-remote
-{ self, inputs, config, ... }: {
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
+{
   imports = [
     self.nixosModules.personal
     inputs.disko.nixosModules.disko
@@ -19,8 +25,7 @@
     hardware.info = "Oracle Cloud VM";
     interfaces = {
       enp0s6 = {
-        physicalConnections =
-          [ (config.lib.topology.mkConnection "internet" "*") ];
+        physicalConnections = [ (config.lib.topology.mkConnection "internet" "*") ];
       };
     };
   };

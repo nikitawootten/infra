@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   shellCommon = {
     enable = true;
@@ -13,8 +18,11 @@ let
   '';
 
   cfg = config.personal.shell;
-in {
-  options.personal.shell = { enable = lib.mkEnableOption "shell config"; };
+in
+{
+  options.personal.shell = {
+    enable = lib.mkEnableOption "shell config";
+  };
 
   config = lib.mkIf cfg.enable {
     home.shellAliases = {
@@ -75,10 +83,14 @@ in {
 
         ${sourceNixSingleUser}
       '';
-    } // shellCommon;
+    }
+    // shellCommon;
 
     programs.bash = {
-      historyControl = [ "ignoredups" "ignorespace" ];
+      historyControl = [
+        "ignoredups"
+        "ignorespace"
+      ];
       initExtra = ''
         # C-backspace
         stty werase \^H
@@ -99,11 +111,11 @@ in {
 
         ${sourceNixSingleUser}
       '';
-    } // shellCommon;
+    }
+    // shellCommon;
 
     # packaged bash on MacOS is ancient
-    home.packages =
-      lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [ bashInteractive ]);
+    home.packages = lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [ bashInteractive ]);
 
     programs.ripgrep.enable = true;
   };

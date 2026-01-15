@@ -1,7 +1,16 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.personal.tmux;
-in {
-  options.personal.tmux = { enable = lib.mkEnableOption "shell config"; };
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.tmux;
+in
+{
+  options.personal.tmux = {
+    enable = lib.mkEnableOption "shell config";
+  };
 
   config = lib.mkIf cfg.enable {
     # Draws heavily from https://github.com/dreamsofcode-io/tmux/blob/main/tmux.conf
@@ -31,22 +40,24 @@ in {
         bind -n S-Right next-window
       '';
 
-      plugins = with pkgs; [{
-        # Provides easy yanking for Linux and MacOS:
-        # - <prefix> [ to activate
-        # - v to select
-        # - C-v to toggle between line and block selection
-        # - y to yank to system clipboard
-        plugin = tmuxPlugins.yank;
-        extraConfig = ''
-          # set vi-mode
-          set-window-option -g mode-keys vi
-          # keybindings
-          bind-key -T copy-mode-vi v send-keys -X begin-selection
-          bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-          bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-        '';
-      }];
+      plugins = with pkgs; [
+        {
+          # Provides easy yanking for Linux and MacOS:
+          # - <prefix> [ to activate
+          # - v to select
+          # - C-v to toggle between line and block selection
+          # - y to yank to system clipboard
+          plugin = tmuxPlugins.yank;
+          extraConfig = ''
+            # set vi-mode
+            set-window-option -g mode-keys vi
+            # keybindings
+            bind-key -T copy-mode-vi v send-keys -X begin-selection
+            bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+            bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+          '';
+        }
+      ];
     };
   };
 }

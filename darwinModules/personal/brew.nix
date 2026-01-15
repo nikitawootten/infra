@@ -1,7 +1,11 @@
 { lib, config, ... }:
-let cfg = config.personal.brew;
-in {
-  options.personal.brew = { enable = lib.mkEnableOption "homebrew config"; };
+let
+  cfg = config.personal.brew;
+in
+{
+  options.personal.brew = {
+    enable = lib.mkEnableOption "homebrew config";
+  };
 
   config = lib.mkIf cfg.enable {
     homebrew = {
@@ -11,7 +15,9 @@ in {
         cleanup = "zap";
       };
 
-      masApps = { Tailscale = 1475387142; };
+      masApps = {
+        Tailscale = 1475387142;
+      };
       brews = [ "mas" ];
       casks = [
         "discord"

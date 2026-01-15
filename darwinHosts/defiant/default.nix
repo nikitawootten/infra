@@ -1,4 +1,5 @@
-{ self, keys, ... }: {
+{ self, keys, ... }:
+{
   imports = [ self.darwinModules.personal ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

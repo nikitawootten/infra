@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.personal.tailscale;
-in {
+let
+  cfg = config.personal.tailscale;
+in
+{
   options.personal.tailscale = {
     enable = lib.mkEnableOption "tailscale configuration";
   };
@@ -8,8 +10,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      extraSetFlags =
-        lib.lists.optional config.personal.ssh-server.enable "--ssh";
+      extraSetFlags = lib.lists.optional config.personal.ssh-server.enable "--ssh";
     };
     networking.firewall.checkReversePath = "loose";
   };

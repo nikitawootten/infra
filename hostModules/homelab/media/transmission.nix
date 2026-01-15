@@ -3,7 +3,8 @@ let
   cfg = config.homelab.media.transmission;
   kanidmGroup = "transmission_users";
   serviceUrl = "http://127.0.0.1:9091";
-in {
+in
+{
   options.homelab.media.transmission =
     (config.lib.homelab.mkServiceOptionSet "Transmission" "transmission" cfg)
     // {
@@ -29,8 +30,11 @@ in {
         "${config.homelab.media.mediaRoot}/torrents:/data"
         "${config.homelab.media.configRoot}/transmission:/config"
       ];
-      extraOptions =
-        [ "--cap-add=NET_ADMIN,NET_RAW,mknod" "--device" "/dev/net/tun" ];
+      extraOptions = [
+        "--cap-add=NET_ADMIN,NET_RAW,mknod"
+        "--device"
+        "/dev/net/tun"
+      ];
     };
 
     services.nginx.virtualHosts.${cfg.domain} = {

@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.homelab.household;
-in {
+let
+  cfg = config.homelab.household;
+in
+{
   options.homelab.household = {
     enable = lib.mkEnableOption "Enable household stack";
     homepageCategory = lib.mkOption {
@@ -15,7 +17,12 @@ in {
     };
   };
 
-  imports = [ ./actual.nix ./changedetection-io.nix ./mealie.nix ./immich.nix ];
+  imports = [
+    ./actual.nix
+    ./changedetection-io.nix
+    ./mealie.nix
+    ./immich.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard.services-declarative.${cfg.homepageCategory} = {

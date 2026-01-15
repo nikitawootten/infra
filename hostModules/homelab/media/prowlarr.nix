@@ -3,9 +3,11 @@ let
   cfg = config.homelab.media.prowlarr;
   kanidmGroup = "prowlarr_users";
   serviceUrl = "http://127.0.0.1:9696";
-in {
+in
+{
   options.homelab.media.prowlarr =
-    config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg // {
+    config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg
+    // {
       authHeaderFile = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
@@ -22,7 +24,9 @@ in {
     };
 
   config = lib.mkIf cfg.enable {
-    services.prowlarr = { enable = true; };
+    services.prowlarr = {
+      enable = true;
+    };
 
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;

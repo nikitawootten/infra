@@ -3,9 +3,11 @@ let
   cfg = config.homelab.media.miniflux;
   kanidmGroup = "miniflux_users";
   clientId = "miniflux";
-in {
+in
+{
   options.homelab.media.miniflux =
-    config.lib.homelab.mkServiceOptionSet "Miniflux" "miniflux" cfg // {
+    config.lib.homelab.mkServiceOptionSet "Miniflux" "miniflux" cfg
+    // {
       clientSecretFile = lib.mkOption {
         type = lib.types.path;
         description = "File containing the Miniflux client secret";
@@ -27,8 +29,7 @@ in {
         OAUTH2_CLIENT_ID = clientId;
         # OAUTH2_CLIENT_SECRET provided via envFile
         OAUTH2_REDIRECT_URL = "${cfg.url}/oauth2/oidc/callback";
-        OAUTH2_OIDC_DISCOVERY_ENDPOINT =
-          "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}";
+        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}";
         OAUTH2_USER_CREATION = "1";
         DISABLE_LOCAL_AUTH = "1";
       };
@@ -39,8 +40,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass =
-          "http://${toString config.services.miniflux.config.LISTEN_ADDR}";
+        proxyPass = "http://${toString config.services.miniflux.config.LISTEN_ADDR}";
         recommendedProxySettings = true;
       };
     };
@@ -54,7 +54,11 @@ in {
       originLanding = cfg.url;
       preferShortUsername = true;
       basicSecretFile = cfg.clientSecretFile;
-      scopeMaps.${kanidmGroup} = [ "email" "openid" "profile" ];
+      scopeMaps.${kanidmGroup} = [
+        "email"
+        "openid"
+        "profile"
+      ];
     };
 
     homelab.media.homepageConfig.${cfg.name} = {

@@ -1,1 +1,7 @@
-{ imports = [ ./work.nix ./play.nix ./security.nix ]; }
+{
+  imports = [
+    ./work.nix
+    ./play.nix
+    ./security.nix
+  ];
+}

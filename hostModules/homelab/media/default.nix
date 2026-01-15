@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.homelab.media;
-in {
+let
+  cfg = config.homelab.media;
+in
+{
   imports = [
     ./audiobookshelf.nix
     ./ersatztv.nix
@@ -47,8 +49,7 @@ in {
       description = "Homepage configuration for the media management stack";
       default = { };
     };
-    enableSambaShare =
-      lib.mkEnableOption "Enable Samba share for media storage";
+    enableSambaShare = lib.mkEnableOption "Enable Samba share for media storage";
   };
 
   config = lib.mkIf cfg.enable {
@@ -68,18 +69,19 @@ in {
       priority = lib.mkDefault 10;
       config = cfg.homepageConfig;
     };
-    services.homepage-dashboard.services-declarative.${cfg.managementHomepageCategory} =
-      {
-        priority = lib.mkDefault 5;
-        config = cfg.managementHomepageConfig;
-      };
+    services.homepage-dashboard.services-declarative.${cfg.managementHomepageCategory} = {
+      priority = lib.mkDefault 5;
+      config = cfg.managementHomepageConfig;
+    };
 
-    services.homepage-dashboard.widgets = [{
-      resources = {
-        label = "Media Storage";
-        disk = cfg.mediaRoot;
-      };
-    }];
+    services.homepage-dashboard.widgets = [
+      {
+        resources = {
+          label = "Media Storage";
+          disk = cfg.mediaRoot;
+        };
+      }
+    ];
 
     services.samba.settings = lib.mkIf cfg.enableSambaShare {
       media = {

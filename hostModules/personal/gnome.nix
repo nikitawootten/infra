@@ -1,12 +1,19 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.personal.gnome;
-in {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.gnome;
+in
+{
   options.personal.gnome = {
     enable = lib.mkEnableOption "gnome configuration";
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.sharedModules = [{ personal.gnome.enable = true; }];
+    home-manager.sharedModules = [ { personal.gnome.enable = true; } ];
 
     personal.sound.enable = lib.mkDefault true;
 

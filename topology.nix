@@ -1,8 +1,14 @@
 { config, ... }:
 let
   inherit (config.lib.topology)
-    mkInternet mkRouter mkSwitch mkDevice mkConnection;
-in {
+    mkInternet
+    mkRouter
+    mkSwitch
+    mkDevice
+    mkConnection
+    ;
+in
+{
   networks.home = {
     name = "Home Network";
     cidrv4 = "10.69.0.1/24";
@@ -12,7 +18,10 @@ in {
 
   nodes.router = mkRouter "pandora" {
     info = "Zimaboard running pfSense";
-    interfaceGroups = [ [ "eth0" ] [ "wan1" ] ];
+    interfaceGroups = [
+      [ "eth0" ]
+      [ "wan1" ]
+    ];
     connections.eth0 = mkConnection "switch" "eth0";
     interfaces.eth0 = {
       addresses = [ "10.69.0.1" ];
@@ -22,7 +31,14 @@ in {
 
   nodes.switch = mkSwitch "switch" {
     info = "TP-Link gigabit managed switch";
-    interfaceGroups = [[ "eth0" "eth1" "eth2" "eth3" ]];
+    interfaceGroups = [
+      [
+        "eth0"
+        "eth1"
+        "eth2"
+        "eth3"
+      ]
+    ];
 
     connections.eth1 = mkConnection "ap1" "eth0";
     connections.eth2 = mkConnection "iris" "end0";
@@ -31,6 +47,11 @@ in {
 
   nodes.ap1 = mkDevice "access-point-1" {
     info = "TP-Link EAP610";
-    interfaceGroups = [[ "eth0" "wlan0" ]];
+    interfaceGroups = [
+      [
+        "eth0"
+        "wlan0"
+      ]
+    ];
   };
 }

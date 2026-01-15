@@ -1,6 +1,13 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.personal.nvidia;
-in {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.personal.nvidia;
+in
+{
   options.personal.nvidia = {
     enable = lib.mkEnableOption "nvidia configuration";
     headless = lib.mkOption {
@@ -18,7 +25,10 @@ in {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ libva-vdpau-driver nvidia-vaapi-driver ];
+      extraPackages = with pkgs; [
+        libva-vdpau-driver
+        nvidia-vaapi-driver
+      ];
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -27,10 +37,12 @@ in {
       open = lib.mkDefault false;
       modesetting.enable = lib.mkDefault true;
       nvidiaSettings = lib.mkDefault (!cfg.headless);
-      package = lib.mkDefault (if cfg.betaDriver then
-        config.boot.kernelPackages.nvidiaPackages.beta
-      else
-        config.boot.kernelPackages.nvidiaPackages.stable);
+      package = lib.mkDefault (
+        if cfg.betaDriver then
+          config.boot.kernelPackages.nvidiaPackages.beta
+        else
+          config.boot.kernelPackages.nvidiaPackages.stable
+      );
       powerManagement.enable = lib.mkDefault cfg.suspend;
     };
 

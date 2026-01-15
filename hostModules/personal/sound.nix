@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.personal.sound;
-in {
+let
+  cfg = config.personal.sound;
+in
+{
   options.personal.sound = {
     enable = lib.mkEnableOption "sound configuration";
   };

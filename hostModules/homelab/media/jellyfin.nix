@@ -1,8 +1,9 @@
 { lib, config, ... }:
-let cfg = config.homelab.media.jellyfin;
-in {
-  options.homelab.media.jellyfin =
-    config.lib.homelab.mkServiceOptionSet "Jellyfin" "jellyfin" cfg;
+let
+  cfg = config.homelab.media.jellyfin;
+in
+{
+  options.homelab.media.jellyfin = config.lib.homelab.mkServiceOptionSet "Jellyfin" "jellyfin" cfg;
 
   config = lib.mkIf cfg.enable {
     services.jellyfin = {
@@ -20,7 +21,10 @@ in {
       };
     };
 
-    networking.firewall.allowedUDPPorts = [ 1900 7359 ];
+    networking.firewall.allowedUDPPorts = [
+      1900
+      7359
+    ];
 
     homelab.media.homepageConfig.${cfg.name} = {
       priority = lib.mkDefault 6;

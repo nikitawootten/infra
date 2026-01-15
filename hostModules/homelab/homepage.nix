@@ -1,6 +1,13 @@
-{ self, lib, config, ... }:
-let cfg = config.homelab.homepage;
-in {
+{
+  self,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.homelab.homepage;
+in
+{
   imports = [ self.nixosModules.homepage-declarative ];
 
   options.homelab.homepage = {
@@ -22,9 +29,8 @@ in {
     services.nginx.virtualHosts."${cfg.domain}" = {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
-      locations."/".proxyPass = "http://127.0.0.1:${
-          toString config.services.homepage-dashboard.listenPort
-        }";
+      locations."/".proxyPass =
+        "http://127.0.0.1:${toString config.services.homepage-dashboard.listenPort}";
     };
   };
 }

@@ -1,4 +1,11 @@
-{ pkgs, inputs, lib, config, ... }: {
+{
+  pkgs,
+  inputs,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   config = {
@@ -16,9 +23,9 @@
         size = 24;
       };
     };
-  } // lib.mkIf (!config.stylix.enable) {
+  }
+  // lib.mkIf (!config.stylix.enable) {
     # NOTE: Stylix only imports the home-manager module if enabled
-    home-manager.sharedModules =
-      [{ imports = [ inputs.stylix.homeModules.stylix ]; }];
+    home-manager.sharedModules = [ { imports = [ inputs.stylix.homeModules.stylix ]; } ];
   };
 }

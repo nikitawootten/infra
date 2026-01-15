@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.zellij = {
     enable = true;
     # Disable auto-start on shell creation

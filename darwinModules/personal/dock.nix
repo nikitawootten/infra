@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   system = {
     defaults = {
       dock = {

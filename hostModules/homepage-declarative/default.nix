@@ -1,6 +1,7 @@
 { lib, config, ... }:
 let
-  enableDefaultTrueOption = description:
+  enableDefaultTrueOption =
+    description:
     lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -40,7 +41,8 @@ let
   priorityComparator = a: b: a.value.priority - b.value.priority > 0;
   sortByPriority = list: (builtins.sort priorityComparator list);
 
-  toHomepageConfig = itemsConfig:
+  toHomepageConfig =
+    itemsConfig:
     let
       keys = builtins.attrNames itemsConfig;
       items = builtins.map (name: {
@@ -49,17 +51,21 @@ let
       }) keys;
       sorted = sortByPriority items;
       filtered = builtins.filter (item: item.value.enable) sorted;
-    in builtins.map (item: { "${item.name}" = item.value.config; }) filtered;
+    in
+    builtins.map (item: { "${item.name}" = item.value.config; }) filtered;
 
-  toParentHomepageConfig = itemsConfig:
+  toParentHomepageConfig =
+    itemsConfig:
     let
-      transformed = builtins.mapAttrs
-        (name: item: item // { config = toHomepageConfig item.config; })
-        itemsConfig;
-    in toHomepageConfig transformed;
+      transformed = builtins.mapAttrs (
+        name: item: item // { config = toHomepageConfig item.config; }
+      ) itemsConfig;
+    in
+    toHomepageConfig transformed;
 
   cfg = config.services.homepage-dashboard;
-in {
+in
+{
   options.services.homepage-dashboard = {
     enable-declarative = lib.mkEnableOption "";
     services-declarative = lib.mkOption {

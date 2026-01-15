@@ -3,23 +3,23 @@ let
   cfg = config.homelab.media.sonarr;
   kanidmGroup = "sonarr_users";
   serviceUrl = "http://127.0.0.1:8989";
-in {
-  options.homelab.media.sonarr =
-    config.lib.homelab.mkServiceOptionSet "Sonarr" "sonarr" cfg // {
-      authHeaderFile = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
-        description = lib.mdDoc ''
-          Path to a file containing the basic auth credentials used by Sonarr.
-          The file should contain a single line in the format:
-          ```
-          proxy_set_header Authorization "Basic <base64-encoded-credentials>";
-          ```
-          where `<base64-encoded-credentials>` is the base64 encoding of `username:password`.
-          ```
-        '';
-      };
+in
+{
+  options.homelab.media.sonarr = config.lib.homelab.mkServiceOptionSet "Sonarr" "sonarr" cfg // {
+    authHeaderFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = lib.mdDoc ''
+        Path to a file containing the basic auth credentials used by Sonarr.
+        The file should contain a single line in the format:
+        ```
+        proxy_set_header Authorization "Basic <base64-encoded-credentials>";
+        ```
+        where `<base64-encoded-credentials>` is the base64 encoding of `username:password`.
+        ```
+      '';
     };
+  };
 
   config = lib.mkIf cfg.enable {
     services.sonarr = {

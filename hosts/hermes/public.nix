@@ -1,4 +1,10 @@
-{ self, secrets, config, ... }: {
+{
+  self,
+  secrets,
+  config,
+  ...
+}:
+{
   imports = [ self.nixosModules.homelab ];
 
   homelab.domain = "cloud.nikita.computer";

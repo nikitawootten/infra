@@ -2,12 +2,11 @@
 let
   cfg = config.homelab.household.changedetection-io;
   kanidmGroup = "changedetectionio_users";
-  serviceUrl =
-    "http://127.0.0.1:${toString config.services.changedetection-io.port}";
-in {
+  serviceUrl = "http://127.0.0.1:${toString config.services.changedetection-io.port}";
+in
+{
   options.homelab.household.changedetection-io =
-    config.lib.homelab.mkServiceOptionSet "ChangeDetection.io" "change" cfg
-    // { };
+    config.lib.homelab.mkServiceOptionSet "ChangeDetection.io" "change" cfg // { };
 
   config = lib.mkIf cfg.enable {
     services.changedetection-io = {

@@ -4,9 +4,11 @@ let
   kanidmGroup = "audiobookshelf_users";
   kanidmAdminGroup = "audiobookshelf_admins";
   kanidmClaim = "claim_groups";
-in {
+in
+{
   options.homelab.media.audiobookshelf =
-    config.lib.homelab.mkServiceOptionSet "AudioBookShelf" "audio" cfg // {
+    config.lib.homelab.mkServiceOptionSet "AudioBookShelf" "audio" cfg
+    // {
       clientSecretFile = lib.mkOption {
         type = lib.types.path;
         description = "File containing the AudioBookShelf client secret";
@@ -23,8 +25,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass =
-          "http://127.0.0.1:${toString config.services.audiobookshelf.port}";
+        proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}";
         proxyWebsockets = true;
         recommendedProxySettings = true;
       };
@@ -45,9 +46,18 @@ in {
       originLanding = cfg.url;
       preferShortUsername = true;
       basicSecretFile = cfg.clientSecretFile;
-      scopeMaps.${kanidmGroup} = [ "email" "openid" "profile" kanidmClaim ];
-      scopeMaps.${kanidmAdminGroup} =
-        [ "email" "openid" "profile" kanidmClaim ];
+      scopeMaps.${kanidmGroup} = [
+        "email"
+        "openid"
+        "profile"
+        kanidmClaim
+      ];
+      scopeMaps.${kanidmAdminGroup} = [
+        "email"
+        "openid"
+        "profile"
+        kanidmClaim
+      ];
       claimMaps.${kanidmClaim}.valuesByGroup = {
         ${kanidmGroup} = [ "user" ];
         ${kanidmAdminGroup} = [ "admin" ];

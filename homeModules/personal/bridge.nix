@@ -1,9 +1,10 @@
 { lib, config, ... }:
-let cfg = config.personal.bridge;
-in {
+let
+  cfg = config.personal.bridge;
+in
+{
   options.personal.bridge = {
-    enable =
-      lib.mkEnableOption "ProtonMail bridge + git-send-email integration";
+    enable = lib.mkEnableOption "ProtonMail bridge + git-send-email integration";
   };
 
   config = lib.mkIf cfg.enable {

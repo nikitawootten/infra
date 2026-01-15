@@ -1,6 +1,13 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.personal.upgrade-diff;
-in {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.personal.upgrade-diff;
+in
+{
   options.personal.upgrade-diff = {
     enable = lib.mkEnableOption "upgrade diff notification";
   };

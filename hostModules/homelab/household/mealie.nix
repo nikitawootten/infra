@@ -3,21 +3,24 @@ let
   cfg = config.homelab.household.mealie;
   kanidmGroup = "mealie_users";
   kanidmAdminGroup = "mealie_admins";
-  kanidmGroups = [ kanidmGroup kanidmAdminGroup ];
+  kanidmGroups = [
+    kanidmGroup
+    kanidmAdminGroup
+  ];
   groupsClaim = "roles";
   clientId = "mealie";
-in {
-  options.homelab.household.mealie =
-    config.lib.homelab.mkServiceOptionSet "Mealie" "mealie" cfg // {
-      clientSecretFile = lib.mkOption {
-        type = lib.types.path;
-        description = "File containing the Mealie client secret";
-      };
-      envFile = lib.mkOption {
-        type = lib.types.path;
-        description = "File containing sensitive environment variables";
-      };
+in
+{
+  options.homelab.household.mealie = config.lib.homelab.mkServiceOptionSet "Mealie" "mealie" cfg // {
+    clientSecretFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing the Mealie client secret";
     };
+    envFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing sensitive environment variables";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     services.mealie = {
@@ -33,8 +36,7 @@ in {
         OIDC_USER_GROUP = kanidmGroup;
         OIDC_ADMIN_GROUP = kanidmAdminGroup;
         OIDC_GROUPS_CLAIM = groupsClaim;
-        OIDC_CONFIGURATION_URL =
-          "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}/.well-known/openid-configuration";
+        OIDC_CONFIGURATION_URL = "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}/.well-known/openid-configuration";
       };
       credentialsFile = cfg.envFile;
       database.createLocally = true;
@@ -61,8 +63,12 @@ in {
       originLanding = cfg.url;
       preferShortUsername = true;
       basicSecretFile = cfg.clientSecretFile;
-      scopeMaps = lib.genAttrs kanidmGroups
-        (group: [ "email" "openid" "profile" groupsClaim ]);
+      scopeMaps = lib.genAttrs kanidmGroups (group: [
+        "email"
+        "openid"
+        "profile"
+        groupsClaim
+      ]);
       claimMaps.${groupsClaim} = {
         joinType = "array";
         valuesByGroup = lib.genAttrs kanidmGroups (group: [ group ]);

@@ -1,6 +1,17 @@
-{ self, inputs, lib, config, pkgs, secrets, keys, ... }:
-let cfg = config.personal.user;
-in {
+{
+  self,
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  keys,
+  ...
+}:
+let
+  cfg = config.personal.user;
+in
+{
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   options.personal.user = {
@@ -16,23 +27,36 @@ in {
     users.users.${cfg.name} = {
       # Default user should have UID of 1000 for consistency
       uid = lib.mkDefault 1000;
-      extraGroups = [ "wheel" "media" "tty" "video" ];
+      extraGroups = [
+        "wheel"
+        "media"
+        "tty"
+        "video"
+      ];
       shell = lib.mkForce pkgs.zsh;
       description = lib.mkDefault "Nikita";
       isNormalUser = lib.mkDefault true;
-      initialHashedPassword =
-        "$y$j9T$3DxK1nrBp3Xl2DHN8X97y0$19IRZEIoDdq.owYAW9MFataPDunzsyfWXS25aT3Am77";
+      initialHashedPassword = "$y$j9T$3DxK1nrBp3Xl2DHN8X97y0$19IRZEIoDdq.owYAW9MFataPDunzsyfWXS25aT3Am77";
     };
 
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      extraSpecialArgs = { inherit self inputs secrets keys; };
+      extraSpecialArgs = {
+        inherit
+          self
+          inputs
+          secrets
+          keys
+          ;
+      };
       users.${config.personal.user.name} = { };
-      sharedModules = [{
-        home.stateVersion = config.system.stateVersion;
-        imports = [ self.homeModules.personal ];
-      }];
+      sharedModules = [
+        {
+          home.stateVersion = config.system.stateVersion;
+          imports = [ self.homeModules.personal ];
+        }
+      ];
     };
   };
 }

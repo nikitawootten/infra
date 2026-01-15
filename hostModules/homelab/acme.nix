@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.homelab.acme;
-in {
+let
+  cfg = config.homelab.acme;
+in
+{
   options.homelab.acme = {
     email = lib.mkOption {
       type = lib.types.str;
@@ -17,7 +19,10 @@ in {
   };
 
   config = {
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
 
     security.acme = {
       acceptTerms = true;

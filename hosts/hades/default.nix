@@ -1,4 +1,11 @@
-{ self, config, secrets, pkgs, ... }: {
+{
+  self,
+  config,
+  secrets,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -8,7 +15,9 @@
 
   topology.self = {
     hardware.info = "Dell R720XD server";
-    interfaces = { eno1 = { }; };
+    interfaces = {
+      eno1 = { };
+    };
   };
 
   services.tailscale.extraSetFlags = [ "--advertise-exit-node" ];
@@ -30,8 +39,7 @@
 
   age.secrets.kanidm-password.file = secrets."kanidm-password";
   age.secrets.kanidm-password.owner = "kanidm";
-  age.secrets.oauth2-proxy-client-secret.file =
-    secrets.oauth2-proxy-client-secret;
+  age.secrets.oauth2-proxy-client-secret.file = secrets.oauth2-proxy-client-secret;
   age.secrets.oauth2-proxy-client-secret.owner = "kanidm";
   age.secrets.oauth2-proxy-config.file = secrets.oauth2-proxy-config;
   age.secrets.oauth2-proxy-config.owner = "oauth2-proxy";
@@ -42,16 +50,14 @@
   homelab.infra = {
     enable = true;
     kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
-    oauth2-proxy.clientSecretFile =
-      config.age.secrets.oauth2-proxy-client-secret.path;
+    oauth2-proxy.clientSecretFile = config.age.secrets.oauth2-proxy-client-secret.path;
     oauth2-proxy.keyFile = config.age.secrets.oauth2-proxy-config.path;
     grafana.clientSecretFile = config.age.secrets.grafana-client-secret.path;
   };
 
   # Media
   age.secrets."transmission".file = secrets."transmission";
-  age.secrets.audiobookshelf-client-secret.file =
-    secrets.audiobookshelf-client-secret;
+  age.secrets.audiobookshelf-client-secret.file = secrets.audiobookshelf-client-secret;
   age.secrets.audiobookshelf-client-secret.owner = "kanidm";
   age.secrets.sonarr-basic-auth.file = secrets."sonarr-basic-auth";
   age.secrets.sonarr-basic-auth.owner = "nginx";
@@ -67,8 +73,7 @@
     mediaRoot = "/menagerie";
     configRoot = "/storage/config";
     transmission.transmissionEnvFile = config.age.secrets."transmission".path;
-    audiobookshelf.clientSecretFile =
-      config.age.secrets.audiobookshelf-client-secret.path;
+    audiobookshelf.clientSecretFile = config.age.secrets.audiobookshelf-client-secret.path;
     sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
     radarr.authHeaderFile = config.age.secrets."radarr-basic-auth".path;
     prowlarr.authHeaderFile = config.age.secrets."prowlarr-basic-auth".path;
@@ -93,22 +98,26 @@
   };
 
   age.secrets.homepage-environment.file = secrets.homepage-environment;
-  services.homepage-dashboard.environmentFile =
-    config.age.secrets."homepage-environment".path;
+  services.homepage-dashboard.environmentFile = config.age.secrets."homepage-environment".path;
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = false;
 
-  boot.loader.grub.mirroredBoots = [{
-    devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
-    path = "/boot-fallback";
-  }];
+  boot.loader.grub.mirroredBoots = [
+    {
+      devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
+      path = "/boot-fallback";
+    }
+  ];
 
   networking.hostName = "hades";
   networking.hostId = "45389833";
-  boot.zfs.extraPools = [ "storage" "storage2" ];
+  boot.zfs.extraPools = [
+    "storage"
+    "storage2"
+  ];
 
   environment.systemPackages = with pkgs; [ mergerfs ];
   fileSystems."/menagerie" = {

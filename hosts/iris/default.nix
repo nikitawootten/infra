@@ -1,4 +1,11 @@
-{ self, config, lib, secrets, ... }: {
+{
+  self,
+  config,
+  lib,
+  secrets,
+  ...
+}:
+{
   imports = [
     self.nixosModules.raspi4sd
     self.nixosModules.personal

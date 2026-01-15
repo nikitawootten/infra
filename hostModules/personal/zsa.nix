@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.personal.zsa;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.personal.zsa;
+in
+{
   options.personal.zsa = {
     enable = lib.mkEnableOption "zsa udev rules + wally";
   };

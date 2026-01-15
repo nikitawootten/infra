@@ -1,6 +1,13 @@
-{ lib, config, keys, ... }:
-let cfg = config.personal.ssh-server;
-in {
+{
+  lib,
+  config,
+  keys,
+  ...
+}:
+let
+  cfg = config.personal.ssh-server;
+in
+{
   options.personal.ssh-server = {
     enable = lib.mkEnableOption "ssh server configuration";
   };
@@ -14,7 +21,6 @@ in {
       };
     };
 
-    users.users.${config.personal.user.name}.openssh.authorizedKeys.keys =
-      keys.authorized_keys;
+    users.users.${config.personal.user.name}.openssh.authorizedKeys.keys = keys.authorized_keys;
   };
 }

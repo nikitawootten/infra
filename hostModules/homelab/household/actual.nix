@@ -2,9 +2,11 @@
 let
   cfg = config.homelab.household.actual;
   kanidmGroup = "actual_users";
-in {
+in
+{
   options.homelab.household.actual =
-    config.lib.homelab.mkServiceOptionSet "Actual Budget" "actual" cfg // {
+    config.lib.homelab.mkServiceOptionSet "Actual Budget" "actual" cfg
+    // {
       clientSecretFile = lib.mkOption {
         type = lib.types.path;
         description = "File containing the Actual Budget client secret";
@@ -21,8 +23,7 @@ in {
       forceSSL = true;
       useACMEHost = config.homelab.domain;
       locations."/" = {
-        proxyPass =
-          "http://127.0.0.1:${toString config.services.actual.settings.port}";
+        proxyPass = "http://127.0.0.1:${toString config.services.actual.settings.port}";
         recommendedProxySettings = true;
       };
     };
@@ -36,7 +37,11 @@ in {
       originLanding = cfg.url;
       preferShortUsername = true;
       basicSecretFile = cfg.clientSecretFile;
-      scopeMaps.${kanidmGroup} = [ "email" "openid" "profile" ];
+      scopeMaps.${kanidmGroup} = [
+        "email"
+        "openid"
+        "profile"
+      ];
       # Actual requires RS256
       enableLegacyCrypto = true;
     };

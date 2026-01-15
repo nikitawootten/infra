@@ -1,22 +1,30 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.homelab.household.immich;
   kanidmGroup = "immich_users";
   kanidmAdminGroup = "immich_admins";
-  kanidmGroups = [ kanidmGroup kanidmAdminGroup ];
+  kanidmGroups = [
+    kanidmGroup
+    kanidmAdminGroup
+  ];
   groupsClaim = "immich_role";
   clientId = "immich";
 
   # Runtime config file path
   runtimeConfigFile = "/run/immich/config.json";
-in {
-  options.homelab.household.immich =
-    config.lib.homelab.mkServiceOptionSet "Immich" "immich" cfg // {
-      clientSecretFile = lib.mkOption {
-        type = lib.types.path;
-        description = "File containing the Immich client secret";
-      };
+in
+{
+  options.homelab.household.immich = config.lib.homelab.mkServiceOptionSet "Immich" "immich" cfg // {
+    clientSecretFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing the Immich client secret";
     };
+  };
 
   config = lib.mkIf cfg.enable {
     services.immich = {
@@ -28,10 +36,8 @@ in {
           autoLaunch = true;
           autoRegister = true;
           inherit clientId;
-          clientSecret =
-            "\${IMMICH_OAUTH_CLIENT_SECRET}"; # Will be replaced by envsubst
-          issuerUrl =
-            "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}";
+          clientSecret = "\${IMMICH_OAUTH_CLIENT_SECRET}"; # Will be replaced by envsubst
+          issuerUrl = "https://${config.homelab.infra.kanidm.domain}/oauth2/openid/${clientId}";
           scope = "openid profile email ${groupsClaim}";
           signingAlgorithm = "RS256";
           storageLabelClaim = "preferred_username";
@@ -63,9 +69,9 @@ in {
 
           # The nixpkgs module sets this in services.immich.environment.IMMICH_CONFIG_FILE
           nixpkgs_config_file="${
-            lib.optionalString (config.services.immich.settings != null)
-            (pkgs.formats.json { }).generate "immich.json"
-            config.services.immich.settings
+            lib.optionalString (config.services.immich.settings != null) (pkgs.formats.json { }).generate
+              "immich.json"
+              config.services.immich.settings
           }"
 
           if [[ -f "$nixpkgs_config_file" ]]; then
@@ -85,7 +91,9 @@ in {
     };
 
     systemd.services.immich-server = {
-      environment = { IMMICH_CONFIG_FILE = lib.mkForce runtimeConfigFile; };
+      environment = {
+        IMMICH_CONFIG_FILE = lib.mkForce runtimeConfigFile;
+      };
       requires = [ "immich-config-setup.service" ];
       after = [ "immich-config-setup.service" ];
     };
@@ -123,8 +131,12 @@ in {
       originLanding = cfg.url;
       preferShortUsername = true;
       basicSecretFile = cfg.clientSecretFile;
-      scopeMaps = lib.genAttrs kanidmGroups
-        (group: [ "email" "openid" "profile" groupsClaim ]);
+      scopeMaps = lib.genAttrs kanidmGroups (group: [
+        "email"
+        "openid"
+        "profile"
+        groupsClaim
+      ]);
       claimMaps.${groupsClaim} = {
         joinType = "array";
         valuesByGroup = {

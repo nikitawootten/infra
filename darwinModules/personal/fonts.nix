@@ -1,7 +1,16 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.personal.fonts;
-in {
-  options.personal.fonts = { enable = lib.mkEnableOption "additional fonts"; };
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.personal.fonts;
+in
+{
+  options.personal.fonts = {
+    enable = lib.mkEnableOption "additional fonts";
+  };
 
   config = lib.mkIf cfg.enable {
     fonts = {

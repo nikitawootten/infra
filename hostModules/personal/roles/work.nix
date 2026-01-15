@@ -13,9 +13,8 @@ in {
     personal.printing.enable = true;
 
     # Android development
-    programs.adb.enable = true;
     users.users.${config.personal.user.name}.extraGroups = [ "adbusers" "kvm" ];
-    environment.systemPackages = [ pkgs.android-studio ];
+    environment.systemPackages = [ pkgs.android-studio pkgs.android-tools ];
 
     services.flatpak.packages = [ "com.slack.Slack" ];
   };

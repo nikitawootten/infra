@@ -20,7 +20,7 @@
         enableTreesitter = true;
 
         nix.enable = true;
-        nix.format.type = "nixfmt";
+        nix.format.type = [ "nixfmt" ];
         python.enable = true;
         python.format.type = [ "black" "isort" ];
         rust.enable = true;

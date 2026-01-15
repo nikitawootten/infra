@@ -43,7 +43,7 @@
 
   home-manager.users.${config.personal.user.name} = {
     personal.fonts.enable = true;
-    home.packages = with pkgs; [ tor-browser-bundle-bin ];
+    home.packages = with pkgs; [ tor-browser ];
 
     dconf.settings."org/gnome/mutter" = {
       experimental-features =

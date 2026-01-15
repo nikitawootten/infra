@@ -1,4 +1,4 @@
-{ self, inputs, config, ... }: {
+{ self, inputs, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     self.nixosModules.personal
@@ -22,7 +22,7 @@
   # ALVR with support for the quest 2
   programs.alvr.enable = true;
   programs.alvr.openFirewall = true;
-  programs.adb.enable = true;
+  environment.systemPackages = [ pkgs.android-tools ];
   users.users.${config.personal.user.name}.extraGroups = [ "adbusers" ];
 
   personal.roles.security.enable = true;
@@ -64,6 +64,8 @@
       "media.ffmpeg.vaapi.enabled" = true;
       "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
     };
+
+    home.packages = with pkgs; [ zed-editor ];
   };
 
   programs.nix-ld.enable = true;

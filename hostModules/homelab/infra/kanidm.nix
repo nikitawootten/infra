@@ -15,7 +15,8 @@ in {
     networking.firewall.allowedTCPPorts = [ 636 ];
 
     services.kanidm = {
-      package = pkgs.kanidm.override { enableSecretProvisioning = true; };
+      # Note run `kanidmd domain upgrade-check` before upgrading major/minor versions
+      package = pkgs.kanidmWithSecretProvisioning_1_8;
 
       enableClient = true;
       clientSettings.uri = config.services.kanidm.serverSettings.origin;

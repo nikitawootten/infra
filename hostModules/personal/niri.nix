@@ -18,14 +18,13 @@ in {
     security.pam.services.gdm.enableGnomeKeyring = true;
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    programs.file-roller.enable = true;
     personal.sound.enable = lib.mkDefault true;
     services.dbus = { enable = true; };
     services.gnome.gnome-keyring.enable = true;
     services.gnome.sushi.enable = true;
     services.gvfs.enable = true;
 
-    environment.systemPackages = with pkgs; [ nautilus swaybg ];
+    environment.systemPackages = with pkgs; [ nautilus swaybg file-roller ];
 
     hardware.brillo.enable = true;
 
@@ -52,9 +51,9 @@ in {
               "Mod+T".action = spawn [ "nautilus" "--new-window" ];
               "Mod+Return".action = spawn [ "ghostty" "+new-window" ];
               "Mod+Shift+Return".action = spawn [ "ghostty" "--title=floatme" ];
-              "Print".action = screenshot;
+              # "Print".action = screenshot;
               # "Ctrl+Print".action = screenshot-screen;
-              "Alt+Print".action = screenshot-window;
+              # "Alt+Print".action = screenshot-window;
               "Mod+Shift+P".action = power-off-monitors;
               "Mod+Alt+L".action = spawn "swaylock";
 

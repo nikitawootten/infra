@@ -60,7 +60,7 @@
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
-    home.packages = with pkgs; [ tor-browser-bundle-bin zed-editor ];
+    home.packages = with pkgs; [ tor-browser zed-editor ];
     personal.bridge.enable = true;
     programs.git.settings.credential.helper =
       "${pkgs.gitFull}/bin/git-credential-libsecret";

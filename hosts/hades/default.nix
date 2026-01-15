@@ -67,7 +67,6 @@
     mediaRoot = "/menagerie";
     configRoot = "/storage/config";
     transmission.transmissionEnvFile = config.age.secrets."transmission".path;
-    ersatztv.image = "jasongdove/ersatztv:latest-nvidia";
     audiobookshelf.clientSecretFile =
       config.age.secrets.audiobookshelf-client-secret.path;
     sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;

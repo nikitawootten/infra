@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.personal.sound;
 in
@@ -17,5 +22,8 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
+    environment.systemPackages = with pkgs; [
+      alsa-utils
+    ];
   };
 }

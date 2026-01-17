@@ -22,7 +22,6 @@ in
       enable = true;
       package = pkgs.niri-unstable;
     };
-
     services.xserver.enable = true;
     services.displayManager.gdm.enable = true;
     security.pam.services.gdm.enableGnomeKeyring = true;
@@ -43,6 +42,11 @@ in
     ];
 
     hardware.brillo.enable = true;
+
+    # https://github.com/Supreeeme/xwayland-satellite/issues/150#issuecomment-2847677630
+    programs.steam.package = pkgs.steam.override {
+      extraArgs = "-system-composer";
+    };
 
     home-manager.sharedModules = [
       (
@@ -70,12 +74,17 @@ in
                 }
               ];
               xwayland-satellite.enable = true;
+              xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-unstable;
               binds = with config.lib.niri.actions; {
                 # Basic interaction
                 "Mod+Shift+E".action = quit;
                 "Mod+Shift+Slash".action = show-hotkey-overlay;
                 "Mod+Shift+Q".action = close-window;
-                "Mod+D".action = spawn "fuzzel";
+                "Mod+D".action = spawn [
+                  "tofi-drun"
+                  "--drun-launch=true"
+                  "--fuzzy-match=true"
+                ];
                 "Mod+T".action = spawn [
                   "nautilus"
                   "--new-window"
@@ -88,64 +97,66 @@ in
                   "ghostty"
                   "--title=floatme"
                 ];
-                # "Print".action = screenshot;
-                # "Ctrl+Print".action = screenshot-screen;
-                # "Alt+Print".action = screenshot-window;
+                "Print".action.screenshot = [ ];
+                "Ctrl+Print".action.screenshot-screen = [ ];
+                "Alt+Print".action.screenshot-window = [ ];
                 "Mod+Shift+P".action = power-off-monitors;
                 "Mod+Alt+L".action = spawn "swaylock";
 
                 "XF86AudioRaiseVolume" = {
                   action.spawn = [
-                    "wpctl"
-                    "set-volume"
-                    "@DEFAULT_AUDIO_SINK@"
-                    "0.1+"
+                    "swayosd-client"
+                    "--output-volume"
+                    "raise"
                   ];
                   allow-when-locked = true;
+                  repeat = true;
                 };
                 "XF86AudioLowerVolume" = {
                   action.spawn = [
-                    "wpctl"
-                    "set-volume"
-                    "@DEFAULT_AUDIO_SINK@"
-                    "0.1-"
+                    "swayosd-client"
+                    "--output-volume"
+                    "lower"
                   ];
                   allow-when-locked = true;
+                  repeat = true;
                 };
                 "XF86AudioMute" = {
                   action.spawn = [
-                    "wpctl"
-                    "set-mute"
-                    "@DEFAULT_AUDIO_SINK@"
-                    "toggle"
+                    "swayosd-client"
+                    "--output-volume"
+                    "mute-toggle"
                   ];
                   allow-when-locked = true;
+                  repeat = false;
                 };
                 "XF86AudioMicMute" = {
                   action.spawn = [
-                    "wpctl"
-                    "set-mute"
-                    "@DEFAULT_AUDIO_SOURCE@"
-                    "toggle"
+                    "swayosd-client"
+                    "--input-volume"
+                    "mute-toggle"
                   ];
                   allow-when-locked = true;
+                  repeat = false;
                 };
 
                 "XF86MonBrightnessUp" = {
                   action.spawn = [
-                    "brillo"
-                    "-A"
-                    "5"
+                    "swayosd-client"
+                    "--brightness"
+                    "raise"
                   ];
                   allow-when-locked = true;
+                  repeat = true;
                 };
                 "XF86MonBrightnessDown" = {
                   action.spawn = [
-                    "brillo"
-                    "-U"
-                    "5"
+                    "swayosd-client"
+                    "--brightness"
+                    "lower"
                   ];
                   allow-when-locked = true;
+                  repeat = true;
                 };
 
                 # Movement
@@ -233,15 +244,15 @@ in
                 "Mod+7".action = focus-workspace 7;
                 "Mod+8".action = focus-workspace 8;
                 "Mod+9".action = focus-workspace 9;
-                # "Mod+Ctrl+1".action = move-column-to-workspace 1;
-                # "Mod+Ctrl+2".action = move-column-to-workspace 2;
-                # "Mod+Ctrl+3".action = move-column-to-workspace 3;
-                # "Mod+Ctrl+4".action = move-column-to-workspace 4;
-                # "Mod+Ctrl+5".action = move-column-to-workspace 5;
-                # "Mod+Ctrl+6".action = move-column-to-workspace 6;
-                # "Mod+Ctrl+7".action = move-column-to-workspace 7;
-                # "Mod+Ctrl+8".action = move-column-to-workspace 8;
-                # "Mod+Ctrl+9".action = move-column-to-workspace 9;
+                "Mod+Ctrl+1".action.move-column-to-workspace = 1;
+                "Mod+Ctrl+2".action.move-column-to-workspace = 2;
+                "Mod+Ctrl+3".action.move-column-to-workspace = 3;
+                "Mod+Ctrl+4".action.move-column-to-workspace = 4;
+                "Mod+Ctrl+5".action.move-column-to-workspace = 5;
+                "Mod+Ctrl+6".action.move-column-to-workspace = 6;
+                "Mod+Ctrl+7".action.move-column-to-workspace = 7;
+                "Mod+Ctrl+8".action.move-column-to-workspace = 8;
+                "Mod+Ctrl+9".action.move-column-to-workspace = 9;
 
                 # Column
                 "Mod+Comma".action = consume-window-into-column;
@@ -261,6 +272,8 @@ in
 
                 "Mod+Tab".action = switch-focus-between-floating-and-tiling;
                 "Mod+Shift+Tab".action = toggle-window-floating;
+
+                "Mod+Shift+N".action = spawn "swaync-client" "-op";
               };
               layout.background-color = "transparent";
               input = {
@@ -332,11 +345,11 @@ in
             };
           };
 
-          services.mako = {
+          services.swaync = {
             enable = true;
-            settings = {
-              default-timeout = 5000;
-            };
+          };
+          services.swayosd = {
+            enable = true;
           };
 
           programs.waybar = {
@@ -344,7 +357,8 @@ in
             systemd.enable = true;
             settings = [
               {
-                height = 25;
+                height = 20;
+                margin = "5";
                 layer = "top";
                 position = "bottom";
                 tray = {
@@ -352,27 +366,16 @@ in
                 };
                 modules-left = [
                   "niri/workspaces"
-                  "niri/window"
-                  "idle_inhibitor"
                 ];
-                modules-center = [ "privacy" ];
+                modules-center = [ ];
                 modules-right = [
+                  "privacy"
                   "tray"
-                  "network"
                   "niri/language"
-                  "pulseaudio"
-                  "backlight"
                   "battery"
                   "clock"
                 ];
 
-                backlight = {
-                  format = "{icon}";
-                  format-icons = [
-                    ""
-                    ""
-                  ];
-                };
                 battery = {
                   format = "{capacity}% {icon}";
                   format-icons = [
@@ -395,29 +398,6 @@ in
                     on-click-right = "mode";
                   };
                 };
-                idle_inhibitor = {
-                  format = "{icon}";
-                  format-icons.activated = "";
-                  format-icons.deactivated = "";
-                };
-                "network" = {
-                  format-wifi = "{essid} ";
-                  format-ethernet = "{ipaddr}/{cidr} 󰊗";
-                  format-disconnected = "";
-                };
-                "niri/window" = {
-                  max-length = 50;
-                };
-                pulseaudio = {
-                  format = "{volume}% {icon}";
-                  format-bluetooth = "{volume}% {icon}";
-                  format-muted = "";
-                  format-icons.default = [
-                    ""
-                    ""
-                  ];
-                  on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-                };
               }
             ];
           };
@@ -431,15 +411,10 @@ in
               }
               {
                 timeout = 6 * 60;
-                command = "systemctl suspend";
+                command = "systemctl suspend-then-hibernate";
               }
             ];
-            events = [
-              {
-                event = "before-sleep";
-                command = "${lib.getExe pkgs.swaylock-effects} -f";
-              }
-            ];
+            events.before-sleep = "${lib.getExe pkgs.swaylock-effects} -f";
           };
 
           programs.swaylock = {
@@ -453,7 +428,24 @@ in
             };
           };
 
-          programs.fuzzel.enable = true;
+          programs.tofi = {
+            enable = true;
+            # Via https://github.com/shreyas-sha3/niri-dots/blob/main/.config/tofi/config
+            settings = {
+              width = "100%";
+              height = "100%";
+              num-results = 5;
+              border-width = 0;
+              outline-width = 0;
+              padding-left = "35%";
+              padding-top = "35%";
+              result-spacing = 25;
+              text-color = config.lib.stylix.colors.base04;
+              selection-color = config.lib.stylix.colors.base16;
+              background-color = "#000A";
+            };
+          };
+          stylix.targets.tofi.colors.enable = false;
 
           personal.ghostty.enable = true;
 

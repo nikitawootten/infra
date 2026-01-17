@@ -17,7 +17,6 @@
   personal.roles.work.enable = true;
 
   personal.networkmanager.enable = true;
-  #personal.virtualbox.enable = true;
   personal.flatpak.enable = true;
   personal.zsa.enable = true;
 
@@ -38,10 +37,19 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
+  # Rotate the screen
+  # (GPD pocket 2 uses a tablet screen, so the default orientation is sideways)
   boot.kernelParams = [
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
   ];
+  # Set a usable console font size
+  console = {
+    # ls /etc/kbd/consolefonts
+    font = "ter-132n";
+    packages = with pkgs; [ terminus_font ];
+    earlySetup = true;
+  };
 
   fonts.fontconfig.subpixel.rgba = "vbgr";
 
@@ -53,7 +61,6 @@
       programs.niri.settings = {
         outputs.eDP-1 = {
           scale = 1.5;
-          transform.rotation = 270;
         };
         layout.gaps = 8;
         layout.border.width = 2;
@@ -61,12 +68,13 @@
     }
   ];
   programs.nix-ld.enable = true;
+
   stylix.enable = true;
   stylix.image = pkgs.fetchurl {
-    url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
-    sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
+    url = "https://github.com/linuxdotexe/nordic-wallpapers/blob/master/wallpapers/ign-0008.png?raw=true";
+    sha256 = "sha256-/ybcRRleApkw3JXQTZgOsYznRwS7pIRvZYp0Vyls7i4=";
   };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {

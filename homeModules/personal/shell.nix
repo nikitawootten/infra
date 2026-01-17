@@ -64,6 +64,8 @@ in
       };
 
       initContent = ''
+        bindkey -e
+
         # C-x C-e edit command in $VISUAL editor (parity with bash)
         zle -N edit-command-line
         bindkey '^x^e' edit-command-line

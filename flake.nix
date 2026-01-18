@@ -64,9 +64,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf-nixpkgs.url = "github:NixOS/nixpkgs/cad22e7d996aea55ecab064e84834289143e44a0";
     nvf = {
       url = "github:notashelf/nvf/v0.8";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nvf-nixpkgs";
     };
   };
 
@@ -113,7 +114,8 @@
         editor =
           let
             nvfConfig = nvf.lib.neovimConfiguration {
-              inherit pkgs;
+              # Workaround see https://github.com/NotAShelf/nvf/issues/1312#issuecomment-3708175539
+              pkgs = inputs.nvf.inputs.nixpkgs.legacyPackages.x86_64-linux;
               modules = [ ./editor ];
             };
           in

@@ -66,10 +66,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-    nvf-nixpkgs.url = "github:NixOS/nixpkgs/cad22e7d996aea55ecab064e84834289143e44a0";
     nvf = {
       url = "github:notashelf/nvf/v0.8";
-      inputs.nixpkgs.follows = "nvf-nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
   };
@@ -136,8 +134,7 @@
             editor =
               let
                 nvfConfig = nvf.lib.neovimConfiguration {
-                  # Workaround see https://github.com/NotAShelf/nvf/issues/1312#issuecomment-3708175539
-                  pkgs = inputs.nvf.inputs.nixpkgs.legacyPackages.x86_64-linux;
+                  inherit pkgs;
                   modules = [ ./editor ];
                 };
               in

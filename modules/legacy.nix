@@ -17,7 +17,6 @@ in
   imports = [
     inputs.home-manager.flakeModules.home-manager
     inputs.pre-commit-hooks.flakeModule
-    inputs.nix-topology.flakeModule
   ];
 
   flake = {
@@ -59,18 +58,6 @@ in
       pre-commit.settings.hooks = {
         nixfmt.enable = true;
       };
-
-      topology.modules = [
-        ./../topology.nix
-        {
-          nixosConfigurations = {
-            iris = self.nixosConfigurations.iris;
-            hades = self.nixosConfigurations.hades;
-            dionysus = self.nixosConfigurations.dionysus;
-            hermes = self.nixosConfigurations.hermes;
-          };
-        }
-      ];
 
       devShells.default = pkgs.mkShell {
         inherit (config.pre-commit.devShell) shellHook;

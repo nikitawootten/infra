@@ -67,7 +67,7 @@
       inputs.flake-parts.follows = "flake-parts";
     };
     nvf = {
-      url = "github:notashelf/nvf/v0.8";
+      url = "github:notashelf/nvf";
       inputs.flake-parts.follows = "flake-parts";
     };
     import-tree.url = "github:vic/import-tree";

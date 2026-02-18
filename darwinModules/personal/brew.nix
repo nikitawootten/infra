@@ -50,7 +50,7 @@ in
     };
 
     programs.zsh.shellInit = ''
-      export PATH=$PATH:${config.homebrew.brewPrefix}
+      export PATH=$PATH:${config.homebrew.prefix}/bin
     '';
   };
 }

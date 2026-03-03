@@ -8,17 +8,14 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.nixosModules.personal
+    self.modules.nixos.personal
+    self.modules.nixos.niri
+    self.modules.nixos.role-play
+    self.modules.nixos.role-security
+    self.modules.nixos.role-work
+    self.modules.nixos.zsa
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
-
-  personal.roles.play.enable = true;
-  personal.roles.security.enable = true;
-  personal.roles.work.enable = true;
-
-  personal.networkmanager.enable = true;
-  personal.flatpak.enable = true;
-  personal.zsa.enable = true;
 
   # Bootloader
   environment.systemPackages = with pkgs; [ sbctl ];
@@ -55,7 +52,6 @@
 
   networking.hostName = "cochrane";
 
-  personal.niri.enable = true;
   home-manager.sharedModules = [
     {
       programs.niri.settings = {
@@ -78,11 +74,11 @@
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
+    imports = [ self.modules.homeManager.bridge ];
     home.packages = with pkgs; [
       tor-browser
       zed-editor
     ];
-    personal.bridge.enable = true;
     programs.git.settings.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
   };
 }

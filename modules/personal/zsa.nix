@@ -1,0 +1,12 @@
+{
+  flake.modules.nixos.zsa =
+    { config, pkgs, ... }:
+    {
+      services.udev.packages = with pkgs; [ zsa-udev-rules ];
+      environment.systemPackages = with pkgs; [ wally-cli ];
+
+      # User must be a part of "plugdev" to use wally without root
+      users.groups.plugdev = { };
+      users.users.${config.personal.user.name}.extraGroups = [ "plugdev" ];
+    };
+}

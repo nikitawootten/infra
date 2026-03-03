@@ -11,19 +11,21 @@
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
     inputs.lanzaboote.nixosModules.lanzaboote
-    self.nixosModules.personal
+    self.modules.nixos.personal
+    self.modules.nixos.niri
+    self.modules.nixos.role-play
+    self.modules.nixos.role-security
+    self.modules.nixos.flatpak
+    self.modules.nixos.zsa
+    self.modules.nixos.virtualbox
   ];
 
   powerManagement.enable = true;
 
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
-  personal.roles.play.enable = true;
-  personal.roles.security.enable = true;
-
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
-  personal.niri.enable = true;
   home-manager.sharedModules = [
     {
       programs.niri.settings = {
@@ -43,15 +45,9 @@
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
   stylix.polarity = "dark";
 
-  personal.networkmanager.enable = true;
-  personal.flatpak.enable = true;
-  personal.zsa.enable = true;
-  personal.virtualbox.enable = true;
-
   services.fprintd.enable = lib.mkForce false;
 
   home-manager.users.${config.personal.user.name} = {
-    personal.fonts.enable = true;
     home.packages = with pkgs; [ tor-browser ];
 
     dconf.settings."org/gnome/mutter" = {
@@ -60,10 +56,6 @@
         "xwayland-native-scaling"
       ];
     };
-
-    personal.firefox.enable = true;
-    personal.vscode.enable = true;
-    personal.cluster-admin.enable = true;
   };
 
   programs.nix-ld.enable = true;

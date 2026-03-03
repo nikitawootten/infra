@@ -1,6 +1,11 @@
 { self, keys, ... }:
 {
-  imports = [ self.darwinModules.personal ];
+  imports = [
+    self.modules.darwin.personal
+    self.modules.darwin.role-work
+    self.modules.darwin.role-play
+    self.modules.darwin.role-security
+  ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -13,7 +18,4 @@
   home-manager.users.nikita = {
     personal.git.signingKey = keys.nikita_defiant;
   };
-  personal.roles.work.enable = true;
-  personal.roles.play.enable = true;
-  personal.roles.security.enable = true;
 }

@@ -7,8 +7,8 @@
 }:
 {
   imports = [
-    self.nixosModules.raspi4sd
-    self.nixosModules.personal
+    self.modules.nixos.raspi4sd
+    self.modules.nixos.personal
     self.nixosModules.homelab
   ];
 

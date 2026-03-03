@@ -8,8 +8,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.nixosModules.personal
+    self.modules.nixos.personal
     self.nixosModules.homelab
+    self.modules.nixos.zfs
+    self.modules.nixos.docker
+    self.modules.nixos.nvidia
     ./minecraft.nix
   ];
 
@@ -25,9 +28,6 @@
   # This machine is sometimes used as a build server
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  personal.zfs.enable = true;
-  personal.docker.enable = true;
-  personal.nvidia.enable = true;
   hardware.nvidia.open = false;
 
   homelab.lan-domain = "arpa.nikita.computer";

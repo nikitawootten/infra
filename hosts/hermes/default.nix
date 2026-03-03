@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-    self.nixosModules.personal
+    self.modules.nixos.personal
     inputs.disko.nixosModules.disko
     ./hardware-configuration.nix
     ./disk-config.nix

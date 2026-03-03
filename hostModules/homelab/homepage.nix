@@ -8,7 +8,7 @@ let
   cfg = config.homelab.homepage;
 in
 {
-  imports = [ self.nixosModules.homepage-declarative ];
+  imports = [ self.modules.nixos.homepage-declarative ];
 
   options.homelab.homepage = {
     enable = lib.mkEnableOption "Homepage dashboard";

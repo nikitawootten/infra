@@ -5,8 +5,8 @@
   ];
 
   flake = {
-    homeModules = import ./../homeModules;
-    nixosModules = import ./../hostModules;
-    darwinModules = import ./../darwinModules;
+    nixosModules = {
+      homelab.imports = [ ./../hostModules/homelab ];
+    };
   };
 }

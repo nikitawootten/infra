@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 {
   perSystem =
     {
@@ -14,6 +14,20 @@
     {
       packages = {
         editor = nvfConfig.neovim;
+      };
+    };
+
+  flake.modules.homeManager.editor =
+    { pkgs, ... }:
+    {
+      home.packages = [
+        self.packages.${pkgs.stdenv.hostPlatform.system}.editor
+      ];
+
+      programs.git.settings.core.editor = "vim";
+      home.sessionVariables = {
+        EDITOR = "vim";
+        VISUAL = "vim";
       };
     };
 }

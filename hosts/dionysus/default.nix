@@ -8,8 +8,15 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.nixosModules.personal
-    self.nixosModules.dslr-webcam
+    self.modules.nixos.personal
+    self.modules.nixos.dslr-webcam
+    self.modules.nixos.gnome
+    self.modules.nixos.role-play
+    self.modules.nixos.role-security
+    self.modules.nixos.flatpak
+    self.modules.nixos.virtualbox
+    self.modules.nixos.nvidia
+    self.modules.nixos.zsa
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
     inputs.nix-topology.nixosModules.default
   ];
@@ -24,28 +31,17 @@
     };
   };
 
-  personal.roles.play.enable = true;
   # ALVR with support for the quest 2
   programs.alvr.enable = true;
   programs.alvr.openFirewall = true;
   environment.systemPackages = [ pkgs.android-tools ];
   users.users.${config.personal.user.name}.extraGroups = [ "adbusers" ];
 
-  personal.roles.security.enable = true;
-  personal.gnome.enable = true;
-
-  personal.networkmanager.enable = true;
-  personal.virtualbox.enable = true;
-  personal.flatpak.enable = true;
-
   personal.nvidia = {
-    enable = true;
     headless = false;
     suspend = true;
     betaDriver = true;
   };
-
-  personal.zsa.enable = true;
 
   dslr-webcam = {
     enable = true;
@@ -61,9 +57,9 @@
   networking.hostName = "dionysus";
 
   home-manager.users.${config.personal.user.name} = {
-    personal.fonts.enable = true;
-    personal.vscode.enable = true;
-    personal.firefox.enable = true;
+    imports = [
+      self.modules.homeManager.firefox
+    ];
 
     programs.firefox.profiles.default.settings = {
       "gfx.webrender.all" = true; # Force enable GPU acceleration

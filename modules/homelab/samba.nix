@@ -19,7 +19,6 @@
       config = lib.mkIf cfg.enable {
         services.samba = {
           enable = true;
-          package = pkgs.samba4Full;
           openFirewall = true;
           settings.global = {
             "server smb encrypt" = "required";

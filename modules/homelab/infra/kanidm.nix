@@ -24,13 +24,13 @@
 
         services.kanidm = {
           # Note run `kanidmd domain upgrade-check` before upgrading major/minor versions
-          package = pkgs.kanidmWithSecretProvisioning_1_8;
+          package = pkgs.kanidmWithSecretProvisioning_1_9;
 
-          enableClient = true;
-          clientSettings.uri = config.services.kanidm.serverSettings.origin;
+          client.enable = true;
+          client.settings.uri = config.services.kanidm.server.settings.origin;
 
-          enableServer = true;
-          serverSettings = {
+          server.enable = true;
+          server.settings = {
             domain = config.homelab.lan-domain;
             origin = cfg.url;
             ldapbindaddress = "0.0.0.0:636";

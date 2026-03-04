@@ -33,6 +33,10 @@
     in
     {
       options.homelab.infra.grafana = config.lib.homelab.mkServiceOptionSet "Grafana" "grafana" cfg // {
+        secretFile = lib.mkOption {
+          type = lib.types.path;
+          description = "File containing the Grafana secret file";
+        };
         clientSecretFile = lib.mkOption {
           type = lib.types.path;
           description = "File containing the Grafana client secret";
@@ -44,6 +48,7 @@
           enable = true;
 
           settings = {
+            security.secret_key = "$__file{${cfg.secretFile}}";
             server.domain = lib.mkForce cfg.domain;
             server.root_url = lib.mkForce cfg.url;
             auth.disable_login_form = true;

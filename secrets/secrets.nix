@@ -19,6 +19,7 @@ in
   "radarr-basic-auth.age".publicKeys = hades_keyset;
   "prowlarr-basic-auth.age".publicKeys = hades_keyset;
   "grafana-client-secret.age".publicKeys = hades_keyset;
+  "grafana-secret.age".publicKeys = hades_keyset;
   "homepage-environment.age".publicKeys = hades_keyset;
   "actual-client-secret.age".publicKeys = hades_keyset;
   "mealie-client-secret.age".publicKeys = hades_keyset;

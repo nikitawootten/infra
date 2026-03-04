@@ -19,10 +19,5 @@ in
       inherit specialArgs;
       nixpkgs = inputs.nixpkgs;
     };
-
-    darwinConfigurations = import ./../../darwinHosts {
-      inherit specialArgs;
-      darwin = inputs.darwin;
-    };
   };
 }

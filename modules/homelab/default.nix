@@ -1,0 +1,99 @@
+{ self, inputs, ... }:
+{
+  flake.modules.nixos.homelab =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.homelab;
+    in
+    {
+      imports = [
+        self.modules.nixos.homelab-household
+        self.modules.nixos.homelab-infra
+        self.modules.nixos.homelab-media
+        self.modules.nixos.homelab-acme
+        self.modules.nixos.homelab-homepage
+        self.modules.nixos.homelab-samba
+        inputs.nix-topology.nixosModules.default
+        inputs.agenix.nixosModules.default
+      ];
+
+      options.homelab = {
+        lan-domain = lib.mkOption {
+          type = lib.types.str;
+          description = "The base domain of the local network";
+          example = "your-domain.com";
+        };
+        domain = lib.mkOption {
+          type = lib.types.str;
+          description = "The domain all services will be deployed under";
+          default = "${config.networking.hostName}.${cfg.lan-domain}";
+        };
+      };
+
+      config = {
+        networking.firewall.allowedTCPPorts = [
+          80
+          443
+        ];
+        services.nginx = {
+          enable = true;
+          recommendedOptimisation = true;
+          recommendedProxySettings = true;
+          recommendedTlsSettings = true;
+          recommendedGzipSettings = true;
+
+          virtualHosts._ = {
+            forceSSL = true;
+            useACMEHost = cfg.domain;
+            default = true;
+            locations."/" = {
+              return = "404";
+            };
+          };
+        };
+
+        environment.enableAllTerminfo = true;
+
+        topology.self.services.nginx = {
+          hidden = true;
+        };
+
+        # Helper function to create a subdomain for a service
+        lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";
+
+        lib.homelab.mkServiceOptionSet = name: subdomain: cfg: {
+          enable = lib.mkEnableOption name;
+          subdomain = lib.mkOption {
+            type = lib.types.str;
+            default = subdomain;
+            description = "${name}'s subdomain";
+          };
+          domain = lib.mkOption {
+            type = lib.types.str;
+            default = config.lib.homelab.mkServiceSubdomain cfg.subdomain;
+            description = "${name}'s domain";
+            readOnly = true;
+          };
+          url = lib.mkOption {
+            type = lib.types.str;
+            default = "https://${cfg.domain}";
+            description = "${name}'s URL";
+            readOnly = true;
+          };
+          name = lib.mkOption {
+            type = lib.types.str;
+            default = name;
+            description = "The name of the service";
+            readOnly = true;
+          };
+        };
+
+        homelab.samba.enable = lib.mkDefault true;
+        homelab.homepage.enable = lib.mkDefault true;
+      };
+    };
+}

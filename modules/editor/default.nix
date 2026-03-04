@@ -1,5 +1,11 @@
 { self, inputs, ... }:
 {
+  imports = [
+    ./config.nix
+    ./filetree.nix
+    ./theme.nix
+  ];
+
   perSystem =
     {
       pkgs,
@@ -8,7 +14,11 @@
     let
       nvfConfig = inputs.nvf.lib.neovimConfiguration {
         inherit pkgs;
-        modules = [ ./../editor ];
+        modules = [
+          self.modules.nvf.editor
+          self.modules.nvf.editor-filetree
+          self.modules.nvf.editor-theme
+        ];
       };
     in
     {

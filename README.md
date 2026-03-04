@@ -25,42 +25,31 @@ TODO: When I'm feeling really bored, generate automatically with a pre-commit ho
 $ make directory
 .
 ├── darwinHosts
-│   ├── defiant
-│   │    { MacBook Pro M4
-│   └── persephone
-│        { Work Mac Mini M2
-├── darwinModules
-│   └── personal
-├── homeModules
-│   └── personal
-│        ⎧ Misc. config, dotfiles, applications, and hacky utilities
-│        ⎨ Makes every computer it infects feel like home
-│        ⎩ Note: Look around before using unless you want to become me
-├── hostModules
-│   ├── dslr-webcam
-│   │    { Module I use to configure my Olympus OM-D camera as a webcam
-│   ├── homelab
-│   │    { Re-usable homelab modules for media, observability, and more
-│   ├── personal
-│   │    { Misc. server and desktop config
-│   └── raspi4sd
-│        { Raspberry Pi 4 SD card configuration
+│   ├── defiant
+│   │    { MacBook Pro M4
+│   └── persephone
+│        { Work Mac Mini M2
+├── editor
 ├── hosts
-│   ├── cochrane
-│   │    { GPD Pocket 2 mini-computer, neglected & seldom used
-│   ├── dionysus
-│   │    { Custom-build workhorse (Ryzen 2920X, NVIDIA 2080ti)
-│   ├── hades
-│   │    { Dell PowerEdge R720XD, primary home server
-│   ├── hermes
-│   ├── iris
-│   │    { Raspberry Pi 4, secondary home server
-│   └── voyager
-│        { Framework 13 (11th Gen Intel), primary laptop
+│   ├── cochrane
+│   │    { GPD Pocket 2 mini-computer, neglected & seldom used
+│   ├── dionysus
+│   │    { Custom-build workhorse (Ryzen 2920X, NVIDIA 2080ti)
+│   ├── hades
+│   │    { Dell PowerEdge R720XD, primary home server
+│   ├── hermes
+│   ├── iris
+│   │    { Raspberry Pi 4, secondary home server
+│   └── voyager
+│        { Framework 13 (11th Gen Intel), primary laptop
+├── modules
+│   ├── flake
+│   ├── homelab
+│   └── personal
 ├── packages
-│   ├── oscal-cli
-│   ├── oscal-deep-diff
-│   └── xspec
+│   ├── oscal-cli
+│   ├── oscal-deep-diff
+│   └── xspec
 └── secrets
      { Age secrets managed by AgeNix
 ```
@@ -81,6 +70,6 @@ If you would like to see these packages submitted [upstream](https://github.com/
 ![network diagram](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/topology.svg)
 _Network diagram [generated](./.github/workflows/artifacts.yaml) with [`oddlama/nix-topology`](https://github.com/oddlama/nix-topology)._
 
-The [`homelab` NixOS module](./hostModules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
+The [`homelab` module](./modules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
 
-For usage examples, refer to the [`hades`](./hosts/hades/) and [`iris`](./hosts/iris/) host configurations:
+For usage examples, refer to the [`hades`](./hosts/hades/) host configuration:

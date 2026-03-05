@@ -9,8 +9,8 @@ let
     }:
     {
       imports = [
-        self.modules.homeManager.fonts
-        self.modules.homeManager.ghostty
+        self.homeModules.fonts
+        self.homeModules.ghostty
       ];
 
       programs.niri = {
@@ -410,14 +410,14 @@ let
     };
 in
 {
-  flake.modules.homeManager.niri = hmModule;
+  flake.homeModules.niri = hmModule;
 
-  flake.modules.nixos.niri =
+  flake.nixosModules.niri =
     { pkgs, ... }:
     {
       imports = [
         inputs.niri.nixosModules.niri
-        self.modules.nixos.sound
+        self.nixosModules.sound
       ];
 
       home-manager.sharedModules = [ hmModule ];

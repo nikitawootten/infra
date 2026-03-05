@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.virtualbox =
+  flake.nixosModules.virtualbox =
     { config, ... }:
     {
       nixpkgs.config.allowUnfree = true;

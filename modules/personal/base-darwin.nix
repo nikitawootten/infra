@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.modules.darwin.base =
+  flake.darwinModules.base =
     { pkgs, ... }:
     {
       programs.zsh.enable = true;

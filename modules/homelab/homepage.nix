@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-homepage =
+  flake.nixosModules.homelab-homepage =
     {
       self,
       lib,
@@ -11,7 +11,7 @@
       cfg = config.homelab.homepage;
     in
     {
-      imports = [ self.modules.nixos.homepage-declarative ];
+      imports = [ self.nixosModules.homepage-declarative ];
 
       options.homelab.homepage = {
         enable = lib.mkEnableOption "Homepage dashboard";

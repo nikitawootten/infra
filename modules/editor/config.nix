@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nvf.editor =
+  flake.nvfModules.editor =
     { ... }:
     {
       config = {

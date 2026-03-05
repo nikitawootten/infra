@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.modules.nixos.user =
+  flake.nixosModules.user =
     {
       lib,
       config,
@@ -55,14 +55,14 @@
           sharedModules = [
             {
               home.stateVersion = config.system.stateVersion;
-              imports = [ self.modules.homeManager.personal ];
+              imports = [ self.homeModules.personal ];
             }
           ];
         };
       };
     };
 
-  flake.modules.darwin.user =
+  flake.darwinModules.user =
     {
       config,
       lib,
@@ -96,7 +96,7 @@
           {
             home.stateVersion = "24.11";
             imports = [
-              self.modules.homeManager.personal
+              self.homeModules.personal
               # Note: Stylix seems not to import its home module properly
               inputs.stylix.homeModules.stylix
             ];

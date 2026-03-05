@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.darwin.dock =
+  flake.darwinModules.dock =
     { config, ... }:
     {
       system = {

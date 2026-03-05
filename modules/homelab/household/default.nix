@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.homelab-household =
+  flake.nixosModules.homelab-household =
     { lib, config, ... }:
     let
       cfg = config.homelab.household;
@@ -21,10 +21,10 @@
       };
 
       imports = [
-        self.modules.nixos.homelab-actual
-        self.modules.nixos.homelab-changedetection-io
-        self.modules.nixos.homelab-mealie
-        self.modules.nixos.homelab-immich
+        self.nixosModules.homelab-actual
+        self.nixosModules.homelab-changedetection-io
+        self.nixosModules.homelab-mealie
+        self.nixosModules.homelab-immich
       ];
 
       config = lib.mkIf cfg.enable {

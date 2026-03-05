@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.homelab-infra =
+  flake.nixosModules.homelab-infra =
     { lib, config, ... }:
     let
       cfg = config.homelab.infra;
@@ -21,11 +21,11 @@
       };
 
       imports = [
-        self.modules.nixos.homelab-kanidm
-        self.modules.nixos.homelab-oauth2-proxy
-        self.modules.nixos.homelab-grafana
-        self.modules.nixos.homelab-prometheus
-        self.modules.nixos.homelab-loki
+        self.nixosModules.homelab-kanidm
+        self.nixosModules.homelab-oauth2-proxy
+        self.nixosModules.homelab-grafana
+        self.nixosModules.homelab-prometheus
+        self.nixosModules.homelab-loki
       ];
 
       config = lib.mkIf cfg.enable {

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = [ self.modules.nixos.homelab ];
+  imports = [ self.nixosModules.homelab ];
 
   homelab.domain = "cloud.nikita.computer";
 

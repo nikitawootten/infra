@@ -8,11 +8,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.modules.nixos.personal
-    self.modules.nixos.homelab
-    self.modules.nixos.zfs
-    self.modules.nixos.docker
-    self.modules.nixos.nvidia
+    self.nixosModules.personal
+    self.nixosModules.homelab
+    self.nixosModules.zfs
+    self.nixosModules.docker
+    self.nixosModules.nvidia
     ./minecraft.nix
   ];
 

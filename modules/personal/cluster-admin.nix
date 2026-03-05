@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.cluster-admin =
+  flake.homeModules.cluster-admin =
     { pkgs, ... }:
     let
       helm-with-plugins = (

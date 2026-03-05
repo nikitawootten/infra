@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-miniflux =
+  flake.nixosModules.homelab-miniflux =
     { config, lib, ... }:
     let
       cfg = config.homelab.media.miniflux;

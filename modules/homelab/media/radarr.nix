@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-radarr =
+  flake.nixosModules.homelab-radarr =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.radarr;

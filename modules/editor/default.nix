@@ -15,9 +15,9 @@
       nvfConfig = inputs.nvf.lib.neovimConfiguration {
         inherit pkgs;
         modules = [
-          self.modules.nvf.editor
-          self.modules.nvf.editor-filetree
-          self.modules.nvf.editor-theme
+          self.nvfModules.editor
+          self.nvfModules.editor-filetree
+          self.nvfModules.editor-theme
         ];
       };
     in
@@ -27,7 +27,7 @@
       };
     };
 
-  flake.modules.homeManager.editor =
+  flake.homeModules.editor =
     { pkgs, ... }:
     {
       home.packages = [

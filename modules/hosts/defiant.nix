@@ -18,10 +18,10 @@ in
         { keys, ... }:
         {
           imports = [
-            self.modules.darwin.personal
-            self.modules.darwin.role-work
-            self.modules.darwin.role-play
-            self.modules.darwin.role-security
+            self.darwinModules.personal
+            self.darwinModules.role-work
+            self.darwinModules.role-play
+            self.darwinModules.role-security
           ];
 
           nixpkgs.hostPlatform = "aarch64-darwin";

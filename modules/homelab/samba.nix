@@ -1,7 +1,7 @@
 # Adopted from https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6
 { ... }:
 {
-  flake.modules.nixos.homelab-samba =
+  flake.nixosModules.homelab-samba =
     {
       lib,
       config,

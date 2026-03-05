@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-acme =
+  flake.nixosModules.homelab-acme =
     { lib, config, ... }:
     let
       cfg = config.homelab.acme;

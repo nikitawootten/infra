@@ -8,12 +8,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.modules.nixos.personal
-    self.modules.nixos.niri
-    self.modules.nixos.role-play
-    self.modules.nixos.role-security
-    self.modules.nixos.role-work
-    self.modules.nixos.zsa
+    self.nixosModules.personal
+    self.nixosModules.niri
+    self.nixosModules.role-play
+    self.nixosModules.role-security
+    self.nixosModules.role-work
+    self.nixosModules.zsa
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
@@ -74,7 +74,7 @@
   stylix.polarity = "dark";
 
   home-manager.users.${config.personal.user.name} = {
-    imports = [ self.modules.homeManager.bridge ];
+    imports = [ self.homeModules.bridge ];
     home.packages = with pkgs; [
       tor-browser
       zed-editor

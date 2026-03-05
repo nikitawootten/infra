@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.zfs = {
+  flake.nixosModules.zfs = {
     services.zfs.autoScrub.enable = true;
 
     boot.supportedFilesystems = [ "zfs" ];

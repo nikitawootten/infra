@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-prowlarr =
+  flake.nixosModules.homelab-prowlarr =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.prowlarr;

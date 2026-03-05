@@ -3,7 +3,7 @@
   # The following articles were used as guides for this module:
   #   - https://www.crackedthecode.co/how-to-use-your-dslr-as-a-webcam-in-linux/
   #   - https://www.tomoliver.net/posts/using-an-slr-as-a-webcam-nixos
-  flake.modules.nixos.dslr-webcam =
+  flake.nixosModules.dslr-webcam =
     {
       pkgs,
       lib,

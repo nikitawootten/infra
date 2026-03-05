@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.raspi4sd =
+  flake.nixosModules.raspi4sd =
     {
       pkgs,
       lib,

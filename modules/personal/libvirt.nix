@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.libvirt =
+  flake.nixosModules.libvirt =
     { pkgs, config, ... }:
     {
       users.users.${config.personal.user.name}.extraGroups = [ "libvirtd" ];

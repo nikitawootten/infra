@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-grafana =
+  flake.nixosModules.homelab-grafana =
     { lib, config, ... }:
     let
       cfg = config.homelab.infra.grafana;

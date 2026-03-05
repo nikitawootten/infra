@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.modules.nixos.homelab =
+  flake.nixosModules.homelab =
     {
       lib,
       config,
@@ -11,12 +11,12 @@
     in
     {
       imports = [
-        self.modules.nixos.homelab-household
-        self.modules.nixos.homelab-infra
-        self.modules.nixos.homelab-media
-        self.modules.nixos.homelab-acme
-        self.modules.nixos.homelab-homepage
-        self.modules.nixos.homelab-samba
+        self.nixosModules.homelab-household
+        self.nixosModules.homelab-infra
+        self.nixosModules.homelab-media
+        self.nixosModules.homelab-acme
+        self.nixosModules.homelab-homepage
+        self.nixosModules.homelab-samba
         inputs.nix-topology.nixosModules.default
         inputs.agenix.nixosModules.default
       ];

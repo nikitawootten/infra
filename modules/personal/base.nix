@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.base =
+  flake.nixosModules.base =
     { pkgs, lib, ... }:
     {
       time.timeZone = lib.mkDefault "America/New_York";

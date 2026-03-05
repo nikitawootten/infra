@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-oauth2-proxy =
+  flake.nixosModules.homelab-oauth2-proxy =
     { config, lib, ... }:
     let
       cfg = config.homelab.infra.oauth2-proxy;

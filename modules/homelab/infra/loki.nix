@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-loki =
+  flake.nixosModules.homelab-loki =
     { lib, config, ... }:
     let
       cfg = config.homelab.infra.loki;

@@ -8,9 +8,9 @@ let
     };
 in
 {
-  flake.modules.homeManager.role-play = hmModule;
+  flake.homeModules.role-play = hmModule;
 
-  flake.modules.nixos.role-play =
+  flake.nixosModules.role-play =
     { pkgs, ... }:
     {
       home-manager.sharedModules = [ hmModule ];
@@ -22,7 +22,7 @@ in
       environment.systemPackages = with pkgs; [ r2modman ];
     };
 
-  flake.modules.darwin.role-play =
+  flake.darwinModules.role-play =
     { ... }:
     {
       home-manager.sharedModules = [ hmModule ];

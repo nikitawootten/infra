@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.misc-utils =
+  flake.homeModules.misc-utils =
     { lib, pkgs, ... }:
     {
       programs = {

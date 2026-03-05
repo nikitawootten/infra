@@ -8,15 +8,15 @@
 {
   imports = [
     ./hardware-configuration.nix
-    self.modules.nixos.personal
-    self.modules.nixos.dslr-webcam
-    self.modules.nixos.gnome
-    self.modules.nixos.role-play
-    self.modules.nixos.role-security
-    self.modules.nixos.flatpak
-    self.modules.nixos.virtualbox
-    self.modules.nixos.nvidia
-    self.modules.nixos.zsa
+    self.nixosModules.personal
+    self.nixosModules.dslr-webcam
+    self.nixosModules.gnome
+    self.nixosModules.role-play
+    self.nixosModules.role-security
+    self.nixosModules.flatpak
+    self.nixosModules.virtualbox
+    self.nixosModules.nvidia
+    self.nixosModules.zsa
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
     inputs.nix-topology.nixosModules.default
   ];
@@ -58,7 +58,7 @@
 
   home-manager.users.${config.personal.user.name} = {
     imports = [
-      self.modules.homeManager.firefox
+      self.homeModules.firefox
     ];
 
     programs.firefox.profiles.default.settings = {

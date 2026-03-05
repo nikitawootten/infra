@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.direnv =
+  flake.homeModules.direnv =
     { pkgs, ... }:
     {
       programs.direnv = {

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-actual =
+  flake.nixosModules.homelab-actual =
     { config, lib, ... }:
     let
       cfg = config.homelab.household.actual;

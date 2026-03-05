@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-jellyfin =
+  flake.nixosModules.homelab-jellyfin =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.jellyfin;

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.tmux =
+  flake.homeModules.tmux =
     { pkgs, ... }:
     {
       # Draws heavily from https://github.com/dreamsofcode-io/tmux/blob/main/tmux.conf

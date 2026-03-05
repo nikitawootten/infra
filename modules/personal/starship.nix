@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.starship = {
+  flake.homeModules.starship = {
     # shells share a common prompt
     programs.starship = {
       enable = true;

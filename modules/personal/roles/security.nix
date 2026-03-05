@@ -28,9 +28,9 @@ let
     };
 in
 {
-  flake.modules.homeManager.role-security = hmModule;
+  flake.homeModules.role-security = hmModule;
 
-  flake.modules.nixos.role-security =
+  flake.nixosModules.role-security =
     {
       pkgs,
       config,
@@ -45,7 +45,7 @@ in
       programs.wireshark.package = lib.mkDefault pkgs.wireshark;
     };
 
-  flake.modules.darwin.role-security =
+  flake.darwinModules.role-security =
     { ... }:
     {
       home-manager.sharedModules = [ hmModule ];

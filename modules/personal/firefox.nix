@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.firefox =
+  flake.homeModules.firefox =
     { pkgs, lib, ... }:
     {
       # needed for speech synthesis (only on linux)

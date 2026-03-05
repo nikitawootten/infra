@@ -1,49 +1,49 @@
 { self, inputs, ... }:
 {
-  flake.modules.homeManager.personal =
+  flake.homeModules.personal =
     { lib, ... }:
     {
       imports = [
         inputs.nix-index-database.homeModules.nix-index
-        self.modules.homeManager.direnv
-        self.modules.homeManager.editor
-        self.modules.homeManager.git
-        self.modules.homeManager.misc-utils
-        self.modules.homeManager.shell
-        self.modules.homeManager.ssh-client
-        self.modules.homeManager.starship
-        self.modules.homeManager.tmux
-        self.modules.homeManager.upgrade-diff
-        self.modules.homeManager.darwin-hm
-        self.modules.homeManager.zellij
+        self.homeModules.direnv
+        self.homeModules.editor
+        self.homeModules.git
+        self.homeModules.misc-utils
+        self.homeModules.shell
+        self.homeModules.ssh-client
+        self.homeModules.starship
+        self.homeModules.tmux
+        self.homeModules.upgrade-diff
+        self.homeModules.darwin-hm
+        self.homeModules.zellij
       ];
       programs.home-manager.enable = lib.mkForce true;
     };
 
   # NixOS bundle - always-on base NixOS modules
-  flake.modules.nixos.personal = {
+  flake.nixosModules.personal = {
     imports = [
-      self.modules.nixos.base
-      self.modules.nixos.upgrade-diff
-      self.modules.nixos.ssh-server
-      self.modules.nixos.tailscale
-      self.modules.nixos.user
-      self.modules.nixos.networkmanager
-      self.modules.nixos.stylix
+      self.nixosModules.base
+      self.nixosModules.upgrade-diff
+      self.nixosModules.ssh-server
+      self.nixosModules.tailscale
+      self.nixosModules.user
+      self.nixosModules.networkmanager
+      self.nixosModules.stylix
     ];
   };
 
   # Darwin bundle - always-on base Darwin modules
-  flake.modules.darwin.personal = {
+  flake.darwinModules.personal = {
     imports = [
       inputs.stylix.darwinModules.stylix
-      self.modules.darwin.base
-      self.modules.darwin.user
-      self.modules.darwin.brew
-      self.modules.darwin.upgrade-diff
-      self.modules.darwin.rancher
-      self.modules.darwin.fonts
-      self.modules.darwin.dock
+      self.darwinModules.base
+      self.darwinModules.user
+      self.darwinModules.brew
+      self.darwinModules.upgrade-diff
+      self.darwinModules.rancher
+      self.darwinModules.fonts
+      self.darwinModules.dock
     ];
   };
 }

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-kanidm =
+  flake.nixosModules.homelab-kanidm =
     {
       pkgs,
       lib,

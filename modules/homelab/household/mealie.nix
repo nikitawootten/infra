@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-mealie =
+  flake.nixosModules.homelab-mealie =
     { config, lib, ... }:
     let
       cfg = config.homelab.household.mealie;

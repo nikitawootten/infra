@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.upgrade-diff =
+  flake.homeModules.upgrade-diff =
     { pkgs, config, ... }:
     {
       home.activation.diff = config.lib.dag.entryAnywhere ''
@@ -10,7 +10,7 @@
       '';
     };
 
-  flake.modules.nixos.upgrade-diff =
+  flake.nixosModules.upgrade-diff =
     { pkgs, ... }:
     {
       system.activationScripts.diff = {
@@ -21,7 +21,7 @@
       };
     };
 
-  flake.modules.darwin.upgrade-diff =
+  flake.darwinModules.upgrade-diff =
     { pkgs, ... }:
     {
       system.activationScripts.diff.text = ''

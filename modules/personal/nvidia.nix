@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.nvidia =
+  flake.nixosModules.nvidia =
     {
       lib,
       config,

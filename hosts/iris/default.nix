@@ -7,9 +7,9 @@
 }:
 {
   imports = [
-    self.modules.nixos.raspi4sd
-    self.modules.nixos.personal
-    self.modules.nixos.homelab
+    self.nixosModules.raspi4sd
+    self.nixosModules.personal
+    self.nixosModules.homelab
   ];
 
   topology.self = {

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-audiobookshelf =
+  flake.nixosModules.homelab-audiobookshelf =
     { config, lib, ... }:
     let
       cfg = config.homelab.media.audiobookshelf;

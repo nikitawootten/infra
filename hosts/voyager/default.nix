@@ -11,13 +11,13 @@
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
     inputs.lanzaboote.nixosModules.lanzaboote
-    self.modules.nixos.personal
-    self.modules.nixos.niri
-    self.modules.nixos.role-play
-    self.modules.nixos.role-security
-    self.modules.nixos.flatpak
-    self.modules.nixos.zsa
-    self.modules.nixos.virtualbox
+    self.nixosModules.personal
+    self.nixosModules.niri
+    self.nixosModules.role-play
+    self.nixosModules.role-security
+    self.nixosModules.flatpak
+    self.nixosModules.zsa
+    self.nixosModules.virtualbox
   ];
 
   powerManagement.enable = true;

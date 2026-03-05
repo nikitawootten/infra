@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-prometheus =
+  flake.nixosModules.homelab-prometheus =
     { lib, config, ... }:
     let
       cfg = config.homelab.infra.prometheus;

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-transmission =
+  flake.nixosModules.homelab-transmission =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.transmission;

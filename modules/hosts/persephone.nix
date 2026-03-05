@@ -18,8 +18,8 @@ in
         { config, ... }:
         {
           imports = [
-            self.modules.darwin.personal
-            self.modules.darwin.role-work
+            self.darwinModules.personal
+            self.darwinModules.role-work
           ];
 
           home-manager.users.${config.system.primaryUser} =

@@ -20,9 +20,9 @@ let
     };
 in
 {
-  flake.modules.homeManager.fonts = hmModule;
+  flake.homeModules.fonts = hmModule;
 
-  flake.modules.darwin.fonts =
+  flake.darwinModules.fonts =
     { pkgs, ... }:
     {
       fonts = {

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.zsa =
+  flake.nixosModules.zsa =
     { config, pkgs, ... }:
     {
       services.udev.packages = with pkgs; [ zsa-udev-rules ];

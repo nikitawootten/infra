@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.darwin-hm =
+  flake.homeModules.darwin-hm =
     { pkgs, lib, ... }:
     {
       config = lib.mkIf pkgs.stdenv.isDarwin {

@@ -1,20 +1,20 @@
 { self, ... }:
 {
-  flake.modules.nixos.homelab-media =
+  flake.nixosModules.homelab-media =
     { lib, config, ... }:
     let
       cfg = config.homelab.media;
     in
     {
       imports = [
-        self.modules.nixos.homelab-audiobookshelf
-        self.modules.nixos.homelab-ersatztv
-        self.modules.nixos.homelab-jellyfin
-        self.modules.nixos.homelab-miniflux
-        self.modules.nixos.homelab-prowlarr
-        self.modules.nixos.homelab-radarr
-        self.modules.nixos.homelab-sonarr
-        self.modules.nixos.homelab-transmission
+        self.nixosModules.homelab-audiobookshelf
+        self.nixosModules.homelab-ersatztv
+        self.nixosModules.homelab-jellyfin
+        self.nixosModules.homelab-miniflux
+        self.nixosModules.homelab-prowlarr
+        self.nixosModules.homelab-radarr
+        self.nixosModules.homelab-sonarr
+        self.nixosModules.homelab-transmission
       ];
 
       options.homelab.media = {

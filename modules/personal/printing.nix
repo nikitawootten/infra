@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.printing =
+  flake.nixosModules.printing =
     { lib, pkgs, ... }:
     {
       services.printing.enable = lib.mkDefault true;

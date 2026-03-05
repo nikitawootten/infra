@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.ssh-client =
+  flake.homeModules.ssh-client =
     { lib, pkgs, ... }:
     {
       programs.ssh = {

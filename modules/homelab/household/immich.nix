@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-immich =
+  flake.nixosModules.homelab-immich =
     {
       config,
       lib,

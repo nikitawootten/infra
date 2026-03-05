@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-sonarr =
+  flake.nixosModules.homelab-sonarr =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.sonarr;

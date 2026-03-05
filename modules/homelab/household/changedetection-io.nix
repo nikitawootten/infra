@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-changedetection-io =
+  flake.nixosModules.homelab-changedetection-io =
     { config, lib, ... }:
     let
       cfg = config.homelab.household.changedetection-io;

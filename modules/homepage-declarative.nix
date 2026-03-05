@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homepage-declarative =
+  flake.nixosModules.homepage-declarative =
     { lib, config, ... }:
     let
       enableDefaultTrueOption =

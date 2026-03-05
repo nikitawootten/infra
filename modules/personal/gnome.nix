@@ -3,7 +3,7 @@ let
   hmModule =
     { pkgs, lib, ... }:
     {
-      imports = [ self.modules.homeManager.ghostty ];
+      imports = [ self.homeModules.ghostty ];
 
       programs.gnome-shell = {
         enable = true;
@@ -81,12 +81,12 @@ let
     };
 in
 {
-  flake.modules.homeManager.gnome = hmModule;
+  flake.homeModules.gnome = hmModule;
 
-  flake.modules.nixos.gnome =
+  flake.nixosModules.gnome =
     { pkgs, ... }:
     {
-      imports = [ self.modules.nixos.sound ];
+      imports = [ self.nixosModules.sound ];
 
       home-manager.sharedModules = [ hmModule ];
 

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.ssh-server =
+  flake.nixosModules.ssh-server =
     {
       lib,
       config,

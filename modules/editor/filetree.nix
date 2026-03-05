@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nvf.editor-filetree =
+  flake.nvfModules.editor-filetree =
     { ... }:
     let
       toggle_mapping = "<C-b>";

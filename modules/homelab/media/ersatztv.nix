@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.homelab-ersatztv =
+  flake.nixosModules.homelab-ersatztv =
     { lib, config, ... }:
     let
       cfg = config.homelab.media.ersatztv;

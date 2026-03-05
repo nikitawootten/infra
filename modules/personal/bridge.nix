@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.bridge =
+  flake.homeModules.bridge =
     { lib, config, ... }:
     {
       services.protonmail-bridge.enable = true;

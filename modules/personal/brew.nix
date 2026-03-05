@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.darwin.brew =
+  flake.darwinModules.brew =
     { config, ... }:
     {
       homebrew = {

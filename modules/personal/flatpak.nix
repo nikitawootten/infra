@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.flatpak =
+  flake.nixosModules.flatpak =
     { ... }:
     {
       imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];

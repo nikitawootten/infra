@@ -28,7 +28,7 @@ update: ## Update "flake.lock"
 # .PHONY: switch-home
 # switch-home: ## Switch local home-manager config
 # 	$(NIX_CMD) develop --command home-manager switch --flake .
-# 
+#
 # .PHONY: build-home
 # build-home: ## Build local home-manager config
 # 	$(NIX_CMD) develop --command home-manager build --flake .
@@ -111,7 +111,3 @@ list-hosts: ## List NixOS configuration names
 .PHONY: get-system
 get-system: ## Get the current system name
 	@$(NIX_CMD) eval --impure --raw --expr 'builtins.currentSystem'
-
-.PHONY: directory
-directory: ## Print information about important directories in this repository
-	@$(NIX_CMD) develop --command tree -dL 2 --info --noreport

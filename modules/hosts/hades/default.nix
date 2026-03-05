@@ -1,0 +1,159 @@
+{ self, inputs, ... }:
+let
+  secrets = import ./../../../secrets;
+  keys = import ./../../../keys.nix;
+  specialArgs = {
+    inherit
+      secrets
+      keys
+      ;
+  };
+in
+{
+  flake.nixosConfigurations.hades = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      (
+        {
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          imports = [
+            ./_hardware-configuration.nix
+            self.nixosModules.personal
+            self.nixosModules.homelab
+            self.nixosModules.zfs
+            self.nixosModules.docker
+            self.nixosModules.nvidia
+            ./_minecraft.nix
+          ];
+
+          topology.self = {
+            hardware.info = "Dell R720XD server";
+            interfaces = {
+              eno1 = { };
+            };
+          };
+
+          services.tailscale.extraSetFlags = [ "--advertise-exit-node" ];
+
+          # This machine is sometimes used as a build server
+          boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+          hardware.nvidia.open = false;
+
+          homelab.lan-domain = "arpa.nikita.computer";
+
+          age.secrets.cloudflare-dns.file = secrets.traefik;
+          homelab.acme.email = "me@nikita.computer";
+          homelab.acme.dnsProvider = "cloudflare";
+          homelab.acme.credentialsFile = config.age.secrets.cloudflare-dns.path;
+
+          age.secrets.kanidm-password.file = secrets."kanidm-password";
+          age.secrets.kanidm-password.owner = "kanidm";
+          age.secrets.oauth2-proxy-client-secret.file = secrets.oauth2-proxy-client-secret;
+          age.secrets.oauth2-proxy-client-secret.owner = "kanidm";
+          age.secrets.oauth2-proxy-config.file = secrets.oauth2-proxy-config;
+          age.secrets.oauth2-proxy-config.owner = "oauth2-proxy";
+          age.secrets.grafana-client-secret.file = secrets.grafana-client-secret;
+          age.secrets.grafana-client-secret.owner = "kanidm";
+          age.secrets.grafana-client-secret.group = "grafana";
+          age.secrets.grafana-client-secret.mode = "0440";
+          age.secrets.grafana-secret.file = secrets.grafana-secret;
+          age.secrets.grafana-secret.owner = "grafana";
+          homelab.infra = {
+            enable = true;
+            kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
+            oauth2-proxy.clientSecretFile = config.age.secrets.oauth2-proxy-client-secret.path;
+            oauth2-proxy.keyFile = config.age.secrets.oauth2-proxy-config.path;
+            grafana.clientSecretFile = config.age.secrets.grafana-client-secret.path;
+            grafana.secretFile = config.age.secrets.grafana-secret.path;
+          };
+
+          # Media
+          age.secrets."transmission".file = secrets."transmission";
+          age.secrets.audiobookshelf-client-secret.file = secrets.audiobookshelf-client-secret;
+          age.secrets.audiobookshelf-client-secret.owner = "kanidm";
+          age.secrets.sonarr-basic-auth.file = secrets."sonarr-basic-auth";
+          age.secrets.sonarr-basic-auth.owner = "nginx";
+          age.secrets.radarr-basic-auth.file = secrets."radarr-basic-auth";
+          age.secrets.radarr-basic-auth.owner = "nginx";
+          age.secrets.prowlarr-basic-auth.file = secrets."prowlarr-basic-auth";
+          age.secrets.prowlarr-basic-auth.owner = "nginx";
+          age.secrets.miniflux-client-secret.file = secrets.miniflux-client-secret;
+          age.secrets.miniflux-client-secret.owner = "kanidm";
+          age.secrets.miniflux-env.file = secrets.miniflux-env;
+          homelab.media = {
+            enable = true;
+            mediaRoot = "/menagerie";
+            configRoot = "/storage/config";
+            transmission.transmissionEnvFile = config.age.secrets."transmission".path;
+            audiobookshelf.clientSecretFile = config.age.secrets.audiobookshelf-client-secret.path;
+            sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
+            radarr.authHeaderFile = config.age.secrets."radarr-basic-auth".path;
+            prowlarr.authHeaderFile = config.age.secrets."prowlarr-basic-auth".path;
+            miniflux.clientSecretFile = config.age.secrets.miniflux-client-secret.path;
+            miniflux.envFile = config.age.secrets.miniflux-env.path;
+          };
+          users.groups.media.gid = 993;
+
+          age.secrets.actual-client-secret.file = secrets."actual-client-secret";
+          age.secrets.actual-client-secret.owner = "kanidm";
+          age.secrets.mealie-client-secret.file = secrets."mealie-client-secret";
+          age.secrets.mealie-client-secret.owner = "kanidm";
+          age.secrets.mealie-env.file = secrets."mealie-env";
+          age.secrets.immich-client-secret.file = secrets."immich-client-secret";
+          age.secrets.immich-client-secret.owner = "kanidm";
+          homelab.household = {
+            enable = true;
+            actual.clientSecretFile = config.age.secrets."actual-client-secret".path;
+            mealie.clientSecretFile = config.age.secrets."mealie-client-secret".path;
+            mealie.envFile = config.age.secrets."mealie-env".path;
+            immich.clientSecretFile = config.age.secrets."immich-client-secret".path;
+          };
+
+          age.secrets.homepage-environment.file = secrets.homepage-environment;
+          services.homepage-dashboard.environmentFiles = [ config.age.secrets."homepage-environment".path ];
+
+          boot.loader.grub.enable = true;
+          boot.loader.grub.efiSupport = true;
+          boot.loader.grub.device = "nodev";
+          boot.loader.efi.canTouchEfiVariables = false;
+
+          boot.loader.grub.mirroredBoots = [
+            {
+              devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
+              path = "/boot-fallback";
+            }
+          ];
+
+          networking.hostName = "hades";
+          networking.hostId = "45389833";
+          boot.zfs.extraPools = [
+            "storage"
+            "storage2"
+          ];
+
+          environment.systemPackages = with pkgs; [ mergerfs ];
+          fileSystems."/menagerie" = {
+            fsType = "fuse.mergerfs";
+            device = "/storage*/media";
+            options = [
+              "cache.files=partial"
+              "dropcacheonclose=true"
+              "category.create=mfs"
+              "minfreespace=100G"
+              "fsname=menageriePool"
+              # "x-systemd.requires=/storage/media"
+              # "x-systemd.requires=/storage2/media"
+              "x-systemd.requires=zfs-mount.service"
+            ];
+          };
+        }
+      )
+    ];
+    inherit specialArgs;
+  };
+}

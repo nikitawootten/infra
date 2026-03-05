@@ -1,8 +1,7 @@
-{ ... }:
+{ self, ... }:
 {
   flake.nixosModules.homelab-homepage =
     {
-      self,
       lib,
       config,
       ...

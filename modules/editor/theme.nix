@@ -1,0 +1,44 @@
+{ ... }:
+{
+  flake.nvfModules.editor-theme =
+    { ... }:
+    {
+      config = {
+        vim = {
+          visuals = {
+            nvim-web-devicons.enable = true;
+            nvim-cursorline.enable = true;
+            highlight-undo.enable = true;
+            nvim-scrollbar.enable = true;
+          };
+
+          ui = {
+            borders.enable = true;
+            colorizer.enable = true;
+            illuminate.enable = true;
+            fastaction.enable = true;
+          };
+
+          statusline = {
+            lualine = {
+              enable = true;
+              theme = "tokyonight";
+            };
+          };
+
+          # Statusline already shows mode
+          luaConfigRC.misc = ''
+            vim.opt.showmode = false
+          '';
+
+          theme = {
+            enable = true;
+            name = "tokyonight";
+            style = "night";
+          };
+
+          binds.whichKey.setupOpts.preset = "helix";
+        };
+      };
+    };
+}

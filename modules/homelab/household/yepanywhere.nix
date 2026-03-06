@@ -24,14 +24,7 @@
           package = self.packages.${pkgs.stdenv.hostPlatform.system}.yepanywhere;
           user = config.personal.user.name;
           group = "users";
-          serverSettings = {
-            version = 1;
-            settings = {
-              serviceWorkerEnabled = true;
-              persistRemoteSessionsToDisk = false;
-              allowedHosts = cfg.domain;
-            };
-          };
+          allowedHosts = [ cfg.domain ];
         };
 
         services.nginx.virtualHosts.${cfg.domain} = {

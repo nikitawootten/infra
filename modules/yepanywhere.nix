@@ -9,7 +9,6 @@
     }:
     let
       cfg = config.services.yepanywhere;
-      settingsFile = pkgs.writeText "server-settings.json" (builtins.toJSON cfg.serverSettings);
     in
     {
       options.services.yepanywhere = {
@@ -50,13 +49,10 @@
           description = "Whether to open the server port in the firewall.";
         };
 
-        serverSettings = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = { };
-          description = ''
-            Attrset written to server-settings.json in the data directory.
-            Only written if non-empty.
-          '';
+        allowedHosts = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "List of allowed hostnames for the ALLOWED_HOSTS environment variable.";
         };
 
         environment = lib.mkOption {
@@ -93,11 +89,10 @@
             LOG_PRETTY = "false";
             NODE_ENV = "production";
           }
+          // lib.optionalAttrs (cfg.allowedHosts != [ ]) {
+            ALLOWED_HOSTS = lib.concatStringsSep "," cfg.allowedHosts;
+          }
           // cfg.environment;
-
-          preStart = lib.mkIf (cfg.serverSettings != { }) ''
-            cp ${settingsFile} ${cfg.dataDir}/server-settings.json
-          '';
 
           serviceConfig = {
             ExecStart = lib.getExe cfg.package;

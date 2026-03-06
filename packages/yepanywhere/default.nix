@@ -11,13 +11,13 @@
 
 let
   pname = "yepanywhere";
-  version = "0.4.8";
+  version = "0.4.9";
 
   src = fetchFromGitHub {
     owner = "kzahel";
     repo = "yepanywhere";
     rev = "v${version}";
-    hash = "sha256-QlRsUB9jq2p7mSGXInk7sRJpr+/rg+lu83XichTVLBY=";
+    hash = "sha256-CGda5IoeCwo3xh9znKJZloARDrnapS2nWanovqtWzhA=";
   };
 in
 stdenv.mkDerivation {

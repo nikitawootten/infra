@@ -36,7 +36,7 @@ in
 
           powerManagement.enable = true;
 
-          systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+          systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
 
           services.udev.packages = [ pkgs.yubikey-personalization ];
 

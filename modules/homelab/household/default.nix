@@ -23,7 +23,6 @@
       imports = [
         self.nixosModules.homelab-actual
         self.nixosModules.homelab-changedetection-io
-        self.nixosModules.homelab-mealie
         self.nixosModules.homelab-immich
       ];
 
@@ -35,7 +34,6 @@
 
         homelab.household.actual.enable = lib.mkDefault true;
         homelab.household.changedetection-io.enable = lib.mkDefault true;
-        homelab.household.mealie.enable = lib.mkDefault true;
         homelab.household.immich.enable = lib.mkDefault true;
       };
     };

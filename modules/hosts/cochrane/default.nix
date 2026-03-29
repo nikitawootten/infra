@@ -66,26 +66,14 @@ in
 
           networking.hostName = "cochrane";
 
-          home-manager.sharedModules = [
-            {
-              programs.niri.settings = {
-                outputs.eDP-1 = {
-                  scale = 1.5;
-                };
-                layout.gaps = 8;
-                layout.border.width = 2;
-              };
-            }
-          ];
-          programs.nix-ld.enable = true;
-
-          stylix.enable = true;
-          stylix.image = pkgs.fetchurl {
-            url = "https://github.com/linuxdotexe/nordic-wallpapers/blob/master/wallpapers/ign-0008.png?raw=true";
-            sha256 = "sha256-/ybcRRleApkw3JXQTZgOsYznRwS7pIRvZYp0Vyls7i4=";
+          personal.niri.extraSettings = {
+            outputs.eDP-1 = {
+              scale = 1.5;
+            };
+            layout.gaps = 8;
+            layout.border.width = 2;
           };
-          stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
-          stylix.polarity = "dark";
+          programs.nix-ld.enable = true;
 
           home-manager.users.${config.personal.user.name} = {
             imports = [ self.homeModules.bridge ];

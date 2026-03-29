@@ -29,14 +29,12 @@
       self.nixosModules.tailscale
       self.nixosModules.user
       self.nixosModules.networkmanager
-      self.nixosModules.stylix
     ];
   };
 
   # Darwin bundle - always-on base Darwin modules
   flake.darwinModules.personal = {
     imports = [
-      inputs.stylix.darwinModules.stylix
       self.darwinModules.base
       self.darwinModules.user
       self.darwinModules.brew

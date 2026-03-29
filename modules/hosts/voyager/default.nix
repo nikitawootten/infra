@@ -40,24 +40,16 @@ in
 
           services.udev.packages = [ pkgs.yubikey-personalization ];
 
-          home-manager.sharedModules = [
-            {
-              programs.niri.settings = {
-                outputs."eDP-1" = {
-                  scale = 1.5;
-                  variable-refresh-rate = true;
-                };
-              };
-            }
-          ];
-
-          stylix.enable = true;
-          stylix.image = pkgs.fetchurl {
+          personal.niri.extraSettings = {
+            outputs."eDP-1" = {
+              scale = 1.5;
+              variable-refresh-rate = true;
+            };
+          };
+          personal.niri.theme.wallpaper = pkgs.fetchurl {
             url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
             sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
           };
-          stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/equilibrium-gray-dark.yaml";
-          stylix.polarity = "dark";
 
           services.fprintd.enable = lib.mkForce false;
 

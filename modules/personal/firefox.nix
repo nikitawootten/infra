@@ -177,6 +177,5 @@
       };
       home.sessionVariables.BROWSER = "firefox";
 
-      stylix.targets.firefox.profileNames = [ "default" ];
     };
 }

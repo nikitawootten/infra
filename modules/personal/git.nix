@@ -40,6 +40,7 @@
             "Thumbs.db"
             "/scratch/" # I often have "scratch" directory for experiments
             ".direnv"
+            ".claude/settings.local.json"
           ];
           settings = {
             user.name = lib.mkDefault cfg.userName;

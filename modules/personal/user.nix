@@ -97,8 +97,6 @@
             home.stateVersion = "24.11";
             imports = [
               self.homeModules.personal
-              # Note: Stylix seems not to import its home module properly
-              inputs.stylix.homeModules.stylix
             ];
           }
         ];

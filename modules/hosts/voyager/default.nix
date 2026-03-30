@@ -55,13 +55,6 @@ in
 
           home-manager.users.${config.personal.user.name} = {
             home.packages = with pkgs; [ tor-browser ];
-
-            dconf.settings."org/gnome/mutter" = {
-              experimental-features = [
-                "scale-monitor-framebuffer"
-                "xwayland-native-scaling"
-              ];
-            };
           };
 
           programs.nix-ld.enable = true;

@@ -531,6 +531,7 @@
 
           environment.systemPackages = [
             pkgs.file-roller
+            pkgs.nautilus
           ];
 
           hardware.brillo.enable = true;

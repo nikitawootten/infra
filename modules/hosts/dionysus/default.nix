@@ -24,10 +24,10 @@ in
             ./_hardware-configuration.nix
             self.nixosModules.personal
             self.nixosModules.dslr-webcam
-            self.nixosModules.gnome
+            self.nixosModules.niri
             self.nixosModules.role-play
             self.nixosModules.role-security
-            self.nixosModules.flatpak
+            self.nixosModules.role-work
             self.nixosModules.virtualbox
             self.nixosModules.nvidia
             self.nixosModules.zsa
@@ -44,12 +44,6 @@ in
               };
             };
           };
-
-          # ALVR with support for the quest 2
-          programs.alvr.enable = true;
-          programs.alvr.openFirewall = true;
-          environment.systemPackages = [ pkgs.android-tools ];
-          users.users.${config.personal.user.name}.extraGroups = [ "adbusers" ];
 
           personal.nvidia = {
             headless = false;
@@ -70,11 +64,33 @@ in
 
           networking.hostName = "dionysus";
 
-          home-manager.users.${config.personal.user.name} = {
-            imports = [
-              self.homeModules.firefox
-            ];
+          personal.niri.extraSettings = {
+            outputs.DP-1 = {
+              transform = "270";
+              position = _: {
+                props = {
+                  x = 3440;
+                  y = -560;
+                };
+              };
+              mode = "2560x1440@74.971";
+              layout = {
+                # Workable solution for vertical monitors until https://github.com/niri-wm/niri/issues/1071 is implemented
+                default-column-width.proportion = 1.0;
+              };
+            };
+            outputs.HDMI-A-1 = {
+              position = _: {
+                props = {
+                  x = 0;
+                  y = 0;
+                };
+              };
+              mode = "3440x1440@100.000";
+            };
+          };
 
+          home-manager.users.${config.personal.user.name} = {
             programs.firefox.profiles.default.settings = {
               "gfx.webrender.all" = true; # Force enable GPU acceleration
               "media.ffmpeg.vaapi.enabled" = true;

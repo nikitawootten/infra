@@ -182,6 +182,8 @@
         pkgs.swaynotificationcenter
         pkgs.swayosd
         pkgs.swaybg
+        pkgs.pasystray
+        pkgs.networkmanagerapplet
       ];
 
       config.settings = {
@@ -200,6 +202,8 @@
             "-m"
             "fill"
           ]
+          [ "pasystray" ]
+          [ "nm-applet" ]
         ];
         binds = {
           # Basic interaction
@@ -532,6 +536,7 @@
           environment.systemPackages = [
             pkgs.file-roller
             pkgs.nautilus
+            pkgs.pavucontrol
           ];
 
           hardware.brillo.enable = true;
@@ -549,6 +554,29 @@
               ];
 
               services.ssh-agent.enable = true;
+
+              home.packages = [
+                pkgs.networkmanagerapplet
+              ];
+
+              dconf.settings = {
+                "org/gnome/desktop/interface" = {
+                  icon-theme = "Adwaita";
+                  gtk-theme = "Adwaita";
+                };
+              };
+
+              gtk = {
+                enable = true;
+                theme = {
+                  name = "Adwaita";
+                };
+                gtk4.theme = null;
+                iconTheme = {
+                  package = pkgs.adwaita-icon-theme;
+                  name = "Adwaita";
+                };
+              };
             }
           ];
         };

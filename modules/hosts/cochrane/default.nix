@@ -24,6 +24,7 @@ in
             ./_hardware-configuration.nix
             self.nixosModules.personal
             self.nixosModules.niri
+            self.nixosModules.bluetooth
             self.nixosModules.role-play
             self.nixosModules.role-security
             self.nixosModules.role-work

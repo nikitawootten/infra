@@ -27,6 +27,7 @@ in
             inputs.lanzaboote.nixosModules.lanzaboote
             self.nixosModules.personal
             self.nixosModules.niri
+            self.nixosModules.bluetooth
             self.nixosModules.role-play
             self.nixosModules.role-security
             self.nixosModules.flatpak

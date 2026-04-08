@@ -3,7 +3,6 @@ rec {
   nikita_yubikey_1 = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIgGx2KcXwXTYHMh5DOLzTq7YIBu0GngrYX9BYiCRnOvAAAABHNzaDo=";
   nikita_voyager = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyxV6Jx53eFSFkl8z1yHOe0GYuG5SNCgf0s3nfJg/Ih";
   nikita_cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWBe6veTROKSNV/iieADl5/8tQ0un/VNN5UTaBDkvp6";
-  nikita_persephone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHkzbA1xpyYLvsOcfabO+MZiWIjWTI6FYXBKdNud7js5";
   nikita_defiant = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF2IY2vuIWsarBVZWul8XuSxiS39hAyIg1rNXtpAxjqX";
 
   # Trusted users for decrypting agenix secrets

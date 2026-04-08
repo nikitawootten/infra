@@ -25,7 +25,6 @@ To list Makefile targets run `make help`.
 | [`iris`](./modules/hosts/iris.nix) | Raspberry Pi 4 |
 | [`voyager`](./modules/hosts/voyager/) | Framework 13 i7-1185G7 |
 | [`defiant`](./modules/hosts/defiant.nix) | MacBook Pro M4 |
-| [`persephone`](./modules/hosts/persephone.nix) | Mac Mini M2 |
 
 ### Homelab
 

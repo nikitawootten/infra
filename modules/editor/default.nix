@@ -22,7 +22,7 @@
       };
     in
     {
-      packages = {
+      _packages = {
         editor = nvfConfig.neovim;
       };
     };

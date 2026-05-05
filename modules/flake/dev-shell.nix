@@ -31,6 +31,7 @@
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default
             inputs.flake-graph.packages.${system}.default
+            nh
           ]
           ++ lib.lists.optionals pkgs.stdenv.isLinux (
             with pkgs;

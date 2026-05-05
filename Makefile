@@ -24,27 +24,17 @@ test: ## Test flake outputs with "nix flake check"
 update: ## Update "flake.lock"
 	$(NIX_CMD) flake update
 
-# NOTE: These targets are not used atm
-# .PHONY: switch-home
-# switch-home: ## Switch local home-manager config
-# 	$(NIX_CMD) develop --command home-manager switch --flake .
-#
-# .PHONY: build-home
-# build-home: ## Build local home-manager config
-# 	$(NIX_CMD) develop --command home-manager build --flake .
-
 .PHONY: switch-nixos
 switch-nixos: ## Switch local NixOS config
-	sudo $(NIX_CMD) develop --command nixos-rebuild switch --flake .#
+	$(NIX_CMD) develop --command nh os switch .#
 
 .PHONY: build-nixos
 build-nixos: ## Build local NixOS config
-	sudo $(NIX_CMD) develop --command nixos-rebuild dry-activate --flake .#
+	$(NIX_CMD) develop --command nh os build .#
 
 .PHONY: switch-darwin
 switch-darwin:
-	sudo $(NIX_CMD) run nix-darwin -- switch --flake .#
-	/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+	$(NIX_CMD) develop --command nh darwin switch .#
 
 .PHONY: switch
 switch: ## Switch NixOS or Darwin config
@@ -72,11 +62,11 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 	@echo Rebuilding configuration for $(HOST) on target $(TARGET) \
 		$(if $(BUILDER),with builder $(BUILDER))
 
-	$(NIX_CMD) run nixpkgs#nixos-rebuild-ng -- \
-		--flake ".#$(HOST)" \
+	$(NIX_CMD) develop --command nh os switch \
 		--target-host "$(TARGET)" \
 		$(if $(BUILDER),--build-host "$(BUILDER)") \
-		--ask-sudo-password switch
+		--ask \
+		".#$(HOST)"
 
 .PHONY: artifacts
 artifacts: topology flake-graph ## Build all artifacts

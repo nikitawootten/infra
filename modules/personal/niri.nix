@@ -473,7 +473,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.niri = inputs.nix-wrapper-modules.wrappers.niri.wrap {
+      _packages.niri = inputs.nix-wrapper-modules.wrappers.niri.wrap {
         inherit pkgs;
         imports = [ self.wrapperModules.niri ];
       };

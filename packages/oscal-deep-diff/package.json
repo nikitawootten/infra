@@ -1,8 +1,0 @@
-{
-    "name": "oscal-deep-diff",
-    "version": "1.0.0",
-    "license": "ISC",
-    "dependencies": {
-        "@oscal/oscal-deep-diff": "1.0.0"
-    }
-}

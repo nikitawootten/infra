@@ -32,7 +32,7 @@
             go.enable = true;
             html.enable = true;
             css.enable = true;
-            ts.enable = true;
+            typescript.enable = true;
             java.enable = true;
             kotlin.enable = true;
             bash.enable = true;

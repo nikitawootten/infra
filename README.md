@@ -40,7 +40,6 @@ For usage examples, refer to the [`hades`](./hosts/hades/) host configuration:
 This flake contains several packages that I rely on day to day:
 
 - [`oscal-cli`](./packages/oscal-cli/)
-- [`oscal-deep-diff`](./packages/oscal-deep-diff/)
 - [`xspec`](./packages/xspec/)
 - [`yepanywhere`](./packages/yepanywhere/)
 

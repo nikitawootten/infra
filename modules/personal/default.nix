@@ -13,7 +13,6 @@
         self.homeModules.ssh-client
         self.homeModules.starship
         self.homeModules.tmux
-        self.homeModules.upgrade-diff
         self.homeModules.darwin-hm
         self.homeModules.zellij
       ];
@@ -24,7 +23,6 @@
   flake.nixosModules.personal = {
     imports = [
       self.nixosModules.base
-      self.nixosModules.upgrade-diff
       self.nixosModules.ssh-server
       self.nixosModules.tailscale
       self.nixosModules.user
@@ -38,7 +36,6 @@
       self.darwinModules.base
       self.darwinModules.user
       self.darwinModules.brew
-      self.darwinModules.upgrade-diff
       self.darwinModules.rancher
       self.darwinModules.fonts
       self.darwinModules.dock

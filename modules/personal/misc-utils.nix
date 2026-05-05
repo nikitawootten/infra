@@ -15,6 +15,7 @@
         jq.enable = lib.mkDefault true;
         nix-index.enable = lib.mkDefault true;
         nix-index-database.comma.enable = lib.mkDefault true;
+        nh.enable = lib.mkDefault true;
       };
 
       home.packages = with pkgs; [

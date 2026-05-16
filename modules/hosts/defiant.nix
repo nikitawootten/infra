@@ -22,6 +22,7 @@ in
             self.darwinModules.role-work
             self.darwinModules.role-play
             self.darwinModules.role-security
+            self.darwinModules.role-hardware-dev
           ];
 
           nixpkgs.hostPlatform = "aarch64-darwin";

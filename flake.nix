@@ -35,11 +35,6 @@
     };
     # Declarative management of flatpaks
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
-    # Create VM/images/containers off of NixOS modules
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,10 +55,6 @@
     nix-wrapper-modules = {
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.flake-parts.follows = "flake-parts";
     };
     import-tree.url = "github:vic/import-tree";
     llm-agents = {

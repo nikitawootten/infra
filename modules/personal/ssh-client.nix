@@ -5,33 +5,37 @@
     {
       programs.ssh = {
         enable = true;
-        enableDefaultConfig = false; # deprecation
-        matchBlocks = {
+        enableDefaultConfig = false; # we set our own "*" defaults below
+        settings = {
           "github.com" = {
-            user = "git";
-            identitiesOnly = true;
+            User = "git";
+            IdentitiesOnly = true;
             # Connect over HTTPS port (useful in restricted wifi environments like conferences)
-            hostname = "ssh.github.com";
-            port = 443;
+            HostName = "ssh.github.com";
+            Port = 443;
           };
           "codeberg.org" = {
-            user = "git";
-            identitiesOnly = true;
+            User = "git";
+            IdentitiesOnly = true;
+          };
+          "tangled.org" = {
+            User = "git";
+            IdentitiesOnly = true;
           };
           "*" = {
-            forwardAgent = false;
-            addKeysToAgent = "yes";
-            compression = false;
-            serverAliveInterval = 0;
-            serverAliveCountMax = 3;
-            hashKnownHosts = false;
-            userKnownHostsFile = "~/.ssh/known_hosts";
-            controlMaster = "no";
-            controlPath = "~/.ssh/master-%r@%n:%p";
-            controlPersist = "no";
-            extraOptions = lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
-              IgnoreUnknown = "AddKeysToAgent,UseKeychain";
-            };
+            ForwardAgent = false;
+            AddKeysToAgent = "yes";
+            Compression = false;
+            ServerAliveInterval = 0;
+            ServerAliveCountMax = 3;
+            HashKnownHosts = false;
+            UserKnownHostsFile = "~/.ssh/known_hosts";
+            ControlMaster = "no";
+            ControlPath = "~/.ssh/master-%r@%n:%p";
+            ControlPersist = "no";
+          }
+          // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+            IgnoreUnknown = "AddKeysToAgent,UseKeychain";
           };
         };
         # Escape hatch allow additional configs in ~/.ssh/config.d/

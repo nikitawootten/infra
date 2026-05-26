@@ -31,9 +31,7 @@
           acceptTerms = true;
           defaults = {
             email = cfg.email;
-            credentialFiles = {
-              SECRETS_FILE = cfg.credentialsFile;
-            };
+            environmentFile = cfg.credentialsFile;
             dnsProvider = cfg.dnsProvider;
           };
 

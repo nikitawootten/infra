@@ -4,6 +4,7 @@
     {
       lib,
       config,
+      pkgs,
       ...
     }:
     let
@@ -56,7 +57,7 @@
           };
         };
 
-        environment.enableAllTerminfo = true;
+        environment.systemPackages = [ pkgs.ghostty.terminfo ];
 
         topology.self.services.nginx = {
           hidden = true;

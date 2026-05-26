@@ -43,6 +43,8 @@ in
           boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
           hardware.nvidia.open = false;
+          # The Quadro P400 is only supported by 580.xx
+          hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
           homelab.lan-domain = "arpa.nikita.computer";
 
@@ -114,12 +116,13 @@ in
 
           boot.loader.grub.enable = true;
           boot.loader.grub.efiSupport = true;
+          boot.loader.grub.efiInstallAsRemovable = true;
           boot.loader.grub.device = "nodev";
           boot.loader.efi.canTouchEfiVariables = false;
 
           boot.loader.grub.mirroredBoots = [
             {
-              devices = [ "/dev/disks/by-id/wwn-0x5000c5007e5f2beb-part3" ];
+              devices = [ "/dev/disk/by-id/wwn-0x5000c5007e5f2beb-part3" ];
               path = "/boot-fallback";
             }
           ];

@@ -2,6 +2,10 @@
 {
   virtualisation.oci-containers.containers.minecraft-server = {
     image = "itzg/minecraft-server";
+    extraOptions = [
+      "--pull"
+      "newer"
+    ];
     environment = {
       UID = "1000";
       GID = toString config.users.groups.${config.homelab.media.group}.gid;

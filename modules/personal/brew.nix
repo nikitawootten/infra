@@ -5,6 +5,12 @@
     {
       homebrew = {
         enable = true;
+
+        # See https://github.com/nix-darwin/nix-darwin/issues/1787
+        onActivation.extraFlags = [
+          "--force-cleanup"
+        ];
+
         onActivation = {
           autoUpdate = false;
           cleanup = "zap";

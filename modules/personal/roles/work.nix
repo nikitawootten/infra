@@ -2,6 +2,13 @@
 let
   hmModule =
     { pkgs, lib, ... }:
+    let
+      claude-code = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
+      claude-personal = pkgs.writeShellScriptBin "claude-personal" ''
+        export CLAUDE_CONFIG_DIR="$HOME/.claude-personal"
+        exec ${claude-code}/bin/claude "$@"
+      '';
+    in
     {
       imports = [
         self.homeModules.cluster-admin
@@ -12,7 +19,8 @@ let
         with pkgs;
         [
           awscli2
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
+          claude-code
+          claude-personal
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
           ollama

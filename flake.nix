@@ -14,7 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Provides hardware-specific NixOS modules
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Provides secure boot support
     lanzaboote = {
       url = "github:nix-community/lanzaboote";

@@ -86,7 +86,7 @@ out/topology.svg: out flake.nix
 flake-graph: out/flake-graph.svg ## Build the flake-graph diagram
 
 out/flake-graph.svg: out flake.lock
-	$(NIX_CMD) develop --command bash -euo pipefail -c 'flake-graph flake.lock | dot -Tsvg > out/flake-graph.svg'
+	$(NIX_CMD) develop --command bash -euo pipefail -c 'flake-graph --size flake.lock | dot -Tsvg > out/flake-graph.svg'
 
 .PHONY: clean
 clean: ## Clean all artifacts

@@ -255,7 +255,7 @@ nixInfo.lze.load {
             vim.keymap.set("n", "<leader>_", function() Snacks.lazygit.open() end, { desc = 'LazyGit' })
             vim.keymap.set('n', "<leader><leader>", function() Snacks.picker.files() end, { desc = "Find files" })
             vim.keymap.set('n', "<leader>ff", function() Snacks.picker.files() end, { desc = "Find files" })
-            vim.keymap.set('n', "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Find git files" })
+            vim.keymap.set('n', "<leader>fg", function() Snacks.picker.grep() end, { desc = "Live grep" })
             vim.keymap.set('n', "<leader>f?", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
             vim.keymap.set('n', "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
             vim.keymap.set('n', "<leader>fr", function() Snacks.picker.recent() end, { desc = "Recent files" })
@@ -633,6 +633,15 @@ nixInfo.lze.load {
         after = function(_)
             require("copilot").setup({
                 panel = { enabled = false },
+                server_opts_overrides = {
+                    -- suppress auth error popups when not signed in
+                    handlers = {
+                        ["window/showMessage"] = function(_, result, _)
+                            if result.type > vim.lsp.protocol.MessageType.Warning then return end
+                            vim.notify(result.message, vim.log.levels.WARN)
+                        end,
+                    },
+                },
                 suggestion = {
                     enabled = true,
                     auto_trigger = true,

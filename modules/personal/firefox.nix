@@ -67,8 +67,9 @@
 
             # Via https://github.com/LudovicoPiero/dotfiles/blob/main/cells/workstations/homeProfiles/firefox/__search.nix
             search = {
-              default = "google";
+              default = "kagi";
               order = [
+                "kagi"
                 "google"
                 "ddg"
               ];
@@ -165,6 +166,17 @@
                     }
                   ];
                   definedAliases = [ "yt" ];
+                };
+
+                "kagi" = {
+                  urls = [
+                    { template = "https://kagi.com/search?q={searchTerms}"; }
+                    {
+                      template = "https://kagi.com/api/autosuggest?q={searchTerms}";
+                      type = "application/x-suggestions+json";
+                    }
+                  ];
+                  definedAliases = [ "k" ];
                 };
 
                 "bing".metaData.hidden = true;

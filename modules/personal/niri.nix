@@ -172,6 +172,16 @@
         description = "Color theme overrides, merged on top of defaultTheme";
       };
 
+      # Required for `peck`
+      config.package = pkgs.niri.overrideAttrs (_: {
+        src = pkgs.fetchFromGitHub {
+          owner = "kiryl";
+          repo = "niri";
+          rev = "d26ab5f29df670110a91a7e933a743eeaf611978";
+          hash = "sha256-3HxntJA2DNg+L94gbM86uGeJqPPWbSX88CjteOmYV0o=";
+        };
+      });
+
       config.v2-settings = true;
       config.env.NIXOS_OZONE_WL = "1";
       config.extraPackages = [
@@ -226,6 +236,10 @@
           "Mod+Shift+Return".spawn = [
             "ghostty"
             "--title=floatme"
+          ];
+          "Mod+Slash".spawn = [
+            "peck"
+            "activate"
           ];
           "Print".screenshot = _: { };
           "Ctrl+Print".screenshot-screen = _: { };
@@ -402,6 +416,7 @@
           inactive-color = t.muted;
         };
         layout.focus-ring.off = _: { };
+        layout.gaps = 4;
         input = {
           focus-follows-mouse = _: {
             props.max-scroll-amount = "10%";
@@ -416,16 +431,17 @@
             natural-scroll = _: { };
             dwt = _: { };
             drag-lock = _: { };
+            tap = _: { };
           };
           workspace-auto-back-and-forth = _: { };
         };
         window-rules = [
           {
             geometry-corner-radius = [
-              14.0
-              14.0
-              14.0
-              14.0
+              8.0
+              8.0
+              8.0
+              8.0
             ];
             clip-to-geometry = true;
           }
@@ -517,6 +533,7 @@
             theme = config.personal.niri.theme;
             settings = config.personal.niri.extraSettings;
           };
+          peck = inputs.peck.packages.${pkgs.stdenv.hostPlatform.system}.default;
         in
         {
           personal.niri.package = wrappedNiri;
@@ -525,18 +542,25 @@
             enable = true;
             package = config.personal.niri.package;
           };
-
-          services.xserver.enable = true;
-          services.displayManager.gdm.enable = true;
-          security.pam.services.gdm.enableGnomeKeyring = true;
+          services.displayManager.ly.enable = true;
+          services.displayManager.ly.settings = {
+            animation = "doom";
+            bigclock = "en";
+          };
+          security.pam.services.ly.enableGnomeKeyring = true;
 
           services.gnome.sushi.enable = true;
           services.gvfs.enable = true;
 
+          # Required by `peck`.
+          services.gnome.at-spi2-core.enable = true;
+
           environment.systemPackages = [
             pkgs.file-roller
             pkgs.nautilus
+            pkgs.loupe
             pkgs.pavucontrol
+            peck
           ];
 
           hardware.brillo.enable = true;
@@ -559,10 +583,29 @@
                 pkgs.networkmanagerapplet
               ];
 
+              systemd.user.services.peck = {
+                Unit = {
+                  Description = "peck activation daemon";
+                  After = [
+                    "graphical-session.target"
+                    "at-spi-dbus-bus.service"
+                  ];
+                  Wants = [ "at-spi-dbus-bus.service" ];
+                  PartOf = [ "graphical-session.target" ];
+                };
+                Service = {
+                  ExecStart = "${lib.getExe peck} daemon";
+                  Restart = "on-failure";
+                  RestartSec = 2;
+                };
+                Install.WantedBy = [ "graphical-session.target" ];
+              };
+
               dconf.settings = {
                 "org/gnome/desktop/interface" = {
                   icon-theme = "Adwaita";
                   gtk-theme = "Adwaita";
+                  toolkit-accessibility = true;
                 };
               };
 

@@ -65,6 +65,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
+    # Vimium-style mouseless navigation for Niri
+    peck = {
+      url = "github:nikitawootten/peck";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

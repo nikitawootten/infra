@@ -30,7 +30,7 @@ in
             self.nixosModules.bluetooth
             self.nixosModules.role-play
             self.nixosModules.role-security
-            self.nixosModules.flatpak
+            self.nixosModules.role-work
             self.nixosModules.zsa
             self.nixosModules.virtualbox
           ];
@@ -44,7 +44,7 @@ in
           personal.niri.extraSettings = {
             outputs."eDP-1" = {
               scale = 1.5;
-              variable-refresh-rate = true;
+              variable-refresh-rate = _: { };
             };
           };
           personal.niri.theme.wallpaper = pkgs.fetchurl {
@@ -52,10 +52,15 @@ in
             sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
           };
 
+          services.displayManager.ly.settings.battery_id = "BAT1";
+
           services.fprintd.enable = lib.mkForce false;
 
           home-manager.users.${config.personal.user.name} = {
-            home.packages = with pkgs; [ tor-browser ];
+            home.packages = with pkgs; [
+              tor-browser
+              zed-editor
+            ];
           };
 
           programs.nix-ld.enable = true;

@@ -33,6 +33,7 @@ in
             self.nixosModules.role-work
             self.nixosModules.zsa
             self.nixosModules.virtualbox
+            self.nixosModules.remote-builder-client
           ];
 
           powerManagement.enable = true;

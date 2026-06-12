@@ -27,6 +27,7 @@ in
             self.nixosModules.zfs
             self.nixosModules.docker
             self.nixosModules.nvidia
+            self.nixosModules.remote-builder-host
             ./_minecraft.nix
           ];
 
@@ -65,6 +66,7 @@ in
           age.secrets.grafana-client-secret.mode = "0440";
           age.secrets.grafana-secret.file = secrets.grafana-secret;
           age.secrets.grafana-secret.owner = "grafana";
+          age.secrets.harmonia-signing-key.file = secrets.harmonia-signing-key;
           homelab.infra = {
             enable = true;
             kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;
@@ -72,6 +74,7 @@ in
             oauth2-proxy.keyFile = config.age.secrets.oauth2-proxy-config.path;
             grafana.clientSecretFile = config.age.secrets.grafana-client-secret.path;
             grafana.secretFile = config.age.secrets.grafana-secret.path;
+            harmonia.signKeyFile = config.age.secrets.harmonia-signing-key.path;
           };
 
           # Media

@@ -29,6 +29,7 @@ in
             self.nixosModules.role-security
             self.nixosModules.role-work
             self.nixosModules.zsa
+            self.nixosModules.remote-builder-client
             inputs.lanzaboote.nixosModules.lanzaboote
           ];
 
@@ -71,7 +72,6 @@ in
             outputs.eDP-1 = {
               scale = 1.5;
             };
-            layout.gaps = 8;
             layout.border.width = 2;
           };
           programs.nix-ld.enable = true;

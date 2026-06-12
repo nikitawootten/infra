@@ -15,4 +15,6 @@
   miniflux-client-secret = ./miniflux-client-secret.age;
   miniflux-env = ./miniflux.env.age;
   immich-client-secret = ./immich-client-secret.age;
+  nix-builder-key = ./nix-builder-key.age;
+  harmonia-signing-key = ./harmonia-signing-key.age;
 }

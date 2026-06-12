@@ -25,6 +25,7 @@
         self.nixosModules.homelab-oauth2-proxy
         self.nixosModules.homelab-grafana
         self.nixosModules.homelab-prometheus
+        self.nixosModules.homelab-harmonia
       ];
 
       config = lib.mkIf cfg.enable {
@@ -37,6 +38,7 @@
         homelab.infra.oauth2-proxy.enable = lib.mkDefault true;
         homelab.infra.grafana.enable = true;
         homelab.infra.prometheus.enable = true;
+        homelab.infra.harmonia.enable = lib.mkDefault true;
 
         homelab.infra.homepageConfig."Pandora" = {
           priority = lib.mkDefault 15;

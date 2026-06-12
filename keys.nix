@@ -5,6 +5,12 @@ rec {
   nikita_cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWBe6veTROKSNV/iieADl5/8tQ0un/VNN5UTaBDkvp6";
   nikita_defiant = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF2IY2vuIWsarBVZWul8XuSxiS39hAyIg1rNXtpAxjqX";
 
+  # Key used by laptops' nix-daemon for remote builds on hades (private half in secrets/nix-builder-key.age)
+  nixremote = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAT0KPrvhLnqyfdMKOy2V+odFG+abCXmMAm0C2w+129n nixremote-builder";
+
+  # Signing key for the harmonia binary cache on hades (private half in secrets/harmonia-signing-key.age)
+  hades_cache = "cache.hades.arpa.nikita.computer-1:nh/nrUoDcjJQLNRQv/v8HC1z4FRYGYW+i9iVu4TeBSA=";
+
   # Trusted users for decrypting agenix secrets
   trusted_users = [ nikita_voyager ];
 

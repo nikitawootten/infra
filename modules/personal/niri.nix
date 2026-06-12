@@ -184,7 +184,7 @@
 
       config.v2-settings = true;
       config.env.NIXOS_OZONE_WL = "1";
-      config.extraPackages = [
+      config.runtimePkgs = [
         wrappedWaybar
         wrappedSwayidle
         wrappedSwaylock

@@ -22,7 +22,6 @@ To list Makefile targets run `make help`.
 | [`cochrane`](./modules/hosts/cochrane/) | GPD Pocket 2 |
 | [`dionysus`](./modules/hosts/dionysus/) | Ryzen 2920X, NVIDIA 2080ti Workhorse |
 | [`hades`](./modules/hosts/hades/) | Dell PowerEdge R720XD |
-| [`iris`](./modules/hosts/iris.nix) | Raspberry Pi 4 |
 | [`voyager`](./modules/hosts/voyager/) | Framework 13 i7-1185G7 |
 | [`defiant`](./modules/hosts/defiant.nix) | MacBook Pro M4 |
 

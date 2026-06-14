@@ -20,7 +20,6 @@ rec {
   hades = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAhbHrBfTCi5TiyBVjhzjRJ4HzN5+JgY6rgvoaKP0ec";
   dionysus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJutM0WGtPHMkziyE9g2nHbxuL1YrJu1y8ysvG0TtAeA";
   cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH+EQFMwbqttKiVOkiMSranPH22J4XZwTtAhWIJB74D";
-  iris = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHl+0G2PgZRw08WSvYtqbRg708uTON6hVMX0Kcwt2VL/";
   hermes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEujTbZxPrwrEaeW343jqs1CtaNPWOB8cUaQppNNPRkS";
 
   systems = [
@@ -29,7 +28,6 @@ rec {
     hades
     dionysus
     cochrane
-    iris
     hermes
   ];
 

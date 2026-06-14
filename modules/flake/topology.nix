@@ -52,7 +52,6 @@
               ];
 
               connections.eth1 = mkConnection "ap1" "eth0";
-              connections.eth2 = mkConnection "iris" "end0";
               connections.eth3 = mkConnection "hades" "eno1";
             };
 
@@ -69,7 +68,6 @@
         )
         {
           nixosConfigurations = {
-            iris = self.nixosConfigurations.iris;
             hades = self.nixosConfigurations.hades;
             dionysus = self.nixosConfigurations.dionysus;
           };

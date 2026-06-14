@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.github-runner =
     {
@@ -51,9 +51,8 @@
             openssh
             gnutar
             gzip
-            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
           ];
-          defaultText = lib.literalExpression "see source (nix, git, gnumake, gh, jq, openssh, gnutar, gzip, claude-code)";
+          defaultText = lib.literalExpression "see source (nix, git, gnumake, gh, jq, openssh, gnutar, gzip)";
           description = "Tools available on PATH to every job.";
         };
       };

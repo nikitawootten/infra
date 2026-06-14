@@ -32,6 +32,8 @@
             inputs.home-manager.packages.${system}.default
             inputs.agenix.packages.${system}.default
             inputs.flake-graph.packages.${system}.default
+            # Used by the auto-update workflow to draft release notes
+            inputs.llm-agents.packages.${system}.claude-code
             nh
           ]
           ++ lib.lists.optionals pkgs.stdenv.isLinux (

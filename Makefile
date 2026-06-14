@@ -24,6 +24,29 @@ test: ## Test flake outputs with "nix flake check"
 update: ## Update "flake.lock"
 	$(NIX_CMD) flake update
 
+.PHONY: build-machines
+build-machines: ## Build every NixOS machine closure (warms the local store/cache)
+	@$(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
+	while read -r host; do \
+	  echo "==> $$host" >&2; \
+	  $(NIX_CMD) build --no-link --print-out-paths \
+	    ".#nixosConfigurations.$$host.config.system.build.toplevel"; \
+	done
+
+.PHONY: closure-diff
+closure-diff: ## Diff machine closures between $(OLD) and $(NEW) out-path lists
+	@paste -d' ' $(OLD) $(NEW) | while read -r old new; do \
+	  echo "### $$new"; nix store diff-closures "$$old" "$$new"; echo; \
+	done
+
+.PHONY: machine-warnings
+machine-warnings: ## Emit declared NixOS warnings per machine as JSON
+	@$(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
+	while read -r host; do \
+	  w="$$($(NIX_CMD) eval --json ".#nixosConfigurations.$$host.config.warnings" 2>/dev/null || echo '[]')"; \
+	  jq -nc --arg h "$$host" --argjson w "$$w" '{host:$$h, warnings:$$w}'; \
+	done | jq -s '.'
+
 .PHONY: switch-nixos
 switch-nixos: ## Switch local NixOS config
 	$(NIX_CMD) develop --command nh os switch .#

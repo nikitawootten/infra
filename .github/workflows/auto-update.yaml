@@ -1,0 +1,91 @@
+name: Auto flake update
+on:
+  schedule: [{ cron: "0 5 * * 0" }] # Sundays 05:00 UTC ≈ midnight ET
+  workflow_dispatch: {}
+concurrency:
+  group: flake-update
+  cancel-in-progress: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    runs-on: [self-hosted, hades]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Respect hold label
+        id: hold
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          held=$(gh pr list --state open --head automation/flake-update \
+                  --json labels --jq '[.[].labels[].name] | index("automation:hold") != null')
+          if [ "$held" = "true" ]; then
+            echo "PR on hold; skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build at current lock
+        if: steps.hold.outputs.skip != 'true'
+        run: |
+          cp flake.lock flake.lock.old
+          make build-machines > old-paths.txt
+          make machine-warnings > warnings-old.json
+
+      - name: Update flake.lock
+        if: steps.hold.outputs.skip != 'true'
+        run: make update
+
+      - name: Run checks
+        if: steps.hold.outputs.skip != 'true'
+        run: make test
+
+      - name: Build at updated lock
+        if: steps.hold.outputs.skip != 'true'
+        run: make build-machines > new-paths.txt
+
+      - name: Diff closures and warnings
+        if: steps.hold.outputs.skip != 'true'
+        run: |
+          make closure-diff OLD=old-paths.txt NEW=new-paths.txt > closure-diff.md
+          make machine-warnings > warnings-new.json
+          jq -n --slurpfile o warnings-old.json --slurpfile n warnings-new.json '
+            ($o[0] | map({key:.host, value:.warnings}) | from_entries) as $old
+            | $n[0]
+            | map({host, new: (.warnings - ($old[.host] // []))})
+            | map(select(.new | length > 0))' > warnings-diff.json
+
+      - name: Generate release notes
+        if: steps.hold.outputs.skip != 'true'
+        env:
+          { CLAUDE_CODE_OAUTH_TOKEN: "${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}" }
+        run: |
+          nix run .#claude-code -- -p \
+            "Write concise release notes for this NixOS flake update, grouped by \
+             input. Use this closure diff as ground truth for what shipped:\n\n\
+             $(cat closure-diff.md)" > notes.md
+
+      - name: Assemble PR body
+        if: steps.hold.outputs.skip != 'true'
+        id: body
+        run: |
+          cp notes.md pr-body.md
+          labels="automation"
+          if [ "$(jq 'length' warnings-diff.json)" -gt 0 ]; then
+            labels="$labels,needs-attention"
+            { echo; echo "## ⚠️ New deprecation/warnings introduced"; echo;
+              jq -r '.[] | "### \(.host)\n" + (.new | map("- " + .) | join("\n"))' \
+                warnings-diff.json; } >> pr-body.md
+          fi
+          echo "labels=$labels" >> "$GITHUB_OUTPUT"
+
+      - name: Open / refresh PR
+        if: steps.hold.outputs.skip != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: automation/flake-update
+          delete-branch: true
+          title: "chore: flake update"
+          body-path: pr-body.md
+          commit-message: "chore: flake update"
+          labels: ${{ steps.body.outputs.labels }}

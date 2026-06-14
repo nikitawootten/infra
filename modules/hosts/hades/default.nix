@@ -28,6 +28,7 @@ in
             self.nixosModules.docker
             self.nixosModules.nvidia
             self.nixosModules.remote-builder-host
+            self.nixosModules.github-runner
             ./_minecraft.nix
           ];
 
@@ -67,6 +68,9 @@ in
           age.secrets.grafana-secret.file = secrets.grafana-secret;
           age.secrets.grafana-secret.owner = "grafana";
           age.secrets.harmonia-signing-key.file = secrets.harmonia-signing-key;
+          age.secrets.github-runner-token.file = secrets.github-runner-token;
+          personal.github-runner.enable = true;
+          personal.github-runner.tokenFile = config.age.secrets.github-runner-token.path;
           homelab.infra = {
             enable = true;
             kanidm.adminPasswordFile = config.age.secrets.kanidm-password.path;

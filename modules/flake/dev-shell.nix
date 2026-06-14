@@ -24,6 +24,7 @@
             nixd
             pwgen
             jq
+            gh
             graphviz
             tree
             openssl

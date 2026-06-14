@@ -17,4 +17,5 @@
   immich-client-secret = ./immich-client-secret.age;
   nix-builder-key = ./nix-builder-key.age;
   harmonia-signing-key = ./harmonia-signing-key.age;
+  github-runner-token = ./github-runner-token.age;
 }

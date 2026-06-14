@@ -26,6 +26,7 @@ in
   "miniflux.env.age".publicKeys = hades_keyset;
   "immich-client-secret.age".publicKeys = hades_keyset;
   "harmonia-signing-key.age".publicKeys = hades_keyset;
+  "github-runner-token.age".publicKeys = hades_keyset;
   "nix-builder-key.age".publicKeys = [
     keys.voyager
     keys.cochrane

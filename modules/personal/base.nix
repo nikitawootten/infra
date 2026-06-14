@@ -42,6 +42,14 @@
         settings = {
           auto-optimise-store = true;
           trusted-users = [ "@wheel" ];
+          # numtide cache serves the llm-agents packages (claude-code, codex,
+          # …), which are not on cache.nixos.org. Configured system-wide here
+          # rather than in role-work so non-work hosts (e.g. hades, which builds
+          # these in CI) also substitute instead of building from source.
+          extra-substituters = [ "https://cache.numtide.com" ];
+          extra-trusted-public-keys = [
+            "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+          ];
         };
         package = pkgs.nixVersions.stable;
         extraOptions = ''

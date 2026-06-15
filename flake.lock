@@ -338,29 +338,6 @@
         "type": "github"
       }
     },
-    "nix-topology": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780597466,
-        "narHash": "sha256-WMZWzx137H4THI8v3ju5LEqe5+sctfztLULSn5s9AN4=",
-        "owner": "oddlama",
-        "repo": "nix-topology",
-        "rev": "40718325a3bc3d3216eb51b8992a46eb9a77e083",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oddlama",
-        "repo": "nix-topology",
-        "type": "github"
-      }
-    },
     "nix-wrapper-modules": {
       "inputs": {
         "nixpkgs": [
@@ -488,7 +465,6 @@
         "llm-agents": "llm-agents",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
-        "nix-topology": "nix-topology",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

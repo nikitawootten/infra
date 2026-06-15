@@ -38,11 +38,6 @@
     };
     # Declarative management of flatpaks
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
-    nix-topology = {
-      url = "github:oddlama/nix-topology";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-    };
     flake-graph = {
       url = "github:nikitawootten/flake-graph";
       inputs.nixpkgs.follows = "nixpkgs";

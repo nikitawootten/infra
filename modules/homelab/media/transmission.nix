@@ -69,12 +69,6 @@
             siteMonitor = serviceUrl;
           };
         };
-
-        topology.self.services.transmission = {
-          name = cfg.name;
-          icon = "services.transmission";
-          details.listen.text = lib.mkForce cfg.domain;
-        };
       };
     };
 }

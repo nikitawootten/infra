@@ -32,13 +32,6 @@ in
             ./_minecraft.nix
           ];
 
-          topology.self = {
-            hardware.info = "Dell R720XD server";
-            interfaces = {
-              eno1 = { };
-            };
-          };
-
           services.tailscale.extraSetFlags = [ "--advertise-exit-node" ];
 
           # This machine is sometimes used as a build server

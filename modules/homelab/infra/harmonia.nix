@@ -48,11 +48,6 @@
             siteMonitor = cfg.url;
           };
         };
-
-        topology.self.services.harmonia = {
-          name = "Harmonia";
-          info = cfg.domain;
-        };
       };
     };
 }

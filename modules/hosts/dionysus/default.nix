@@ -33,18 +33,7 @@ in
             self.nixosModules.nvidia
             self.nixosModules.zsa
             inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
-            inputs.nix-topology.nixosModules.default
           ];
-
-          topology.self = {
-            hardware.info = "AMD Threadripper 2920X + NVIDIA 2080TI desktop";
-            interfaces = {
-              enp8s0 = { };
-              wlp5s0 = {
-                physicalConnections = [ (config.lib.topology.mkConnection "ap1" "wlan0") ];
-              };
-            };
-          };
 
           personal.nvidia = {
             headless = false;

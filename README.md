@@ -27,9 +27,6 @@ To list Makefile targets run `make help`.
 
 ### Homelab
 
-![network diagram](https://gist.githubusercontent.com/nikitawootten/a0b5b3e0afdaaa8e02ace16b955da7ec/raw/topology.svg)
-_Network diagram [generated](./.github/workflows/artifacts.yaml) with [`oddlama/nix-topology`](https://github.com/oddlama/nix-topology)._
-
 The [`homelab` module](./modules/homelab/) packages most of my homelab-specific configuration, including media management and monitoring.
 
 For usage examples, refer to the [`hades`](./hosts/hades/) host configuration:
@@ -43,4 +40,3 @@ This flake contains several packages that I rely on day to day:
 - [`yepanywhere`](./packages/yepanywhere/)
 
 These packages are **UNOFFICIAL**, experimental, potentially transient, and come with no guarantees or warranty.
-If you would like to see these packages submitted [upstream](https://github.com/NixOS/nixpkgs) or to the [NUR](https://nur.nix-community.org/), **please open an issue on this repository as a signal of interest**.

@@ -62,10 +62,6 @@
             };
           };
         };
-
-        topology.self.services.radarr = {
-          details.listen.text = lib.mkForce cfg.domain;
-        };
       };
     };
 }

@@ -18,7 +18,6 @@
         self.nixosModules.homelab-acme
         self.nixosModules.homelab-homepage
         self.nixosModules.homelab-samba
-        inputs.nix-topology.nixosModules.default
         inputs.agenix.nixosModules.default
       ];
 
@@ -58,10 +57,6 @@
         };
 
         environment.systemPackages = [ pkgs.ghostty.terminfo ];
-
-        topology.self.services.nginx = {
-          hidden = true;
-        };
 
         # Helper function to create a subdomain for a service
         lib.homelab.mkServiceSubdomain = subdomain: "${subdomain}.${cfg.domain}";

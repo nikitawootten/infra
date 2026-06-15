@@ -22,10 +22,3 @@ jobs:
           token: ${{ secrets.GIST_TOKEN }}
           file_path: out/flake-graph.svg
           gist_file_name: flake-graph.svg
-      - name: Upload topology.svg
-        uses: exuanbo/actions-deploy-gist@v1.1.4
-        with:
-          gist_id: "a0b5b3e0afdaaa8e02ace16b955da7ec"
-          token: ${{ secrets.GIST_TOKEN }}
-          file_path: out/topology.svg
-          gist_file_name: topology.svg

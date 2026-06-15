@@ -92,18 +92,10 @@ remote-switch-nixos: ## Switch a remote NixOS config (e.x. make remote-switch-ni
 		".#$(HOST)"
 
 .PHONY: artifacts
-artifacts: topology flake-graph ## Build all artifacts
+artifacts: flake-graph ## Build all artifacts
 
 out:
 	mkdir out
-
-.PHONY: topology
-topology: out/topology.svg ## Build the nix-topology diagram
-
-out/topology.svg: out flake.nix
-	$(NIX_CMD) build .#topology.$(shell make --silent get-system).config.output
-	cp --no-preserve=mode result/main.svg out/topology.svg
-	cp --no-preserve=mode result/network.svg out/network.svg
 
 .PHONY: flake-graph
 flake-graph: out/flake-graph.svg ## Build the flake-graph diagram

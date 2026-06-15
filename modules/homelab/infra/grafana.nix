@@ -120,11 +120,6 @@
           };
         };
 
-        topology.self.services.grafana = {
-          info = lib.mkForce "";
-          details.listen.text = lib.mkForce cfg.domain;
-        };
-
         systemd.services.grafana.after = lib.optionals config.homelab.infra.kanidm.enable [
           "kanidm.service"
         ];

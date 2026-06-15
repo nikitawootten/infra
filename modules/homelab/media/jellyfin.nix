@@ -43,11 +43,6 @@
             };
           };
         };
-
-        topology.self.services.jellyfin = {
-          info = lib.mkForce "";
-          details.listen.text = lib.mkForce cfg.domain;
-        };
       };
     };
 }

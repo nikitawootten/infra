@@ -68,6 +68,11 @@
 
         nix.settings.trusted-users = [ "github-runner" ];
 
+        # Persistent home for github runner build artifacts, preventing garbage collection.
+        systemd.tmpfiles.rules = [
+          "d /var/lib/github-runner/gc-roots 0755 github-runner github-runner -"
+        ];
+
         services.github-runners.${config.networking.hostName} = {
           enable = true;
           inherit (cfg)
@@ -93,6 +98,8 @@
 
           user = "github-runner";
           group = "github-runner";
+
+          serviceOverrides.ReadWritePaths = [ "/var/lib/github-runner/gc-roots" ];
         };
       };
     };

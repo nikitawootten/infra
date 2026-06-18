@@ -29,7 +29,7 @@ jobs:
         if: steps.hold.outputs.skip != 'true'
         run: |
           cp flake.lock flake.lock.old
-          make build-machines > old-paths.txt
+          make build-machines LINK_DIR=/var/lib/github-runner/gc-roots/update/old > old-paths.txt
           make machine-warnings > warnings-old.json
 
       - name: Update flake.lock
@@ -42,7 +42,7 @@ jobs:
 
       - name: Build at updated lock
         if: steps.hold.outputs.skip != 'true'
-        run: make build-machines > new-paths.txt
+        run: make build-machines LINK_DIR=/var/lib/github-runner/gc-roots/update/new > new-paths.txt
 
       - name: Diff closures and warnings
         if: steps.hold.outputs.skip != 'true'

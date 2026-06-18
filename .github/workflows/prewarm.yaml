@@ -15,4 +15,4 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build every machine
-        run: make build-machines
+        run: make build-machines LINK_DIR=/var/lib/github-runner/gc-roots/prewarm

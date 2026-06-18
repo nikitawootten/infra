@@ -24,12 +24,17 @@ test: ## Test flake outputs with "nix flake check"
 update: ## Update "flake.lock"
 	$(NIX_CMD) flake update
 
+# Optional directory under which to create a per-host GC root for each closure.
+LINK_DIR ?=
+
 .PHONY: build-machines
-build-machines: ## Build every NixOS machine closure (warms the local store/cache)
+build-machines: ## Build every NixOS machine closure. Set LINK_DIR to root results as GC roots.
+	@if [ -n "$(LINK_DIR)" ]; then mkdir -p "$(LINK_DIR)"; fi
 	@$(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
 	while read -r host; do \
 	  echo "==> $$host" >&2; \
-	  $(NIX_CMD) build --no-link --print-out-paths \
+	  $(NIX_CMD) build --print-out-paths \
+	    $(if $(LINK_DIR),--out-link "$(LINK_DIR)/$$host",--no-link) \
 	    ".#nixosConfigurations.$$host.config.system.build.toplevel"; \
 	done
 

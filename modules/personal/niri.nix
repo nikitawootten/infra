@@ -85,20 +85,30 @@
           ];
           modules-center = [ ];
           modules-right = [
+            "idle_inhibitor"
             "privacy"
             "tray"
             "niri/language"
             "battery"
             "clock"
           ];
+          idle_inhibitor = {
+            format = "{icon}";
+            format-icons = {
+              activated = "";
+              deactivated = "";
+            };
+            tooltip-format-activated = "Sleep inhibited";
+            tooltip-format-deactivated = "Sleep enabled";
+          };
           battery = {
             format = "{capacity}% {icon}";
             format-icons = [
-              ""
-              ""
-              ""
-              ""
-              ""
+              ""
+              ""
+              ""
+              ""
+              ""
             ];
           };
           clock = {
@@ -116,7 +126,7 @@
         };
         "style.css".content = ''
           * {
-            font-family: monospace;
+            font-family: "JetBrainsMono Nerd Font", monospace;
             font-size: 13px;
           }
           window#waybar {
@@ -134,9 +144,12 @@
           #workspaces button.urgent {
             color: ${t.urgent};
           }
-          #clock, #battery, #tray, #language {
+          #clock, #battery, #tray, #language, #idle_inhibitor {
             color: ${t.fg};
             padding: 0 8px;
+          }
+          #idle_inhibitor.activated {
+            color: ${t.warning};
           }
           #battery.warning {
             color: ${t.warning};

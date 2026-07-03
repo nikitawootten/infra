@@ -54,6 +54,10 @@
           enable = true;
           keyFile = cfg.keyFile;
           reverseProxy = true;
+          trustedProxyIP = [
+            "127.0.0.1/32"
+            "::1/128"
+          ];
           setXauthrequest = true;
           # redirectURL = "https://${cfg.domain}/oauth2/callback";
 

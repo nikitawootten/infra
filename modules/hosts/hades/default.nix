@@ -129,6 +129,7 @@ in
 
           networking.hostName = "hades";
           networking.hostId = "45389833";
+          boot.zfs.forceImportRoot = false;
           boot.zfs.extraPools = [
             "storage"
             "storage2"

@@ -24,7 +24,7 @@
 
         services.kanidm = {
           # Note run `kanidmd domain upgrade-check` before upgrading major/minor versions
-          package = pkgs.kanidmWithSecretProvisioning_1_9;
+          package = pkgs.kanidmWithSecretProvisioning_1_10;
 
           client.enable = true;
           client.settings.uri = config.services.kanidm.server.settings.origin;

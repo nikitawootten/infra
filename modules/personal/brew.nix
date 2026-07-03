@@ -18,6 +18,7 @@
 
         masApps = {
           Tailscale = 1475387142;
+          Xcode = 497799835;
         };
         brews = [ "mas" ];
         casks = [
@@ -28,25 +29,18 @@
           "obsidian"
           "ghostty"
           "signal"
-          "spotify"
           "protonvpn"
           "proton-drive"
           "zed"
           "jordanbaird-ice"
           "blender"
           "krita"
-          "darktable"
-          "orion"
-          "jellyfin-media-player"
-          "unity"
           "godot"
-          "keka"
           "tor-browser"
           "obs"
           "utm"
           "google-chrome"
           "soduto"
-          "qflipper"
         ];
       };
 

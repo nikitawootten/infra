@@ -1,13 +1,20 @@
 { ... }:
 {
   flake.homeModules.firefox =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       # needed for speech synthesis (only on linux)
       home.packages = lib.lists.optional pkgs.stdenv.isLinux pkgs.speechd;
 
       programs.firefox = {
         enable = true;
+        configPath = "${config.xdg.configHome}/mozilla/firefox";
+
         profiles = {
           default = {
             id = 0;

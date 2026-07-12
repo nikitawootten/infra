@@ -37,6 +37,5 @@ This flake contains several packages that I rely on day to day:
 
 - [`oscal-cli`](./packages/oscal-cli/)
 - [`xspec`](./packages/xspec/)
-- [`yepanywhere`](./packages/yepanywhere/)
 
 These packages are **UNOFFICIAL**, experimental, potentially transient, and come with no guarantees or warranty.

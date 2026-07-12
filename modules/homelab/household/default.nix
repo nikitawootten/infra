@@ -24,7 +24,6 @@
         self.nixosModules.homelab-actual
         self.nixosModules.homelab-changedetection-io
         self.nixosModules.homelab-immich
-        self.nixosModules.homelab-yepanywhere
       ];
 
       config = lib.mkIf cfg.enable {
@@ -36,7 +35,6 @@
         homelab.household.actual.enable = lib.mkDefault true;
         homelab.household.changedetection-io.enable = lib.mkDefault true;
         homelab.household.immich.enable = lib.mkDefault true;
-        homelab.household.yepanywhere.enable = lib.mkDefault true;
       };
     };
 }

@@ -8,7 +8,6 @@ let
         [
           nmap
           sqlmap
-          sqlitebrowser
           dbeaver-bin
         ]
         ++ lib.lists.optionals pkgs.stdenv.isLinux (
@@ -51,6 +50,5 @@ in
       home-manager.sharedModules = [ hmModule ];
 
       homebrew.brews = [ "ipsw" ];
-      homebrew.casks = [ "wireshark-app" ];
     };
 }

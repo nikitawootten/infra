@@ -13,7 +13,6 @@
 
       programs.firefox = {
         enable = true;
-        configPath = "${config.xdg.configHome}/mozilla/firefox";
 
         profiles = {
           default = {
@@ -193,6 +192,9 @@
             };
           };
         };
+      }
+      // lib.attrsets.optionalAttrs (!pkgs.stdenv.isDarwin) {
+        configPath = "${config.xdg.configHome}/mozilla/firefox";
       };
       home.sessionVariables.BROWSER = "firefox";
 

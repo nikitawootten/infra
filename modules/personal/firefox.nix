@@ -9,7 +9,7 @@
     }:
     {
       # needed for speech synthesis (only on linux)
-      home.packages = lib.lists.optional pkgs.stdenv.isLinux pkgs.speechd;
+      home.packages = lib.lists.optional pkgs.stdenv.hostPlatform.isLinux pkgs.speechd;
 
       programs.firefox = {
         enable = true;
@@ -193,7 +193,7 @@
           };
         };
       }
-      // lib.attrsets.optionalAttrs (!pkgs.stdenv.isDarwin) {
+      // lib.attrsets.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
         configPath = "${config.xdg.configHome}/mozilla/firefox";
       };
       home.sessionVariables.BROWSER = "firefox";

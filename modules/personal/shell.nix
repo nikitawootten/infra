@@ -113,7 +113,9 @@
       // shellCommon;
 
       # packaged bash on MacOS is ancient
-      home.packages = lib.lists.optionals pkgs.stdenv.isDarwin (with pkgs; [ bashInteractive ]);
+      home.packages = lib.lists.optionals pkgs.stdenv.hostPlatform.isDarwin (
+        with pkgs; [ bashInteractive ]
+      );
 
       programs.ripgrep.enable = true;
     };

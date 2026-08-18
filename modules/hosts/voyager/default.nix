@@ -53,15 +53,12 @@ in
             sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
           };
 
-          services.displayManager.ly.settings.battery_id = "BAT1";
-
           services.fprintd.enable = lib.mkForce false;
 
           home-manager.users.${config.personal.user.name} = {
-            home.packages = with pkgs; [
-              tor-browser
-              zed-editor
-            ];
+            imports = [ self.homeModules.zed ];
+
+            home.packages = with pkgs; [ tor-browser ];
           };
 
           programs.nix-ld.enable = true;

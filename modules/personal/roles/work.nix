@@ -31,8 +31,11 @@ let
           nodejs_24
           scrcpy
         ]
-        ++ (lib.lists.optionals pkgs.stdenv.isLinux [ httpie-desktop ])
-        ++ (lib.lists.optionals pkgs.stdenv.isDarwin [
+        ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
+          httpie-desktop
+          self.packages.${pkgs.stdenv.hostPlatform.system}.lotion
+        ])
+        ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isDarwin [
           swiftlint
           xcbeautify
           swift-format
@@ -63,7 +66,10 @@ in
         pkgs.android-tools
       ];
 
-      services.flatpak.packages = [ "com.slack.Slack" ];
+      services.flatpak.packages = [
+        "com.slack.Slack"
+        "us.zoom.Zoom"
+      ];
     };
 
   flake.darwinModules.role-work =

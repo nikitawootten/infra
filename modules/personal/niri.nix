@@ -1,4 +1,26 @@
 { self, inputs, ... }:
+let
+  defaultTheme = pkgs: {
+    wallpaper = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/main/bin_original.png";
+      sha256 = "sha256-scfp1OJwvkooZi5kHBE7/NVVroXo0dzwwl6ND+AokZQ=";
+    };
+    bg = "#1a1b26";
+    "bg-dark" = "#16161e";
+    fg = "#c0caf5";
+    accent = "#7aa2f7";
+    "accent-alt" = "#bb9af7";
+    urgent = "#f7768e";
+    success = "#9ece6a";
+    warning = "#e0af68";
+    info = "#7dcfff";
+    muted = "#565f89";
+    orange = "#ff9e64";
+    teal = "#73dacb";
+    surface = "#3d59a1";
+    black = "#15161e";
+  };
+in
 {
   flake.wrapperModules.niri =
     {
@@ -8,173 +30,82 @@
       ...
     }:
     let
-      defaultTheme = {
-        wallpaper = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/main/bin_original.png";
-          sha256 = "sha256-scfp1OJwvkooZi5kHBE7/NVVroXo0dzwwl6ND+AokZQ=";
-        };
-        bg = "#1a1b26";
-        "bg-dark" = "#16161e";
-        fg = "#c0caf5";
-        accent = "#7aa2f7";
-        "accent-alt" = "#bb9af7";
-        urgent = "#f7768e";
-        success = "#9ece6a";
-        warning = "#e0af68";
-        info = "#7dcfff";
-        muted = "#565f89";
-        orange = "#ff9e64";
-        teal = "#73dacb";
-        surface = "#3d59a1";
-        black = "#15161e";
-      };
-      t = defaultTheme // config.theme;
-      wrappedSwaylock = inputs.nix-wrapper-modules.wrappers.swaylock.wrap {
-        inherit pkgs;
-        package = pkgs.swaylock-effects;
-        settings = {
-          clock = true;
-          show-failed-attempts = true;
-          indicator = true;
-          ignore-empty-password = true;
-          color = t.bg;
-          line-color = t.bg;
-          ring-color = t.surface;
-          key-hl-color = t.accent;
-          bs-hl-color = t.urgent;
-          inside-color = "${t.bg}cc";
-          text-color = t.fg;
-          ring-ver-color = t.accent;
-          inside-ver-color = "${t.bg}cc";
-          ring-wrong-color = t.urgent;
-          inside-wrong-color = "${t.bg}cc";
-          ring-clear-color = t.warning;
-          inside-clear-color = "${t.bg}cc";
-          text-clear-color = t.fg;
-        }
-        // {
-          image = "${t.wallpaper}";
-        };
-      };
-      wrappedSwayidle = inputs.nix-wrapper-modules.wrappers.swayidle.wrap {
-        inherit pkgs;
-        timeouts = [
-          {
-            timeout = 5 * 60;
-            command = "${wrappedSwaylock}/bin/swaylock -f";
-          }
-          {
-            timeout = 6 * 60;
-            command = "systemctl suspend-then-hibernate";
-          }
-        ];
-        events.before-sleep = "${wrappedSwaylock}/bin/swaylock -f";
-      };
-      wrappedWaybar = inputs.nix-wrapper-modules.wrappers.waybar.wrap {
+      t = defaultTheme pkgs // config.theme;
+      noctaliaIpc = target: fn: [
+        "noctalia-shell"
+        "ipc"
+        "call"
+        target
+        fn
+      ];
+      wrappedNoctalia = inputs.nix-wrapper-modules.wrappers.noctalia-shell.wrap {
         inherit pkgs;
         settings = {
-          height = 20;
-          margin = "5";
-          layer = "top";
-          position = "bottom";
-          tray = {
-            spacing = 15;
-          };
-          modules-left = [
-            "niri/workspaces"
-          ];
-          modules-center = [ ];
-          modules-right = [
-            "idle_inhibitor"
-            "privacy"
-            "tray"
-            "niri/language"
-            "battery"
-            "clock"
-          ];
-          idle_inhibitor = {
-            format = "{icon}";
-            format-icons = {
-              activated = "";
-              deactivated = "";
-            };
-            tooltip-format-activated = "Sleep inhibited";
-            tooltip-format-deactivated = "Sleep enabled";
-          };
-          battery = {
-            format = "{capacity}% {icon}";
-            format-icons = [
-              ""
-              ""
-              ""
-              ""
-              ""
-            ];
-          };
-          clock = {
-            format = "{:%a %d %b %H:%M}";
-            format-alt = "Week {:%V of %Y}";
-            tooltip-format = "<tt><small>{calendar}</small></tt>";
-            calendar = {
-              mode = "month";
-              mode-mon-col = 3;
-              weeks-pos = "left";
-              on-scroll = 1;
-              on-click-right = "mode";
+          bar = {
+            position = "bottom";
+            widgets = {
+              left = [
+                {
+                  id = "Workspace";
+                  showApplications = true;
+                  showApplicationsHover = true;
+                }
+              ];
+              center = [
+                {
+                  id = "SystemMonitor";
+                  compactMode = false;
+                  usePadding = true;
+                  showCpuTemp = false;
+                  showDiskUsage = true;
+                  showDiskAvailable = true;
+                  showNetworkStats = true;
+                }
+              ];
+              right = [
+                {
+                  id = "MediaMini";
+                  maxWidth = 250;
+                  showVisualizer = true;
+                }
+                { id = "Tray"; }
+                { id = "KeyboardLayout"; }
+                { id = "NotificationHistory"; }
+                { id = "KeepAwake"; }
+                { id = "Battery"; }
+                { id = "Volume"; }
+                { id = "Clock"; }
+                {
+                  id = "ControlCenter";
+                  useDistroLogo = true;
+                }
+              ];
             };
           };
-        };
-        "style.css".content = ''
-          * {
-            font-family: "JetBrainsMono Nerd Font", monospace;
-            font-size: 13px;
-          }
-          window#waybar {
-            background-color: ${t."bg-dark"};
-            color: ${t.fg};
-            border-top: 2px solid ${t.surface};
-          }
-          #workspaces button {
-            color: ${t.muted};
-            padding: 0 5px;
-          }
-          #workspaces button.active {
-            color: ${t.accent};
-          }
-          #workspaces button.urgent {
-            color: ${t.urgent};
-          }
-          #clock, #battery, #tray, #language, #idle_inhibitor {
-            color: ${t.fg};
-            padding: 0 8px;
-          }
-          #idle_inhibitor.activated {
-            color: ${t.warning};
-          }
-          #battery.warning {
-            color: ${t.warning};
-          }
-          #battery.critical {
-            color: ${t.urgent};
-          }
-        '';
-      };
-      wrappedTofi = inputs.nix-wrapper-modules.wrappers.tofi.wrap {
-        inherit pkgs;
-        settings = {
-          width = "100%";
-          height = "100%";
-          num-results = 5;
-          border-width = 0;
-          outline-width = 0;
-          padding-left = "35%";
-          padding-top = "35%";
-          result-spacing = 25;
-          background-color = "${t.black}AA";
-          text-color = t.fg;
-          prompt-color = t.accent;
-          selection-color = t.accent;
-          selection-background = "${t.surface}88";
+          dock.enabled = false;
+          wallpaper.overviewEnabled = true;
+          appLauncher = {
+            terminalCommand = "ghostty -e";
+            enableClipboardHistory = true;
+          };
+          location = {
+            autoLocate = true;
+            useFahrenheit = true;
+          };
+          colorSchemes = {
+            predefinedScheme = "Tokyo Night";
+            useWallpaperColors = false;
+            darkMode = true;
+          };
+          ui.fontFixed = "JetBrainsMono Nerd Font";
+          general.showChangelogOnStartup = false;
+          idle = {
+            enabled = true;
+            screenOffTimeout = 0;
+            lockTimeout = 5 * 60;
+            suspendTimeout = 6 * 60;
+            suspendCommand = "systemctl ${config.idleAction}";
+          };
         };
       };
     in
@@ -183,6 +114,12 @@
         type = lib.types.attrs;
         default = { };
         description = "Color theme overrides, merged on top of defaultTheme";
+      };
+
+      options.idleAction = lib.mkOption {
+        type = lib.types.str;
+        default = "suspend-then-hibernate";
+        description = "systemctl sleep verb noctalia runs on idle";
       };
 
       # Required for `peck`
@@ -198,46 +135,22 @@
       config.v2-settings = true;
       config.env.NIXOS_OZONE_WL = "1";
       config.runtimePkgs = [
-        wrappedWaybar
-        wrappedSwayidle
-        wrappedSwaylock
-        wrappedTofi
-        pkgs.swaynotificationcenter
-        pkgs.swayosd
-        pkgs.swaybg
-        pkgs.pasystray
-        pkgs.networkmanagerapplet
+        wrappedNoctalia
+        pkgs.fastfetch
       ];
 
       config.settings = {
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
         spawn-at-startup = [
-          [ "waybar" ]
-          [ "swayidle" ]
-          [ "swaync" ]
-          [ "swayosd-server" ]
-          [
-            "swaybg"
-            "-c"
-            "${t.bg}"
-            "-i"
-            "${t.wallpaper}"
-            "-m"
-            "fill"
-          ]
-          [ "pasystray" ]
-          [ "nm-applet" ]
+          [ "noctalia-shell" ]
         ];
         binds = {
           # Basic interaction
           "Mod+Shift+E".quit = _: { };
           "Mod+Shift+Slash".show-hotkey-overlay = _: { };
           "Mod+Shift+Q".close-window = _: { };
-          "Mod+D".spawn = [
-            "tofi-drun"
-            "--drun-launch=true"
-            "--fuzzy-match=true"
-          ];
+          "Mod+D".spawn = noctaliaIpc "launcher" "toggle";
+          "Mod+V".spawn = noctaliaIpc "launcher" "clipboard";
           "Mod+T".spawn = [
             "nautilus"
             "--new-window"
@@ -257,51 +170,35 @@
           "Print".screenshot = _: { };
           "Ctrl+Print".screenshot-screen = _: { };
           "Ctrl+Shift+Print".screenshot-window = _: { };
-          "Mod+Alt+L".spawn = "swaylock";
+          "Mod+Alt+L".spawn = noctaliaIpc "lockScreen" "lock";
 
           "XF86AudioRaiseVolume" = _: {
             props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--output-volume"
-              "raise"
-            ];
+            content.spawn = noctaliaIpc "volume" "increase";
           };
           "XF86AudioLowerVolume" = _: {
             props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--output-volume"
-              "lower"
-            ];
+            content.spawn = noctaliaIpc "volume" "decrease";
           };
           "XF86AudioMute" = _: {
             props = {
               allow-when-locked = true;
               repeat = false;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--output-volume"
-              "mute-toggle"
-            ];
+            content.spawn = noctaliaIpc "volume" "muteOutput";
           };
           "XF86AudioMicMute" = _: {
             props = {
               allow-when-locked = true;
               repeat = false;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--input-volume"
-              "mute-toggle"
-            ];
+            content.spawn = noctaliaIpc "volume" "muteInput";
           };
 
           "XF86MonBrightnessUp" = _: {
@@ -309,22 +206,14 @@
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--brightness"
-              "raise"
-            ];
+            content.spawn = noctaliaIpc "brightness" "increase";
           };
           "XF86MonBrightnessDown" = _: {
             props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = [
-              "swayosd-client"
-              "--brightness"
-              "lower"
-            ];
+            content.spawn = noctaliaIpc "brightness" "decrease";
           };
 
           # Movement
@@ -416,10 +305,7 @@
           "Mod+Tab".switch-focus-between-floating-and-tiling = _: { };
           "Mod+Shift+Tab".toggle-window-floating = _: { };
 
-          "Mod+Shift+N".spawn = [
-            "swaync-client"
-            "-op"
-          ];
+          "Mod+Shift+N".spawn = noctaliaIpc "notifications" "toggleHistory";
           "Mod+BracketLeft".consume-or-expel-window-left = _: { };
           "Mod+BracketRight".consume-or-expel-window-right = _: { };
         };
@@ -439,6 +325,9 @@
               layout = "us,ru";
               options = "grp:win_space_toggle,caps:escape";
             };
+          };
+          mouse = {
+            scroll-factor = 0.5;
           };
           touchpad = {
             natural-scroll = _: { };
@@ -487,10 +376,26 @@
             default-column-width.fixed = 480;
             default-window-height.fixed = 270;
           }
+          {
+            matches = [
+              {
+                app-id = "steam";
+                title = "^notificationtoasts_\\d+_desktop$";
+              }
+            ];
+            default-floating-position = _: {
+              props = {
+                x = 10;
+                y = 10;
+                relative-to = "bottom-right";
+              };
+            };
+            open-focused = false;
+          }
         ];
         layer-rules = [
           {
-            matches = [ { namespace = "^wallpaper$"; } ];
+            matches = [ { namespace = "^noctalia-overview-"; } ];
             place-within-backdrop = true;
           }
         ];
@@ -531,6 +436,11 @@
           default = { };
           description = "Theme overrides merged with defaults from the wrapper module";
         };
+        idleAction = lib.mkOption {
+          type = lib.types.str;
+          default = "suspend-then-hibernate";
+          description = "systemctl sleep verb noctalia runs on idle";
+        };
         package = lib.mkOption {
           type = lib.types.package;
           readOnly = true;
@@ -545,8 +455,10 @@
             imports = [ self.wrapperModules.niri ];
             theme = config.personal.niri.theme;
             settings = config.personal.niri.extraSettings;
+            idleAction = config.personal.niri.idleAction;
           };
           peck = inputs.peck.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          wallpaper = (defaultTheme pkgs // config.personal.niri.theme).wallpaper;
         in
         {
           personal.niri.package = wrappedNiri;
@@ -555,12 +467,9 @@
             enable = true;
             package = config.personal.niri.package;
           };
-          services.displayManager.ly.enable = true;
-          services.displayManager.ly.settings = {
-            animation = "doom";
-            bigclock = "en";
-          };
-          security.pam.services.ly.enableGnomeKeyring = true;
+          services.xserver.enable = true;
+          services.displayManager.gdm.enable = true;
+          security.pam.services.gdm.enableGnomeKeyring = true;
 
           services.gnome.sushi.enable = true;
           services.gvfs.enable = true;
@@ -592,9 +501,12 @@
 
               services.ssh-agent.enable = true;
 
-              home.packages = [
-                pkgs.networkmanagerapplet
-              ];
+              home.file."Pictures/Wallpapers/${wallpaper.name}".source = wallpaper;
+
+              home.file.".face".source = pkgs.fetchurl {
+                url = "https://avatars.githubusercontent.com/u/8916363";
+                sha256 = "sha256-8hO46RoG4rCrB+bkIBAx/AU16jyQ6T9s5kopO6KLFo0=";
+              };
 
               systemd.user.services.peck = {
                 Unit = {

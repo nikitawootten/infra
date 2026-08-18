@@ -34,7 +34,7 @@
             ControlPath = "~/.ssh/master-%r@%n:%p";
             ControlPersist = "no";
           }
-          // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+          // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
             IgnoreUnknown = "AddKeysToAgent,UseKeychain";
           };
         };

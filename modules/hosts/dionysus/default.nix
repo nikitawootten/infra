@@ -14,11 +14,7 @@ in
     system = "x86_64-linux";
     modules = [
       (
-        {
-          config,
-          pkgs,
-          ...
-        }:
+        { config, ... }:
         {
           imports = [
             ./_hardware-configuration.nix
@@ -56,7 +52,6 @@ in
 
           personal.niri.extraSettings = {
             outputs.DP-1 = {
-              transform = "270";
               position = _: {
                 props = {
                   x = 3440;
@@ -81,13 +76,15 @@ in
           };
 
           home-manager.users.${config.personal.user.name} = {
+            imports = [ self.homeModules.zed ];
+
             programs.firefox.profiles.default.settings = {
               "gfx.webrender.all" = true; # Force enable GPU acceleration
               "media.ffmpeg.vaapi.enabled" = true;
               "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
             };
 
-            home.packages = with pkgs; [ zed-editor ];
+            programs.zed-editor.installRemoteServer = true;
           };
 
           programs.nix-ld.enable = true;
@@ -95,8 +92,9 @@ in
           # Disable auto-suspend
           services.displayManager.gdm.autoSuspend = false;
 
-          # Multi-monitor support: Secondary monitor is rotated
-          boot.kernelParams = [ "video=HDMI-1:panel_orientation=left_side_up" ];
+          personal.niri.idleAction = "suspend";
+
+          boot.kernelParams = [ "video=DP-1:panel_orientation=right_side_up" ];
 
           # Needed to build aarch64 packages such as raspberry pi images
           boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

@@ -10,7 +10,7 @@ let
           sqlmap
           dbeaver-bin
         ]
-        ++ lib.lists.optionals pkgs.stdenv.isLinux (
+        ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux (
           with pkgs;
           [
             burpsuite

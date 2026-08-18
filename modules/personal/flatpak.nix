@@ -14,6 +14,7 @@
           "org.libreoffice.LibreOffice"
           "org.signal.Signal"
           "md.obsidian.Obsidian"
+          "com.spotify.Client"
         ];
         uninstallUnmanaged = true;
         update.auto = {

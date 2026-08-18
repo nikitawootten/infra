@@ -3,7 +3,7 @@
   flake.homeModules.darwin-hm =
     { pkgs, lib, ... }:
     {
-      config = lib.mkIf pkgs.stdenv.isDarwin {
+      config = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         # Disabling for now due to lack of SSH resident key support in MacOS's packaged SSH agent
         programs.git.settings.commit.gpgsig = lib.mkForce false;
 

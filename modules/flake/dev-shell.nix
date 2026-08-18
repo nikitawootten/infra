@@ -36,7 +36,7 @@
             inputs.llm-agents.packages.${system}.claude-code
             nh
           ]
-          ++ lib.lists.optionals pkgs.stdenv.isLinux (
+          ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux (
             with pkgs;
             [
               # Secure boot

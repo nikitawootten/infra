@@ -4,7 +4,9 @@ let
     { pkgs, lib, ... }:
     {
       # PrismLauncher installed via brew cask on MacOS
-      home.packages = with pkgs; [ ] ++ lib.lists.optionals pkgs.stdenv.isLinux [ prismlauncher ];
+      home.packages =
+        with pkgs;
+        [ ] ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [ prismlauncher ];
     };
 in
 {

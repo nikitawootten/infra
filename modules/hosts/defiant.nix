@@ -35,6 +35,8 @@ in
           networking.hostName = "defiant";
 
           home-manager.users.nikita = {
+            imports = [ self.homeModules.zed ];
+
             personal.git.signingKey = keys.nikita_defiant;
           };
         }

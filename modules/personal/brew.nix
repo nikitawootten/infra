@@ -31,7 +31,6 @@
           "signal"
           "protonvpn"
           "proton-drive"
-          "zed"
           "jordanbaird-ice"
           "blender"
           "krita"

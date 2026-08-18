@@ -77,11 +77,11 @@ in
           programs.nix-ld.enable = true;
 
           home-manager.users.${config.personal.user.name} = {
-            imports = [ self.homeModules.bridge ];
-            home.packages = with pkgs; [
-              tor-browser
-              zed-editor
+            imports = [
+              self.homeModules.bridge
+              self.homeModules.zed
             ];
+            home.packages = with pkgs; [ tor-browser ];
             programs.git.settings.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
           };
         }

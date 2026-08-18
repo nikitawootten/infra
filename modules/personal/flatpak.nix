@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.nixosModules.flatpak =
-    { ... }:
+    { config, ... }:
     {
       imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
 
@@ -16,6 +16,7 @@
           "md.obsidian.Obsidian"
           "com.spotify.Client"
         ];
+        overrides.global.Environment.TZ = config.time.timeZone;
         uninstallUnmanaged = true;
         update.auto = {
           enable = true;

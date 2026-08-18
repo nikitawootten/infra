@@ -95,7 +95,10 @@
             git_protocol = "ssh";
             prompt = "enabled";
           };
-          extensions = with pkgs; [ gh-dash ];
+          extensions = with pkgs; [
+            gh-dash
+            gh-stack
+          ];
         };
 
         home.sessionVariables = {

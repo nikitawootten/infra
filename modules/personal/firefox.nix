@@ -68,7 +68,6 @@
               # MISC
               "browser.aboutConfig.showWarning" = false;
               "middlemouse.paste" = false;
-              "general.smoothScroll" = true;
             };
 
             # Via https://github.com/LudovicoPiero/dotfiles/blob/main/cells/workstations/homeProfiles/firefox/__search.nix

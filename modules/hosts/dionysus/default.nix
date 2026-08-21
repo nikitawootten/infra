@@ -78,9 +78,11 @@ in
           home-manager.users.${config.personal.user.name} = {
             imports = [ self.homeModules.zed ];
 
+            personal.git.signingKey = keys.nikita_dionysus;
+
             programs.firefox.profiles.default.settings = {
               "gfx.webrender.all" = true; # Force enable GPU acceleration
-              "media.ffmpeg.vaapi.enabled" = true;
+              "media.hardware-video-decoding.force-enabled" = true;
               "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
             };
 

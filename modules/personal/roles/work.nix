@@ -68,7 +68,6 @@ in
 
       services.flatpak.packages = [
         "com.slack.Slack"
-        "us.zoom.Zoom"
       ];
     };
 

@@ -471,6 +471,8 @@ in
           services.displayManager.gdm.enable = true;
           security.pam.services.gdm.enableGnomeKeyring = true;
 
+          programs.yubikey-touch-detector.enable = true;
+
           services.gnome.sushi.enable = true;
           services.gvfs.enable = true;
 

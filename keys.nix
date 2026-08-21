@@ -4,6 +4,7 @@ rec {
   nikita_voyager = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyxV6Jx53eFSFkl8z1yHOe0GYuG5SNCgf0s3nfJg/Ih";
   nikita_cochrane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWBe6veTROKSNV/iieADl5/8tQ0un/VNN5UTaBDkvp6";
   nikita_defiant = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF2IY2vuIWsarBVZWul8XuSxiS39hAyIg1rNXtpAxjqX";
+  nikita_dionysus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOkEViBIvZG3w/11CWyM5VO2bq6dzT4e/2+/63UbVPLe";
 
   # Key used by laptops' nix-daemon for remote builds on hades (private half in secrets/nix-builder-key.age)
   nixremote = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAT0KPrvhLnqyfdMKOy2V+odFG+abCXmMAm0C2w+129n nixremote-builder";

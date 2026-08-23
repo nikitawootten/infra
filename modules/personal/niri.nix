@@ -310,12 +310,25 @@ in
           "Mod+BracketRight".consume-or-expel-window-right = _: { };
         };
         layout.background-color = "transparent";
-        layout.border = {
+        layout.border.off = _: { };
+        layout.focus-ring = {
+          width = 4;
           active-color = t.accent;
           inactive-color = t.muted;
+          urgent-color = t.urgent;
         };
-        layout.focus-ring.off = _: { };
-        layout.gaps = 4;
+        layout.tab-indicator = {
+          position = "left";
+          gap = 0;
+          width = 4;
+          length = _: {
+            props.total-proportion = 0.5;
+          };
+          active-color = t.success;
+          inactive-color = t.muted;
+          urgent-color = t.urgent;
+        };
+        layout.gaps = 8;
         input = {
           focus-follows-mouse = _: {
             props.max-scroll-amount = "10%";
@@ -401,6 +414,8 @@ in
         ];
         clipboard.disable-primary = _: { };
         prefer-no-csd = _: { };
+        # Allows notification actions and window activation from Noctalia
+        debug.honor-xdg-activation-with-invalid-serial = _: { };
       };
     };
 
@@ -488,6 +503,9 @@ in
           ];
 
           hardware.brillo.enable = true;
+
+          services.upower.enable = true;
+          services.power-profiles-daemon.enable = true;
 
           # https://github.com/Supreeeme/xwayland-satellite/issues/150#issuecomment-2847677630
           programs.steam.package = pkgs.steam.override {

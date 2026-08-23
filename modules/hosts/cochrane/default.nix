@@ -68,11 +68,19 @@ in
 
           networking.hostName = "cochrane";
 
+          # Yield to interactive tasks during builds.
+          nix.daemonCPUSchedPolicy = "idle";
+
           personal.niri.extraSettings = {
             outputs.eDP-1 = {
               scale = 1.5;
             };
-            layout.border.width = 2;
+            # Compensate for GPD Pocket 2 not having a touchpad that allows
+            # for scrolling
+            input.mouse = {
+              scroll-method = "on-button-down";
+              scroll-button = 273; # BTN_RIGHT
+            };
           };
           programs.nix-ld.enable = true;
 

@@ -30,6 +30,7 @@
           nvim-lspconfig
           trouble-nvim
           nvim-surround
+          direnv-vim
           vim-startuptime
           blink-cmp
           colorful-menu-nvim
@@ -37,7 +38,6 @@
           gitsigns-nvim
           which-key-nvim
           fidget-nvim
-          nvim-lint
           conform-nvim
           nvim-treesitter-textobjects
           nvim-treesitter.withAllGrammars
@@ -63,6 +63,7 @@
       config.runtimePkgs = with pkgs; [
         # general
         git
+        direnv
         lazygit
         tree-sitter
         ripgrep

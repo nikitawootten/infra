@@ -71,10 +71,21 @@ in
           # Yield to interactive tasks during builds.
           nix.daemonCPUSchedPolicy = "idle";
 
+          personal.niri.greeterSettings.output = {
+            layout = "eDP-1:0,0";
+            scales = "eDP-1:1.5";
+            transforms = "eDP-1:270";
+          };
+
           personal.niri.extraSettings = {
-            outputs.eDP-1 = {
-              scale = 1.5;
-            };
+            _children = [
+              {
+                output = {
+                  _args = [ "eDP-1" ];
+                  scale = 1.5;
+                };
+              }
+            ];
             # Compensate for GPD Pocket 2 not having a touchpad that allows
             # for scrolling
             input.mouse = {

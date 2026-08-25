@@ -50,30 +50,18 @@ in
 
           networking.hostName = "dionysus";
 
-          personal.niri.extraSettings = {
-            outputs.DP-1 = {
-              position = _: {
-                props = {
-                  x = 3440;
-                  y = -560;
-                };
-              };
-              mode = "2560x1440@74.971";
-              layout = {
-                # Workable solution for vertical monitors until https://github.com/niri-wm/niri/issues/1071 is implemented
-                default-column-width.proportion = 1.0;
-              };
-            };
-            outputs.HDMI-A-1 = {
-              position = _: {
-                props = {
+          personal.niri.extraSettings._children = [
+            {
+              output = {
+                _args = [ "HDMI-A-1" ];
+                position._props = {
                   x = 0;
                   y = 0;
                 };
+                mode = "3440x1440@100.000";
               };
-              mode = "3440x1440@100.000";
-            };
-          };
+            }
+          ];
 
           home-manager.users.${config.personal.user.name} = {
             imports = [ self.homeModules.zed ];
@@ -90,9 +78,6 @@ in
           };
 
           programs.nix-ld.enable = true;
-
-          # Disable auto-suspend
-          services.displayManager.gdm.autoSuspend = false;
 
           personal.niri.idleAction = "suspend";
 

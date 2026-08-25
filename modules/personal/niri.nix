@@ -22,135 +22,150 @@ let
   };
 in
 {
-  flake.wrapperModules.niri =
+  flake.nixosModules.niri =
     {
       config,
-      lib,
       pkgs,
+      lib,
       ...
     }:
     let
-      t = defaultTheme pkgs // config.theme;
-      noctaliaIpc = target: fn: [
-        "noctalia-shell"
-        "ipc"
-        "call"
-        target
-        fn
-      ];
-      wrappedNoctalia = inputs.nix-wrapper-modules.wrappers.noctalia-shell.wrap {
-        inherit pkgs;
-        settings = {
-          bar = {
-            position = "bottom";
-            widgets = {
-              left = [
-                {
-                  id = "Workspace";
-                  showApplications = true;
-                  showApplicationsHover = true;
-                }
-              ];
-              center = [
-                {
-                  id = "SystemMonitor";
-                  compactMode = false;
-                  usePadding = true;
-                  showCpuTemp = false;
-                  showDiskUsage = true;
-                  showDiskAvailable = true;
-                  showNetworkStats = true;
-                }
-              ];
-              right = [
-                {
-                  id = "MediaMini";
-                  maxWidth = 250;
-                  showVisualizer = true;
-                }
-                { id = "Tray"; }
-                { id = "KeyboardLayout"; }
-                { id = "NotificationHistory"; }
-                { id = "KeepAwake"; }
-                { id = "Battery"; }
-                { id = "Volume"; }
-                { id = "Clock"; }
-                {
-                  id = "ControlCenter";
-                  useDistroLogo = true;
-                }
-              ];
-            };
-          };
-          dock.enabled = false;
-          wallpaper.overviewEnabled = true;
-          appLauncher = {
-            terminalCommand = "ghostty -e";
-            enableClipboardHistory = true;
-          };
-          location = {
-            autoLocate = true;
-            useFahrenheit = true;
-          };
-          colorSchemes = {
-            predefinedScheme = "Tokyo Night";
-            useWallpaperColors = false;
-            darkMode = true;
-          };
-          ui.fontFixed = "JetBrainsMono Nerd Font";
-          general.showChangelogOnStartup = false;
-          idle = {
+      t = defaultTheme pkgs // config.personal.niri.theme;
+
+      noctaliaMsg =
+        command:
+        [
+          "noctalia"
+          "msg"
+        ]
+        ++ command;
+
+      noctaliaSettings = {
+        shell = {
+          clipboard_enabled = true;
+          launch_apps_as_systemd_services = true;
+          settings_show_advanced = true;
+          niri_overview_type_to_launch_enabled = true;
+          screen_time_enabled = true;
+          password_style = "random";
+          polkit_agent = true;
+        };
+
+        theme = {
+          mode = "dark";
+          source = "builtin";
+          builtin = "Tokyo-Night";
+          templates.builtin_ids = [
+            "gtk3"
+            "gtk4"
+            "ghostty"
+            "niri"
+            "qt"
+          ];
+        };
+
+        wallpaper = {
+          enabled = true;
+          directory = "~/Pictures/Wallpapers";
+          default.path = "~/Pictures/Wallpapers/${t.wallpaper.name}";
+        };
+        backdrop.enabled = false;
+
+        location.auto_locate = true;
+        weather = {
+          enabled = true;
+          unit = "imperial";
+        };
+
+        dock.enabled = false;
+
+        idle = {
+          behavior.lock = {
             enabled = true;
-            screenOffTimeout = 0;
-            lockTimeout = 5 * 60;
-            suspendTimeout = 6 * 60;
-            suspendCommand = "systemctl ${config.idleAction}";
+            action = "lock";
+            timeout = 5 * 60;
+          };
+          behavior.screen-off.enabled = false;
+          behavior.suspend = {
+            enabled = true;
+            action = "command";
+            command = "systemctl ${config.personal.niri.idleAction}";
+            timeout = 6 * 60;
           };
         };
-      };
-    in
-    {
-      options.theme = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "Color theme overrides, merged on top of defaultTheme";
-      };
 
-      options.idleAction = lib.mkOption {
-        type = lib.types.str;
-        default = "suspend-then-hibernate";
-        description = "systemctl sleep verb noctalia runs on idle";
-      };
-
-      # Required for `peck`
-      config.package = pkgs.niri.overrideAttrs (_: {
-        src = pkgs.fetchFromGitHub {
-          owner = "kiryl";
-          repo = "niri";
-          rev = "d26ab5f29df670110a91a7e933a743eeaf611978";
-          hash = "sha256-3HxntJA2DNg+L94gbM86uGeJqPPWbSX88CjteOmYV0o=";
+        bar.main = {
+          position = "bottom";
+          # Square off the bottom corners and run the bar edge to edge.
+          margin_ends = 0;
+          radius_bottom_left = 0;
+          radius_bottom_right = 0;
+          start = [
+            "workspaces"
+            "active_window"
+          ];
+          center = [
+            "cpu"
+            "ram"
+            "disk"
+          ];
+          end = [
+            "media"
+            "privacy"
+            "tray"
+            "keyboard_layout"
+            "notifications"
+            "battery"
+            "volume"
+            "clock"
+            "control-center"
+          ];
         };
-      });
 
-      config.v2-settings = true;
-      config.env.NIXOS_OZONE_WL = "1";
-      config.runtimePkgs = [
-        wrappedNoctalia
-        pkgs.fastfetch
-      ];
+        widget = {
+          cpu = {
+            type = "sysmon";
+            stat = "cpu_usage";
+            visualization = "graph";
+            show_value = false;
+          };
+          ram = {
+            type = "sysmon";
+            stat = "ram_used";
+            visualization = "graph";
+            show_value = false;
+          };
+          disk = {
+            type = "sysmon";
+            stat = "disk_free";
+            path = "/";
+            visualization = "none";
+          };
+          battery.show_label = false;
+          media = {
+            max_length = 250;
+            hide_when_no_media = true;
+          };
+          privacy.hide_inactive = true;
+          tray.drawer = true;
+        };
+      };
 
-      config.settings = {
+      baseSettings = {
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
-        spawn-at-startup = [
-          [ "noctalia-shell" ]
-        ];
         binds = {
           # Basic interaction
-          "Mod+Shift+E".quit = _: { };
-          "Mod+Shift+Slash".show-hotkey-overlay = _: { };
-          "Mod+Shift+Q".close-window = _: { };
-          "Mod+D".spawn = noctaliaIpc "launcher" "toggle";
-          "Mod+V".spawn = noctaliaIpc "launcher" "clipboard";
+          "Mod+Shift+E".quit = { };
+          "Mod+Shift+Slash".show-hotkey-overlay = { };
+          "Mod+Shift+Q".close-window = { };
+          "Mod+D".spawn = noctaliaMsg [
+            "panel-toggle"
+            "launcher"
+          ];
+          "Mod+V".spawn = noctaliaMsg [
+            "panel-toggle"
+            "clipboard"
+          ];
           "Mod+T".spawn = [
             "nautilus"
             "--new-window"
@@ -167,104 +182,107 @@ in
             "peck"
             "activate"
           ];
-          "Print".screenshot = _: { };
-          "Ctrl+Print".screenshot-screen = _: { };
-          "Ctrl+Shift+Print".screenshot-window = _: { };
-          "Mod+Alt+L".spawn = noctaliaIpc "lockScreen" "lock";
+          "Print".screenshot = { };
+          "Ctrl+Print".screenshot-screen = { };
+          "Ctrl+Shift+Print".screenshot-window = { };
+          "Mod+Alt+L".spawn = noctaliaMsg [
+            "session"
+            "lock"
+          ];
 
-          "XF86AudioRaiseVolume" = _: {
-            props = {
+          "XF86AudioRaiseVolume" = {
+            _props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = noctaliaIpc "volume" "increase";
+            spawn = noctaliaMsg [ "volume-up" ];
           };
-          "XF86AudioLowerVolume" = _: {
-            props = {
+          "XF86AudioLowerVolume" = {
+            _props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = noctaliaIpc "volume" "decrease";
+            spawn = noctaliaMsg [ "volume-down" ];
           };
-          "XF86AudioMute" = _: {
-            props = {
+          "XF86AudioMute" = {
+            _props = {
               allow-when-locked = true;
               repeat = false;
             };
-            content.spawn = noctaliaIpc "volume" "muteOutput";
+            spawn = noctaliaMsg [ "volume-mute" ];
           };
-          "XF86AudioMicMute" = _: {
-            props = {
+          "XF86AudioMicMute" = {
+            _props = {
               allow-when-locked = true;
               repeat = false;
             };
-            content.spawn = noctaliaIpc "volume" "muteInput";
+            spawn = noctaliaMsg [ "mic-mute" ];
           };
 
-          "XF86MonBrightnessUp" = _: {
-            props = {
+          "XF86MonBrightnessUp" = {
+            _props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = noctaliaIpc "brightness" "increase";
+            spawn = noctaliaMsg [ "brightness-up" ];
           };
-          "XF86MonBrightnessDown" = _: {
-            props = {
+          "XF86MonBrightnessDown" = {
+            _props = {
               allow-when-locked = true;
               repeat = true;
             };
-            content.spawn = noctaliaIpc "brightness" "decrease";
+            spawn = noctaliaMsg [ "brightness-down" ];
           };
 
           # Movement
-          "Mod+Left".focus-column-or-monitor-left = _: { };
-          "Mod+Down".focus-window-or-workspace-down = _: { };
-          "Mod+Up".focus-window-or-workspace-up = _: { };
-          "Mod+Right".focus-column-or-monitor-right = _: { };
-          "Mod+H".focus-column-or-monitor-left = _: { };
-          "Mod+J".focus-window-or-workspace-down = _: { };
-          "Mod+K".focus-window-or-workspace-up = _: { };
-          "Mod+L".focus-column-or-monitor-right = _: { };
+          "Mod+Left".focus-column-or-monitor-left = { };
+          "Mod+Down".focus-window-or-workspace-down = { };
+          "Mod+Up".focus-window-or-workspace-up = { };
+          "Mod+Right".focus-column-or-monitor-right = { };
+          "Mod+H".focus-column-or-monitor-left = { };
+          "Mod+J".focus-window-or-workspace-down = { };
+          "Mod+K".focus-window-or-workspace-up = { };
+          "Mod+L".focus-column-or-monitor-right = { };
 
-          "Mod+Ctrl+Left".move-column-left-or-to-monitor-left = _: { };
-          "Mod+Ctrl+Down".move-window-down-or-to-workspace-down = _: { };
-          "Mod+Ctrl+Up".move-window-up-or-to-workspace-up = _: { };
-          "Mod+Ctrl+Right".move-column-right-or-to-monitor-right = _: { };
-          "Mod+Ctrl+H".move-column-left-or-to-monitor-left = _: { };
-          "Mod+Ctrl+J".move-window-down-or-to-workspace-down = _: { };
-          "Mod+Ctrl+K".move-window-up-or-to-workspace-up = _: { };
-          "Mod+Ctrl+L".move-column-right-or-to-monitor-right = _: { };
+          "Mod+Ctrl+Left".move-column-left-or-to-monitor-left = { };
+          "Mod+Ctrl+Down".move-window-down-or-to-workspace-down = { };
+          "Mod+Ctrl+Up".move-window-up-or-to-workspace-up = { };
+          "Mod+Ctrl+Right".move-column-right-or-to-monitor-right = { };
+          "Mod+Ctrl+H".move-column-left-or-to-monitor-left = { };
+          "Mod+Ctrl+J".move-window-down-or-to-workspace-down = { };
+          "Mod+Ctrl+K".move-window-up-or-to-workspace-up = { };
+          "Mod+Ctrl+L".move-column-right-or-to-monitor-right = { };
 
-          "Mod+Home".focus-column-first = _: { };
-          "Mod+End".focus-column-last = _: { };
-          "Mod+Ctrl+Home".move-column-to-first = _: { };
-          "Mod+Ctrl+End".move-column-to-last = _: { };
+          "Mod+Home".focus-column-first = { };
+          "Mod+End".focus-column-last = { };
+          "Mod+Ctrl+Home".move-column-to-first = { };
+          "Mod+Ctrl+End".move-column-to-last = { };
 
-          "Mod+WheelScrollDown" = _: {
-            props.cooldown-ms = 150;
-            content.focus-workspace-down = _: { };
+          "Mod+WheelScrollDown" = {
+            _props.cooldown-ms = 150;
+            focus-workspace-down = { };
           };
-          "Mod+WheelScrollUp" = _: {
-            props.cooldown-ms = 150;
-            content.focus-workspace-up = _: { };
+          "Mod+WheelScrollUp" = {
+            _props.cooldown-ms = 150;
+            focus-workspace-up = { };
           };
-          "Mod+Ctrl+WheelScrollDown" = _: {
-            props.cooldown-ms = 150;
-            content.move-column-to-workspace-down = _: { };
+          "Mod+Ctrl+WheelScrollDown" = {
+            _props.cooldown-ms = 150;
+            move-column-to-workspace-down = { };
           };
-          "Mod+Ctrl+WheelScrollUp" = _: {
-            props.cooldown-ms = 150;
-            content.move-column-to-workspace-up = _: { };
+          "Mod+Ctrl+WheelScrollUp" = {
+            _props.cooldown-ms = 150;
+            move-column-to-workspace-up = { };
           };
 
-          "Mod+WheelScrollRight".focus-column-right = _: { };
-          "Mod+WheelScrollLeft".focus-column-left = _: { };
-          "Mod+Ctrl+WheelScrollRight".move-column-right = _: { };
-          "Mod+Ctrl+WheelScrollLeft".move-column-left = _: { };
-          "Mod+Shift+WheelScrollDown".focus-column-right = _: { };
-          "Mod+Shift+WheelScrollUp".focus-column-left = _: { };
-          "Mod+Ctrl+Shift+WheelScrollDown".move-column-right = _: { };
-          "Mod+Ctrl+Shift+WheelScrollUp".move-column-left = _: { };
+          "Mod+WheelScrollRight".focus-column-right = { };
+          "Mod+WheelScrollLeft".focus-column-left = { };
+          "Mod+Ctrl+WheelScrollRight".move-column-right = { };
+          "Mod+Ctrl+WheelScrollLeft".move-column-left = { };
+          "Mod+Shift+WheelScrollDown".focus-column-right = { };
+          "Mod+Shift+WheelScrollUp".focus-column-left = { };
+          "Mod+Ctrl+Shift+WheelScrollDown".move-column-right = { };
+          "Mod+Ctrl+Shift+WheelScrollUp".move-column-left = { };
 
           "Mod+1".focus-workspace = 1;
           "Mod+2".focus-workspace = 2;
@@ -286,31 +304,35 @@ in
           "Mod+Ctrl+9".move-column-to-workspace = 9;
 
           # Column
-          "Mod+Comma".consume-window-into-column = _: { };
-          "Mod+Period".expel-window-from-column = _: { };
-          "Mod+R".switch-preset-column-width = _: { };
-          "Mod+Shift+R".reset-window-height = _: { };
-          "Mod+F".maximize-column = _: { };
-          "Mod+Shift+F".fullscreen-window = _: { };
-          "Mod+Ctrl+F".expand-column-to-available-width = _: { };
-          "Mod+C".center-column = _: { };
+          "Mod+Comma".consume-window-into-column = { };
+          "Mod+Period".expel-window-from-column = { };
+          "Mod+R".switch-preset-column-width = { };
+          "Mod+Shift+R".reset-window-height = { };
+          "Mod+F".maximize-column = { };
+          "Mod+Shift+F".fullscreen-window = { };
+          "Mod+Ctrl+F".expand-column-to-available-width = { };
+          "Mod+C".center-column = { };
           "Mod+Minus".set-column-width = "-10%";
           "Mod+Equal".set-column-width = "+10%";
           "Mod+Shift+Minus".set-window-height = "-10%";
           "Mod+Shift+Equal".set-window-height = "+10%";
-          "Mod+W".toggle-column-tabbed-display = _: { };
+          "Mod+W".toggle-column-tabbed-display = { };
 
-          "Mod+Grave".toggle-overview = _: { };
+          "Mod+Grave".toggle-overview = { };
 
-          "Mod+Tab".switch-focus-between-floating-and-tiling = _: { };
-          "Mod+Shift+Tab".toggle-window-floating = _: { };
+          "Mod+Tab".switch-focus-between-floating-and-tiling = { };
+          "Mod+Shift+Tab".toggle-window-floating = { };
 
-          "Mod+Shift+N".spawn = noctaliaIpc "notifications" "toggleHistory";
-          "Mod+BracketLeft".consume-or-expel-window-left = _: { };
-          "Mod+BracketRight".consume-or-expel-window-right = _: { };
+          "Mod+Shift+N".spawn = noctaliaMsg [
+            "panel-toggle"
+            "control-center"
+            "notifications"
+          ];
+          "Mod+BracketLeft".consume-or-expel-window-left = { };
+          "Mod+BracketRight".consume-or-expel-window-right = { };
         };
         layout.background-color = "transparent";
-        layout.border.off = _: { };
+        layout.border.off = { };
         layout.focus-ring = {
           width = 4;
           active-color = t.accent;
@@ -321,18 +343,14 @@ in
           position = "left";
           gap = 0;
           width = 4;
-          length = _: {
-            props.total-proportion = 0.5;
-          };
+          length._props.total-proportion = 0.5;
           active-color = t.success;
           inactive-color = t.muted;
           urgent-color = t.urgent;
         };
         layout.gaps = 8;
         input = {
-          focus-follows-mouse = _: {
-            props.max-scroll-amount = "10%";
-          };
+          focus-follows-mouse._props.max-scroll-amount = "10%";
           keyboard = {
             xkb = {
               layout = "us,ru";
@@ -343,100 +361,103 @@ in
             scroll-factor = 0.5;
           };
           touchpad = {
-            natural-scroll = _: { };
-            dwt = _: { };
-            drag-lock = _: { };
-            tap = _: { };
+            natural-scroll = { };
+            dwt = { };
+            drag-lock = { };
+            tap = { };
           };
-          workspace-auto-back-and-forth = _: { };
+          workspace-auto-back-and-forth = { };
         };
-        window-rules = [
+        clipboard.disable-primary = { };
+        prefer-no-csd = { };
+        overview.workspace-shadow.off = { };
+        # Allows notification actions and window activation from Noctalia
+        debug.honor-xdg-activation-with-invalid-serial = { };
+        _children = [
           {
-            geometry-corner-radius = [
-              8.0
-              8.0
-              8.0
-              8.0
-            ];
-            clip-to-geometry = true;
+            window-rule = {
+              geometry-corner-radius = [
+                8.0
+                8.0
+                8.0
+                8.0
+              ];
+              clip-to-geometry = true;
+            };
           }
           {
-            matches = [ { is-active = false; } ];
-            opacity = 0.95;
+            window-rule = {
+              _children = [ { match._props.is-active = false; } ];
+              opacity = 0.95;
+            };
           }
           {
-            matches = [
-              { title = "floatme"; }
-              { title = "Authentication Required"; }
-            ];
-            open-floating = true;
+            window-rule = {
+              _children = [
+                { match._props.title = "floatme"; }
+                { match._props.title = "Authentication Required"; }
+              ];
+              open-floating = true;
+            };
           }
           {
-            matches = [
-              {
-                app-id = "firefox";
-                title = "Picture-in-Picture";
-              }
-            ];
-            open-floating = true;
-            default-floating-position = _: {
-              props = {
+            window-rule = {
+              _children = [
+                {
+                  match._props = {
+                    app-id = "firefox";
+                    title = "Picture-in-Picture";
+                  };
+                }
+              ];
+              open-floating = true;
+              default-floating-position._props = {
                 x = 32;
                 y = 32;
                 relative-to = "bottom-right";
               };
+              default-column-width.fixed = 480;
+              default-window-height.fixed = 270;
             };
-            default-column-width.fixed = 480;
-            default-window-height.fixed = 270;
           }
           {
-            matches = [
-              {
-                app-id = "steam";
-                title = "^notificationtoasts_\\d+_desktop$";
-              }
-            ];
-            default-floating-position = _: {
-              props = {
+            window-rule = {
+              _children = [
+                {
+                  match._props = {
+                    app-id = "steam";
+                    title = "^notificationtoasts_\\d+_desktop$";
+                  };
+                }
+              ];
+              default-floating-position._props = {
                 x = 10;
                 y = 10;
                 relative-to = "bottom-right";
               };
+              open-focused = false;
             };
-            open-focused = false;
           }
-        ];
-        layer-rules = [
           {
-            matches = [ { namespace = "^noctalia-overview-"; } ];
-            place-within-backdrop = true;
+            window-rule = {
+              _children = [ { match._props.app-id = "dev.noctalia.Noctalia"; } ];
+              open-floating = true;
+              default-column-width.fixed = 1080;
+              default-window-height.fixed = 920;
+            };
+          }
+          {
+            layer-rule = {
+              _children = [ { match._props.namespace = "^noctalia-wallpaper"; } ];
+              place-within-backdrop = true;
+            };
           }
         ];
-        clipboard.disable-primary = _: { };
-        prefer-no-csd = _: { };
-        # Allows notification actions and window activation from Noctalia
-        debug.honor-xdg-activation-with-invalid-serial = _: { };
       };
-    };
-
-  perSystem =
-    { pkgs, ... }:
-    {
-      _packages.niri = inputs.nix-wrapper-modules.wrappers.niri.wrap {
-        inherit pkgs;
-        imports = [ self.wrapperModules.niri ];
-      };
-    };
-
-  flake.nixosModules.niri =
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
+    in
     {
       imports = [
+        inputs.noctalia-greeter.nixosModules.default
         self.nixosModules.sound
       ];
 
@@ -444,12 +465,27 @@ in
         extraSettings = lib.mkOption {
           type = lib.types.attrs;
           default = { };
-          description = "Host-specific niri settings merged with defaults";
+          description = ''
+            Host-specific niri settings, merged with the defaults. Uses
+            home-manager's KDL dialect: `_props` for node properties, `_args`
+            for positional arguments and `_children` for repeated nodes such as
+            `output`.
+          '';
         };
         theme = lib.mkOption {
           type = lib.types.attrs;
           default = { };
-          description = "Theme overrides merged with defaults from the wrapper module";
+          description = "Theme overrides merged with the defaults";
+        };
+        greeterSettings = lib.mkOption {
+          type = lib.types.attrs;
+          default = { };
+          description = ''
+            Host-specific `greeter.toml` settings, merged over the defaults.
+            Mainly `output.{layout,scales,transforms}`: the greeter's bundled
+            wlroots compositor does not pick up the kernel `panel_orientation`
+            quirk that niri honours, so rotated panels must be spelled out.
+          '';
         };
         idleAction = lib.mkOption {
           type = lib.types.str;
@@ -459,32 +495,52 @@ in
         package = lib.mkOption {
           type = lib.types.package;
           readOnly = true;
-          description = "The wrapped niri package";
+          description = "The niri package in use";
         };
       };
 
       config =
         let
-          wrappedNiri = inputs.nix-wrapper-modules.wrappers.niri.wrap {
-            inherit pkgs;
-            imports = [ self.wrapperModules.niri ];
-            theme = config.personal.niri.theme;
-            settings = config.personal.niri.extraSettings;
-            idleAction = config.personal.niri.idleAction;
-          };
           peck = inputs.peck.packages.${pkgs.stdenv.hostPlatform.system}.default;
-          wallpaper = (defaultTheme pkgs // config.personal.niri.theme).wallpaper;
+          wallpaper = t.wallpaper;
         in
         {
-          personal.niri.package = wrappedNiri;
+          # Required for `peck`
+          personal.niri.package = pkgs.niri.overrideAttrs (_: {
+            src = pkgs.fetchFromGitHub {
+              owner = "kiryl";
+              repo = "niri";
+              rev = "d26ab5f29df670110a91a7e933a743eeaf611978";
+              hash = "sha256-3HxntJA2DNg+L94gbM86uGeJqPPWbSX88CjteOmYV0o=";
+            };
+          });
 
           programs.niri = {
             enable = true;
             package = config.personal.niri.package;
           };
-          services.xserver.enable = true;
-          services.displayManager.gdm.enable = true;
-          security.pam.services.gdm.enableGnomeKeyring = true;
+          environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+          programs.noctalia-greeter = {
+            enable = true;
+            settings = lib.recursiveUpdate {
+              session.default = "Niri";
+              user.default = config.personal.user.name;
+              appearance = {
+                scheme = "Tokyo-Night";
+                theme_mode = "dark";
+                password_style = "random";
+              };
+              keyboard = {
+                layout = "us,ru";
+                options = "grp:win_space_toggle,caps:escape";
+              };
+              cursor = {
+                theme = "Adwaita";
+                size = 24;
+              };
+            } config.personal.niri.greeterSettings;
+          };
 
           programs.yubikey-touch-detector.enable = true;
 
@@ -497,7 +553,11 @@ in
           environment.systemPackages = [
             pkgs.file-roller
             pkgs.nautilus
+            pkgs.papers
+            pkgs.simple-scan
             pkgs.loupe
+            pkgs.showtime
+            pkgs.snapshot
             pkgs.pavucontrol
             peck
           ];
@@ -515,9 +575,35 @@ in
           home-manager.sharedModules = [
             {
               imports = [
+                inputs.noctalia.homeModules.default
                 self.homeModules.fonts
                 self.homeModules.ghostty
               ];
+
+              programs.noctalia = {
+                enable = true;
+                systemd.enable = true;
+                settings = noctaliaSettings;
+              };
+
+              wayland.windowManager.niri = {
+                enable = true;
+                # Shared with the system-level `programs.niri`, which already
+                # installs the session and its systemd units.
+                package = config.personal.niri.package;
+                systemd.enable = false;
+                portalPackage = null;
+                xwaylandSatellitePackage = null;
+                settings = lib.mkMerge [
+                  baseSettings
+                  config.personal.niri.extraSettings
+                ];
+                extraConfig = ''
+                  include optional=true "~/.config/niri/noctalia.kdl"
+                '';
+              };
+
+              home.packages = [ pkgs.fastfetch ];
 
               services.ssh-agent.enable = true;
 

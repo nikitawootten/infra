@@ -42,12 +42,20 @@ in
 
           services.udev.packages = [ pkgs.yubikey-personalization ];
 
-          personal.niri.extraSettings = {
-            outputs."eDP-1" = {
-              scale = 1.5;
-              variable-refresh-rate = _: { };
-            };
+          personal.niri.greeterSettings.output = {
+            layout = "eDP-1:0,0";
+            scales = "eDP-1:1.5";
           };
+
+          personal.niri.extraSettings._children = [
+            {
+              output = {
+                _args = [ "eDP-1" ];
+                scale = 1.5;
+                variable-refresh-rate = { };
+              };
+            }
+          ];
           personal.niri.theme.wallpaper = pkgs.fetchurl {
             url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
             sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";

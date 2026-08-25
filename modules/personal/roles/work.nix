@@ -33,7 +33,6 @@ let
         ]
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
           httpie-desktop
-          self.packages.${pkgs.stdenv.hostPlatform.system}.lotion
         ])
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isDarwin [
           swiftlint

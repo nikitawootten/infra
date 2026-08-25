@@ -28,6 +28,7 @@ in
             self.nixosModules.virtualbox
             self.nixosModules.nvidia
             self.nixosModules.zsa
+            self.nixosModules.remote-builder-client
             inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
           ];
 

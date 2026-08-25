@@ -28,6 +28,7 @@ in
   "nix-builder-key.age".publicKeys = [
     keys.voyager
     keys.cochrane
+    keys.dionysus
   ]
   ++ keys.trusted_users;
 }

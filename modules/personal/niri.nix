@@ -39,7 +39,7 @@
               "niri"
               "qt"
             ];
-            # Path must match `noctalia_base16` in modules/editor/config/init.lua.
+            # Path must match `noctalia_base16` in modules/editor/config/lua/plugins/colorscheme.lua.
             user.nvim-base16 = {
               input_path = "${self.noctaliaTemplates.nvim-base16}";
               output_path = "~/.local/state/nvim/noctalia-base16.lua";

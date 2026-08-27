@@ -5,6 +5,9 @@
   ...
 }:
 {
+  # Consumed by Noctalia's template engine, not by nvim; see modules/personal/niri.nix.
+  flake.noctaliaTemplates.nvim-base16 = ./noctalia-base16.lua;
+
   flake.wrapperModules.editor =
     { pkgs, ... }:
     {
@@ -52,7 +55,7 @@
 
       config.specs.colorscheme = {
         lazy = true;
-        data = pkgs.vimPlugins.tokyonight-nvim;
+        data = pkgs.vimPlugins.base16-nvim;
       };
 
       config.specs.copilot = {

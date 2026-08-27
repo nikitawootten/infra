@@ -1,26 +1,4 @@
 { self, inputs, ... }:
-let
-  defaultTheme = pkgs: {
-    wallpaper = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/main/bin_original.png";
-      sha256 = "sha256-scfp1OJwvkooZi5kHBE7/NVVroXo0dzwwl6ND+AokZQ=";
-    };
-    bg = "#1a1b26";
-    "bg-dark" = "#16161e";
-    fg = "#c0caf5";
-    accent = "#7aa2f7";
-    "accent-alt" = "#bb9af7";
-    urgent = "#f7768e";
-    success = "#9ece6a";
-    warning = "#e0af68";
-    info = "#7dcfff";
-    muted = "#565f89";
-    orange = "#ff9e64";
-    teal = "#73dacb";
-    surface = "#3d59a1";
-    black = "#15161e";
-  };
-in
 {
   flake.nixosModules.niri =
     {
@@ -30,8 +8,6 @@ in
       ...
     }:
     let
-      t = defaultTheme pkgs // config.personal.niri.theme;
-
       noctaliaMsg =
         command:
         [
@@ -52,24 +28,31 @@ in
         };
 
         theme = {
-          mode = "dark";
-          source = "builtin";
+          mode = "auto";
+          source = "wallpaper";
           builtin = "Tokyo-Night";
-          templates.builtin_ids = [
-            "gtk3"
-            "gtk4"
-            "ghostty"
-            "niri"
-            "qt"
-          ];
+          templates = {
+            builtin_ids = [
+              "gtk3"
+              "gtk4"
+              "ghostty"
+              "niri"
+              "qt"
+            ];
+            # Path must match `noctalia_base16` in modules/editor/config/init.lua.
+            user.nvim-base16 = {
+              input_path = "${self.noctaliaTemplates.nvim-base16}";
+              output_path = "~/.local/state/nvim/noctalia-base16.lua";
+              post_hook = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 -x nvim";
+            };
+          };
         };
 
         wallpaper = {
           enabled = true;
           directory = "~/Pictures/Wallpapers";
-          default.path = "~/Pictures/Wallpapers/${t.wallpaper.name}";
         };
-        backdrop.enabled = false;
+        backdrop.enabled = true;
 
         location.auto_locate = true;
         weather = {
@@ -333,20 +316,12 @@ in
         };
         layout.background-color = "transparent";
         layout.border.off = { };
-        layout.focus-ring = {
-          width = 4;
-          active-color = t.accent;
-          inactive-color = t.muted;
-          urgent-color = t.urgent;
-        };
+        layout.focus-ring.width = 4;
         layout.tab-indicator = {
           position = "left";
           gap = 0;
           width = 4;
           length._props.total-proportion = 0.5;
-          active-color = t.success;
-          inactive-color = t.muted;
-          urgent-color = t.urgent;
         };
         layout.gaps = 8;
         input = {
@@ -370,7 +345,6 @@ in
         };
         clipboard.disable-primary = { };
         prefer-no-csd = { };
-        overview.workspace-shadow.off = { };
         # Allows notification actions and window activation from Noctalia
         debug.honor-xdg-activation-with-invalid-serial = { };
         _children = [
@@ -442,13 +416,11 @@ in
             window-rule = {
               _children = [ { match._props.app-id = "dev.noctalia.Noctalia"; } ];
               open-floating = true;
-              default-column-width.fixed = 1080;
-              default-window-height.fixed = 920;
             };
           }
           {
             layer-rule = {
-              _children = [ { match._props.namespace = "^noctalia-wallpaper"; } ];
+              _children = [ { match._props.namespace = "^noctalia-backdrop"; } ];
               place-within-backdrop = true;
             };
           }
@@ -471,11 +443,6 @@ in
             for positional arguments and `_children` for repeated nodes such as
             `output`.
           '';
-        };
-        theme = lib.mkOption {
-          type = lib.types.attrs;
-          default = { };
-          description = "Theme overrides merged with the defaults";
         };
         greeterSettings = lib.mkOption {
           type = lib.types.attrs;
@@ -502,7 +469,6 @@ in
       config =
         let
           peck = inputs.peck.packages.${pkgs.stdenv.hostPlatform.system}.default;
-          wallpaper = t.wallpaper;
         in
         {
           # Required for `peck`
@@ -559,6 +525,7 @@ in
             pkgs.showtime
             pkgs.snapshot
             pkgs.pavucontrol
+            pkgs.glib
             peck
           ];
 
@@ -607,7 +574,9 @@ in
 
               services.ssh-agent.enable = true;
 
-              home.file."Pictures/Wallpapers/${wallpaper.name}".source = wallpaper;
+              services.udiskie.enable = true;
+
+              systemd.user.tmpfiles.rules = [ "d %h/Pictures/Wallpapers 0755 - - -" ];
 
               home.file.".face".source = pkgs.fetchurl {
                 url = "https://avatars.githubusercontent.com/u/8916363";
@@ -635,16 +604,18 @@ in
               dconf.settings = {
                 "org/gnome/desktop/interface" = {
                   icon-theme = "Adwaita";
-                  gtk-theme = "Adwaita";
                   toolkit-accessibility = true;
                 };
               };
 
               gtk = {
                 enable = true;
+                # Noctalia's GTK hook swaps this between adw-gtk3 and adw-gtk3-dark.
                 theme = {
-                  name = "Adwaita";
+                  package = pkgs.adw-gtk3;
+                  name = "adw-gtk3";
                 };
+                # GTK4 apps ignore Noctalia's colors if a theme is set here.
                 gtk4.theme = null;
                 iconTheme = {
                   package = pkgs.adwaita-icon-theme;

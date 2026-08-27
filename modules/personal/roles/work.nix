@@ -30,6 +30,7 @@ let
           vscode-json-languageserver
           nodejs_24
           scrcpy
+          proton-vpn
         ]
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
           httpie-desktop

@@ -106,6 +106,28 @@ if os.getenv("SSH_TTY") then
 	}
 end
 
+-- direnv.vim reapplies the pre-nvim environment on every DirChanged, dropping the
+-- wrapper's runtimePkgs from PATH. Re-append (not prepend) so a devshell still wins.
+local wrapper_path = vim.env.PATH or ""
+vim.api.nvim_create_autocmd("User", {
+	pattern = "DirenvLoaded",
+	callback = function()
+		local present = {}
+		for entry in vim.gsplit(vim.env.PATH or "", ":", { trimempty = true }) do
+			present[entry] = true
+		end
+		local missing = {}
+		for entry in vim.gsplit(wrapper_path, ":", { trimempty = true }) do
+			if not present[entry] then
+				table.insert(missing, entry)
+			end
+		end
+		if #missing > 0 then
+			vim.env.PATH = vim.env.PATH .. ":" .. table.concat(missing, ":")
+		end
+	end,
+})
+
 -- [[ Setting options ]]
 vim.o.exrc = false
 vim.opt.list = true
@@ -242,20 +264,37 @@ vim.keymap.set("n", "<leader>zu", "zug", { desc = "Undo add word" })
 vim.keymap.set("n", "<leader>z=", "z=", { desc = "Suggest corrections" })
 vim.keymap.set("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { desc = "Fix previous spelling" })
 
+-- Written by Noctalia's `nvim-base16` user template; see modules/personal/niri.nix.
+local noctalia_base16 = vim.fn.stdpath("state") .. "/noctalia-base16.lua"
+
+local function apply_noctalia_base16()
+	local ok, colors = pcall(dofile, noctalia_base16)
+	if not ok then
+		return
+	end
+	require("base16-colorscheme").setup(colors)
+	-- setup() only rewrites highlight groups, so nothing else learns the palette moved.
+	vim.api.nvim_exec_autocmds("ColorScheme", { pattern = vim.g.colors_name })
+end
+
+local noctalia_signal = vim.uv.new_signal()
+noctalia_signal:start("sigusr1", vim.schedule_wrap(apply_noctalia_base16))
+
 nixInfo.lze.load({
 	{
 		"trigger_colorscheme",
 		event = "VimEnter",
 		load = function(_)
 			vim.schedule(function()
-				vim.cmd.colorscheme("tokyonight-night")
+				vim.cmd.colorscheme("base16-tokyo-night-dark")
+				apply_noctalia_base16()
 			end)
 		end,
 	},
 	{
-		"tokyonight.nvim",
+		"base16-nvim",
 		auto_enable = true,
-		colorscheme = { "tokyonight", "tokyonight-night", "tokyonight-storm", "tokyonight-day", "tokyonight-moon" },
+		colorscheme = { "base16-tokyo-night-dark" },
 	},
 	{
 		"snacks.nvim",
@@ -309,6 +348,33 @@ nixInfo.lze.load({
 			vim.keymap.set("n", "<leader>gg", function()
 				Snacks.lazygit.open()
 			end, { desc = "LazyGit" })
+			vim.keymap.set("n", "<leader>gS", function()
+				Snacks.picker.git_status()
+			end, { desc = "Git status" })
+			vim.keymap.set("n", "<leader>gh", function()
+				Snacks.picker.git_diff()
+			end, { desc = "Git diff hunks" })
+			vim.keymap.set("n", "<leader>gl", function()
+				Snacks.picker.git_log()
+			end, { desc = "Git log" })
+			vim.keymap.set("n", "<leader>gL", function()
+				Snacks.picker.git_log_file()
+			end, { desc = "Git log (file)" })
+			vim.keymap.set("n", "<leader>gw", function()
+				local paths = {}
+				for _, line in ipairs(vim.fn.systemlist("git worktree list --porcelain")) do
+					local path = line:match("^worktree (.+)$")
+					if path then
+						table.insert(paths, path)
+					end
+				end
+				vim.ui.select(paths, { prompt = "Worktree (tcd)" }, function(choice)
+					if choice then
+						vim.cmd.tcd(vim.fn.fnameescape(choice))
+						vim.notify("tcd → " .. choice)
+					end
+				end)
+			end, { desc = "Switch worktree (tcd)" })
 			-- Buffers
 			vim.keymap.set("n", "<leader>bd", function()
 				Snacks.bufdelete()
@@ -712,7 +778,7 @@ nixInfo.lze.load({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "tokyonight",
+					theme = "base16",
 					component_separators = "|",
 					section_separators = "",
 				},

@@ -56,10 +56,6 @@ in
               };
             }
           ];
-          personal.niri.theme.wallpaper = pkgs.fetchurl {
-            url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
-            sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
-          };
 
           services.fprintd.enable = lib.mkForce false;
 
@@ -67,6 +63,11 @@ in
             imports = [ self.homeModules.zed ];
 
             home.packages = with pkgs; [ tor-browser ];
+
+            home.file."Pictures/Wallpapers/wallhaven-x6pl9v.jpg".source = pkgs.fetchurl {
+              url = "https://w.wallhaven.cc/full/x6/wallhaven-x6pl9v.jpg";
+              sha256 = "sha256-IXYn+ohEiv3IXfw+dta9TzNpZFto026h64hMDrTrDm8=";
+            };
           };
 
           programs.nix-ld.enable = true;

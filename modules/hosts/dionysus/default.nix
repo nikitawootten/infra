@@ -14,7 +14,7 @@ in
     system = "x86_64-linux";
     modules = [
       (
-        { config, ... }:
+        { config, pkgs, ... }:
         {
           imports = [
             ./_hardware-configuration.nix
@@ -79,6 +79,8 @@ in
           };
 
           programs.nix-ld.enable = true;
+
+          services.udev.packages = [ pkgs.qmk-udev-rules ];
 
           personal.niri.idleAction = "suspend";
 

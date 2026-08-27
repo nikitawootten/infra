@@ -31,7 +31,7 @@ in
 
         userSettings = {
           theme = {
-            mode = if pkgs.stdenv.hostPlatform.isDarwin then "light" else "dark";
+            mode = "system";
             light = "macOS Classic Light";
             dark = "Tokyo Night";
           };

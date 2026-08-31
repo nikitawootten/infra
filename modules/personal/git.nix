@@ -101,6 +101,10 @@
           ];
         };
 
+        programs.lazygit = {
+          enable = true;
+        };
+
         home.sessionVariables = {
           # Where I do my work
           GIT_WORKSPACE = "~/Documents/workspace";

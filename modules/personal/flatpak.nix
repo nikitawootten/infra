@@ -11,7 +11,6 @@
         packages = [
           "com.discordapp.Discord"
           "com.google.Chrome"
-          "org.libreoffice.LibreOffice"
           "org.signal.Signal"
           "md.obsidian.Obsidian"
           "com.spotify.Client"

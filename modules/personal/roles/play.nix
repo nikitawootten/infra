@@ -6,7 +6,12 @@ let
       # PrismLauncher installed via brew cask on MacOS
       home.packages =
         with pkgs;
-        [ ] ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [ prismlauncher ];
+        [ ]
+        ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
+          prismlauncher
+          fractal
+          foliate
+        ];
     };
 in
 {

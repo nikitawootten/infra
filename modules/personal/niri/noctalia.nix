@@ -7,6 +7,14 @@
       lib,
       ...
     }:
+    let
+      # GIT_WORKSPACE holds a literal `~`, so expand it before use.
+      workspace = "ws=$(eval echo \"\${GIT_WORKSPACE:-~/Documents/workspace}\")";
+      # Git repos in the workspace, allowing one level of nesting (<group>/<subproject>).
+      listRepos = "${workspace}; find -L \"$ws\" -mindepth 2 -maxdepth 3 -name .git -printf '%h\\n' 2>/dev/null | sed \"s|^$ws/||\" | sort";
+      # Open the selected repo in a new terminal, optionally running a command in it.
+      openRepo = args: "${workspace}; exec ghostty --working-directory=\"$ws/{selection}\"${args}";
+    in
     {
       options.personal.niri.idleAction = lib.mkOption {
         type = lib.types.str;
@@ -30,6 +38,25 @@
                 screen_time_enabled = true;
                 password_style = "random";
                 polkit_agent = true;
+
+                launcher.dmenu.entry = {
+                  proj = {
+                    label = "Projects";
+                    prefix = "proj";
+                    glyph = "git-branch";
+                    global = false;
+                    command = listRepos;
+                    exec = openRepo "";
+                  };
+                  edit = {
+                    label = "Edit project";
+                    prefix = "edit";
+                    glyph = "pencil";
+                    global = false;
+                    command = listRepos;
+                    exec = openRepo " -e \"\${EDITOR:-nvim}\" .";
+                  };
+                };
               };
 
               theme = {

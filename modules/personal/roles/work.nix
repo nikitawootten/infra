@@ -34,6 +34,10 @@ let
         ]
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
           httpie-desktop
+          libreoffice
+          hunspell
+          hunspellDicts.en_US
+          hunspellDicts.ru_RU
         ])
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isDarwin [
           swiftlint

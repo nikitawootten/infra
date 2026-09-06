@@ -1,3 +1,15 @@
+-- support devenv's uv integration
+local function find_venv(root)
+	if vim.env.VIRTUAL_ENV then
+		return vim.env.VIRTUAL_ENV
+	end
+	for _, dir in ipairs({ root .. "/.venv", root .. "/.devenv/state/venv" }) do
+		if vim.uv.fs_stat(dir .. "/bin/python") then
+			return dir
+		end
+	end
+end
+
 return {
 	{
 		"nvim-lspconfig",
@@ -121,8 +133,25 @@ return {
 		},
 	},
 	{
-		"basedpyright",
+		"ty",
+		lsp = {
+			filetypes = { "python" },
+			cmd = function(dispatchers, config)
+				return vim.lsp.rpc.start(
+					{ "ty", "server" },
+					dispatchers,
+					{ env = { VIRTUAL_ENV = find_venv(config.root_dir) } }
+				)
+			end,
+		},
+	},
+	{
+		"ruff",
 		lsp = { filetypes = { "python" } },
+	},
+	{
+		"vtsls",
+		lsp = { filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" } },
 	},
 	{
 		"rust_analyzer",

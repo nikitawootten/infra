@@ -79,9 +79,11 @@
         lua-language-server
         stylua
         # python
-        basedpyright
-        black
-        isort
+        ty
+        ruff
+        # javascript / typescript
+        vtsls
+        prettier
         # rust
         rust-analyzer
         rustfmt

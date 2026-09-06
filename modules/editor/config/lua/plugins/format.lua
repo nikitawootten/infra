@@ -13,8 +13,12 @@ return {
 				formatters_by_ft = {
 					nix = { "nixfmt" },
 					lua = { "stylua" },
-					python = { "isort", "black" },
+					python = { "ruff_organize_imports", "ruff_format" },
 					rust = { "rustfmt" },
+					javascript = { "prettier" },
+					javascriptreact = { "prettier" },
+					typescript = { "prettier" },
+					typescriptreact = { "prettier" },
 				},
 				format_on_save = function(bufnr)
 					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

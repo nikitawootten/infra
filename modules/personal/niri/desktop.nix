@@ -24,6 +24,7 @@
         pkgs.snapshot
         pkgs.pavucontrol
         pkgs.glib
+        pkgs.wl-clipboard
         peck
       ];
 

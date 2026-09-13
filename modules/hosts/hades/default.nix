@@ -80,10 +80,6 @@ in
           age.secrets.audiobookshelf-client-secret.owner = "kanidm";
           age.secrets.sonarr-basic-auth.file = secrets."sonarr-basic-auth";
           age.secrets.sonarr-basic-auth.owner = "nginx";
-          age.secrets.radarr-basic-auth.file = secrets."radarr-basic-auth";
-          age.secrets.radarr-basic-auth.owner = "nginx";
-          age.secrets.prowlarr-basic-auth.file = secrets."prowlarr-basic-auth";
-          age.secrets.prowlarr-basic-auth.owner = "nginx";
           age.secrets.miniflux-client-secret.file = secrets.miniflux-client-secret;
           age.secrets.miniflux-client-secret.owner = "kanidm";
           age.secrets.miniflux-env.file = secrets.miniflux-env;
@@ -94,8 +90,6 @@ in
             transmission.transmissionEnvFile = config.age.secrets."transmission".path;
             audiobookshelf.clientSecretFile = config.age.secrets.audiobookshelf-client-secret.path;
             sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
-            radarr.authHeaderFile = config.age.secrets."radarr-basic-auth".path;
-            prowlarr.authHeaderFile = config.age.secrets."prowlarr-basic-auth".path;
             miniflux.clientSecretFile = config.age.secrets.miniflux-client-secret.path;
             miniflux.envFile = config.age.secrets.miniflux-env.path;
           };

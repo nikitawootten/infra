@@ -40,6 +40,7 @@
           "utm"
           "google-chrome"
           "soduto"
+          "spotify"
         ];
       };
 

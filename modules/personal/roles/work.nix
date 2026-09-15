@@ -78,6 +78,8 @@ in
   flake.darwinModules.role-work =
     { ... }:
     {
+      imports = [ self.darwinModules.firefox ];
+
       home-manager.sharedModules = [ hmModule ];
 
       homebrew.masApps = {

@@ -1,5 +1,10 @@
 { ... }:
 {
+  flake.darwinModules.firefox = {
+    homebrew.casks = [ "firefox" ];
+    launchd.user.envVariables.MOZ_LEGACY_PROFILES = "1";
+  };
+
   flake.homeModules.firefox =
     {
       pkgs,
@@ -194,6 +199,10 @@
       }
       // lib.attrsets.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
         configPath = "${config.xdg.configHome}/mozilla/firefox";
+      }
+      // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+        # On macOS firefox is installed via a homebrew cask
+        package = null;
       };
       home.sessionVariables.BROWSER = "firefox";
 

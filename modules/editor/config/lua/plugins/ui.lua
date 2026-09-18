@@ -44,11 +44,13 @@ return {
 				require("which-key").show({ global = false })
 			end, { desc = "Buffer-local keymaps (which-key)" })
 			require("which-key").add({
+				{ "<leader><Tab>", group = "tabs" },
 				{ "<leader>b", group = "[b]uffer" },
 				{ "<leader>c", group = "[c]ode" },
 				{ "<leader>d", group = "[d]ocument" },
 				{ "<leader>f", group = "[f]ind" },
 				{ "<leader>g", group = "[g]it" },
+				{ "<leader>q", group = "[q]uit/quickfix" },
 				{ "<leader>r", group = "[r]ename" },
 				{ "<leader>s", group = "[s]earch" },
 				{ "<leader>t", group = "[t]oggles" },

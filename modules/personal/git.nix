@@ -79,6 +79,7 @@
 
             help.autocorrect = lib.mkDefault "prompt";
             commit.verbose = lib.mkDefault true;
+            merge.conflictStyle = lib.mkDefault "zdiff3";
           };
           signing = {
             format = lib.mkDefault "ssh";
@@ -87,6 +88,12 @@
           };
           maintenance.enable = lib.mkDefault true;
           lfs.enable = true;
+        };
+
+        programs.delta = {
+          enable = true;
+          enableGitIntegration = true;
+          options.navigate = true;
         };
 
         programs.gh = {

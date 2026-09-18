@@ -21,6 +21,11 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+-- Common file/session commands
+vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Write file" })
+vim.keymap.set("n", "<leader>W", "<cmd>wall<CR>", { desc = "Write all files" })
+vim.keymap.set("n", "<leader>qq", "<cmd>quit<CR>", { desc = "Quit" })
 vim.keymap.set("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Next diagnostic" })
@@ -50,6 +55,32 @@ vim.keymap.set("n", "[Q", "<cmd>cfirst<CR>zz", { desc = "First quickfix item" })
 -- Buffer cycling
 vim.keymap.set("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "[b", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+
+-- Tab management
+vim.keymap.set("n", "<leader><Tab>n", "<cmd>tabnew<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader><Tab>d", "<cmd>tabclose<CR>", { desc = "Close tab" })
+vim.keymap.set("n", "]t", "<cmd>tabnext<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "[t", "<cmd>tabprevious<CR>", { desc = "Previous tab" })
+
+-- UI toggles
+vim.keymap.set("n", "<leader>tn", function()
+	vim.wo.number = not vim.wo.number
+end, { desc = "Toggle line numbers" })
+vim.keymap.set("n", "<leader>tr", function()
+	vim.wo.relativenumber = not vim.wo.relativenumber
+end, { desc = "Toggle relative numbers" })
+vim.keymap.set("n", "<leader>tw", function()
+	vim.wo.wrap = not vim.wo.wrap
+end, { desc = "Toggle wrap" })
+vim.keymap.set("n", "<leader>td", function()
+	local config = vim.diagnostic.config()
+	vim.diagnostic.config({
+		virtual_text = config.virtual_text and false or { spacing = 2, source = "if_many" },
+	})
+end, { desc = "Toggle diagnostic virtual text" })
+vim.keymap.set("n", "<leader>tC", function()
+	vim.wo.conceallevel = vim.wo.conceallevel == 0 and 2 or 0
+end, { desc = "Toggle conceallevel" })
 
 -- Terminal mode: leave the terminal by window motion
 for _, key in ipairs({ "h", "j", "k", "l" }) do

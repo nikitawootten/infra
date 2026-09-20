@@ -17,9 +17,9 @@
     in
     {
       options.personal.niri.idleAction = lib.mkOption {
-        type = lib.types.str;
+        type = lib.types.nullOr lib.types.str;
         default = "suspend-then-hibernate";
-        description = "systemctl sleep verb noctalia runs on idle";
+        description = "systemctl sleep verb noctalia runs on idle, or null to only blank the screens";
       };
 
       config.home-manager.sharedModules = [
@@ -94,14 +94,20 @@
 
               dock.enabled = false;
 
-              idle = {
-                behavior.lock = {
+              idle.behavior = {
+                lock = {
                   enabled = true;
                   action = "lock";
                   timeout = 5 * 60;
                 };
-                behavior.screen-off.enabled = false;
-                behavior.suspend = {
+                screen-off = {
+                  enabled = config.personal.niri.idleAction == null;
+                  action = "screen_off";
+                  timeout = 6 * 60;
+                };
+              }
+              // lib.optionalAttrs (config.personal.niri.idleAction != null) {
+                suspend = {
                   enabled = true;
                   action = "command";
                   command = "systemctl ${config.personal.niri.idleAction}";

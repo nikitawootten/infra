@@ -82,7 +82,7 @@ in
 
           services.udev.packages = [ pkgs.qmk-udev-rules ];
 
-          personal.niri.idleAction = "suspend";
+          personal.niri.idleAction = null;
 
           boot.kernelParams = [ "video=DP-1:panel_orientation=right_side_up" ];
 

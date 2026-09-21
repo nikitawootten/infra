@@ -15,7 +15,7 @@
         self.nixosModules.homelab-prowlarr
         self.nixosModules.homelab-radarr
         self.nixosModules.homelab-sonarr
-        self.nixosModules.homelab-transmission
+        self.nixosModules.homelab-qbittorrent
       ];
 
       options.homelab.media = {
@@ -63,7 +63,7 @@
         homelab.media.ersatztv.enable = lib.mkDefault true;
         homelab.media.flaresolverr.enable = lib.mkDefault true;
         homelab.media.jellyfin.enable = lib.mkDefault true;
-        homelab.media.transmission.enable = lib.mkDefault true;
+        homelab.media.qbittorrent.enable = lib.mkDefault true;
         homelab.media.prowlarr.enable = lib.mkDefault true;
         homelab.media.radarr.enable = lib.mkDefault true;
         homelab.media.sonarr.enable = lib.mkDefault true;

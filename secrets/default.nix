@@ -1,6 +1,6 @@
 {
   traefik = ./traefik.env.age;
-  transmission = ./transmission.env.age;
+  protonvpn-private-key = ./protonvpn-private-key.age;
   kanidm-password = ./kanidm-password.age;
   audiobookshelf-client-secret = ./audiobookshelf-client-secret.age;
   oauth2-proxy-client-secret = ./oauth2-proxy-client-secret.age;

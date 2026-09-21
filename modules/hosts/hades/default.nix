@@ -75,7 +75,11 @@ in
           };
 
           # Media
-          age.secrets."transmission".file = secrets."transmission";
+          age.secrets.protonvpn-private-key = {
+            file = secrets.protonvpn-private-key;
+            owner = "systemd-network";
+          };
+          systemd.services.systemd-networkd.restartTriggers = [ secrets.protonvpn-private-key ];
           age.secrets.audiobookshelf-client-secret.file = secrets.audiobookshelf-client-secret;
           age.secrets.audiobookshelf-client-secret.owner = "kanidm";
           age.secrets.sonarr-basic-auth.file = secrets."sonarr-basic-auth";
@@ -87,7 +91,7 @@ in
             enable = true;
             mediaRoot = "/menagerie";
             configRoot = "/storage/config";
-            transmission.transmissionEnvFile = config.age.secrets."transmission".path;
+            qbittorrent.wireguardPrivateKeyFile = config.age.secrets.protonvpn-private-key.path;
             audiobookshelf.clientSecretFile = config.age.secrets.audiobookshelf-client-secret.path;
             sonarr.authHeaderFile = config.age.secrets."sonarr-basic-auth".path;
             miniflux.clientSecretFile = config.age.secrets.miniflux-client-secret.path;

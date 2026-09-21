@@ -8,7 +8,7 @@ in
     keys.hermes
   ]
   ++ keys.trusted_users;
-  "transmission.env.age".publicKeys = hades_keyset;
+  "protonvpn-private-key.age".publicKeys = hades_keyset;
   "kanidm-password.age".publicKeys = hades_keyset;
   "audiobookshelf-client-secret.age".publicKeys = hades_keyset;
   "oauth2-proxy-client-secret.age".publicKeys = hades_keyset;

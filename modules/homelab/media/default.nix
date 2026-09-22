@@ -14,6 +14,7 @@
         self.nixosModules.homelab-miniflux
         self.nixosModules.homelab-prowlarr
         self.nixosModules.homelab-radarr
+        self.nixosModules.homelab-shelfmark
         self.nixosModules.homelab-sonarr
         self.nixosModules.homelab-qbittorrent
       ];
@@ -66,6 +67,7 @@
         homelab.media.qbittorrent.enable = lib.mkDefault true;
         homelab.media.prowlarr.enable = lib.mkDefault true;
         homelab.media.radarr.enable = lib.mkDefault true;
+        homelab.media.shelfmark.enable = lib.mkDefault true;
         homelab.media.sonarr.enable = lib.mkDefault true;
         homelab.media.enableSambaShare = lib.mkDefault true;
         homelab.media.miniflux.enable = lib.mkDefault true;

@@ -16,7 +16,7 @@
         '';
       };
 
-      config.programs.noctalia-greeter = {
+      config.services.displayManager.noctalia-greeter = {
         enable = true;
         settings = lib.recursiveUpdate {
           session.default = "Niri";

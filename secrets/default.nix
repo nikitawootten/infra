@@ -7,6 +7,7 @@
   oauth2-proxy-config = ./oauth2-proxy-config.age;
   sonarr-basic-auth = ./sonarr-basic-auth.age;
   grafana-client-secret = ./grafana-client-secret.age;
+  discord-webhook = ./discord-webhook.age;
   grafana-secret = ./grafana-secret.age;
   homepage-environment = ./homepage-environment.age;
   actual-client-secret = ./actual-client-secret.age;

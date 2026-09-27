@@ -75,7 +75,10 @@
           };
           provision = {
             enable = true;
-            datasources.settings.apiVersion = 1;
+            datasources.settings = {
+              apiVersion = 1;
+              prune = true;
+            };
           };
         };
 

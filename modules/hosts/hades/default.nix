@@ -74,6 +74,17 @@ in
             harmonia.signKeyFile = config.age.secrets.harmonia-signing-key.path;
           };
 
+          age.secrets.discord-webhook.file = secrets.discord-webhook;
+          homelab.infra.prometheus = {
+            discordWebhookFile = config.age.secrets.discord-webhook.path;
+            expectedPools = [
+              "zroot"
+              "storage"
+              "storage2"
+            ];
+            expectedSmartDisks = 8;
+          };
+
           # Media
           age.secrets.protonvpn-private-key = {
             file = secrets.protonvpn-private-key;

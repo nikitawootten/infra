@@ -9,6 +9,7 @@
       imports = [
         self.nixosModules.homelab-audiobookshelf
         self.nixosModules.homelab-ersatztv
+        self.nixosModules.homelab-filebrowser
         self.nixosModules.homelab-flaresolverr
         self.nixosModules.homelab-jellyfin
         self.nixosModules.homelab-miniflux
@@ -62,6 +63,7 @@
 
         homelab.media.audiobookshelf.enable = lib.mkDefault true;
         homelab.media.ersatztv.enable = lib.mkDefault true;
+        homelab.media.filebrowser.enable = lib.mkDefault true;
         homelab.media.flaresolverr.enable = lib.mkDefault true;
         homelab.media.jellyfin.enable = lib.mkDefault true;
         homelab.media.qbittorrent.enable = lib.mkDefault true;

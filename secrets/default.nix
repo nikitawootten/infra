@@ -1,4 +1,5 @@
 {
+  filebrowser-client-secret = ./filebrowser-client-secret.age;
   traefik = ./traefik.env.age;
   protonvpn-private-key = ./protonvpn-private-key.age;
   kanidm-password = ./kanidm-password.age;

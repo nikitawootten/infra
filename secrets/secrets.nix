@@ -9,6 +9,7 @@ in
   ]
   ++ keys.trusted_users;
   "protonvpn-private-key.age".publicKeys = hades_keyset;
+  "filebrowser-client-secret.age".publicKeys = hades_keyset;
   "kanidm-password.age".publicKeys = hades_keyset;
   "audiobookshelf-client-secret.age".publicKeys = hades_keyset;
   "oauth2-proxy-client-secret.age".publicKeys = hades_keyset;

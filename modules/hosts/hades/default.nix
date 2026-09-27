@@ -98,8 +98,12 @@ in
           age.secrets.miniflux-client-secret.file = secrets.miniflux-client-secret;
           age.secrets.miniflux-client-secret.owner = "kanidm";
           age.secrets.miniflux-env.file = secrets.miniflux-env;
+          age.secrets.filebrowser-client-secret.file = secrets.filebrowser-client-secret;
+          age.secrets.filebrowser-client-secret.owner = "kanidm";
+          systemd.services.filebrowser-quantum.restartTriggers = [ secrets.filebrowser-client-secret ];
           homelab.media = {
             enable = true;
+            filebrowser.clientSecretFile = config.age.secrets.filebrowser-client-secret.path;
             mediaRoot = "/menagerie";
             configRoot = "/storage/config";
             qbittorrent.wireguardPrivateKeyFile = config.age.secrets.protonvpn-private-key.path;

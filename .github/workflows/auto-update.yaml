@@ -58,20 +58,13 @@ jobs:
       - name: Generate release notes
         if: steps.hold.outputs.skip != 'true'
         env:
-          OPENCODE_API_KEY: "${{ secrets.OPENCODE_API_KEY }}"
-          OPENCODE_PERMISSION: |
-            {
-              "*": "deny",
-              "read": "allow",
-              "edit": {
-                "*": "deny",
-                "notes.md": "allow"
-              }
-            }
+          CODEX_HOME: /var/lib/github-runner/codex
         run: |
-          nix develop --command opencode run --auto -m opencode/qwen3.7-plus \
-            "Write concise release notes for this NixOS flake update, grouped by \
-             input, and save them to notes.md. \
+          test "$(jq -r '.auth_mode' "$CODEX_HOME/auth.json")" = chatgpt
+          nix develop .#runner --command codex exec --sandbox read-only --ephemeral \
+            --ignore-user-config --output-last-message notes.md \
+            "Write concise Markdown release notes for this NixOS flake update, \
+             grouped by input. Return only the release notes. \
              Use this closure diff as ground truth for what shipped:\n\n\
              $(cat closure-diff.md)"
 

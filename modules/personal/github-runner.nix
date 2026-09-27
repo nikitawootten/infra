@@ -71,6 +71,8 @@
         # Persistent home for github runner build artifacts, preventing garbage collection.
         systemd.tmpfiles.rules = [
           "d /var/lib/github-runner/gc-roots 0755 github-runner github-runner -"
+          # Keep Codex credentials outside the runner state cleared on each restart.
+          "d /var/lib/github-runner/codex 0700 github-runner github-runner -"
         ];
 
         services.github-runners.${config.networking.hostName} = {
@@ -99,7 +101,10 @@
           user = "github-runner";
           group = "github-runner";
 
-          serviceOverrides.ReadWritePaths = [ "/var/lib/github-runner/gc-roots" ];
+          serviceOverrides.ReadWritePaths = [
+            "/var/lib/github-runner/gc-roots"
+            "/var/lib/github-runner/codex"
+          ];
         };
       };
     };

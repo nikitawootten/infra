@@ -8,41 +8,46 @@
       ...
     }:
     {
-      devShells.default = pkgs.mkShell {
-        inherit (config.pre-commit.devShell) shellHook;
-        NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-        name = "infra";
-        packages =
-          with pkgs;
-          [
-            nix
-            nixos-rebuild
-            git
-            # So that Home-Manager knows what configuration to target
-            hostname
-            # Editor support
-            nixd
-            pwgen
-            jq
-            gh
-            graphviz
-            tree
-            openssl
-            nixfmt
-            inputs.home-manager.packages.${system}.default
-            inputs.agenix.packages.${system}.default
-            inputs.flake-graph.packages.${system}.default
-            # Used by the auto-update workflow to draft release notes
-            inputs.llm-agents.packages.${system}.claude-code
-            nh
-          ]
-          ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux (
+      devShells = {
+        default = pkgs.mkShell {
+          inherit (config.pre-commit.devShell) shellHook;
+          NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+          name = "infra";
+          packages =
             with pkgs;
             [
-              # Secure boot
-              sbctl
+              nix
+              nixos-rebuild
+              git
+              # So that Home-Manager knows what configuration to target
+              hostname
+              # Editor support
+              nixd
+              pwgen
+              jq
+              gh
+              graphviz
+              tree
+              openssl
+              nixfmt
+              inputs.home-manager.packages.${system}.default
+              inputs.agenix.packages.${system}.default
+              inputs.flake-graph.packages.${system}.default
+              nh
             ]
-          );
+            ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux (
+              with pkgs;
+              [
+                # Secure boot
+                sbctl
+              ]
+            );
+        };
+
+        runner = pkgs.mkShell {
+          name = "infra-runner";
+          packages = [ inputs.llm-agents.packages.${system}.codex ];
+        };
       };
     };
 }

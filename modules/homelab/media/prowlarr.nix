@@ -11,6 +11,8 @@
       options.homelab.media.prowlarr = config.lib.homelab.mkServiceOptionSet "Prowlarr" "prowlarr" cfg;
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "prowlarr" ];
+
         services.prowlarr = {
           enable = true;
           settings.auth.method = "External";

@@ -50,6 +50,8 @@
         };
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "oauth2-proxy" ];
+
         services.oauth2-proxy = {
           enable = true;
           keyFile = cfg.keyFile;

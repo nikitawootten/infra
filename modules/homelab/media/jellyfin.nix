@@ -9,6 +9,8 @@
       options.homelab.media.jellyfin = config.lib.homelab.mkServiceOptionSet "Jellyfin" "jellyfin" cfg;
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "jellyfin" ];
+
         services.jellyfin = {
           enable = true;
           group = config.homelab.media.group;
@@ -38,6 +40,7 @@
             siteMonitor = cfg.url;
             widget = {
               type = "jellyfin";
+              version = 2;
               url = cfg.url;
               key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
             };

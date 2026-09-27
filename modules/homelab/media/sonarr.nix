@@ -25,6 +25,8 @@
       };
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "sonarr" ];
+
         services.sonarr = {
           enable = true;
           group = config.homelab.media.group;

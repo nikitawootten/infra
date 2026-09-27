@@ -11,6 +11,8 @@
       options.homelab.media.radarr = config.lib.homelab.mkServiceOptionSet "Radarr" "radarr" cfg;
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "radarr" ];
+
         services.radarr = {
           enable = true;
           group = config.homelab.media.group;

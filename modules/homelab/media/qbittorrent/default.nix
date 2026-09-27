@@ -26,6 +26,8 @@
         };
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "qbittorrent" ];
+
         services.protonvpn-torrent = {
           enable = true;
           privateKeyFile = cfg.wireguardPrivateKeyFile;

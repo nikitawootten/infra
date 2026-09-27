@@ -22,6 +22,18 @@
       ];
 
       options.homelab = {
+        criticalServices = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          example = [
+            "jellyfin"
+            "grafana"
+          ];
+          description = ''
+            Critical systemd service names, without the .service suffix, or full
+            unit names ending in .service or .timer.
+          '';
+        };
         lan-domain = lib.mkOption {
           type = lib.types.str;
           description = "The base domain of the local network";
@@ -35,6 +47,10 @@
       };
 
       config = {
+        homelab.criticalServices =
+          lib.optional config.services.nginx.enable "nginx"
+          ++ lib.optional config.services.tailscale.enable "tailscaled";
+
         networking.firewall.allowedTCPPorts = [
           80
           443

@@ -38,6 +38,40 @@
             (builtins.toJSON {
               groups = [
                 {
+                  name = "critical-services";
+                  rules = map (
+                    service:
+                    let
+                      unit =
+                        if lib.hasSuffix ".service" service || lib.hasSuffix ".timer" service then
+                          service
+                        else
+                          "${service}.service";
+                    in
+                    {
+                      alert = "CriticalServiceUnavailable";
+                      expr =
+                        let
+                          selector = ''job=${builtins.toJSON config.networking.hostName},name=${builtins.toJSON unit},state="active"'';
+                        in
+                        ''
+                          node_systemd_unit_state{${selector}} != 1
+                          or absent(node_systemd_unit_state{${selector}})
+                        '';
+                      for = "2m";
+                      labels = {
+                        severity = "critical";
+                        host = config.networking.hostName;
+                        inherit service;
+                      };
+                      annotations = {
+                        summary = "${config.networking.hostName}: ${service} is unavailable";
+                        description = "${unit} has not been active for two minutes.";
+                      };
+                    }
+                  ) (lib.unique config.homelab.criticalServices);
+                }
+                {
                   name = "storage";
                   rules = [
                     {
@@ -202,6 +236,7 @@
                 group_by = [
                   "alertname"
                   "host"
+                  "service"
                   "pool"
                   "mountpoint"
                   "device"

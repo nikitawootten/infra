@@ -20,6 +20,8 @@
       };
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "kanidm" ];
+
         networking.firewall.allowedTCPPorts = [ 636 ];
 
         services.kanidm = {

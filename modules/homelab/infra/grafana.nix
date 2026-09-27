@@ -44,6 +44,8 @@
       };
 
       config = lib.mkIf cfg.enable {
+        homelab.criticalServices = [ "grafana" ];
+
         services.grafana = {
           enable = true;
 

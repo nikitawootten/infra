@@ -33,8 +33,6 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.darwin.follows = "darwin";
     };
     # Declarative management of flatpaks
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";

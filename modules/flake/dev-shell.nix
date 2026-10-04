@@ -46,7 +46,10 @@
 
         runner = pkgs.mkShell {
           name = "infra-runner";
-          packages = [ inputs.llm-agents.packages.${system}.codex ];
+          packages = [
+            inputs.llm-agents.packages.${system}.codex
+          ]
+          ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.bubblewrap ];
         };
       };
     };

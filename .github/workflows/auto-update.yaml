@@ -36,6 +36,42 @@ jobs:
         if: steps.hold.outputs.skip != 'true'
         run: make update
 
+      - name: Detect new warnings
+        if: steps.hold.outputs.skip != 'true'
+        id: warnings
+        run: |
+          make machine-warnings > warnings-new.json
+          jq -n --slurpfile o warnings-old.json --slurpfile n warnings-new.json '
+            ($o[0] | map({key:.host, value:.warnings}) | from_entries) as $old
+            | $n[0]
+            | map({host, new: (.warnings - ($old[.host] // []))})
+            | map(select(.new | length > 0))' > warnings-diff.json
+          echo "count=$(jq 'length' warnings-diff.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Fix new deprecations
+        if: steps.hold.outputs.skip != 'true' && steps.warnings.outputs.count != '0'
+        env:
+          CODEX_HOME: /var/lib/github-runner/codex
+        run: |
+          test "$(jq -r '.auth_mode' "$CODEX_HOME/auth.json")" = chatgpt
+          nix develop .#runner --command codex exec --sandbox workspace-write --ephemeral \
+            --ignore-user-config -c approval_policy='"never"' --output-last-message fixes.md - <<'PROMPT'
+          Fix straightforward deprecations introduced by this flake.lock update.
+          Read warnings-diff.json, warnings-old.json, and the repository configuration.
+          Apply minimal, behavior-preserving fixes to existing tracked .nix files only,
+          such as migrating renamed options. Consult the updated inputs in /nix/store
+          when necessary. Leave ambiguous or behavior-changing migrations for review;
+          do not suppress warnings or change unrelated configuration.
+          Do not change flake.lock, workflow files, or generated reports. Do not create
+          files, commit, or push; the workflow will commit your edits into the update PR.
+          The workflow runs checks and builds after your edits, so do not deploy anything.
+          Describe migrations and their rationale in your final Markdown response, which
+          the workflow saves to fixes.md. Do not add comments that merely document the
+          migration. Update existing comments if they become inaccurate, and add comments
+          only when needed to explain non-obvious behavior.
+          Return concise Markdown describing the fixes and anything left for manual review.
+          PROMPT
+
       - name: Run checks
         if: steps.hold.outputs.skip != 'true'
         run: make test
@@ -62,17 +98,21 @@ jobs:
         run: |
           test "$(jq -r '.auth_mode' "$CODEX_HOME/auth.json")" = chatgpt
           nix develop .#runner --command codex exec --sandbox read-only --ephemeral \
-            --ignore-user-config --output-last-message notes.md \
-            "Write concise Markdown release notes for this NixOS flake update, \
-             grouped by input. Return only the release notes. \
-             Use this closure diff as ground truth for what shipped:\n\n\
-             $(cat closure-diff.md)"
+            --ignore-user-config --output-last-message notes.md - <<'PROMPT'
+          Write concise Markdown release notes for this NixOS flake update,
+          grouped by input. Return only the release notes.
+          Include the configuration fixes shown by git diff -- '*.nix'.
+          Read closure-diff.md and use it as ground truth for what shipped.
+          PROMPT
 
       - name: Assemble PR body
         if: steps.hold.outputs.skip != 'true'
         id: body
         run: |
           cp notes.md pr-body.md
+          if [ "${{ steps.warnings.outputs.count }}" -gt 0 ]; then
+            { echo; echo "## Deprecation fixes"; echo; cat fixes.md; } >> pr-body.md
+          fi
           labels="automation"
           if [ "$(jq 'length' warnings-diff.json)" -gt 0 ]; then
             labels="$labels,needs-attention"
@@ -92,4 +132,7 @@ jobs:
           body-path: pr-body.md
           commit-message: "chore: flake update"
           labels: ${{ steps.body.outputs.labels }}
-          add-paths: flake.lock
+          # Include Codex's configuration fixes, excluding generated reports.
+          add-paths: |
+            flake.lock
+            *.nix

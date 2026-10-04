@@ -101,10 +101,29 @@
           user = "github-runner";
           group = "github-runner";
 
-          serviceOverrides.ReadWritePaths = [
-            "/var/lib/github-runner/gc-roots"
-            "/var/lib/github-runner/codex"
-          ];
+          serviceOverrides = {
+            ReadWritePaths = [
+              "/var/lib/github-runner/gc-roots"
+              "/var/lib/github-runner/codex"
+            ];
+            # Codex's bubblewrap sandbox needs nested namespaces and mount/capset syscalls.
+            RestrictNamespaces = [
+              "user"
+              "mnt"
+              "pid"
+              "net"
+            ];
+            SystemCallFilter = lib.mkForce [
+              "~@clock"
+              "~@cpu-emulation"
+              "~@module"
+              "~@obsolete"
+              "~@raw-io"
+              "~@reboot"
+              "~setdomainname"
+              "~sethostname"
+            ];
+          };
         };
       };
     };

@@ -30,7 +30,7 @@ LINK_DIR ?=
 .PHONY: build-machines
 build-machines: ## Build every NixOS machine closure. Set LINK_DIR to root results as GC roots.
 	@if [ -n "$(LINK_DIR)" ]; then mkdir -p "$(LINK_DIR)"; fi
-	@$(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
+	@set -euo pipefail; $(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
 	while read -r host; do \
 	  echo "==> $$host" >&2; \
 	  $(NIX_CMD) build --print-out-paths \
@@ -46,9 +46,9 @@ closure-diff: ## Diff machine closures between $(OLD) and $(NEW) out-path lists
 
 .PHONY: machine-warnings
 machine-warnings: ## Emit declared NixOS warnings per machine as JSON
-	@$(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
+	@set -euo pipefail; $(NIX_CMD) flake show --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]' | \
 	while read -r host; do \
-	  w="$$($(NIX_CMD) eval --json ".#nixosConfigurations.$$host.config.warnings" 2>/dev/null || echo '[]')"; \
+	  w="$$($(NIX_CMD) eval --json ".#nixosConfigurations.$$host.config.warnings")"; \
 	  jq -nc --arg h "$$host" --argjson w "$$w" '{host:$$h, warnings:$$w}'; \
 	done | jq -s '.'
 

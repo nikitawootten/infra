@@ -30,16 +30,9 @@
           "ghostty"
           "signal"
           "protonvpn"
-          "proton-drive"
           "jordanbaird-ice"
           "blender"
-          "krita"
-          "godot"
-          "tor-browser"
-          "obs"
-          "utm"
           "google-chrome"
-          "soduto"
           "spotify"
         ];
       };

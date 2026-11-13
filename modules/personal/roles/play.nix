@@ -37,9 +37,6 @@ in
       homebrew.casks = [
         "steam"
         "prismLauncher"
-        "kicad"
-        "freecad"
-        "calibre"
       ];
     };
 }

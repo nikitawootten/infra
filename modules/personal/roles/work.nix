@@ -31,6 +31,7 @@ let
           nodejs_24
           scrcpy
           proton-vpn
+          sentry-cli
         ]
         ++ (lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
           httpie-desktop

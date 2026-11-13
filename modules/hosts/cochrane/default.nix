@@ -44,7 +44,6 @@ in
           boot.loader.systemd-boot.enable = false;
           boot.loader.efi.canTouchEfiVariables = true;
 
-          boot.initrd.systemd.enable = true;
           boot.initrd.luks.devices."luks-f190f8c5-0961-45c4-a785-d7f3692e65f8".device =
             "/dev/disk/by-uuid/f190f8c5-0961-45c4-a785-d7f3692e65f8";
 

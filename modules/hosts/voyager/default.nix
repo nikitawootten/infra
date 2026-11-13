@@ -92,7 +92,6 @@ in
           boot.supportedFilesystems = [ "ntfs" ];
 
           # Setup keyfile
-          boot.initrd.systemd.enable = true;
           boot.initrd.secrets = {
             "/crypto_keyfile.bin" = null;
           };
